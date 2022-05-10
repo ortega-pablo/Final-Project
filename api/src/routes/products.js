@@ -5,10 +5,10 @@ const { getAllProducts } = require("../controllers/products");
 
 
 router.get("/", async (req, res, next) => {
-  try {
+ /*  try {
     let allProducts = await getAllProducts();
     res.status(200).send(allProducts);
   } catch (error) {
     next(error);
-  }
+  } */
 });
