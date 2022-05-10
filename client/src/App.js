@@ -24,7 +24,7 @@ function App() {
       <button onClick={(e)=>{onClick(e)}}> boton traedor </button> 
       {
         products.map( p => {
-          return(<h2>{p.nombre}</h2>)
+          return(<h2>{p.name}</h2>)
         })
       }
       <h2> PORFI QUE ANDE </h2> 
