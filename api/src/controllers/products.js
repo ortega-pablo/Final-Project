@@ -1,6 +1,6 @@
 const { Product } = require("../db");
 
-const getAllProducts = async () => {
+/* const getAllProducts = async () => {
   return await Product.findAll({
     attributes: [
       "sku",
@@ -41,9 +41,9 @@ const getAllProducts = async () => {
   });
 };
 
-
+ */
 
 
 module.exports = {
-    getAllProducts,
+   // getAllProducts,
   };
