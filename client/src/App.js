@@ -20,6 +20,7 @@ function App() {
   return (
     <div className="App">
       <h1> Funciono !!!!!</h1>
+      <h1>Esto es una prueba Samuel.</h1>
       <button onClick={(e)=>{onClick(e)}}> boton traedor </button> 
       {
         products.map( p => {
