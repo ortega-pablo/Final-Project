@@ -26,6 +26,7 @@ function App() {
           return(<h2>{p.nombre}</h2>)
         })
       }
+      <h2> PORFI QUE ANDE </h2> 
     </div>
   );
 }
