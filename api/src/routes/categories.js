@@ -18,6 +18,7 @@ router.post("/", async (req, res, next) => {
         description,
         thumbnail,
       });
+      
       newSubCategory.addCategory(category);
 
       return res.status(200).send(newSubCategory);
