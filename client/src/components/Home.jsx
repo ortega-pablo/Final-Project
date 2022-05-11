@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/actions";
 import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper"
+import Footer from "./Footer/Footer";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export const Home = () => {
             </div>
           );
         })}
+      <Footer/>
     </div>
   );
 };
