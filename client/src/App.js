@@ -1,34 +1,16 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route} from 'react-router-dom';
-import { getProducts } from './redux/actions';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Detail } from "./components/Detail/Detail";
+import { Home } from "./components/Home";
 
 
 function App() {
-  const dispatch = useDispatch()
-  const products = useSelector((state) => state.products)
-  // useEffect(()=>{
-  //   dispatch(getProducts())
-  // },[dispatch])
-      // onClick para el boton traerecetas 
-    const onClick = (evento)=> {
-        evento.preventDefault();
-        dispatch(getProducts())
-    }
-    
-
   return (
-    <div className="App">
-      <h1> Funciono !!!!!</h1>
-      <h1>Esto es una prueba Samuel.</h1>
-      <button onClick={(e)=>{onClick(e)}}> boton traedor </button> 
-      {
-        products.map( p => {
-          return(<h2>{p.name}</h2>)
-        })
-      }
-      <h2> PORFI QUE ANDE </h2> 
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/detail" element={<Detail/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
