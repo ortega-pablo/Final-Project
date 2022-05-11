@@ -3,6 +3,7 @@ const { Router } = require('express');
 const categoriesRoute = require ("./categories")
 const answersRoute = require ("./answers")
 const asksRoute = require ("./asks")
+const userRoute = require("./user")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -17,5 +18,6 @@ const router = Router();
 router.use("/categories" , categoriesRoute)
 router.use("/answers", answersRoute)
 router.use("/asks", asksRoute)
+router.use("/user", userRoute)
 
 module.exports = router;
