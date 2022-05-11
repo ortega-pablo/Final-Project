@@ -55,6 +55,7 @@ const {
   ShoppingCart,
   Specification,
   User,
+  SubCategory,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -68,31 +69,43 @@ Product.belongsToMany(Order, { through: "orderItems"});
 Order.belongsToMany(Product, { through: "orderItems"});
 
 Order.hasMany(Ask);
+Ask.belongsTo(Order)
 
 Product.hasMany(Ask);
+Ask.belongsTo(Product)
 
 Ask.hasOne(Answer)
+Answer.belongsTo(Ask)
 
 User.hasMany(Ask)
+Ask.belongsTo(User)
 
 User.hasMany(Answer)
+Answer.belongsTo(User)
 
 Product.belongsToMany(Category, { through: "product-category"});
 Category.belongsToMany(Product, { through: "product-category"});
 
-Category.hasMany(Category);
+Category.belongsToMany(SubCategory, { through: "sub_Categories"});
+SubCategory.belongsToMany(Category, { through: "sub_Categories"});
 
 Product.hasOne(ProductInventory)
+ProductInventory.belongsTo(Product)
 
 ShoppingCart.hasMany(Product)
+Product.belongsTo(ShoppingCart)
 
 User.hasMany(Order)
+Order.belongsTo(User)
 
 User.hasOne(ShoppingCart)
+ShoppingCart.belongsTo(User)
 
 User.hasMany(Address)
+Address.belongsTo(User)
 
-User.hasMany(Payment)
+User.belongsToMany(Payment, { through: "user-payment"})
+Payment.belongsToMany(User, { through: "user-payment"})
 
 
 
