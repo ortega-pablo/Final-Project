@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from './Footer.module.css';
 
-const Footer = () => {
+export const Footer = () => {
     return(
         <div className={styles.footContainer}> 
             <h6>Empresa copada</h6>
@@ -12,4 +12,3 @@ const Footer = () => {
     )
 }
 
-export default Footer
