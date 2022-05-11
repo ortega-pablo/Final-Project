@@ -1,23 +1,22 @@
-import React from 'react'
+import React from 'react';
+import Typography from '@mui/material/Typography';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import {SelectPage} from './SelectPage';
 
-export const Pagination = ({productsPerPage, products, paginate, currentPage}) => {
-   
-  const numbers = []
+export const Paginationxd = ({setCurrentPage, currentPage, productsPerPage, products}) => {
+  
+  // pagination
+  const handleChangePage = (event, value) => {
+    setCurrentPage(value);
+  };
   const numberOfPages = Math.ceil(products/productsPerPage)
-  for(let i = 0 ;  i < numberOfPages ; i++) {
-    numbers.push(i+1)
-  }
 
   return (
-    <nav>
-      <ul>
-        {
-          numbers?.map(number => (
-            <a onClick={()=>paginate(number)} key={number}>{number}</a>
-          ))
-        }
-      </ul>
-    </nav>  
-  )
+    <Stack spacing={2}>
+      <Typography>Page: {currentPage}</Typography>
+      <Pagination count={numberOfPages} page={currentPage} onChange={handleChangePage} />
+      <SelectPage setCurrentPage={setCurrentPage} currentPage={currentPage} productsPerPage={productsPerPage} products={products}/>
+    </Stack>
+  );
 }
-

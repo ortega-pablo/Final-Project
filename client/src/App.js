@@ -12,16 +12,16 @@ import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 function App() {
   return (
     <BrowserRouter>
-    <NavBar></NavBar>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/detail" element={<Detail/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/createaccount" element={<CreateAccount/>}/>
-        <Route path="*" element={<NotFound/>}/>
-      </Routes>
-        <Footer/>
+      <NavBar></NavBar>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/detail" element={<Detail/>}/>
+          <Route path="/about" element={<About/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/createaccount" element={<CreateAccount/>}/>
+          <Route path="*" element={<NotFound/>}/>
+        </Routes>
+      <Footer/>
     </BrowserRouter>
 
   );
