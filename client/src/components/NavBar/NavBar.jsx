@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { Link } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -109,9 +110,9 @@ export const NavBar = () => {
     open={isMenuOpen}
     onClose={handleMenuClose}
   >
-    <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-    <MenuItem onClick={handleMenuClose}>Products</MenuItem>
-    <MenuItem onClick={handleMenuClose}>About</MenuItem>
+    <MenuItem><Link href ="/" sx={{textDecoration: "none", color: "#282424",}}>Home</Link></MenuItem>
+    <MenuItem><Link href ="/" sx={{textDecoration: "none", color: "#282424", }}>Product</Link></MenuItem>
+    <MenuItem><Link href ="/about" sx={{textDecoration: "none", color: "#282424",}}>About</Link></MenuItem>
   </Menu>
   )
   const renderProfileMenu = (
