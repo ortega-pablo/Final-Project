@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/actions";
 import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper"
-import Footer from "./Footer/Footer";
+import { Pagination } from "./Pagination/Pagination";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -14,13 +14,24 @@ export const Home = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1)
+  const [productsPerPage, setProductsPerPage] = useState(2)
+  //calculos pagination
+  const lastProduct = currentPage*productsPerPage
+  const firstProduct = lastProduct - productsPerPage
+  const actualPage = products.slice(firstProduct, lastProduct)
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
   return (
     <div>
       <h1>Soy el Home</h1>
       <SwipeableTextMobileStepper/>
 
       {products &&
-        products.map((prod, index) => {
+        actualPage.map((prod, index) => {
           return (
             <div key={index}>
               <Card
@@ -33,7 +44,7 @@ export const Home = () => {
             </div>
           );
         })}
-      <Footer/>
+      <Pagination productsPerPage={productsPerPage} products={products.length} paginate={paginate} currentPage={currentPage}/>
     </div>
   );
 };
