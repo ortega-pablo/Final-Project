@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_CATEGORIES = "GET_CATEGORIES";
 
 let respuesta = {data: [{
     "id": 1,
@@ -1600,6 +1601,28 @@ let respuesta = {data: [{
     "grossWeight": 20.2 
 },]}
 
+let respuesta2 = {data: [{
+    "name": "categoria 1",
+    "description": "categoria 1 descripcion",
+    "thumbnail": "categoria 1 thumbnail"
+},
+{
+    "name": "categoria 2",
+    "description": "categoria 2 descripcion",
+    "thumbnail": "categoria 2 thumbnail"
+},
+{
+    "name": "categoria 3",
+    "description": "categoria43 descripcion",
+    "thumbnail": "categoria 3 thumbnail"
+},
+{
+    "name": "categoria 4",
+    "description": "categoria 4 descripcion",
+    "thumbnail": "categoria 4 thumbnail"
+},
+]}
+
 
 
 export const getProducts = () => {
@@ -1607,6 +1630,16 @@ export const getProducts = () => {
         let response = respuesta
         return dispatch ({
             type: GET_PRODUCTS,
+            payload: response.data
+        })
+    }
+}
+
+export const getCategories = () => {
+    return async (dispatch) => {
+        let response = respuesta2;
+        return dispatch ({
+            type: GET_CATEGORIES,
             payload: response.data
         })
     }

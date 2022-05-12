@@ -1,9 +1,11 @@
-import { GET_PRODUCTS } from "../actions";
+import { GET_PRODUCTS, GET_CATEGORIES } from "../actions";
 
 
 const initialState = {
     products: [],
-    productsAux: []
+    productsAux: [],
+    categories: [],
+    categoriesAux:[]
 }
 
 const rootReducer = (state = initialState, action ) => {
@@ -13,6 +15,13 @@ const rootReducer = (state = initialState, action ) => {
                 ...state,
                 products: action.payload,
                 productsAux: action.payload
+            }
+        }
+        case GET_CATEGORIES: {
+            return{
+                ...state,
+                categories: action.payload,
+                categoriesAux: action.payload
             }
         }
 

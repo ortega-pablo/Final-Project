@@ -9,6 +9,8 @@ import MultiActionAreaCard from "./Card/Card";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import { Box } from "@mui/system";
+import { Category } from "./Category/Category";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,11 +45,12 @@ export const Home = () => {
     <div>
       <h1>Soy el Home</h1>
       <SwipeableTextMobileStepper  />
+      <Box sx= {{width: '100%', display: 'flex'}}>
+      <Category></Category>
       <Grid container spacing={12} sx={{ml:"auto", mr:"auto", mt:1}}>
       {products &&
         actualPage.map((prod, index) => {
           return (
-            
               <Grid item l>
                 <Paper className={classes.paper}>
                   <MultiActionAreaCard
@@ -63,6 +66,7 @@ export const Home = () => {
           );
         })}
          </Grid>
+      </Box>
       <Paginationxd
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
