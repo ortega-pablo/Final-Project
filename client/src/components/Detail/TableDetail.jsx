@@ -26,7 +26,10 @@ export default function TableDetail({products}) {
 
 
   return (
-    <TableContainer component={Paper}>
+
+    <Paper>
+
+    <TableContainer component={Paper} sx={{ maxWidth: 700, flexGrow: 1, ml:"auto", mr:"auto", mt:1 }} >
         <h3>Especificaciones técnicas</h3>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -102,5 +105,6 @@ export default function TableDetail({products}) {
         </TableBody>
       </Table>
     </TableContainer>
+    </Paper>
   );
 }

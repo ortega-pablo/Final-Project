@@ -31,20 +31,26 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, Link } from '@mui/material';
 
 export default function MultiActionAreaCard({name, price,brand, thumbnail}) {
   return (
 
 
-    <Card sx={{ width: 400 }}>
+    <Card sx={{ width: 200 }}>
+
       <CardActionArea>
+
+      <Link href="/detail" underline="none">
+       
         <CardMedia
           component="img"
           height="140"
           image={thumbnail}
           alt="green iguana"
         />
+
+      </Link>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {name}

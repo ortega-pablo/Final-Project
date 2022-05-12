@@ -6,6 +6,12 @@ import CarouselDetail from "./CarouselDetail"
 import TableDetail from './TableDetail';
 import QuestionsAndAnswers from "./QuestionsAndAnswers"
 
+
+
+
+
+
+
 export const Detail = () => {
 const dispatch = useDispatch();
 //deberia ser un state.detail
