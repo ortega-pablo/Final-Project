@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
       content,
     });
 
-    newAnswer.setUser(userId);
+    newAnswer.setUser(user);
     newAnswer.setAsk(ask);     // changed to set becauase "add" doesnt work
 
     res.status(200).send(newAnswer);

@@ -11,8 +11,7 @@ router.post("/", async (req, res, next) => {
       const newAsk = await Ask.create({
         content,
       });
-      console.log(userId)
-      console.log(productId)
+
         newAsk.setUser(userId);
         newAsk.setProduct(productId);
 
