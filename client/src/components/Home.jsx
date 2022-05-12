@@ -42,8 +42,8 @@ export const Home = () => {
   return (
     <div>
       <h1>Soy el Home</h1>
-      <SwipeableTextMobileStepper />
-      <Grid container spacing={12}>
+      <SwipeableTextMobileStepper  />
+      <Grid container spacing={12} sx={{ml:"auto", mr:"auto", mt:1}}>
       {products &&
         actualPage.map((prod, index) => {
           return (

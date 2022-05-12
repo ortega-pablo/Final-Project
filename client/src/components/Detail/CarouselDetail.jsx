@@ -54,7 +54,7 @@ function CarouselDetail({products}) {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+    <Box sx={{ maxWidth: 400, flexGrow: 1, ml:"auto", mr:"auto", mt:1 }}>
         <h3>{products[0].name}</h3>
         <h3>Function:  ?????</h3>
         <h3>$ {products[0].price}</h3>

@@ -12,6 +12,7 @@ export  const QuestionsAndAnswers = () => {
         component="form"
         sx={{
           "& > :not(style)": { m: 1, width: "25ch" },
+          maxWidth: 600, flexGrow: 1, ml:"auto", mr:"auto", mt:1
         }}
         noValidate
         autoComplete="off"
