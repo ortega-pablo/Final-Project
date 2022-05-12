@@ -4,13 +4,14 @@ import {useParams ,useNavigate  } from "react-router-dom"
 import { getProducts } from '../../redux/actions';
 import CarouselDetail from "./CarouselDetail"
 import TableDetail from './TableDetail';
+import QuestionsAndAnswers from "./QuestionsAndAnswers"
 
 export const Detail = () => {
 const dispatch = useDispatch();
 //deberia ser un state.detail
 const products = useSelector( state=> state.products)
 
-let id = useParams()
+// let id = useParams()
 
 
 useEffect(()=>{
@@ -37,6 +38,8 @@ useEffect(()=>{
             }
             <TableDetail
              products={products}/>
+             <h3>Preguntas y respuestas</h3>
+             <QuestionsAndAnswers/>
       </div>
   )
 }

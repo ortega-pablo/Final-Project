@@ -9,6 +9,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import { ButtonBase } from '@mui/material';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -58,8 +59,10 @@ function CarouselDetail({products}) {
         <h3>Function:  ?????</h3>
         <h3>$ {products[0].price}</h3>
         <h3>Specification: ??????</h3>
-        <button>Agregar al carrito</button>
-        <button>Volver</button>
+        {/* <button>Agregar al carrito</button>
+        <button>Volver</button> */}
+        <Button variant="contained">Agregar al carrito</Button>
+        <Button variant="contained">Volver</Button>
       <Paper
         square
         elevation={0}
