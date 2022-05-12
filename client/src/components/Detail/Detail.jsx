@@ -21,25 +21,34 @@ useEffect(()=>{
     //     dispatch(clearDetail())
     // })
 }, [dispatch])
+    
 
 
   return (
       <div>
-          <div>Detail</div>
-          
-          <CarouselDetail
-            products={products}/>
+
+            
+            <div>Detail</div>
             {
-                products[0].id ?
-                <div>
-                    hola
-                </div> 
+                products.length &&
+                    <CarouselDetail
+                        products={products}/>
+            }
+            {   
+                products.length &&
+                    products[0].id ?
+                        <div>
+                            hola
+                        </div> 
                 : <div>Cargando...</div>
             }
-            <TableDetail
-             products={products}/>
-             <h3>Preguntas y respuestas</h3>
-             <QuestionsAndAnswers/>
+            {
+                products.length &&
+                    <TableDetail
+                        products={products}/>
+            }
+            <h3>Preguntas y respuestas</h3>
+            <QuestionsAndAnswers/>
       </div>
   )
 }
