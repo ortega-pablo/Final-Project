@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, Product, Ask } = require("../db");
+const { Ask } = require("../db");
 const router = Router();
 
 router.post("/", async (req, res, next) => {

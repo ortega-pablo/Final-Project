@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, Ask, Answer } = require("../db");
+const { Answer } = require("../db");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
@@ -7,12 +7,12 @@ router.post("/", async (req, res, next) => {
   const { UserId, askId } = req.query;
 
   try {
-    const user = await User.findAll({
+    const user = await User.findOne({
       where: {
         id: UserId,
       },
     });
-    const ask = await Ask.findAll({
+    const ask = await Ask.findOne({
       where: {
         id: askId,
       },
