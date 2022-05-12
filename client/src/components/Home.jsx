@@ -68,6 +68,7 @@ export const Home = () => {
         currentPage={currentPage}
         productsPerPage={productsPerPage}
         products={products.length}
+        setProductsPerPage={setProductsPerPage}
       />
     </div>
   );
