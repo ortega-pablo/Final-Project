@@ -6,14 +6,16 @@ const { User } = require("../db");
 
 router.post("/", async (req, res, next) => {
 
-    const {name} = req.body;
+    const {userName} = req.body;
 
     try{
 
-      if(name){
+      if(userName){
         const newUser = await User.create({
-            name
+          userName
+         
         })
+
         return res.status(200).send(newUser)
       }
        
