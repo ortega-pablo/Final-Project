@@ -10,6 +10,7 @@ router.post("/", async (req, res, next) => {
     const {productId, specificationId} = req.query
 
     try{
+        
       if(productId){
 
         const specificationValue = await ProductSpecification.create({
@@ -26,6 +27,7 @@ router.post("/", async (req, res, next) => {
 
         return res.status(200).send(specificationValue)
       }
+
 
     } catch(error){
         next(error)

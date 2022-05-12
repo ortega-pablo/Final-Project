@@ -20,8 +20,8 @@ router.post("/", async (req, res, next) => {
                 id: productId,
             }
         });
-
         
+
         newSpecification.addProduct(productId);
 
         res.status(200).send(newSpecification);

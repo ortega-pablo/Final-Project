@@ -15,38 +15,38 @@ const productInfo = async function (id, categoryId) {
         {
             model: Specification,
             attributes: ["name"]
-        },]
-        // {
-        //     model: ProductInventory,
-        //     attributes: ["quantity"],
-        // },
-        // {
-        //     model: Discount,
-        //     attributes: ["name", "description", "discountPercent", "active"],
-        //     through: {
-        //         attributes: [],
-        //     }
-        // },
-        // {
-        //     model: Category,
-        //     attributes: ["name", "description", "thumbnail"],
-        //     include: [
-        //         {
-        //             model: SubCategory,
-        //             attributes: ["name", "description", "thumbnail"]
-        //         }
-        //     ]
-        // },
-        // {
-        //     model: Ask,
-        //     attributes: ["content"],
-        //     include: [
-        //         {
-        //             model: Answer,
-        //             attributes: ["content"]
-        //         }
-        //     ]
-        // }]
+        },
+        {
+            model: ProductInventory,
+            attributes: ["quantity"],
+        },
+        {
+            model: Discount,
+            attributes: ["name", "description", "discountPercent", "active"],
+            through: {
+                attributes: [],
+            }
+        },
+        {
+            model: Category,
+            attributes: ["name", "description", "thumbnail"],
+            include: [
+                {
+                    model: SubCategory,
+                    attributes: ["name", "description", "thumbnail"]
+                }
+            ]
+        },
+        {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+                {
+                    model: Answer,
+                    attributes: ["content"]
+                }
+            ]
+        }]
     })
 
 
