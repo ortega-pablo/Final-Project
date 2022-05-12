@@ -7,12 +7,12 @@ router.post("/", async (req, res, next) => {
   const { UserId, askId } = req.query;
 
   try {
-    // const user = await User.findOne({
-    //   where: {
-    //     id: UserId,
-    //   },
-    // });
-    const ask = await Ask.findOne({
+    const user = await User.findAll({
+      where: {
+        id: UserId,
+      },
+    });
+    const ask = await Ask.findAll({
       where: {
         id: askId,
       },
@@ -21,8 +21,8 @@ router.post("/", async (req, res, next) => {
       content,
     });
 
-    // newAnswer.addUser(user);
-    newAnswer.setAsk(ask);     // changed to set becauase "add" doesnt work
+    newAnswer.addUser(user);
+    newAnswer.addAsk(ask);
 
     res.status(200).send(newAnswer);
     
