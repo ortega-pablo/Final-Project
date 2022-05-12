@@ -13,8 +13,32 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home';
+import InfoIcon from '@mui/icons-material/Info';
+import GroupIcon from '@mui/icons-material/Group';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from '@mui/material';
+import Button from '@mui/material/Button';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Slide from '@mui/material/Slide';
+
+
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,23 +80,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const NavBar = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMenuProfileOpen = Boolean(anchorProfileEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorProfileEl(event.currentTarget);
   };
-
-  const handleMenuOpen = (event) => {
-      setAnchorEl(event.currentTarget)
-  };
-
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -83,41 +100,15 @@ export const NavBar = () => {
     handleMobileMenuClose();
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuProfileId = 'primary-search-account-menu';
-  const menuId = 'Secondary-Search-Menu';
-  const renderMenu = (
-    <Menu
-    anchorEl={anchorEl}
-    anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-    id={menuId}
-    keepMounted
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-    open={isMenuOpen}
-    onClose={handleMenuClose}
-  >
-    <MenuItem><Link href ="/" sx={{textDecoration: "none", color: "#282424",}}>Home</Link></MenuItem>
-    <MenuItem><Link href ="/" sx={{textDecoration: "none", color: "#282424", }}>Product</Link></MenuItem>
-    <MenuItem><Link href ="/about" sx={{textDecoration: "none", color: "#282424",}}>About</Link></MenuItem>
-  </Menu>
-  )
   const renderProfileMenu = (
     <Menu
-      anchorEl={anchorEl}
+      anchorEl={anchorProfileEl}
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'right',
@@ -159,10 +150,10 @@ export const NavBar = () => {
           color="inherit"
         >
           <Badge color="error">
-            <ShoppingCartIcon />
+            <HomeIcon />
           </Badge>
         </IconButton>
-        <p>Cart</p>
+        <p>Home</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -176,43 +167,92 @@ export const NavBar = () => {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          color="inherit"
+        >
+          <Badge color="error">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          color="inherit"
+        >
+          <Badge color="error">
+            <InfoIcon />
+          </Badge>
+        </IconButton>
+        <p>About Us</p>
+      </MenuItem>
     </Menu>
   );
 
   return (
-    <Box  sx={{ flexGrow: 1}}>
-      <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2"}} position="static">
+    <Box  sx={{ flexGrow: 1,}}>
+       <HideOnScroll {...props}>
+       <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", } }  >
         <Toolbar>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="Opciones"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleMenuOpen}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
+
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            LOGO
+          </Typography>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', sm: 'block' },
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif;',
+              color: 'inherit',
+              textDecoration: 'none',
+              margin: '5px'
+            }}
+          >
+            NombreShop
           </Typography>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Buscar…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
+            <Box sx={{margin: '5px'}}>
+              <Button
+              variant='outlined'
+                sx={{ my: 2, color: 'white', display: 'block', borderColor: '#E8E9F2'}}
+                href="/"
+              >
+                Productos
+              </Button>
+            </Box>
+            <Box sx={{margin: '5px'}}>
+            <Button
+              variant='outlined'
+              href='/about'
+              sx={{ my: 2, color: 'white', display: 'block', borderColor: '#E8E9F2', }}
+            >
+              Sobre nosotros
+            </Button>
+            </Box>
+
+          </Box>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
@@ -249,9 +289,10 @@ export const NavBar = () => {
           </Box>
         </Toolbar>
       </AppBar>
+       </HideOnScroll>
+       <Toolbar></Toolbar>
       {renderMobileMenu}
       {renderProfileMenu}
-      {renderMenu}
     </Box>
   );
 }
