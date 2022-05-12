@@ -25,7 +25,6 @@ router.post("/", async (req, res, next) => {
     newAnswer.setAsk(ask);
 
     res.status(200).send(newAnswer);
-    
   } catch (error) {
     next(error);
   }
