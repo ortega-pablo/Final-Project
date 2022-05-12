@@ -25,20 +25,15 @@ const getAllProducts = async () => {
           },
         },
       },
-      /* {
+      {
         model: Specification,
         attributes: ["id", "name"],
         through: {
-          attributes: [],
-        },
-        include: {
-          model: ProductSpecification,
+          as:"value:",
           attributes: ["value"],
-          through: {
-            attributes: [],
-          },
         },
-      }, */
+      },
+      
     ], 
   });
 };

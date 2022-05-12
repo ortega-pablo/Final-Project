@@ -126,11 +126,7 @@ router.post("/addSpecification", async (req, res, next) => {
         id: specificationId,
       },
     });
-
-    /* const newProductSpecification = await ProductSpecification.create({
-      value,
-    }); */
-  
+ 
     console.log(product)
     console.log(specification)
     

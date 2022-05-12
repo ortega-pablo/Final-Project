@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Ask } = require("../db");
+const { User, Product, Ask } = require("../db");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
@@ -11,6 +11,7 @@ router.post("/", async (req, res, next) => {
       const newAsk = await Ask.create({
         content,
       });
+
         newAsk.setUser(userId);
         newAsk.setProduct(productId);
 
