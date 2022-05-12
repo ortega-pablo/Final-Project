@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const { Product, Discount, Category } = require("../db");
-const { getAllProducts,getProductsByName , orderProducts } = require("../controllers/products");
+const { Product, Discount, Category, Specification, ProductSpecification } = require("../db");
+const { getAllProducts, getProductsByName , orderProducts } = require("../controllers/products");
 const router = Router();
 
 router.get("/", async (req, res, next) => {
@@ -18,7 +18,6 @@ router.get("/", async (req, res, next) => {
       }
     } else {
       const allProducts = await getAllProducts();
-      console.log(allProducts)
       res.status(200).send(allProducts);
     }
   } catch (error) {
@@ -26,56 +25,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-/* router.get("/", async (req, res, next) => {
-  try {
-    const allProducts = await Product.findAll({
-      attributes: [
-        "id",
-        "name",
-        "sku",
-        "brand",
-        "keyWords",
-        "price",
-        "netWeight",
-        "description",
-        "thumbnail",
-        "image",
-        "productDimensions",
-        "packageDimensions",
-        "grossWeight",
-        "warranty",
-        "createdAt",
-        "updatedAt",
-      ],
-      include: [
-        {
-          model: Discount,
-          attributes: [
-            "id",
-            "name",
-            "description",
-            "discountPercent",
-            "active",
-          ],
-          through: {
-            attributes: [],
-          },
-        },
-        {
-          model: Category,
-          attributes: ["id", "name", "description", "thumbnail"],
-          where: {},
-          through: {
-            attributes: [],
-          },
-        },
-      ],
-    });
-    res.status(200).send(allProducts);
-  } catch (error) {
-    next(error);
-  }
-}); */
 
 router.post("/", async (req, res, next) => {
   const {
@@ -164,7 +113,7 @@ router.post("/addDiscount", async (req, res, next) => {
 
 router.post("/addSpecification", async (req, res, next) => {
   try {
-    const { value } = re.body;
+    const { value } = req.body;
     const { productId, specificationId } = req.query;
 
     const product = await Product.findOne({
@@ -178,16 +127,20 @@ router.post("/addSpecification", async (req, res, next) => {
       },
     });
 
-    const newProductSpecification = await ProductSpecification.create({
+    /* const newProductSpecification = await ProductSpecification.create({
       value,
-    });
-
-    newProductSpecification.setProduct(product);
-    newProductSpecification.setSpecification(specification);
+    }); */
+  
+    console.log(product)
+    console.log(specification)
+    
+    product.addSpecification(specification , {through:{value:value}})
 
     res.status(200).send("Successfully associated Specification.");
   } catch (error) {
     next(error);
   }
 });
+
+
 module.exports = router;

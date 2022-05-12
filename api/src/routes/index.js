@@ -5,6 +5,7 @@ const answersRoute = require ("./answers")
 const asksRoute = require ("./asks")
 const usersRoute = require ("./users")
 const discountsRoute = require("./discounts")
+const specificationsRoute = require("./specification")
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -20,5 +21,6 @@ router.use("/answers", answersRoute)
 router.use("/asks", asksRoute)
 router.use("/users", usersRoute)
 router.use("/discounts", discountsRoute)
+router.use("/specifications", specificationsRoute)
 
 module.exports = router;

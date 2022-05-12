@@ -1,26 +1,8 @@
-const { Product, Discount, Category } = require("../db");
+const { Product, Discount, Category, SubCategory, Specification, ProductSpecification } = require("../db");
 const { Op } = require("sequelize");
 
 const getAllProducts = async () => {
   return await Product.findAll({
-    attributes: [
-      "id",
-      "name",
-      "sku",
-      "brand",
-      "keyWords",
-      "price",
-      "netWeight",
-      "description",
-      "thumbnail",
-      "image",
-      "productDimensions",
-      "packageDimensions",
-      "grossWeight",
-      "warranty",
-      "createdAt",
-      "updatedAt",
-    ],
     include: [
       {
         model: Discount,
@@ -35,7 +17,28 @@ const getAllProducts = async () => {
         through: {
           attributes: [],
         },
+        include: {
+          model: SubCategory,
+          attributes: ["id", "name", "description", "thumbnail"],
+          through: {
+            attributes: [],
+          },
+        },
       },
+      /* {
+        model: Specification,
+        attributes: ["id", "name"],
+        through: {
+          attributes: [],
+        },
+        include: {
+          model: ProductSpecification,
+          attributes: ["value"],
+          through: {
+            attributes: [],
+          },
+        },
+      }, */
     ], 
   });
 };
@@ -59,9 +62,15 @@ const getProductsByName = async (name) => {
       {
         model: Category,
         attributes: ["id", "name", "description", "thumbnail"],
-        where: {},
         through: {
           attributes: [],
+        },
+        include: {
+          model: SubCategory,
+          attributes: ["id", "name", "description", "thumbnail"],
+          through: {
+            attributes: [],
+          },
         },
       },
     ],
