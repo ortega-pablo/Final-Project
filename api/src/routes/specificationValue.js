@@ -1,3 +1,4 @@
+
 const {Router} = require("express");
 const router = Router();
 
@@ -11,20 +12,19 @@ router.post("/", async (req, res, next) => {
     try{
       if(productId){
 
-        const newSpecification = await Specification.create({
-            name,
+        const specificationValue = await ProductSpecification.create({
+            value
         });
 
-        const product = await Product.findOne({
+        const specValue = await Specification.findOne({
             where: {
-                id: productId,
+                id: specificationId
             }
-        });
+        })
+    
+        specificationValue.addSpecification(specValue)
 
-        
-        newSpecification.addProduct(productId);
-
-        res.status(200).send(newSpecification);
+        return res.status(200).send(specificationValue)
       }
 
     } catch(error){
