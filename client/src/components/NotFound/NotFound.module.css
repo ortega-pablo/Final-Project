@@ -1,0 +1,12 @@
+.fondo{
+    background-image: url("./404\ moneda.webp");
+    width: 100vw;
+    height: 100vh;
+   
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow-x:auto;
+    background-position:bottom;
+};
+
