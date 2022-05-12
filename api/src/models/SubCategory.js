@@ -5,14 +5,13 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     thumbnail: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
   });
 };

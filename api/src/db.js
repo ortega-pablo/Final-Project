@@ -47,7 +47,6 @@ const {
   Category,
   Discount,
   Order,
-  OrderItems,
   Payment,
   Product,
   ProductInventory,
@@ -62,8 +61,8 @@ const {
 Product.belongsToMany(Discount, { through: "discount_products"});
 Discount.belongsToMany(Product, { through: "discount_products"});
 
-Product.belongsToMany(Specification, { through: "productSpecification"});
-Specification.belongsToMany(Product, { through: "productSpecification"});
+Product.belongsToMany(Specification, { through: ProductSpecification});
+Specification.belongsToMany(Product, { through: ProductSpecification});
 
 Product.belongsToMany(Order, { through: "orderItems"});
 Order.belongsToMany(Product, { through: "orderItems"});

@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
     sku: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     brand: {
       type: DataTypes.STRING,
@@ -16,7 +17,6 @@ module.exports = (sequelize) => {
     },
     keyWords: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     price: {
       type: DataTypes.FLOAT,
@@ -32,11 +32,9 @@ module.exports = (sequelize) => {
     },
     thumbnail: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     productDimensions: {
       type: DataTypes.STRING,

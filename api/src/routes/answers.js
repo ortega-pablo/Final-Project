@@ -1,15 +1,15 @@
 const { Router } = require("express");
-const { Answer } = require("../db");
+const { Answer, Ask, User } = require("../db");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
   const { content } = req.body;
-  const { UserId, askId } = req.query;
+  const { userId, askId } = req.query;
 
   try {
     const user = await User.findOne({
       where: {
-        id: UserId,
+        id: userId,
       },
     });
     const ask = await Ask.findOne({
@@ -21,11 +21,10 @@ router.post("/", async (req, res, next) => {
       content,
     });
 
-    newAnswer.addUser(user);
-    newAnswer.addAsk(ask);
+    newAnswer.setUser(user);
+    newAnswer.setAsk(ask);
 
     res.status(200).send(newAnswer);
-    
   } catch (error) {
     next(error);
   }

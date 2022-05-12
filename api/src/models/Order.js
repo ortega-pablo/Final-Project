@@ -7,8 +7,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     state: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
 };
