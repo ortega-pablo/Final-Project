@@ -26,6 +26,7 @@ export const Footer = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
         bottom: 0,
         width: 1,
         textAlign: 'center',
