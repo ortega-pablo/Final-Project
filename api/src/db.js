@@ -47,7 +47,6 @@ const {
   Category,
   Discount,
   Order,
-  OrderItems,
   Payment,
   Product,
   ProductInventory,
