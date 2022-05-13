@@ -26,4 +26,29 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+
+
+router.get("/", async (req, res, next) => {
+
+  const {productId} = req.query
+
+  try{
+    if(productId) {
+
+      const findByQuantity = await Product.findAll()
+      const found = await findByQuantity?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
+
+      
+      found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
+
+    } else {
+      const getAll = await ProductInventory.findAll()
+      return res.status(200).send(getAll)
+    }
+  } catch(error){
+    res.send(error)
+  }
+  
+})
+
 module.exports = router;
