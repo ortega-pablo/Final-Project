@@ -15,7 +15,7 @@ function App() {
       <NavBar></NavBar>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/detail" element={<Detail/>}/>
+          <Route path="/detail/:id" element={<Detail/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/createaccount" element={<CreateAccount/>}/>
