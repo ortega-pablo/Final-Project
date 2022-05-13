@@ -34,6 +34,9 @@ router.post("/", async (req, res, next) => {
 });
 
 
+
+
+
 router.get("/", async (req, res) => {          
 
   const {userId, productId} = req.query
@@ -45,10 +48,18 @@ router.get("/", async (req, res) => {
         where: {
           id: userId
         },
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-        }]
+        include:[
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"]
+              }
+          ]
+          },
+        ]
       })
 
       let userArray = [];
@@ -75,7 +86,7 @@ router.get("/", async (req, res) => {
       
     //////////////////// PRODUCT STARTS HERE ///////////////////////// 
     } else if(productId){
-      console.log("aqui entro")
+      
       const getProduct = await Product.findOne({
         where: {
           id: productId
@@ -88,8 +99,7 @@ router.get("/", async (req, res) => {
 
         let productArray = [];
         productArray.push(getProduct)
-
-        console.log("aqui tambien")
+        
         const productSimplified = productArray?.map(e => {
           return {
             id: e.id,
@@ -98,7 +108,6 @@ router.get("/", async (req, res) => {
           }
         })
 
-        console.log(productSimplified)
       
         if(getProduct.asks.length === 0){
           return res.send("No questions found for this product")
