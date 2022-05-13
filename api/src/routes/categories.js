@@ -70,6 +70,8 @@ router.get("/", async (req, res, next) => {
           },
         },
       });
+
+      console.log(getAll)
       return res.status(200).send(getAll)
 
     }
@@ -77,5 +79,28 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+
+
+router.get("/subcategories", async (req, res) => {
+  
+  const {name} = req.query
+
+  try{
+    if(name) {
+
+      const findByName = await SubCategory.findAll()
+      const found = await findByName?.filter(e => e.name.toLowerCase().includes(name.toLowerCase()));
+
+      found.length ? res.status(200).json(found) : res.json("Subcategory not found, please try another search");
+
+    } else {
+      const getAll = await SubCategory.findAll()
+      return res.status(200).send(getAll)
+    }
+  } catch(error){
+    res.send(error)
+  }
+})
 
 module.exports = router;
