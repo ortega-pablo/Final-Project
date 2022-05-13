@@ -19,7 +19,7 @@ export const getProducts = () => {
 
 export const getDetail = (id) => {
     return async (dispatch) => {
-        let response = await axios("http://localhost:3001/productsDetail/" + id)
+        let response = await axios(`http://localhost:3001/productDetail/${id}`)
         return dispatch ({
             type: GET_DETAIL,
             payload: response.data
