@@ -24,9 +24,9 @@ router.post("/", async (req, res, next) => {
 });
 
 
-router.get("/", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
 
-  const {userId} = req.query;
+  const {userId} = req.params;
  
   
   try {
@@ -42,6 +42,7 @@ router.get("/", async (req, res, next) => {
 
     } else {
 
+      console.log("Por aqui paso")
       const getAllUsers = await User.findAll();
       return res.status(200).send(getAllUsers)
     }

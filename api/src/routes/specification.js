@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const { Specification } = require("../db");
+const { Specification, ProductSpecification } = require("../db");
 
 router.post("/", async (req, res, next) => {
   const { name } = req.body;
@@ -17,6 +17,28 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+///////////////////////////////////////////////GET ROUTES ///////////////////////////////////////////
+router.get("/:id", async (req, res, next) => {
+
+  const {id} = req.params
+
+
+    const getAllSpecs = await Specification.findOne({
+      where: {
+        id
+      },
+      include: [
+        {
+          model: ProductSpecification,
+          as:"value:",
+          attributes: ["value"],
+        }
+      ]
+    })
+
+    return res.status(200).send(getAllSpecs)
+  
+})
 
 
 module.exports = router;
