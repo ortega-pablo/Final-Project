@@ -9,6 +9,7 @@ const productDetailRoute = require("./productDetail")
 const productInventoryRoute = require("./productInventory")
 const allCategoriesRoute = require("./allCategories")
 const specificationsRoute = require("./specification")
+const imagesRoute = require("./images")
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -28,6 +29,7 @@ router.use("/productDetail", productDetailRoute)
 router.use("/inventory", productInventoryRoute)
 router.use("/allcategories", allCategoriesRoute)
 router.use("/specifications", specificationsRoute)
+router.use("/images", imagesRoute)
 
 
 module.exports = router;
