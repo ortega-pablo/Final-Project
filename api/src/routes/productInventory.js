@@ -1,32 +1,29 @@
-const {Router} = require("express");
+const { Router } = require("express");
 const router = Router();
 
-const {Product, ProductInventory} = require("../db")
-
+const { Product, ProductInventory } = require("../db");
 
 router.post("/", async (req, res, next) => {
+  const { quantity } = req.body;
+  const { productId } = req.query;
 
-    const {quantity} = req.body
-    const {productId} = req.query;
+  try {
+    const addQuantity = await ProductInventory.create({
+      quantity,
+    });
 
-    try{
-        const addQuantity = await ProductInventory.create({
-            quantity
-        });
+    const product = await Product.findOne({
+      where: {
+        id: productId,
+      },
+    });
 
-        const product = await Product.findOne({
-            where: {
-                id: productId,
-            }
-        });
+    addQuantity.setProduct(productId);
 
-        addQuantity.setProduct(productId);
-
-        res.status(200).send(addQuantity);
-
-    } catch(error){
-        next(error)
-    }
-})
+    res.status(200).send(addQuantity);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

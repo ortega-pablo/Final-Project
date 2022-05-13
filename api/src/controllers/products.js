@@ -52,15 +52,16 @@ const getProductsByName = async (name) => {
     },
     include: [
       {
-        model: ProductInventory,
-        attributes: ["quantity"],
+        model: Specification,
+        attributes: ["id", "name"],
+        through: {
+            as:"value:",
+            attributes: ["value"],
+        },
       },
       {
-        model: Discount,
-        attributes: ["id", "name", "description", "discountPercent", "active"],
-        through: {
-          attributes: [],
-        },
+        model: ProductInventory,
+        attributes: ["quantity"],
       },
       {
         model: Discount,
