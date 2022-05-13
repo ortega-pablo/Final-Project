@@ -3,7 +3,8 @@ const router = Router();
 const jwt = require("jsonwebtoken");
 const { User } = require("../db");
 const bcrypt = require("bcrypt");
-
+require("dotenv").config();
+const { KEY_WORD_JWT } = process.env;
 // Register User
 
 router.post("/create", async (req, res, next) => {
@@ -11,6 +12,7 @@ router.post("/create", async (req, res, next) => {
 
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
+    const userFound = User.findOne({ where: { email } });
     const newUser = await User.create({
       userName,
       email,
@@ -33,12 +35,25 @@ router.post("/login", async (req, res, next) => {
 
   try {
     const user = await User.findOne({ where: { userName } });
-    console.log(user);
+    //console.log(user);
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
-    console.log(passwordCorrect);
-    console.log("aqui: ", await bcrypt.compare(password, user.password));
-    res.status(200).send("nice");
+    if (!(user && passwordCorrect)) {
+      response.status(401).json({
+        error: "invalid user or password",
+      });
+    }
+    const userforToken = {
+      id: user.id,
+      username: user.username,
+    };
+
+    const token = jwt.sign(userforToken, KEY_WORD_JWT);
+    res.status(200).send({
+      firstName: user.firstName,
+      username: user.userName,
+      token,
+    });
   } catch (error) {
     next(error);
   }
