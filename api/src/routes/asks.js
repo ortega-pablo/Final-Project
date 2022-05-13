@@ -34,9 +34,6 @@ router.post("/", async (req, res, next) => {
 });
 
 
-
-
-
 router.get("/", async (req, res) => {          
 
   const {userId, productId} = req.query
@@ -117,7 +114,10 @@ router.get("/", async (req, res) => {
       }
     
     } else {
-      return res.send("Not found")
+      const getAllQuestions = await Ask.findAll();
+
+      return res.status(200).send(getAllQuestions)
+
     }
   } catch(error){
     res.send(error)

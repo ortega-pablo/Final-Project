@@ -35,6 +35,8 @@ router.post("/", async (req, res, next) => {
 
 
 
+
+
 router.get("/", async (req, res) => {          
 
   const {userId, productId, askId} = req.query
@@ -161,7 +163,9 @@ router.get("/", async (req, res) => {
 
      
     } else {
-      return res.send("Not found")
+      const getAllAnswers = await Answer.findAll();
+
+      return res.status(200).send(getAllAnswers)
     }
   } catch(error){
     res.send(error)
