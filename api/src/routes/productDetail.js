@@ -13,14 +13,6 @@ const productInfo = async function (id) {
         },
         include: [
         {
-            model: Specification,
-            attributes: ["id", "name"],
-            through: {
-                as:"value:",
-                attributes: ["value"],
-            },
-        },
-        {
             model: ProductInventory,
             attributes: ["quantity"],
         },
@@ -33,13 +25,25 @@ const productInfo = async function (id) {
         },
         {
             model: Category,
-            attributes: ["name", "description", "thumbnail"],
-            include: [
-                {
-                    model: SubCategory,
-                    attributes: ["name", "description", "thumbnail"]
-                }
-            ]
+            attributes: ["id", "name", "description", "thumbnail"],
+            through: {
+              attributes: [],
+            },
+            include: {
+              model: SubCategory,
+              attributes: ["id", "name", "description", "thumbnail"],
+              through: {
+                attributes: [],
+              },
+            },
+          },
+          {
+            model: Specification,
+            attributes: ["id", "name"],
+            through: {
+                as:"value:",
+                attributes: ["value"],
+            },
         },
         {
             model: Ask,
