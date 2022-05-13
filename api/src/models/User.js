@@ -8,28 +8,28 @@ module.exports = (sequelize) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     role: {
       type: DataTypes.ENUM,
       values:["customer","admin"],
-      allowNull: false,
+      allowNull: true,
     },
   });
 };

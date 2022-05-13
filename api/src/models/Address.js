@@ -7,8 +7,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     addressLine2: {
-        type: DataTypes.TEXT,
-      },
+      type: DataTypes.TEXT,
+    },
     postalCode: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -25,6 +25,5 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    
   });
 };
