@@ -1,9 +1,13 @@
-const { Product, Discount, Category, SubCategory, Specification, ProductSpecification } = require("../db");
+const { Product, Discount, Category, SubCategory, Specification, ProductSpecification, ProductInventory } = require("../db");
 const { Op } = require("sequelize");
 
 const getAllProducts = async () => {
   return await Product.findAll({
     include: [
+      {
+        model: ProductInventory,
+        attributes: ["quantity"],
+      },
       {
         model: Discount,
         attributes: ["id", "name", "description", "discountPercent", "active"],

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Answer, Ask, User } = require("../db");
+const { User, Ask, Answer } = require("../db");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
@@ -12,19 +12,22 @@ router.post("/", async (req, res, next) => {
         id: userId,
       },
     });
+
     const ask = await Ask.findOne({
       where: {
         id: askId,
       },
     });
+
     const newAnswer = await Answer.create({
       content,
     });
 
     newAnswer.setUser(user);
-    newAnswer.setAsk(ask);
+    newAnswer.setAsk(ask);     // changed to set becauase "add" doesnt work
 
     res.status(200).send(newAnswer);
+    
   } catch (error) {
     next(error);
   }
