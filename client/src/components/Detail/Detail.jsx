@@ -27,13 +27,9 @@ useEffect(()=>{
     //     dispatch(clearDetail())
     // })
 }, [dispatch])
-    
-
 
   return (
       <div>
-
-            
             <div>Detail</div>
             {
                 products.length &&
