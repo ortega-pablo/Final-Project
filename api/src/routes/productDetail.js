@@ -5,7 +5,7 @@ const { Product, Ask, Answer, Discount, Category, Specification, ProductInventor
 
 
 
-const productInfo = async function (id, categoryId) {
+const productInfo = async function (id) {
 
     const getProduct = await Product.findOne({
         where: {
@@ -14,7 +14,11 @@ const productInfo = async function (id, categoryId) {
         include: [
         {
             model: Specification,
-            attributes: ["name"]
+            attributes: ["id", "name"],
+            through: {
+                as:"value:",
+                attributes: ["value"],
+            },
         },
         {
             model: ProductInventory,

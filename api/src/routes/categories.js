@@ -8,7 +8,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     if (categoryName) {
-      const category = await Category.findOne({  //change to "findOne"
+      const category = await Category.findAll({
         where: {
           name: categoryName,
         },
@@ -22,18 +22,15 @@ router.post("/", async (req, res, next) => {
       newSubCategory.addCategory(category);
 
       return res.status(200).send(newSubCategory);
-      
-    } else {
-      const newCategory = await Category.create({
-        name,
-        description,
-        thumbnail,
-      });
-
-      res.status(200).send(newCategory);
     }
 
-    
+    const newCategory = await Category.create({
+      name,
+      description,
+      thumbnail,
+    });
+
+    res.status(200).send(newCategory);
   } catch (error) {
     next(error);
   }
