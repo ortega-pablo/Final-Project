@@ -23,4 +23,31 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+
+router.get("/:userId", async (req, res, next) => {
+
+  const {userId} = req.params;
+  
+  try {
+    if(userId){
+      const getUser = await User.findOne({
+        where: {
+          id: userId
+        }
+      })
+
+      return res.status(200).send(getUser)
+
+    } else {
+      
+      const getAllUsers = await User.findAll();
+
+      return res.status(200).send(getAllUsers)
+    }
+
+  } catch(error) {
+    next(error)
+  }
+})
+
 module.exports = router;
