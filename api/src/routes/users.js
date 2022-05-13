@@ -24,31 +24,49 @@ router.post("/", async (req, res, next) => {
 });
 
 
-router.get("/:userId", async (req, res, next) => {
 
-  const {userId} = req.params;
- 
+router.get("/", async (req, res, next) => {
+
+  const {firstName} = req.query
+
+  try{
+    if(firstName) {
+
+      const findByName = await User.findAll()
+      const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
+
+      
+      found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
+
+    } else {
+      const findByName = await User.findAll()
+      return res.status(200).send(findByName)
+    }
+  } catch(error){
+    res.send(error)
+  }
   
-  try {
-    if(userId){
+})
 
-      const getUser = await User.findOne({
+router.get("/:userId", async (req, res) => {
+
+  const {userId} = req.params
+
+  try {
+    if(userId) {
+      const findById = await User.findOne({
         where: {
           id: userId
         }
       })
-
-      return res.status(200).send(getUser)
-
-    } else {
-
-      console.log("Por aqui paso")
-      const getAllUsers = await User.findAll();
-      return res.status(200).send(getAllUsers)
+  
+      return res.send(findById)
+  
+    } else{
+      return res.status(404).send("User not found")
     }
-
-  } catch(error) {
-    next(error)
+  } catch(error){
+    res.send(error)
   }
 })
 
