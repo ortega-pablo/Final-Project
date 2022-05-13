@@ -24,12 +24,14 @@ router.post("/", async (req, res, next) => {
 });
 
 
-router.get("/:userId", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
 
-  const {userId} = req.params;
+  const {userId} = req.query;
+ 
   
   try {
     if(userId){
+
       const getUser = await User.findOne({
         where: {
           id: userId
@@ -39,9 +41,8 @@ router.get("/:userId", async (req, res, next) => {
       return res.status(200).send(getUser)
 
     } else {
-      
-      const getAllUsers = await User.findAll();
 
+      const getAllUsers = await User.findAll();
       return res.status(200).send(getAllUsers)
     }
 
