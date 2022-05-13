@@ -36,4 +36,46 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+
+
+router.get("/", async (req, res, next) => {
+
+  const {name} = req.query
+  try {
+    if(name){
+      const getCategories = await Category.findAll({
+        include: {
+          model: SubCategory,
+          attributes: ["name", "description", "thumbnail"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+      
+      const found = await getCategories?.filter(e => e.name.toLowerCase().includes(name.toLowerCase()));
+
+      found.length ? res.status(200).json(found) : res.json("Category not found, please try another search");
+
+      res.status(200).send(getCategories);
+
+    } else{
+
+      const getAll = await Category.findAll({
+        include: {
+          model: SubCategory,
+          attributes: ["name", "description", "thumbnail"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+      return res.status(200).send(getAll)
+
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
