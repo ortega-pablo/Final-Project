@@ -33,7 +33,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Link } from '@mui/material';
 
-export default function MultiActionAreaCard({name, price,brand, thumbnail}) {
+export default function MultiActionAreaCard({name, price,brand, thumbnail,sku, id}) {
   return (
 
 
@@ -41,7 +41,7 @@ export default function MultiActionAreaCard({name, price,brand, thumbnail}) {
 
       <CardActionArea>
 
-      <Link href="/detail" underline="none">
+      <Link href={"/detail/" + id}  underline="none">
        
         <CardMedia
           component="img"
@@ -57,6 +57,7 @@ export default function MultiActionAreaCard({name, price,brand, thumbnail}) {
           </Typography>
           <h3>$ {price}</h3>
           <h3>{brand}</h3>
+          <h3>{sku}</h3>
           <Typography variant="body2" color="text.secondary">
             Con esta minadora te vas a hacer millonario!
           </Typography>

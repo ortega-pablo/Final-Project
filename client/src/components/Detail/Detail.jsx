@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {useParams ,useNavigate  } from "react-router-dom"
-import { getProducts } from '../../redux/actions';
+import { getProducts, getDetail } from '../../redux/actions';
 import CarouselDetail from "./CarouselDetail"
 import TableDetail from './TableDetail';
 import QuestionsAndAnswers from "./QuestionsAndAnswers"
@@ -15,14 +15,14 @@ import QuestionsAndAnswers from "./QuestionsAndAnswers"
 export const Detail = () => {
 const dispatch = useDispatch();
 //deberia ser un state.detail
-const products = useSelector( state=> state.products)
+const product = useSelector( state=> state.productDetail)
 
-// let id = useParams()
+ let id = useParams()
 
 
 useEffect(()=>{
     //tendria que ser un getDitail(id) desde las action
-    dispatch(getProducts()) 
+    dispatch(getDetail(id)) 
     // return (()=>{
     //     dispatch(clearDetail())
     // })
@@ -32,22 +32,22 @@ useEffect(()=>{
       <div>
             <div>Detail</div>
             {
-                products.length &&
+                product &&
                     <CarouselDetail
-                        products={products}/>
+                        product={product}/>
             }
             {   
-                products.length &&
-                    products[0].id ?
+                product &&
+                    product.id ?
                         <div>
                             hola
                         </div> 
                 : <div>Cargando...</div>
             }
             {
-                products.length &&
+                product  &&
                     <TableDetail
-                        products={products}/>
+                        product={product}/>
             }
             <h3>Preguntas y respuestas</h3>
             <QuestionsAndAnswers/>
