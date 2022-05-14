@@ -1,15 +1,15 @@
-import { Grid, SwipeableDrawer } from "@mui/material";
+import { Button, CircularProgress, Grid, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/actions";
-import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
 import MultiActionAreaCard from "./Card/Card";
 import { Container } from "@mui/material";
-import { CssBaseline } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +42,7 @@ export const Home = () => {
 
   return (
     <div>
+
       <Container
         maxWidth="vp"
         sx={{
@@ -49,7 +50,7 @@ export const Home = () => {
           flexDirection: "column",
           margin: 0,
           width: "100%",
-          alignItems: "stretch",
+          justifyContent: "space-between",
         }}
       >
         <SwipeableTextMobileStepper
@@ -58,37 +59,48 @@ export const Home = () => {
             width: "100%",
           }}
         />
+        <Button color="primary" variant="contained">
+          hola
+        </Button>
+        <Container
+        maxWidth="vp"
+            sx={{
+              display: "flex",
+              width: "100%",
+              backgroundColor: "#000000",
+            }}
+          >
+            <p> Aca van tus filtros samu chupapija </p>
+          </Container>
         <Container
           maxWidth="vp"
           sx={{
             display: "flex",
             flexDirection: "row",
             width: "100%",
+            padding: 0,
           }}
         >
-          <Container
-            sx={{
-              width: "15%",
-            }}
-          >
-            <p> Aca van tus filtros samu chupapija </p>
-          </Container>
+          
           <Grid
             container
-            spacing={12}
             sx={{
               display: "flex",
               ml: "auto",
               mr: "auto",
-              mt: 1,
+              mt: "10px",
               width: "85%",
               justifyContent: "center",
             }}
           >
-            {products &&
+            {products.length>0 ?
               actualPage.map((prod, index) => {
                 return (
-                  <Grid item l>
+                  <Grid sx={{
+                    m: "10px"
+                  }}>
+                    <Link href={"/detail/" + prod.id} underline="none">
+        
                     <Paper className={classes.paper}>
                       <MultiActionAreaCard
                         key={index}
@@ -96,14 +108,24 @@ export const Home = () => {
                         brand={prod.brand}
                         thumbnail={prod.thumbnail}
                         price={prod.price}
-                        sku={prod.sku}
                         id={prod.id}
+                        description={prod.description}
                       />
                     </Paper>
+                    </Link>
                   </Grid>
                 );
-              })}
-              <Container maxWidth="vp" sx={{width:'100%'}}>
+              }):
+              <CircularProgress sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+              />
+            }
+          </Grid>
+        </Container>
+
+          <Container maxWidth="vp" sx={{width:'100%'}}>
                 <Paginationxd
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
@@ -112,10 +134,7 @@ export const Home = () => {
                   setProductsPerPage={setProductsPerPage}
                 />
               </Container>
-          </Grid>
-        </Container>
-
-
+            
       </Container>
     </div>
   );

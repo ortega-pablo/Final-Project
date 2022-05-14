@@ -39,35 +39,44 @@ export default function MultiActionAreaCard({
   thumbnail,
   sku,
   id,
+  description,
 }) {
   return (
     <Card sx={{ width: 200, hover: "true" }}>
-      <CardActionArea>
-        <Link href={"/detail/" + id} underline="none">
+      <CardActionArea sx={[
+    {
+      '&:hover': {
+        transform: "scale(1.05)",
+        boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.6)",
+        transitionDuration: "1s",
+        background: "rgba(138, 151, 165, 0.21)",
+      },
+    }
+  ]}>
           <CardMedia
             component="img"
             height="140"
             image={thumbnail}
             alt="green iguana"
           />
-        </Link>
+        
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {name}
           </Typography>
-          <h3>$ {price}</h3>
-          <h3>{brand}</h3>
-          <h3>{sku}</h3>
+          <h3>Precio: $({price})</h3>
+          <h3>Marca: {brand}</h3>
           <Typography variant="body2" color="text.secondary">
-            Con esta minadora te vas a hacer millonario!
+          <h5>{description}</h5>
           </Typography>
         </CardContent>
+        
       </CardActionArea>
-      <CardActions>
+ {/*      <CardActions>
         <Button size="small" color="primary">
           Comparar
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
