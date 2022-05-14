@@ -6,19 +6,11 @@ import CarouselDetail from "./CarouselDetail"
 import TableDetail from './TableDetail';
 import QuestionsAndAnswers from "./QuestionsAndAnswers"
 
-
-
-
-
-
-
 export const Detail = () => {
 const dispatch = useDispatch();
 //deberia ser un state.detail
-const product = useSelector( state=> state.productDetail)
-
- let id = useParams()
-
+const productDetail = useSelector( state=> state.productDetail)
+ let { id } = useParams()
 
 useEffect(()=>{
     //tendria que ser un getDitail(id) desde las action
@@ -29,28 +21,19 @@ useEffect(()=>{
 }, [dispatch])
 
   return (
-      <div>
-            <div>Detail</div>
-            {
-                product &&
-                    <CarouselDetail
-                        product={product}/>
-            }
-            {   
-                product &&
-                    product.id ?
-                        <div>
-                            hola
-                        </div> 
-                : <div>Cargando...</div>
-            }
-            {
-                product  &&
-                    <TableDetail
-                        product={product}/>
-            }
-            <h3>Preguntas y respuestas</h3>
-            <QuestionsAndAnswers/>
-      </div>
+      <>
+          {productDetail.length > 0 ?(
+          <div> 
+
+                <CarouselDetail
+                    productDetail={productDetail}/>
+                <TableDetail
+                    productDetail={productDetail}/>
+                <h3>Preguntas y respuestas</h3>
+                <QuestionsAndAnswers/>
+          </div>
+          ) : (<div> Cagando ...</div>)
+          } 
+      </>
   )
 }
