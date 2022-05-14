@@ -1,7 +1,7 @@
 import { Grid, SwipeableDrawer } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/actions";
+import { getProducts, filterPerCategory, filterPerSubCategory } from "../redux/actions";
 import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
@@ -10,6 +10,8 @@ import { Container } from "@mui/material";
 import { CssBaseline } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import { Box } from "@mui/system";
+import Category  from "./Category/Category";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,11 +26,17 @@ const useStyles = makeStyles((theme) => ({
 
 export const Home = () => {
   const dispatch = useDispatch();
+
   const products = useSelector((state) => state.products);
+
+  const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
+
+  //reRenderizador 
+  const [reRender, setReRender] = useState('');
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +47,18 @@ export const Home = () => {
   const actualPage = products.slice(firstProduct, lastProduct);
 
   const classes = useStyles();
+
+  const handleClickForCategories = (category) => {
+    dispatch(filterPerCategory(category));
+    setReRender(`Ultimo ordenamiento ${category}`);
+    setCurrentPage(1);
+  }
+
+  const handleClickForSubcategories = (subCategory) => {
+    dispatch(filterPerSubCategory(subCategory));
+    setReRender(`Ultimo ordenamiento ${subCategory}`);
+    setCurrentPage(1);
+  }
 
   return (
     <div>
@@ -71,7 +91,7 @@ export const Home = () => {
               width: "15%",
             }}
           >
-            <p> Aca van tus filtros samu chupapija </p>
+            <Category handleClickForCategories = {handleClickForCategories} handleClickForSubcategories= {handleClickForSubcategories}></Category>
           </Container>
           <Grid
             container
