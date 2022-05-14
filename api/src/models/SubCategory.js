@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("discount", {
+  sequelize.define("subCategory", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -9,15 +9,9 @@ module.exports = (sequelize) => {
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
-    discountPercent: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    active: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
+    thumbnail: {
+      type: DataTypes.STRING,
     },
   });
 };

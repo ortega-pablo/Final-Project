@@ -1,16 +1,17 @@
 import { Grid, SwipeableDrawer } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, getCategories } from "../redux/actions";
+import { getProducts, filterPerCategory, filterPerSubCategory } from "../redux/actions";
 import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
 import MultiActionAreaCard from "./Card/Card";
-
+import { Container } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { Box } from "@mui/system";
-import { Category } from "./Category/Category";
+import Category  from "./Category/Category";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,8 +33,10 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getCategories())
   }, [dispatch]);
+
+  //reRenderizador 
+  const [reRender, setReRender] = useState('');
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,38 +48,95 @@ export const Home = () => {
 
   const classes = useStyles();
 
+  const handleClickForCategories = (category) => {
+    dispatch(filterPerCategory(category));
+    setReRender(`Ultimo ordenamiento ${category}`);
+    setCurrentPage(1);
+  }
+
+  const handleClickForSubcategories = (subCategory) => {
+    dispatch(filterPerSubCategory(subCategory));
+    setReRender(`Ultimo ordenamiento ${subCategory}`);
+    setCurrentPage(1);
+  }
+
   return (
     <div>
-      <h1>Soy el Home</h1>
-      <SwipeableTextMobileStepper  />
-      <Box sx= {{width: '100%', display: 'flex'}}>
-        <Category categories= {categories}></Category>
-        <Grid container spacing={12} sx={{ml:"auto", mr:"auto", mt:1}}>
-        {products &&
-          actualPage.map((prod, index) => {
-            return (
-                <Grid item l>
-                  <Paper className={classes.paper}>
-                    <MultiActionAreaCard
-                      key={index}
-                      name={prod.name}
-                      brand={prod.brand}
-                      thumbnail={prod.thumbnail}
-                      price={prod.price}
-                    />
-                  </Paper>
-                </Grid>
-            
-            );
-          })}
+      <Container
+        maxWidth="vp"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          margin: 0,
+          width: "100%",
+          alignItems: "stretch",
+        }}
+      >
+        <SwipeableTextMobileStepper
+          sx={{
+            display: "flex",
+            width: "100%",
+          }}
+        />
+        <Container
+          maxWidth="vp"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+          }}
+        >
+          <Container
+            sx={{
+              width: "15%",
+            }}
+          >
+            <Category handleClickForCategories = {handleClickForCategories} handleClickForSubcategories= {handleClickForSubcategories}></Category>
+          </Container>
+          <Grid
+            container
+            spacing={12}
+            sx={{
+              display: "flex",
+              ml: "auto",
+              mr: "auto",
+              mt: 1,
+              width: "85%",
+              justifyContent: "center",
+            }}
+          >
+            {products &&
+              actualPage.map((prod, index) => {
+                return (
+                  <Grid item l>
+                    <Paper className={classes.paper}>
+                      <MultiActionAreaCard
+                        key={index}
+                        name={prod.name}
+                        brand={prod.brand}
+                        thumbnail={prod.thumbnail}
+                        price={prod.price}
+                        sku={prod.sku}
+                        id={prod.id}
+                      />
+                    </Paper>
+                  </Grid>
+                );
+              })}
+              <Container maxWidth="vp" sx={{width:'100%'}}>
+                <Paginationxd
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  productsPerPage={productsPerPage}
+                  products={products.length}
+                  setProductsPerPage={setProductsPerPage}
+                />
+              </Container>
           </Grid>
-      </Box>
-      <Paginationxd
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        productsPerPage={productsPerPage}
-        products={products.length}
-      />
+        </Container>
+
+
+      </Container>
     </div>
   );
 };

@@ -197,7 +197,6 @@ export const NavBar = (props) => {
        <HideOnScroll {...props}>
        <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", } }  >
         <Toolbar>
-
           <Typography
             variant="h6"
             noWrap

@@ -10,21 +10,30 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Collapse } from '@material-ui/core';
 import { ListItemIcon, ListSubheader } from '@mui/material';
 import StarBorder from '@mui/icons-material/StarBorder';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getCategories } from '../../redux/actions';
+import { withWidth } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
 
 
 
-export function Category({categories}) {
+function Category({handleClickForCategories, handleClickForSubcategories}) {
 
-  const [open, setOpen] = React.useState(false);
+  const categories = useSelector(state => state.categories);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(getCategories());
+  }, [dispatch])
 
   return (
-    <Box>
+    <Hidden xsDown>
+      <Box>
 
-        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
@@ -33,9 +42,11 @@ export function Category({categories}) {
             </ListSubheader>
           }
         >
-        {categories.length ?  categories.map((category) => { return <>
+        {categories.length ?  categories.map((category) => {
+          return <>
           <ListItemButton
             key={category}
+            onClick={() => handleClickForCategories(category.name)}
             disableGutters
             secondaryAction={
                 <IconButton aria-label="comment">
@@ -45,22 +56,44 @@ export function Category({categories}) {
             >
             <ListItemText primary={category.name}  />
             </ListItemButton>
+              {category.subCategories ? category.subCategories.map(subCategory => {
+                return <>
             <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Starred" />
-                </ListItemButton>
+                      <ListItemButton 
+                      key={subCategory} 
+                      sx={{ pl: 3 }}
+                      onClick={() => handleClickForSubcategories(subCategory.name)}
+                      >
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary={subCategory.name}/>
+                      </ListItemButton>
               </List>
+                </>
+              }) : <></>}
         </>}) : 
         <></>
         }
 
         </List>
-    </Box>
+        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Precio
+            </ListSubheader>
+          }>
+
+        </List>
+        </Box>
+    </Hidden>
+    
   );
 }
+
+export default withWidth()(Category);
 //  <Collapse in={open} timeout="auto" unmountOnExit>
 //           <List component="div" disablePadding>
 //             {categories.subCategories.length ? categories.subCategories.map(subCategory => {
