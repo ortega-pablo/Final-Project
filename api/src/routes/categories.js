@@ -89,13 +89,33 @@ router.get("/subcategories", async (req, res) => {
   try{
     if(name) {
 
-      const findByName = await SubCategory.findAll()
+      const findByName = await SubCategory.findAll({
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            through: {
+              attributes: []
+            }
+          }
+        ]
+      })
       const found = await findByName?.filter(e => e.name.toLowerCase().includes(name.toLowerCase()));
 
       found.length ? res.status(200).json(found) : res.json("Subcategory not found, please try another search");
 
     } else {
-      const getAll = await SubCategory.findAll()
+      const getAll = await SubCategory.findAll({
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            through: {
+              attributes: []
+            }
+          }
+        ]
+      })
       return res.status(200).send(getAll)
     }
   } catch(error){

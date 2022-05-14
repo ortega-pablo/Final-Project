@@ -53,6 +53,10 @@ router.get("/", async (req, res) => {
               {
                 model: Answer,
                 attributes: ["content"]
+              },
+              {
+                model: Product,
+                attributes: ["id", "name"]
               }
           ]
           },
@@ -61,6 +65,8 @@ router.get("/", async (req, res) => {
 
       let userArray = [];
       userArray.push(getUser)
+
+      console.log(userArray)
 
       const userSimplified = userArray?.map(e => {
         return {
@@ -77,7 +83,7 @@ router.get("/", async (req, res) => {
         return res.send("No questions found for this user")
 
       } else {
-        return res.status(200).send(userSimplified)
+        return res.status(200).send(userArray)
       }
 
       
@@ -112,8 +118,9 @@ router.get("/", async (req, res) => {
       } else {
         return res.status(200).send(productSimplified)
       }
-    
-    } else {
+
+    }
+     else {
       const getAllQuestions = await Ask.findAll();
 
       return res.status(200).send(getAllQuestions)
