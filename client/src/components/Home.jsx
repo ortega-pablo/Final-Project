@@ -6,7 +6,8 @@ import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
 import MultiActionAreaCard from "./Card/Card";
-
+import { Container } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
@@ -41,37 +42,81 @@ export const Home = () => {
 
   return (
     <div>
-      <h1>Soy el Home</h1>
-      <SwipeableTextMobileStepper  />
-      <Grid container spacing={12} sx={{ml:"auto", mr:"auto", mt:1}}>
-      {products &&
-        actualPage.map((prod, index) => {
-          return (
-            
-              <Grid item l>
-                <Paper className={classes.paper}>
-                  <MultiActionAreaCard
-                    key={index}
-                    name={prod.name}
-                    brand={prod.brand}
-                    thumbnail={prod.thumbnail}
-                    price={prod.price}
-                    sku={prod.sku}
-                    id={prod.id}
-                  />
-                </Paper>
-              </Grid>
-           
-          );
-        })}
-         </Grid>
-      <Paginationxd
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        productsPerPage={productsPerPage}
-        products={products.length}
-        setProductsPerPage={setProductsPerPage}
-      />
+      <Container
+        maxWidth="vp"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          margin: 0,
+          width: "100%",
+          alignItems: "stretch",
+        }}
+      >
+        <SwipeableTextMobileStepper
+          sx={{
+            display: "flex",
+            width: "100%",
+          }}
+        />
+        <Container
+          maxWidth="vp"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+          }}
+        >
+          <Container
+            sx={{
+              width: "15%",
+            }}
+          >
+            <p> Aca van tus filtros samu chupapija </p>
+          </Container>
+          <Grid
+            container
+            spacing={12}
+            sx={{
+              display: "flex",
+              ml: "auto",
+              mr: "auto",
+              mt: 1,
+              width: "85%",
+              justifyContent: "center",
+            }}
+          >
+            {products &&
+              actualPage.map((prod, index) => {
+                return (
+                  <Grid item l>
+                    <Paper className={classes.paper}>
+                      <MultiActionAreaCard
+                        key={index}
+                        name={prod.name}
+                        brand={prod.brand}
+                        thumbnail={prod.thumbnail}
+                        price={prod.price}
+                        sku={prod.sku}
+                        id={prod.id}
+                      />
+                    </Paper>
+                  </Grid>
+                );
+              })}
+              <Container maxWidth="vp" sx={{width:'100%'}}>
+                <Paginationxd
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  productsPerPage={productsPerPage}
+                  products={products.length}
+                  setProductsPerPage={setProductsPerPage}
+                />
+              </Container>
+          </Grid>
+        </Container>
+
+
+      </Container>
     </div>
   );
 };
