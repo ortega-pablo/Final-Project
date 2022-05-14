@@ -6,12 +6,6 @@ import CarouselDetail from "./CarouselDetail"
 import TableDetail from './TableDetail';
 import QuestionsAndAnswers from "./QuestionsAndAnswers"
 
-
-
-
-
-
-
 export const Detail = () => {
 const dispatch = useDispatch();
 //deberia ser un state.detail
@@ -30,9 +24,7 @@ useEffect(()=>{
       <>
           {productDetail.length > 0 ?(
           <div> 
-                {productDetail[0].name}
-    
-                <div>Detail</div>
+
                 <CarouselDetail
                     productDetail={productDetail}/>
                 <TableDetail
