@@ -56,6 +56,8 @@ export const Home = () => {
                     brand={prod.brand}
                     thumbnail={prod.thumbnail}
                     price={prod.price}
+                    sku={prod.sku}
+                    id={prod.id}
                   />
                 </Paper>
               </Grid>
