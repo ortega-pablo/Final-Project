@@ -59,7 +59,7 @@ export const getDetail = (id) => {
 
 export const getCategories = () => {
     return async (dispatch) => {
-        let response = await axios("http://localhost:3001/allcategories");
+        let response = await axios("http://localhost:3001/categories");
         return dispatch({
             type: GET_CATEGORIES,
             payload: response.data
