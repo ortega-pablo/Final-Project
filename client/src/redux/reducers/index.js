@@ -1,10 +1,12 @@
-import { GET_PRODUCTS, GET_DETAIL } from "../actions";
+import { GET_PRODUCTS, GET_DETAIL, GET_CATEGORIES, FILTER_PER_CATEGORY } from "../actions";
 
 
 const initialState = {
     products: [],
     productsAux: [],
-    productDetail: {}
+    productDetail: {},
+    categories: [],
+    categoriesAux:[]
 }
 
 const rootReducer = (state = initialState, action ) => {
@@ -21,6 +23,25 @@ const rootReducer = (state = initialState, action ) => {
                 ...state,
                 productDetail: action.payload
             }
+        case GET_CATEGORIES:{
+            
+            return {
+                ...state,
+                categories: action.payload,
+           }
+        }
+        case FILTER_PER_CATEGORY:{
+            const allProducts = state.productsAux;
+            let filterProducts = [];
+            allProducts.forEach((p) => {
+                let filterCat = p.categories.filter(c => c.name === action.payload);
+                if (filterCat.length) filterProducts.push(p);
+            })
+            return {
+                ...state,
+                products: filterProducts
+            }
+        }
         
 
             
