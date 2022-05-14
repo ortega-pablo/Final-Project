@@ -36,39 +36,6 @@ router.post("/", async (req, res, next) => {
 });
 
 
-// router.get("/", async (req, res, next) => {
-
-//   const {userId, productId} = req.query
-
-//   try{
-
-//     if(userId && productId){
-  
-//       const getBoth = await Ask.findAll({
-//         where: {
-//           productId,
-//           userId
-//         }
-//       })
-      
-//      if(!getBoth.length){
-//       return res.send("User does not have any questions for this product")
-      
-//      }
-//      else{
-//       return res.send(getBoth)  
-//      }
-
-//     } else{
-//       return res.send("User does not have any questions for this product")
-//     }
-     
-//   } catch(error){
-//     next(error)
-//   }
-// })
-
-
 router.get("/", async (req, res, next) => {          
 
   const {userId, productId} = req.query
@@ -106,7 +73,12 @@ router.get("/", async (req, res, next) => {
           userName: e.userName,
           firstName: e.firstName,
           lastName: e.lastName,
-          questions: e.asks?.map(v => v.content)
+          asks: e.asks?.map(v => {
+            return {
+              question: v.content && v.content,
+              product: v.answer && v.product
+            }
+          })
         }
       })
 
@@ -127,11 +99,17 @@ router.get("/", async (req, res, next) => {
         let productArray = [];
         productArray.push(getOneProduct)
 
+
         const productSimplified = productArray?.map(e => {
           return {
             id: e.id,
             name: e.name,
-            questions: e.asks?.map(v => v.content)
+            asks: e.asks?.map(v => {
+              return {
+                question: v?.content,
+                answer: v.answer && v.answer.content
+              }
+            }),
           }
         })
 

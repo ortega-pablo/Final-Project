@@ -31,10 +31,18 @@ const getUser = async function(userId){
         where: {
           id: productId
         }, 
-        include: [{
-          model: Ask,
-          attributes: ["content"],
-        }]
+        include:[
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"]
+              },
+            ]
+          }
+        ]
       })
   }
 
