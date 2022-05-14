@@ -24,8 +24,8 @@ const validate = (input) => {
     }
 
     if(input.password) {
-      if(!/(?=.*[0-9])/.test(input.password)){
-        errors.password = 'Contraseña invalida'
+      if(input.password.length > 18){
+        errors.password = 'La contraseña no puede contener mas de 18 caracteres'
       }
     } else {
       errors.password = 'Campo requerido'
@@ -78,17 +78,7 @@ export const Login = () => {
             LOGIN
           </Typography>
           <Box component="form" onSubmit={handleSubmit} onChange={handleSetInput} noValidate sx={{ mt: 1 }}>
-            { errors.email? (<TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />) :
+
               <TextField
               margin="normal"
               required
@@ -97,8 +87,10 @@ export const Login = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              error={errors.email}
+              helperText={errors.email}
               autoFocus
-            />}
+            />
             <TextField
               margin="normal"
               required
@@ -108,6 +100,7 @@ export const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={errors.password}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
