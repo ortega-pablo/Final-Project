@@ -32,36 +32,14 @@ router.get("/", async (req, res, next) => {
   try{
     if(firstName) {
 
-      const findByName = await User.findAll({
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-          include: [
-              {
-                  model: Answer,
-                  attributes: ["content"]
-              }
-          ]
-      }]
-      })
+      const findByName = await User.findAll()
       const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
 
-      
       found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
 
     } else {
-      const getAll = await User.findAll({
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-          include: [
-              {
-                  model: Answer,
-                  attributes: ["content"]
-              }
-          ]
-      }]
-      })
+      const getAll = await User.findAll()
+
       return res.status(200).send(getAll)
     }
   } catch(error){
@@ -79,21 +57,13 @@ router.get("/:userId", async (req, res) => {
       const findById = await User.findOne({
         where: {
           id: userId
-        },
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-          include: [
-              {
-                  model: Answer,
-                  attributes: ["content"]
-              }
-          ]
-        }]
+        }
       })
 
-      console.log(findById)
-      return res.send(findById)
+      let temp = []
+      temp.push(findById)
+    
+      return res.send(temp)
   
     } else{
       return res.status(404).send("User not found")

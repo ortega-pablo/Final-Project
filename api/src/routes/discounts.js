@@ -65,6 +65,37 @@ router.get("/", async (req, res, next) => {
   
 })
 
+router.get("/:discountId", async (req, res) => {
+
+  const {discountId} = req.params
+
+  try {
+    if(discountId) {
+      const findById = await Discount.findOne({
+        where: {
+          id: discountId
+        },
+        include: [
+          {
+            model: Product,
+            attributes: ["id", "name", "price"],
+            through: {
+              attributes: []
+            }
+          }
+        ]
+      })
+
+      return res.send(findById)
+
+    } else{
+      return res.status(404).send("Discount not found")
+    }
+  } catch(error){
+    res.send(error)
+  }
+})
+
 
 
 module.exports = router;

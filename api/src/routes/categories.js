@@ -100,6 +100,7 @@ router.get("/subcategories", async (req, res) => {
           }
         ]
       })
+      
       const found = await findByName?.filter(e => e.name.toLowerCase().includes(name.toLowerCase()));
 
       found.length ? res.status(200).json(found) : res.json("Subcategory not found, please try another search");
