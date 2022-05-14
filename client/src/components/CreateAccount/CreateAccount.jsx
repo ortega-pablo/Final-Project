@@ -28,8 +28,8 @@ const validate = (input) => {
   }
   //password validations /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
   if (input.password) {
-    if(input.password.match(/^([^ ]){8,15}$/)){
-      //hay que arreglar 
+    if (input.password.match(/^([^ ]){8,15}$/)) {
+      //hay que arreglar
     }
   } else {
     errors.password = "Field required";
@@ -40,8 +40,8 @@ const validate = (input) => {
       errors.firstName = "This field can only contains letters";
     } else if (input.firstName.lenght > 20) {
       errors.firstName = "This field cannot contain more than 20 characters";
-    } 
-  }else {
+    }
+  } else {
     errors.firstName = "Field required";
   }
   //lastName validations
@@ -55,17 +55,16 @@ const validate = (input) => {
     errors.lastName = "Field required";
   }
 
-  //phone validations 
+  //phone validations
   // no anda
   if (input.phone) {
     if (input.phone.toString().lenght > 20) {
       errors.phone = "Phone numbers do not contain more than 20 characters";
-    } 
-  }else {
+    }
+  } else {
     errors.phone = "Field required";
   }
 
-  
   return errors;
 };
 
@@ -93,8 +92,6 @@ export const CreateAccount = () => {
       })
     );
   };
-  console.log("errors ====> ", errors);
-  console.log("input ====> ", input);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -122,139 +119,68 @@ export const CreateAccount = () => {
           noValidate
           sx={{ mt: 1 }}
         >
-          {errors.email ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-          ) : (
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-          )}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            error={errors.email}
+            helperText={errors.email}
+            autoFocus
+          />
 
-          {errors.userName ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="userName"
-              label="Username"
-              name="userName"
-              autoComplete="userName"
-            />
-          ) : (
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="userName"
-              label="Username"
-              name="userName"
-              autoComplete="userName"
-            />
-          )}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="userName"
+            label="Username"
+            name="userName"
+            autoComplete="userName"
+            error={errors.userName}
+            helperText={errors.userName}
+          />
 
-          {errors.password ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              name="password"
-              autoComplete="password"
-            />
-          ) : (
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              name="password"
-              autoComplete="password"
-            />
-          )}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Password"
+            name="password"
+            autoComplete="password"
+            error={errors.password}
+            helperText={errors.password}
+          />
 
-         
-          {errors.firstName ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="firstName"
-              label="First Name"
-              name="firstName"
-              autoComplete="firstName"
-            />
-          ) : (
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="firstName"
-              label="First Name"
-              name="firstName"
-              autoComplete="firstName"
-            />
-          )}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            autoComplete="firstName"
+            error={errors.firstName}
+            helperText={errors.firstName}
+          />
 
-          {errors.lastName ? 
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lastName"
-              
-            />
-           : 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lastName"
-            />
-          }
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="lastName"
+            error={errors.lastName}
+            helperText={errors.lastName}
+          />
 
-          {errors.phone ? 
-            <TextField
-              type="number"
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="phone"
-              label="Phone"
-              name="phone"
-              autoComplete="phone"
-            />
-           :
-            <TextField
+          <TextField
             margin="normal"
             type="number"
             required
@@ -263,9 +189,11 @@ export const CreateAccount = () => {
             label="Phone Number"
             name="phone"
             autoComplete="phone"
-          />}
+            error={errors.phone}
+            helperText={errors.phone}
+          />
 
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="aceptTerms" color="primary" />}
             label="Acepto los terminos y condiciones"
             id="aceptTerms"
@@ -273,7 +201,7 @@ export const CreateAccount = () => {
 
           <Link href="https://google.com" target="_blank">
             <Typography>Ver terminos y condiciones</Typography>
-          </Link>
+          </Link> */}
 
           <Button
             type="submit"
