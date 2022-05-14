@@ -20,7 +20,7 @@ const rows = [
   createData('Peso', 356.9)
 ];
 
-export default function TableDetail({products}) {
+export default function TableDetail({productDetail}) {
 
 
 
@@ -46,11 +46,11 @@ export default function TableDetail({products}) {
             <TableRow
                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-                <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row">
                Nombre
               </TableCell>
               <TableCell component="th" scope="row">
-               {products[0].name}
+               {productDetail[0].name}
               </TableCell>
             
             </TableRow>
@@ -65,11 +65,9 @@ export default function TableDetail({products}) {
                Tamaño
               </TableCell>
               <TableCell component="th" scope="row">
-               {products[0].productDimension}
+               {productDetail[0].productDimensions}
               </TableCell>
-             
             </TableRow>
-          
           </>
          }
           {<>
@@ -80,7 +78,7 @@ export default function TableDetail({products}) {
                Codigo
               </TableCell>
               <TableCell component="th" scope="row">
-               {products[0].sku}
+               {productDetail[0].sku}
               </TableCell>
              
             </TableRow>
@@ -95,7 +93,7 @@ export default function TableDetail({products}) {
                Peso
               </TableCell>
               <TableCell component="th" scope="row">
-               {products[0].netWeight}
+               {productDetail[0].netWeight}
               </TableCell>
              
             </TableRow>

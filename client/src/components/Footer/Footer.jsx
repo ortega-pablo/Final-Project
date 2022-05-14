@@ -3,9 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-import { CssBaseline } from '@mui/material';
 
-// NO BORRAR CSS BASELINE, Parece un tag perdido, pero si la sacamos rompe
 
 function Copyright() {
   return (
@@ -32,7 +30,6 @@ export const Footer = () => {
         textAlign: 'center',
       }}
     >
-    <CssBaseline/>
     <Box
         component="footer"
         sx={{

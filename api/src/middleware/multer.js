@@ -1,18 +1,16 @@
 const multer = require("multer"); //engolvamos la libreria multer dentro de una constante
 
 
-function uploadImage(){
     const storage = multer.diskStorage({              
-        destination: './public/files',
+        destination: function (req, file, cb) {
+            cb(null, './public/files')
+        },
         filename: function (req, file, cb) {
             let extension = file.originalname.slice(file.originalname.lastIndexOf("."))
-            cb(null, Date.now() + extension)
+            cb(null, `${file.filename}-${Date.now()}.${extension}`)
         }
       })
-      
-      const upload = multer({ storage: storage })
+      const upload = multer({ storage: storage }).single("file")
 
-      return  upload;
-}
 
-module.export = uploadImage;
+module.exports = storage;
