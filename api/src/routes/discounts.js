@@ -14,14 +14,6 @@ router.post("/", async (req, res, next) => {
       active,
     });
 
-    const product = await Product.findAll({
-      where: {
-        id: productId,
-      },
-    });
-
-    newDiscount.addProduct(productId);
-
     res.status(200).send(newDiscount);
   } catch (error) {
     next(error);
