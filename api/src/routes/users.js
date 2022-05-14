@@ -1,8 +1,4 @@
 const { Router } = require("express");
-<<<<<<< HEAD
-=======
-const { User, Ask, Answer } = require("../db");
->>>>>>> 53c8aa035201ede67ba352fc9a59908f9182aa18
 const router = Router();
 const jwt = require("jsonwebtoken");
 const { User } = require("../db");
@@ -32,7 +28,6 @@ router.post("/create", async (req, res, next) => {
   }
 });
 
-<<<<<<< HEAD
 // Login User
 
 router.post("/login", async (req, res, next) => {
@@ -64,87 +59,85 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-module.exports = router;
-=======
-
-
 router.get("/", async (req, res, next) => {
-
-  const {firstName} = req.query
-
-  try{
-    if(firstName) {
-
-      const findByName = await User.findAll({
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-          include: [
-              {
-                  model: Answer,
-                  attributes: ["content"]
-              }
-          ]
-      }]
-      })
-      const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
-
-      
-      found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
-
-    } else {
-      const getAll = await User.findAll({
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-          include: [
-              {
-                  model: Answer,
-                  attributes: ["content"]
-              }
-          ]
-      }]
-      })
-      return res.status(200).send(getAll)
-    }
-  } catch(error){
-    res.send(error)
-  }
-  
-})
-
-router.get("/:userId", async (req, res) => {
-
-  const {userId} = req.params
+  const { firstName } = req.query;
 
   try {
-    if(userId) {
+    if (firstName) {
+      const findByName = await User.findAll({
+        include: [
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"],
+              },
+            ],
+          },
+        ],
+      });
+      const found = await findByName?.filter((e) =>
+        e.firstName.toLowerCase().includes(firstName.toLowerCase())
+      );
+
+      found.length
+        ? res.status(200).json(found)
+        : res.json("User not found, please try another search");
+    } else {
+      const getAll = await User.findAll({
+        include: [
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"],
+              },
+            ],
+          },
+        ],
+      });
+      return res.status(200).send(getAll);
+    }
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    if (userId) {
       const findById = await User.findOne({
         where: {
-          id: userId
+          id: userId,
         },
-        include:[{
-          model: Ask,
-          attributes: ["content"],
-          include: [
+        include: [
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
               {
-                  model: Answer,
-                  attributes: ["content"]
-              }
-          ]
-        }]
-      })
+                model: Answer,
+                attributes: ["content"],
+              },
+            ],
+          },
+        ],
+      });
 
-      console.log(findById)
-      return res.send(findById)
-  
-    } else{
-      return res.status(404).send("User not found")
+      console.log(findById);
+      return res.send(findById);
+    } else {
+      return res.status(404).send("User not found");
     }
-  } catch(error){
-    res.send(error)
+  } catch (error) {
+    res.send(error);
   }
-})
+});
 
 module.exports = router;
->>>>>>> 53c8aa035201ede67ba352fc9a59908f9182aa18
