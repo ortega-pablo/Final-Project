@@ -1604,22 +1604,26 @@ let respuesta = {data: [{
 let respuesta2 = {data: [{
     "name": "categoria 1",
     "description": "categoria 1 descripcion",
-    "thumbnail": "categoria 1 thumbnail"
+    "thumbnail": "categoria 1 thumbnail",
+    "subCategories": ["subCategory1", "subCategory2", "subCategory3"]
 },
 {
     "name": "categoria 2",
     "description": "categoria 2 descripcion",
-    "thumbnail": "categoria 2 thumbnail"
+    "thumbnail": "categoria 2 thumbnail",
+    "subCategories": ["subCategory1", "subCategory2", "subCategory3"]
 },
 {
     "name": "categoria 3",
     "description": "categoria43 descripcion",
-    "thumbnail": "categoria 3 thumbnail"
+    "thumbnail": "categoria 3 thumbnail",
+    "subCategories": ["subCategory1", "subCategory2", "subCategory3"]
 },
 {
     "name": "categoria 4",
     "description": "categoria 4 descripcion",
-    "thumbnail": "categoria 4 thumbnail"
+    "thumbnail": "categoria 4 thumbnail",
+    "subCategories": []
 },
 ]}
 

@@ -1,7 +1,7 @@
 import { Grid, SwipeableDrawer } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/actions";
+import { getProducts, getCategories } from "../redux/actions";
 import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
@@ -25,10 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const Home = () => {
   const dispatch = useDispatch();
+
   const products = useSelector((state) => state.products);
+
+  const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getCategories())
   }, [dispatch]);
 
   //Pagination
@@ -46,26 +50,26 @@ export const Home = () => {
       <h1>Soy el Home</h1>
       <SwipeableTextMobileStepper  />
       <Box sx= {{width: '100%', display: 'flex'}}>
-      <Category></Category>
-      <Grid container spacing={12} sx={{ml:"auto", mr:"auto", mt:1}}>
-      {products &&
-        actualPage.map((prod, index) => {
-          return (
-              <Grid item l>
-                <Paper className={classes.paper}>
-                  <MultiActionAreaCard
-                    key={index}
-                    name={prod.name}
-                    brand={prod.brand}
-                    thumbnail={prod.thumbnail}
-                    price={prod.price}
-                  />
-                </Paper>
-              </Grid>
-           
-          );
-        })}
-         </Grid>
+        <Category categories= {categories}></Category>
+        <Grid container spacing={12} sx={{ml:"auto", mr:"auto", mt:1}}>
+        {products &&
+          actualPage.map((prod, index) => {
+            return (
+                <Grid item l>
+                  <Paper className={classes.paper}>
+                    <MultiActionAreaCard
+                      key={index}
+                      name={prod.name}
+                      brand={prod.brand}
+                      thumbnail={prod.thumbnail}
+                      price={prod.price}
+                    />
+                  </Paper>
+                </Grid>
+            
+            );
+          })}
+          </Grid>
       </Box>
       <Paginationxd
         setCurrentPage={setCurrentPage}
