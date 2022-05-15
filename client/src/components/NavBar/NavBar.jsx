@@ -9,21 +9,17 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
-import GroupIcon from '@mui/icons-material/Group';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from '@mui/material';
 import Button from '@mui/material/Button';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Slide from '@mui/material/Slide';
 
 
-function HideOnScroll(props) {
+/* function HideOnScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
@@ -37,7 +33,7 @@ function HideOnScroll(props) {
       {children}
     </Slide>
   );
-}
+} */
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -193,9 +189,9 @@ export const NavBar = (props) => {
   );
 
   return (
-    <Box  sx={{ flexGrow: 1,}}>
-       <HideOnScroll {...props}>
-       <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", } }  >
+    <Box  sx={{ flexGrow: 1}} >
+       
+       <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", position: "fixed" } }  >
         <Toolbar>
           <Typography
             variant="h6"
@@ -235,7 +231,7 @@ export const NavBar = (props) => {
               <Button
               variant='outlined'
                 sx={{ my: 2, color: 'white', display: 'block', borderColor: '#E8E9F2'}}
-                href="/"
+                href="/#container"
               >
                 Productos
               </Button>
@@ -288,7 +284,7 @@ export const NavBar = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-       </HideOnScroll>
+      
        <Toolbar></Toolbar>
       {renderMobileMenu}
       {renderProfileMenu}

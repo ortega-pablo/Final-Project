@@ -1,13 +1,9 @@
 import * as React from 'react';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
-import { Box, ListItemButton, Typography } from '@mui/material';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Collapse } from '@material-ui/core';
+import { Box, ListItemButton } from '@mui/material';
 import { ListItemIcon, ListSubheader } from '@mui/material';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { useSelector, useDispatch } from 'react-redux';

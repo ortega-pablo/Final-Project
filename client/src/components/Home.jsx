@@ -1,17 +1,18 @@
-import { Grid, SwipeableDrawer } from "@mui/material";
+import { Button, CircularProgress, Grid, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, filterPerCategory, filterPerSubCategory } from "../redux/actions";
-import { Card } from "./Card/Card";
+import {
+  getProducts,
+  filterPerCategory,
+  filterPerSubCategory,
+} from "../redux/actions";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
 import MultiActionAreaCard from "./Card/Card";
 import { Container } from "@mui/material";
-import { CssBaseline } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { Box } from "@mui/system";
-import Category  from "./Category/Category";
+import Category from "./Category/Category";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,8 +36,8 @@ export const Home = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  //reRenderizador 
-  const [reRender, setReRender] = useState('');
+  //reRenderizador
+  const [reRender, setReRender] = useState("");
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,13 +53,13 @@ export const Home = () => {
     dispatch(filterPerCategory(category));
     setReRender(`Ultimo ordenamiento ${category}`);
     setCurrentPage(1);
-  }
+  };
 
   const handleClickForSubcategories = (subCategory) => {
     dispatch(filterPerSubCategory(subCategory));
     setReRender(`Ultimo ordenamiento ${subCategory}`);
     setCurrentPage(1);
-  }
+  };
 
   return (
     <div>
@@ -69,7 +70,7 @@ export const Home = () => {
           flexDirection: "column",
           margin: 0,
           width: "100%",
-          alignItems: "stretch",
+          justifyContent: "space-between",
         }}
       >
         <SwipeableTextMobileStepper
@@ -84,58 +85,70 @@ export const Home = () => {
             display: "flex",
             flexDirection: "row",
             width: "100%",
+            padding: 0,
           }}
         >
-          <Container
-            sx={{
-              width: "15%",
-            }}
-          >
-            <Category handleClickForCategories = {handleClickForCategories} handleClickForSubcategories= {handleClickForSubcategories}></Category>
-          </Container>
+
+            <Category
+              handleClickForCategories={handleClickForCategories}
+              handleClickForSubcategories={handleClickForSubcategories}
+            ></Category>
+      
           <Grid
-            container
-            spacing={12}
+          id="container"
+            container 
             sx={{
               display: "flex",
               ml: "auto",
               mr: "auto",
-              mt: 1,
-              width: "85%",
+              mt: "10px",
               justifyContent: "center",
             }}
           >
-            {products &&
+            {products.length > 0 ? (
               actualPage.map((prod, index) => {
                 return (
-                  <Grid item l>
-                    <Paper className={classes.paper}>
-                      <MultiActionAreaCard
-                        key={index}
-                        name={prod.name}
-                        brand={prod.brand}
-                        thumbnail={prod.thumbnail}
-                        price={prod.price}
-                        sku={prod.sku}
-                        id={prod.id}
-                      />
-                    </Paper>
+                  <Grid
+                    sx={{
+                      m: "10px",
+                    }}
+                  >
+                    <Link href={"/detail/" + prod.id} underline="none">
+                      <Paper className={classes.paper}>
+                        <MultiActionAreaCard
+                          key={index}
+                          name={prod.name}
+                          brand={prod.brand}
+                          thumbnail={prod.thumbnail}
+                          price={prod.price}
+                          id={prod.id}
+                          description={prod.description}
+                        />
+                      </Paper>
+                    </Link>
                   </Grid>
                 );
-              })}
-              <Container maxWidth="vp" sx={{width:'100%'}}>
-                <Paginationxd
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  productsPerPage={productsPerPage}
-                  products={products.length}
-                  setProductsPerPage={setProductsPerPage}
-                />
-              </Container>
+              })
+            ) : (
+              <CircularProgress
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              />
+            )}
           </Grid>
         </Container>
 
-
+        <Container maxWidth="vp" sx={{ width: "100%" }}>
+          <Paginationxd
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            productsPerPage={productsPerPage}
+            products={products.length}
+            setProductsPerPage={setProductsPerPage}
+          />
+        </Container>
       </Container>
     </div>
   );
