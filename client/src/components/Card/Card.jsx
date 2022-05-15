@@ -39,7 +39,7 @@ export default function MultiActionAreaCard({
   thumbnail,
 }) {
   return (
-    <Card sx={{ width: 200, hover: "true" }}>
+    <Card sx={{ width: 200, hover: "true", maxHeight:'360px', minHeight:'360px'}}>
       <CardActionArea sx={[
     {
       '&:hover': {
@@ -47,11 +47,13 @@ export default function MultiActionAreaCard({
         boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.6)",
         transitionDuration: "1s",
         background: "rgba(138, 151, 165, 0.21)",
+        maxHeight:'360px', 
+        minHeight:'360px'
       },
     }
   ]}>        
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={{mb:'auto'}}>
             {name}
           </Typography>
           <CardMedia

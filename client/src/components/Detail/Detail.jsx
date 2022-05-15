@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box, maxWidth } from "@mui/system";
+import { Footer } from "../Footer/Footer";
 
 export const Detail = () => {
   const dispatch = useDispatch();
@@ -94,7 +95,9 @@ export const Detail = () => {
               justifyContent: "center",
             }}
           />
-        )}
+        )}  
+          
+        <Footer/>
 
     </div>
   );

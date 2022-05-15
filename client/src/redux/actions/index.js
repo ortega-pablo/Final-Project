@@ -38,7 +38,6 @@ let respuesta2 = {data: [{
 export const getProducts = () => {
     return async (dispatch) => {
         let response = await axios("http://localhost:3001/products")
-        console.log(response)
         return dispatch ({
             type: GET_PRODUCTS,
             payload: response.data

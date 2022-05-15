@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import { Link } from "@mui/material";
 import { FormControlLabel } from "@mui/material";
 import { Checkbox } from "@mui/material";
+import { Footer } from "../Footer/Footer";
 
 const validate = (input) => {
   let errors = {};
@@ -100,100 +101,104 @@ export const CreateAccount = () => {
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{ textAlign: "center", mb: "6.5%" }}
-    >
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-        }}
+    <>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ textAlign: "center", mb: 7 }}
       >
+      <Typography variant='h3' sx={{mt:10}}>
+      Crea tu cuenta
+      </Typography>
         <Box
-          component="form"
-          onSubmit={handleSubmit}
-          onChange={handleSetInput}
-          noValidate
-          sx={{ mt: 1 }}
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            error={errors.email}
-            helperText={errors.email}
-            autoFocus
-          />
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            onChange={handleSetInput}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              error={errors.email}
+              helperText={errors.email}
+              autoFocus
+            />
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="userName"
-            label="Username"
-            name="userName"
-            autoComplete="userName"
-            error={errors.userName}
-            helperText={errors.userName}
-          />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="userName"
+              label="Username"
+              name="userName"
+              autoComplete="userName"
+              error={errors.userName}
+              helperText={errors.userName}
+            />
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            label="Password"
-            name="password"
-            autoComplete="password"
-            error={errors.password}
-            helperText={errors.password}
-          />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="Password"
+              name="password"
+              autoComplete="password"
+              error={errors.password}
+              helperText={errors.password}
+            />
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            autoComplete="firstName"
-            error={errors.firstName}
-            helperText={errors.firstName}
-          />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              name="firstName"
+              autoComplete="firstName"
+              error={errors.firstName}
+              helperText={errors.firstName}
+            />
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            autoComplete="lastName"
-            error={errors.lastName}
-            helperText={errors.lastName}
-          />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              autoComplete="lastName"
+              error={errors.lastName}
+              helperText={errors.lastName}
+            />
 
-          <TextField
-            margin="normal"
-            type="number"
-            required
-            fullWidth
-            id="phone"
-            label="Phone Number"
-            name="phone"
-            autoComplete="phone"
-            error={errors.phone}
-            helperText={errors.phone}
-          />
+            <TextField
+              margin="normal"
+              type="number"
+              required
+              fullWidth
+              id="phone"
+              label="Phone Number"
+              name="phone"
+              autoComplete="phone"
+              error={errors.phone}
+              helperText={errors.phone}
+            />
 
-          {/* <FormControlLabel
+            {/* <FormControlLabel
             control={<Checkbox value="aceptTerms" color="primary" />}
             label="Acepto los terminos y condiciones"
             id="aceptTerms"
@@ -203,16 +208,18 @@ export const CreateAccount = () => {
             <Typography>Ver terminos y condiciones</Typography>
           </Link> */}
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+      <Footer />
+    </>
   );
 };

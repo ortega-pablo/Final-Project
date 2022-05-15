@@ -73,6 +73,7 @@ function CarouselDetail({ productDetail }) {
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
+        sx={{backgroundColor:'inherit'}}
         nextButton={
           <Button
             size="small"
