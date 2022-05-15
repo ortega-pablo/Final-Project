@@ -13,11 +13,10 @@ import { Container } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Category from "./Category/Category";
+import { Footer } from "./Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
+
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
@@ -110,11 +109,11 @@ export const Home = () => {
                 return (
                   <Grid
                     sx={{
-                      m: "10px",
+                      m: "10px", width:"235px", justifyContent:"stretch"
                     }}
                   >
+                      <Paper className={classes.paper} sx={{display: 'flex', heigth: "360px", padding: 2}} >
                     <Link href={"/detail/" + prod.id} underline="none">
-                      <Paper className={classes.paper}>
                         <MultiActionAreaCard
                           key={index}
                           name={prod.name}
@@ -124,8 +123,8 @@ export const Home = () => {
                           id={prod.id}
                           description={prod.description}
                         />
-                      </Paper>
                     </Link>
+                      </Paper>
                   </Grid>
                 );
               })
@@ -150,6 +149,7 @@ export const Home = () => {
           />
         </Container>
       </Container>
+      <Footer/>
     </div>
   );
 };

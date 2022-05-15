@@ -13,16 +13,14 @@ import { Box } from "@mui/system";
 
 export const QuestionsAndAnswers = ({ asks }) => {
   return (
-    <Box sx={{
-      width: "80%",
-      alignSelf:"center",
-alignItems:"center"
-    }}>
-      <List
-       sx={{
-  
-      }} 
-      >
+    <Box
+      sx={{
+        width: "80%",
+        alignSelf: "center",
+        alignItems: "center",
+      }}
+    >
+      <List sx={{}}>
         {asks.map((a) => {
           return (
             <>
@@ -36,7 +34,7 @@ alignItems:"center"
                 ></Typography>
               </li>
               <ListItem>
-                <ListItemText primary={a.content} secondary="User 1" />
+                  <ListItemText primary={a.content} secondary="User 1" />                
               </ListItem>
               <Divider component="li" variant="inset" />
               <li>
@@ -51,7 +49,10 @@ alignItems:"center"
                 <ListItemAvatar>
                   <SubdirectoryArrowRightIcon />
                 </ListItemAvatar>
-                <ListItemText primary={a.answer.content} secondary="User 2" />
+                {a.answer !== null ? 
+                  (<ListItemText primary={a.answer.content} secondary="User 2" />)
+                  : (<ListItemText secondary="Sin respuestas" />)
+                }
               </ListItem>
             </>
           );
