@@ -35,12 +35,21 @@ router.get("/", async (req, res, next) => {
       const findByName = await User.findAll()
       const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
 
+<<<<<<< HEAD
       found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
 
     } else {
       const getAll = await User.findAll()
 
       return res.status(200).send(getAll)
+=======
+      
+      found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
+
+    } else {
+      const findByName = await User.findAll()
+      return res.status(200).send(findByName)
+>>>>>>> b70d9665c111120983c09c06b31d63665ffaa6a3
     }
   } catch(error){
     res.send(error)
@@ -59,11 +68,16 @@ router.get("/:userId", async (req, res) => {
           id: userId
         }
       })
+<<<<<<< HEAD
 
       let temp = []
       temp.push(findById)
     
       return res.send(temp)
+=======
+  
+      return res.send(findById)
+>>>>>>> b70d9665c111120983c09c06b31d63665ffaa6a3
   
     } else{
       return res.status(404).send("User not found")

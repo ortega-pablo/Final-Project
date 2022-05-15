@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 
+<<<<<<< HEAD
 const { ProductSpecification, Specification, Product } = require("../db");
+=======
+const { Specification, ProductSpecification } = require("../db");
+>>>>>>> b70d9665c111120983c09c06b31d63665ffaa6a3
 
 router.post("/", async (req, res, next) => {
   const { name } = req.body;
@@ -17,6 +21,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+<<<<<<< HEAD
 router.get("/", async (req, res, next) => {
   
   const {name, productId} = req.query
@@ -47,6 +52,29 @@ router.get("/", async (req, res, next) => {
   }catch(error){
     next(error)
   }
+=======
+///////////////////////////////////////////////GET ROUTES ///////////////////////////////////////////
+router.get("/:id", async (req, res, next) => {
+
+  const {id} = req.params
+
+
+    const getAllSpecs = await Specification.findOne({
+      where: {
+        id
+      },
+      include: [
+        {
+          model: ProductSpecification,
+          as:"value:",
+          attributes: ["value"],
+        }
+      ]
+    })
+
+    return res.status(200).send(getAllSpecs)
+  
+>>>>>>> b70d9665c111120983c09c06b31d63665ffaa6a3
 })
 
 
