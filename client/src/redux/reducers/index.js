@@ -1,10 +1,11 @@
-import { GET_PRODUCTS, GET_DETAIL, POST_PRODUCT } from "../actions";
+import { GET_PRODUCTS, GET_DETAIL, POST_PRODUCT, GET_ALL_CATEGORIES, POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT } from "../actions";
 
 
 const initialState = {
     products: [],
     productsAux: [],
-    productDetail: {}
+    productDetail: {},
+    allCategories: []
 }
 
 const rootReducer = (state = initialState, action ) => {
@@ -28,6 +29,22 @@ const rootReducer = (state = initialState, action ) => {
 
             } 
         }
+        case GET_ALL_CATEGORIES:{
+            return {
+                ...state,
+                allCategories:action.payload
+            }
+        }
+        case POST_ADD_CATEROY_TO_PRODUCT:{
+            return{
+                ...state
+            }
+        }
+        // case POST_ADD_SPECIFICATION_TO_PRODUCT:{
+        //     return{
+        //         ...state
+        //     }
+        // }
 
             
 

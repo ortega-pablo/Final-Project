@@ -9,10 +9,17 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField } from '@mui/material';
-import { postProduct, getProducts } from '../../redux/actions';
+import { postProduct, getProducts, getAllCategories , postAddCateroryToProduct, postAddSpecificationToProduct } from '../../redux/actions';
 import InputAdornment from '@mui/material/InputAdornment';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Link from '@mui/material/Link';
+import { useNavigate } from "react-router-dom";
+
+import Select from '@mui/material/Select';
+import { AddCategoryToProduct } from './AddCategoryToProduct';
 
 
 function MyFormHelperText() {
@@ -57,7 +64,7 @@ const validate = (input) => {
     if (input.price.trim() === "") {
       errors.price = "Se requiere el precio del producto";
     } else if (isNaN(input.price)) {
-      errors.price = "El valor debe ser numerico";
+      errors.price = "El valor debe ser numerico"; // ojo, , debemos aceptar puntos
     } else if (input.price < 0) {
       errors.price = "El valor no puede ser negativo";
     }
@@ -67,13 +74,39 @@ const validate = (input) => {
       errors.sku = "Se requiere el codigo SKU del producto";
     }
   };
-  if (input.desc) {
-    if (input.desc.trim() === "") {
-      errors.desc = "Se requiere la descripción del producto";
-    }else if (input.desc.length > 5) {
-      errors.desc = "La descripción no puede contener mas de 500 caracteres";
+  if (input.description) {
+    if (input.description.trim() === "") {
+      errors.description = "Se requiere la descripción del producto";
+    } else if (input.description.length > 10) {
+      errors.description = "La descripción no puede contener mas de 500 caracteres";
+    }
+  };
+  if (input.netWeight) {
+    if (input.netWeight.trim() === "") {
+      errors.netWeight = "Se requiere el peso neto del producto";
+    } else if (isNaN(input.netWeight)) {
+      errors.netWeight = "El valor debe ser numerico"; // ojo, , debemos aceptar puntos
+    } else if (input.netWeight < 0) {
+      errors.netWeight = "El valor no puede ser negativo";
+    }
+  };
+  if (input.grossWeight) {
+    if (input.grossWeight.trim() === "") {
+      errors.grossWeight = "Se requiere el peso bruto del producto";
+    } else if (isNaN(input.grossWeight)) {
+      errors.grossWeight = "El valor debe ser numerico"; // ojo, , debemos aceptar puntos
+    } else if (input.grossWeight < 0) {
+      errors.grossWeight = "El valor no puede ser negativo";
+    }
+  };
+  if (input.warranty) {
+    if (input.warranty.trim() === "") {
+      errors.warranty = "Se requiere la garantia del producto";
+    } else if (input.warranty.length > 8) {
+      errors.warranty = "La descripción de la garantia no puede contener mas de 500 caracteres";
     }
   }
+  console.log(errors)
 
   return errors
 }
@@ -84,8 +117,10 @@ const validate = (input) => {
 export function UseFormControl() {
   const dispatch = useDispatch();
   const productosExistentes = useSelector(state => state.products)
+  const allCategories = useSelector (state => state.allCategories)
 
-
+  
+console.log(allCategories)
   const [errorName, setErrorName] = useState(false)
   const [leyendaErrorName, setLeyendaErrorName] = useState("")
   const [errorBrand, setErrorBrand] = useState(false)
@@ -96,6 +131,15 @@ export function UseFormControl() {
   const [leyendaErrorSku, setLeyendaErrorSku] = useState("")
   const [errorDesc, setErrorDesc] = useState(false)
   const [leyendaErrorDesc, setLeyendaErrorDesc] = useState("")
+
+  const [errorNetWei, setErrorNetWei] = useState(false)
+  const [leyendaErrorNetWei, setLeyendaErrorNetWei] = useState("")
+
+  const [errorGrossWei, setErrorGrossWei] = useState(false)
+  const [leyendaerrorGrossWei, setLeyendaErrorGrossWei] = useState("")
+
+  const [errorWarr, setErrorWarr] = useState(false)
+  const [leyendaerrorWarr, setLeyendaErrorWarr] = useState("")
 
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
@@ -113,14 +157,25 @@ export function UseFormControl() {
     thumbnail: ""
   });
 
+  const [age, setAge] = React.useState('');
+let ultimoElemento = productosExistentes[productosExistentes.length-1]
+console.log(ultimoElemento?.id)
+console.log(age)
+  const handleChange = (event) => {
+    event.preventDefault()
+    setAge(event.target.value);
+   
+    
+  };
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getAllCategories());
   }, [dispatch]);
 
+  let navigate = useNavigate();
 
-
-  function handleSubmit(e) {
+  function  handleSubmit  (e) {
     e.preventDefault();
 
     const NameRepetido = productosExistentes.find(p => p.name === input.name)
@@ -156,31 +211,82 @@ export function UseFormControl() {
       console.log("error de sku")
 
     }
-    if (errors.desc) {
+    if (errors.description) {
       setErrorDesc(true)
-      setLeyendaErrorDesc(errors.desc)
+      setLeyendaErrorDesc(errors.description)
 
       console.log("error de desc")
 
     }
-
-
-
     if (errors.brand) {
       setErrorBrand(true)
       setLeyendaErrorBrand(errors.brand)
       console.log("error de marca")
 
     }
+    if (errors.netWeight) {
+      setErrorNetWei(true)
+      setLeyendaErrorNetWei(errors.netWeight)
+      console.log("error de peso neto")
 
-    if (NameRepetido || SKURepetido || errors?.name || errors?.sku || errors?.price || errors?.brand || errors?.desc) {
+    }
+    if (errors.grossWeight) {
+      setErrorGrossWei(true)
+      setLeyendaErrorGrossWei(errors.grossWeight)
+      console.log("error de peso bruto")
+
+    }
+    if (errors.warranty) {
+      setErrorWarr(true)
+      setLeyendaErrorWarr(errors.warranty)
+      console.log("error de garantia")
+
+    }
+
+    if (NameRepetido || SKURepetido || errors?.name || errors?.sku || errors?.price || errors?.brand || errors?.description || errors?.netWeight || errors?.grossWeight || errors?.warranty) {
       console.log("hay errores")
       alert("hay errores")
-      return
-    } else {
+
+    }
+    if (!input.sku) {
+      setErrorSku(true)
+      setLeyendaErrorSku("El sku es obligatorio")
+    }
+    if (!input.name) {
+      setErrorName(true)
+      setLeyendaErrorName("El nombre es obligatorio")
+    }
+    if (!input.brand) {
+      setErrorBrand(true)
+      setLeyendaErrorBrand("La marca es obligatoria")
+    }
+    if (!input.price) {
+      setErrorPrice(true)
+      setLeyendaErrorPrice("El precio es obligatorio, puede ser 0 ")
+    }
+    if (!input.description) {
+      setErrorDesc(true)
+      setLeyendaErrorDesc("La descripción es obligatoria")
+    }
+    if (!input.netWeight) {
+      setErrorNetWei(true)
+      setLeyendaErrorNetWei("El peso bruto es obligatorio")
+    }
+    if (!input.grossWeight) {
+      setErrorGrossWei(true)
+      setLeyendaErrorGrossWei("El peso bruto es obligatorio")
+    }
+    if (!input.warranty) {
+      setErrorWarr(true)
+      setLeyendaErrorWarr("La garantia es obligatoria")
+    }
+    else {
       console.log("se ha creado")
-      
+     
       dispatch(postProduct(input))
+      console.log(age)
+      dispatch(postAddCateroryToProduct( ultimoElemento.id+1 ,age))
+      navigate("/detail/" + (ultimoElemento?.id+1))
     }
 
 
@@ -212,8 +318,27 @@ export function UseFormControl() {
       setErrorSku(false)
       setLeyendaErrorSku("")
     };
+    if (!errors.description) {
+      setErrorDesc(false)
+      setLeyendaErrorDesc("")
+    };
+    if (!errors.netWeight) {
+      setErrorNetWei(false)
+      setLeyendaErrorNetWei("")
+    };
+    if (!errors.grosstWeight) {
+      setErrorGrossWei(false)
+      setLeyendaErrorGrossWei("")
+    };
+    if (!errors.brand) {
+      setErrorBrand(false)
+      setLeyendaErrorBrand("")
+    };
 
-
+    if (!errors.warranty) {
+      setErrorWarr(false)
+      setLeyendaErrorWarr("")
+    };
 
 
 
@@ -221,13 +346,15 @@ export function UseFormControl() {
 
 
   return (
+    <>
+    
     <Box component="form" noValidate autoComplete="off" onChange={e => handleInput(e)} onSubmit={(e) => handleSubmit(e)}>
       <h2>Creando algo</h2>
 
       <TextField
 
         id="outlined-basic"
-        label="Nombre"
+        label="Nombre *"
         variant="outlined"
         name='name'
         helperText={leyendaErrorName}
@@ -236,7 +363,7 @@ export function UseFormControl() {
       <TextField
 
         id="outlined-basic"
-        label="Marca"
+        label="Marca *"
         variant="outlined"
         name='brand'
         helperText={leyendaErrorBrand}
@@ -245,7 +372,7 @@ export function UseFormControl() {
       <TextField
 
         id="outlined-basic"
-        label="Precio"
+        label="Precio *"
         variant="outlined"
         name='price'
         InputProps={{
@@ -259,7 +386,7 @@ export function UseFormControl() {
       <TextField
 
         id="outlined-basic"
-        label="Codigo"
+        label="Codigo *"
         variant="outlined"
         name='sku'
         helperText={leyendaErrorSku}
@@ -269,7 +396,7 @@ export function UseFormControl() {
       <TextField
 
         id="outlined-basic"
-        label="Descripcion"
+        label="Descripcion *"
         variant="outlined"
         name='description'
         helperText={leyendaErrorDesc}
@@ -278,17 +405,36 @@ export function UseFormControl() {
       <TextField
 
         id="outlined-basic"
-        label="Peso neto"
+        label="Peso neto *"
         variant="outlined"
         name='netWeight'
-        
+        InputProps={{
+          endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+        }}
+        helperText={leyendaErrorNetWei}
+        error={errorNetWei}
+
       />
       <TextField
 
         id="outlined-basic"
-        label="Garatia"
+        label="Peso bruto *"
+        variant="outlined"
+        name='grossWeight'
+        InputProps={{
+          endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+        }}  
+        helperText={leyendaerrorGrossWei}
+        error={errorGrossWei}
+      />
+      <TextField
+
+        id="outlined-basic"
+        label="Garatía *"
         variant="outlined"
         name='warranty'
+        helperText={leyendaerrorWarr}
+        error={errorWarr}
       />
 
       <TextField
@@ -301,36 +447,72 @@ export function UseFormControl() {
       <TextField
 
         id="outlined-basic"
-        label="Dimensiones del producto"
+        label="Dimensiones del producto *"
         variant="outlined"
         name='productDimensions'
       />
       <TextField
 
         id="outlined-basic"
-        label="Dimensiones del package"
+        label="Dimensiones del package *"
         variant="outlined"
         name='packageDimensions'
       />
+
       <TextField
 
         id="outlined-basic"
-        label="Peso bruto"
-        variant="outlined"
-        name='grossWeight'
-      />
-      <TextField
-
-        id="outlined-basic"
-        label="IMagen de miniatura"
+        label="Imagen de miniatura"
         variant="outlined"
         name='thumbnail'
       />
-      <Button onClick={(e) => handleSubmit(e)}>Crear</Button>
-      <Alert severity="success">
+      <TextField
+
+        id="outlined-basic"
+        label="Imagenes"
+        variant="outlined"
+        name='image'
+      />
+    
+      <Button onClick={(e) => handleSubmit(e)}>Siguiente</Button>
+   
+      <h4>(*) elementos obligatorios</h4>
+      {/* <Alert severity="success">
         <AlertTitle>Felicidades</AlertTitle>
         This is a success alert — <strong>check it out!</strong>
-      </Alert>
+      </Alert> */}
     </Box>
+<br/>
+<InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
+         <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={age}
+          onChange={handleChange}
+          label="Age"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {
+            allCategories?.map(cat => {
+                  return (
+                    <MenuItem value={cat.id}>{cat.name} {cat.id}</MenuItem>
+                   
+                  )
+
+            }) 
+          }
+          
+          {/* {
+            age?.map(cat=>(
+             <h3>{cat.name} {cat.id}</h3>
+            ))
+          }
+           */}
+           <h2>{age.name}</h2>
+          
+        </Select>
+    </>
   );
 }
