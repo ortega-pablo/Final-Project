@@ -7,6 +7,8 @@ import { NotFound } from "./components/NotFound/NotFound";
 import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
+import { UseFormControl} from "./components/Forms/UseFormControl"
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
           <Route path="/about" element={<About/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/createaccount" element={<CreateAccount/>}/>
+          <Route path="/createProduct" element={<UseFormControl/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       <Footer/>

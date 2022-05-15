@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_DETAIL = "GET_DETAIL";
+export const POST_PRODUCT = "POST_PRODUCT"
 
 
 
@@ -25,4 +26,16 @@ export const getDetail = (id) => {
             payload: response.data
         })
     }
-}
+};
+
+export const postProduct = (payload) => {
+    return async function (dispatch){
+        try {
+                
+            let json = await axios.post(`http://localhost:3001/products`, payload)  //url + body
+        
+            return json
+        } catch (error) {
+            console.log(error)
+        }
+         }}
