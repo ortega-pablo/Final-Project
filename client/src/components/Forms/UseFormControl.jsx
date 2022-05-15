@@ -175,7 +175,7 @@ console.log(age)
 
   let navigate = useNavigate();
 
-  function  handleSubmit  (e) {
+  async function  handleSubmit  (e) {
     e.preventDefault();
 
     const NameRepetido = productosExistentes.find(p => p.name === input.name)
@@ -245,48 +245,64 @@ console.log(age)
 
     if (NameRepetido || SKURepetido || errors?.name || errors?.sku || errors?.price || errors?.brand || errors?.description || errors?.netWeight || errors?.grossWeight || errors?.warranty) {
       console.log("hay errores")
+      e.preventDefault()
       alert("hay errores")
 
     }
+
+
     if (!input.sku) {
+      e.preventDefault()
       setErrorSku(true)
       setLeyendaErrorSku("El sku es obligatorio")
     }
     if (!input.name) {
+      e.preventDefault()
       setErrorName(true)
       setLeyendaErrorName("El nombre es obligatorio")
     }
     if (!input.brand) {
+      e.preventDefault()
       setErrorBrand(true)
       setLeyendaErrorBrand("La marca es obligatoria")
     }
     if (!input.price) {
+      e.preventDefault()
       setErrorPrice(true)
       setLeyendaErrorPrice("El precio es obligatorio, puede ser 0 ")
     }
     if (!input.description) {
+      e.preventDefault()
       setErrorDesc(true)
       setLeyendaErrorDesc("La descripción es obligatoria")
     }
     if (!input.netWeight) {
+      e.preventDefault()
       setErrorNetWei(true)
       setLeyendaErrorNetWei("El peso bruto es obligatorio")
     }
     if (!input.grossWeight) {
+      e.preventDefault()
       setErrorGrossWei(true)
       setLeyendaErrorGrossWei("El peso bruto es obligatorio")
     }
     if (!input.warranty) {
+      e.preventDefault()
       setErrorWarr(true)
       setLeyendaErrorWarr("La garantia es obligatoria")
+      
     }
-    else {
+     if (!(NameRepetido || SKURepetido || errors?.name || errors?.sku || errors?.price || errors?.brand || errors?.description || errors?.netWeight || errors?.grossWeight || errors?.warranty)){
+      // input.errors.hasOwnProperty()
       console.log("se ha creado")
      
-      dispatch(postProduct(input))
-      console.log(age)
-      dispatch(postAddCateroryToProduct( ultimoElemento.id+1 ,age))
-      navigate("/detail/" + (ultimoElemento?.id+1))
+    const newProd =  await  dispatch(  postProduct(input))
+    
+    console.log(newProd.data.id)
+      
+    await  dispatch(postAddCateroryToProduct(newProd.data.id  ,age))
+   
+      navigate("/detail/" + newProd.data.id)
     }
 
 
@@ -504,13 +520,7 @@ console.log(age)
             }) 
           }
           
-          {/* {
-            age?.map(cat=>(
-             <h3>{cat.name} {cat.id}</h3>
-            ))
-          }
-           */}
-           <h2>{age.name}</h2>
+        
           
         </Select>
     </>
