@@ -5,17 +5,14 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { CssBaseline } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./themeConfig";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
         <App />
-      </ThemeProvider>
     </React.StrictMode>
   </Provider>
 );

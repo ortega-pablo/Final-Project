@@ -37,9 +37,6 @@ export default function MultiActionAreaCard({
   price,
   brand,
   thumbnail,
-  sku,
-  id,
-  description,
 }) {
   return (
     <Card sx={{ width: 200, hover: "true" }}>
@@ -52,23 +49,19 @@ export default function MultiActionAreaCard({
         background: "rgba(138, 151, 165, 0.21)",
       },
     }
-  ]}>
+  ]}>        
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {name}
+          </Typography>
           <CardMedia
             component="img"
             height="140"
             image={thumbnail}
             alt="green iguana"
           />
-        
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <h3>Precio: $({price})</h3>
+          <h3>Precio: {"$"}{price}</h3>
           <h3>Marca: {brand}</h3>
-          <Typography variant="body2" color="text.secondary">
-          <h5>{description}</h5>
-          </Typography>
         </CardContent>
         
       </CardActionArea>

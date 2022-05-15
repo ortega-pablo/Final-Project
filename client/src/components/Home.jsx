@@ -6,14 +6,12 @@ import {
   filterPerCategory,
   filterPerSubCategory,
 } from "../redux/actions";
-import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
 import MultiActionAreaCard from "./Card/Card";
 import { Container } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { Box } from "@mui/system";
 import Category from "./Category/Category";
 
 const useStyles = makeStyles((theme) => ({
@@ -81,19 +79,6 @@ export const Home = () => {
             width: "100%",
           }}
         />
-        <Button color="primary" variant="contained">
-          hola
-        </Button>
-        <Container
-          maxWidth="vp"
-          sx={{
-            display: "flex",
-            width: "100%",
-            backgroundColor: "#000000",
-          }}
-        >
-          <p> Aca van tus filtros samu chupapija </p>
-        </Container>
         <Container
           maxWidth="vp"
           sx={{
@@ -103,24 +88,20 @@ export const Home = () => {
             padding: 0,
           }}
         >
-          <Container
-            sx={{
-              width: "15%",
-            }}
-          >
+
             <Category
               handleClickForCategories={handleClickForCategories}
               handleClickForSubcategories={handleClickForSubcategories}
             ></Category>
-          </Container>
+      
           <Grid
-            container
+          id="container"
+            container 
             sx={{
               display: "flex",
               ml: "auto",
               mr: "auto",
               mt: "10px",
-              width: "85%",
               justifyContent: "center",
             }}
           >
