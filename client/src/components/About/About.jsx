@@ -16,7 +16,7 @@ export const About = () => {
           Nos ubicamos en la provincia de rio negro, lugar donde recibimos y despachamos 
           pedidos que llegan y van hacia todo el mundo. 
         </Typography>
-        <Typography varian='h6' sx={{mb:23}} color='primary' >
+        <Typography variant='h6' sx={{mb:43}} color='primary' >
           Vos que esperas para hacerte rico con tu minadora de bitcoin? 
         </Typography>
       </Container>
