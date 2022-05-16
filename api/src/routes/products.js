@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, Discount, Category, Specification, ProductSpecification } = require("../db");
+const { Product, Discount, Category, Specification, ProductSpecification, SubCategory  } = require("../db");
 const { getAllProducts, getProductsByName , orderProducts } = require("../controllers/products");
 const router = Router();
 
@@ -83,6 +83,29 @@ router.post("/addCategory", async (req, res, next) => {
     await category.addProduct(product);
 
     res.status(200).send("Successfully associated category.");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/addSubCategory", async (req, res, next) => {
+  try {
+    const { productId, subCategoryId } = req.query;
+
+    const product = await Product.findOne({
+      where: {
+        id: productId,
+      },
+    });
+    const subCategory = await SubCategory.findOne({
+      where: {
+        id: subCategoryId,
+      },
+    });
+
+    await subCategory.addProduct(product);
+
+    res.status(200).send("Successfully associated sub category.");
   } catch (error) {
     next(error);
   }

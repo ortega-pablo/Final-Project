@@ -7,21 +7,40 @@ require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
 // Register User
 
+// router.post("/create", async (req, res, next) => {
+//   const { userName, email, password, firstName, lastName, phone } = req.body;
+
+//   try {
+//     let Hashpassword = bcrypt.hashSync(password, 10);
+//     const userFound = User.findOne({ where: { email } });
+//     if (userFound) {
+//       return response.status(401).json({
+//         error: "email is already used",
+//       });
+//     }
+//     const newUser = await User.create({
+//       userName,
+//       email,
+//       password: Hashpassword,
+//       firstName,
+//       lastName,
+//       phone,
+//     });
+
+//     res.status(200).send(newUser);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 router.post("/create", async (req, res, next) => {
   const { userName, email, password, firstName, lastName, phone } = req.body;
 
   try {
-    let Hashpassword = bcrypt.hashSync(password, 10);
-    const userFound = User.findOne({ where: { email } });
-    if (userFound) {
-      return response.status(401).json({
-        error: "email is already used",
-      });
-    }
+
     const newUser = await User.create({
       userName,
       email,
-      password: Hashpassword,
+      password,
       firstName,
       lastName,
       phone,
