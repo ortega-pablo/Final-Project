@@ -85,6 +85,9 @@ Answer.belongsTo(User)
 Product.belongsToMany(Category, { through: "product-category"});
 Category.belongsToMany(Product, { through: "product-category"});
 
+Product.belongsToMany(SubCategory, { through: "product-subCategory"});
+SubCategory.belongsToMany(Product, { through: "product-subCategory"});
+
 Category.belongsToMany(SubCategory, { through: "sub_Categories"});
 SubCategory.belongsToMany(Category, { through: "sub_Categories"});
 
