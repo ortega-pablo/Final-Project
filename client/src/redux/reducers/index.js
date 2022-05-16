@@ -24,11 +24,11 @@ const rootReducer = (state = initialState, action ) => {
                 productDetail: action.payload
             }
         case GET_CATEGORIES:{
+            
             return {
                 ...state,
                 categories: action.payload,
-                categoriesAux: action.payload
-            }
+           }
         }
         case FILTER_PER_CATEGORY:{
             const allProducts = state.productsAux;

@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import { Link } from "@mui/material";
 import { FormControlLabel } from "@mui/material";
 import { Checkbox } from "@mui/material";
+import { Footer } from "../Footer/Footer";
 
 const validate = (input) => {
   let errors = {};
@@ -28,8 +29,8 @@ const validate = (input) => {
   }
   //password validations /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
   if (input.password) {
-    if(input.password.match(/^([^ ]){8,15}$/)){
-      //hay que arreglar 
+    if (input.password.match(/^([^ ]){8,15}$/)) {
+      //hay que arreglar
     }
   } else {
     errors.password = "Field required";
@@ -40,8 +41,8 @@ const validate = (input) => {
       errors.firstName = "This field can only contains letters";
     } else if (input.firstName.lenght > 20) {
       errors.firstName = "This field cannot contain more than 20 characters";
-    } 
-  }else {
+    }
+  } else {
     errors.firstName = "Field required";
   }
   //lastName validations
@@ -55,17 +56,16 @@ const validate = (input) => {
     errors.lastName = "Field required";
   }
 
-  //phone validations 
+  //phone validations
   // no anda
   if (input.phone) {
     if (input.phone.toString().lenght > 20) {
       errors.phone = "Phone numbers do not contain more than 20 characters";
-    } 
-  }else {
+    }
+  } else {
     errors.phone = "Field required";
   }
 
-  
   return errors;
 };
 
@@ -93,8 +93,6 @@ export const CreateAccount = () => {
       })
     );
   };
-  console.log("errors ====> ", errors);
-  console.log("input ====> ", input);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -103,38 +101,29 @@ export const CreateAccount = () => {
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{ textAlign: "center", mb: "6.5%" }}
-    >
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-        }}
+    <>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ textAlign: "center", mb: 7 }}
       >
+      <Typography variant='h3' sx={{mt:10}}>
+      Crea tu cuenta
+      </Typography>
         <Box
-          component="form"
-          onSubmit={handleSubmit}
-          onChange={handleSetInput}
-          noValidate
-          sx={{ mt: 1 }}
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          {errors.email ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-          ) : (
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            onChange={handleSetInput}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -143,22 +132,11 @@ export const CreateAccount = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              error={errors.email}
+              helperText={errors.email}
               autoFocus
             />
-          )}
 
-          {errors.userName ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="userName"
-              label="Username"
-              name="userName"
-              autoComplete="userName"
-            />
-          ) : (
             <TextField
               margin="normal"
               required
@@ -167,21 +145,10 @@ export const CreateAccount = () => {
               label="Username"
               name="userName"
               autoComplete="userName"
+              error={errors.userName}
+              helperText={errors.userName}
             />
-          )}
 
-          {errors.password ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              name="password"
-              autoComplete="password"
-            />
-          ) : (
             <TextField
               margin="normal"
               required
@@ -190,22 +157,10 @@ export const CreateAccount = () => {
               label="Password"
               name="password"
               autoComplete="password"
+              error={errors.password}
+              helperText={errors.password}
             />
-          )}
 
-         
-          {errors.firstName ? (
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="firstName"
-              label="First Name"
-              name="firstName"
-              autoComplete="firstName"
-            />
-          ) : (
             <TextField
               margin="normal"
               required
@@ -214,22 +169,10 @@ export const CreateAccount = () => {
               label="First Name"
               name="firstName"
               autoComplete="firstName"
+              error={errors.firstName}
+              helperText={errors.firstName}
             />
-          )}
 
-          {errors.lastName ? 
-            <TextField
-              error
-              margin="normal"
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lastName"
-              
-            />
-           : 
             <TextField
               margin="normal"
               required
@@ -238,34 +181,24 @@ export const CreateAccount = () => {
               label="Last Name"
               name="lastName"
               autoComplete="lastName"
+              error={errors.lastName}
+              helperText={errors.lastName}
             />
-          }
 
-          {errors.phone ? 
             <TextField
+              margin="normal"
               type="number"
-              error
-              margin="normal"
               required
               fullWidth
               id="phone"
-              label="Phone"
+              label="Phone Number"
               name="phone"
               autoComplete="phone"
+              error={errors.phone}
+              helperText={errors.phone}
             />
-           :
-            <TextField
-            margin="normal"
-            type="number"
-            required
-            fullWidth
-            id="phone"
-            label="Phone Number"
-            name="phone"
-            autoComplete="phone"
-          />}
 
-          <FormControlLabel
+            {/* <FormControlLabel
             control={<Checkbox value="aceptTerms" color="primary" />}
             label="Acepto los terminos y condiciones"
             id="aceptTerms"
@@ -273,18 +206,20 @@ export const CreateAccount = () => {
 
           <Link href="https://google.com" target="_blank">
             <Typography>Ver terminos y condiciones</Typography>
-          </Link>
+          </Link> */}
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+      <Footer />
+    </>
   );
 };
