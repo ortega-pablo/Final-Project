@@ -16,6 +16,7 @@ function validate (value) {
   let errors = {};
   if(isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número."
   if(isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número."
+  if(value.Desde > value.Hasta) errors.Desde = "El primero valor debe ser menor."
   return errors;
 }
 
@@ -127,14 +128,19 @@ function Category({handleClickForCategories, handleClickForSubcategories, handle
             </ListSubheader>
           }>
             <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 0, Hasta: 50000});
+              handleClickSubmitPerPrice({Desde: 0, Hasta: 100000});
               }}>
-            <ListItemText primary={"Hasta $50.000"}  />
+            <ListItemText primary={"Hasta $100.000"}  />
             </ListItemButton>
             <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 0, Hasta: 200000});
+              handleClickSubmitPerPrice({Desde: 100000, Hasta: 200000});
             }}>
-            <ListItemText primary={"Hasta $200.000"}  />
+            <ListItemText primary={"$100.000 - $200.000"}  />
+            </ListItemButton>
+            <ListItemButton onClick={() => {
+              handleClickSubmitPerPrice({Desde: 200000, Hasta: 1000000});
+              }}>
+            <ListItemText primary={"Mas de $200.000"}  />
             </ListItemButton>
             <ListItem>
               <Box  >
@@ -158,7 +164,7 @@ function Category({handleClickForCategories, handleClickForSubcategories, handle
                 handleClick(e);
                 if(errors.Desde || errors.Hasta){
                   e.preventDefault();
-                  alert("Los campos deben ser númericos.");
+                  alert("Existen errores.");
                 }else{
                   handleClickSubmitPerPrice(value);
                 }
