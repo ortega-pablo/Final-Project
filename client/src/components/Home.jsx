@@ -1,7 +1,7 @@
 import { Grid, SwipeableDrawer } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, filterPerCategory, filterPerSubCategory } from "../redux/actions";
+import { getProducts, filterPerCategory, filterPerSubCategory, filterPerPrice, filterPerName} from "../redux/actions";
 import { Card } from "./Card/Card";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { Box } from "@mui/system";
 import Category  from "./Category/Category";
+import { formatMuiErrorMessage } from "@mui/utils";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,10 +33,14 @@ export const Home = () => {
 
   const categories = useSelector((state) => state.categories);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  const {name} = useParams();
+  
+  console.log(name);
 
+  useEffect(() => {
+    dispatch(getProducts(name));
+  }, [dispatch]);
+  
   //reRenderizador 
   const [reRender, setReRender] = useState('');
 
@@ -59,6 +65,14 @@ export const Home = () => {
     setReRender(`Ultimo ordenamiento ${subCategory}`);
     setCurrentPage(1);
   }
+
+  const handleClickSubmitPerPrice = (value) => {
+      dispatch(filterPerPrice(value));
+      setReRender(`Ultimo ordenamiento ${value}`)
+      setCurrentPage(1);
+  }
+
+
 
   return (
     <div>
@@ -91,7 +105,12 @@ export const Home = () => {
               width: "15%",
             }}
           >
-            <Category handleClickForCategories = {handleClickForCategories} handleClickForSubcategories= {handleClickForSubcategories}></Category>
+            <Category 
+              handleClickForCategories = {handleClickForCategories} 
+              handleClickForSubcategories= {handleClickForSubcategories}
+              handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
+            >
+            </Category>
           </Container>
           <Grid
             container

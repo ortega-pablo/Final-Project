@@ -17,11 +17,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupIcon from '@mui/icons-material/Group';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link } from '@mui/material';
+import { Link, Input} from '@mui/material';
 import Button from '@mui/material/Button';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
-
+import { getProducts } from "../../redux/actions/index";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -66,7 +68,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(Input)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -83,6 +85,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [name, setName] = React.useState('');
+
+  const searchProductPerName = (name) => {
+    dispatch(getProducts())
+    navigate('/')
+  }
+
+  const handleChangeForName = (e) => {
+    setName(e.target.value)
+  }
 
   const isMenuProfileOpen = Boolean(anchorProfileEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -221,15 +235,22 @@ export const NavBar = (props) => {
           >
             NombreShop
           </Typography>
-          <Search>
+          <form onSubmit={(e) => {
+            navigate(`/${name}`)            
+            }}
+            
+            >
+          <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Buscar…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChangeForName}
             />
           </Search>
+          </form>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
             <Box sx={{margin: '5px'}}>
               <Button
