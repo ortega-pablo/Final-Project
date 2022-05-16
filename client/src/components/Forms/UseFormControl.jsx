@@ -88,8 +88,10 @@ export function UseFormControl() {
     thumbnail: "",
   });
 
-  const [categoty, setCategoty] = React.useState("");
+  const [category, setCategory] = React.useState("");
+  const [subCategory, setsubCategory] = React.useState("");
 
+console.log(category)
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
@@ -97,7 +99,7 @@ export function UseFormControl() {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setCategoty(e.target.value);
+    setCategory(e.target.value);
   };
 
   async function handleSubmit(e) {
@@ -235,7 +237,7 @@ export function UseFormControl() {
 
       const newProd = await dispatch(postProduct(input));
 
-      await dispatch(postAddCateroryToProduct(newProd.data.id, categoty));
+      await dispatch(postAddCateroryToProduct(newProd.data.id, category));
 
       navigate("/detail/" + newProd.data.id);
     }
@@ -292,7 +294,7 @@ export function UseFormControl() {
 
   async function handleNewCategory(e) {
     e.preventDefault();
-    console.log(e);
+   
 
     console.log(newCat);
     await dispatch(postAddCaterory(newCat));
@@ -439,7 +441,7 @@ export function UseFormControl() {
       <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
-        value={categoty}
+        value={category}
         onChange={handleChange}
         label="Age"
       >
@@ -448,17 +450,56 @@ export function UseFormControl() {
         </MenuItem>
         {allCategories?.map((cat) => {
           return (
+            
             <MenuItem value={cat.id}>
               {cat.name} {cat.id}
             </MenuItem>
+            
+            
           );
         })}
       </Select>
 
+   <Select
+    value={subCategory}
+    label="Sub Categoria">
+      <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {
+        
+        }
+   </Select>
+{/* <Select native defaultValue="" id="grouped-native-select" label="Grouping">
+          <option aria-label="None" value="" />
+            {
+              allCategories?.map(cat=> {
+                return (
+                  <optgroup label={cat.name}>
+                    {cat.subCategories.map( sub =>{
+                      return (
+                        <option value={sub.id}>{sub.name}</option>
+                      )
+                    } )
+
+                    }
+                    
+                    </optgroup>
+                )
+              })
+            }
+         
+        
+          
+        </Select> */}
+        
       <AddCategory
         handleInputNewCategory={handleInputNewCategory}
         handleNewCategory={handleNewCategory}
       />
+      {
+        
+      }
     </>
   );
 }

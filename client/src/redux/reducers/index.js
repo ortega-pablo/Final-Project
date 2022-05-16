@@ -1,5 +1,8 @@
 
-import { GET_PRODUCTS, GET_DETAIL, GET_CATEGORIES, FILTER_PER_CATEGORY, FILTER_PER_SUBCATEGORY, POST_PRODUCT,  POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT, ADD_CATEGORY } from "../actions";
+
+
+
+import { GET_PRODUCTS, GET_DETAIL, GET_CATEGORIES, FILTER_PER_CATEGORY, FILTER_PER_SUBCATEGORY, FILTER_PER_PRICE, FILTER_PER_NAME,  POST_PRODUCT,  POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT, ADD_CATEGORY } from "../actions";
 
 
 const initialState = {
@@ -45,8 +48,6 @@ const rootReducer = (state = initialState, action ) => {
         }
         case FILTER_PER_SUBCATEGORY:{
             const allProducts = state.productsAux;
-            console.log(allProducts);
-            console.log(allProducts[0]);
             let filterProducts = [];
             allProducts.forEach((p) => {
                  p.categories.forEach(c => {
@@ -54,6 +55,25 @@ const rootReducer = (state = initialState, action ) => {
                      if(filterSubCat.length) filterProducts.push(p)
                  });
             })
+            console.log(filterProducts)
+            return{
+                ...state,
+                products: filterProducts
+            }
+        }
+        case FILTER_PER_PRICE: {
+            console.log(action.payload);
+            const allProducts = state.products;
+            let filterProducts = allProducts.filter(p => (p.price >= action.payload.Desde && p.price <= action.payload.Hasta));
+            return{
+                ...state,
+                   products: filterProducts
+            }
+        }
+        case FILTER_PER_NAME:{
+            console.log(state.productsAux)
+            const allProducts = state.productsAux;
+            const filterProducts = allProducts.filter(p => p.name.toLowerCase().includes(action.payload.toLowerCase()));
             console.log(filterProducts)
             return{
                 ...state,

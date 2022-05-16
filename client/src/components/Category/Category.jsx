@@ -3,7 +3,7 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
-import { Box, ListItemButton } from '@mui/material';
+import { Box, ListItemButton, FormControl, Input, FormHelperText, TextField, ListItem, Button } from '@mui/material';
 import { ListItemIcon, ListSubheader } from '@mui/material';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,18 +12,71 @@ import { getCategories } from '../../redux/actions';
 import { withWidth } from '@material-ui/core';
 import { Hidden } from '@material-ui/core';
 
+function validate (value) {
+  let errors = {};
+  if(isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número."
+  if(isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número."
+  return errors;
+}
 
 
-function Category({handleClickForCategories, handleClickForSubcategories}) {
+
+function Category({handleClickForCategories, handleClickForSubcategories, handleClickSubmitPerPrice}) {
 
   const categories = useSelector(state => state.categories);
 
+  let [errors, setErrors] = React.useState({});
+
+  let [reRender, setRerender] = React.useState('');
+
+  const [errorDesde, setErrorDesde] = React.useState(false)
+  const [leyendaErrorDesde, setLeyendaErrorDesde] = React.useState("")
+
+  const [errorHasta, setErrorHasta] = React.useState(false)
+  const [leyendaErrorHasta, setLeyendaErrorHasta] = React.useState("")
 
   const dispatch = useDispatch();
 
+  function handleClick (e){
+    e.preventDefault();
+    if(errors.Desde){
+      setErrorDesde(true);
+      setLeyendaErrorDesde(errors?.Desde)
+    }
+    if(errors.Hasta){
+      setErrorHasta(true);
+      setLeyendaErrorHasta(errors?.Hasta)
+    }
+  }
+
   useEffect(()=> {
     dispatch(getCategories());
-  }, [dispatch])
+  }, [dispatch]);
+
+  const [value, setValue] = React.useState({
+    Desde:null, 
+    Hasta:null
+  });
+
+  const handleChange = (e) => {
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value
+    })
+    setErrors(validate({
+      ...value,
+      [e.target.name]: e.target.value
+    }))
+
+    if(!errors.Desde){
+      setErrorDesde(false);
+      setLeyendaErrorDesde("")
+    }
+    if(!errors.Hasta){
+      setErrorHasta(false);
+      setLeyendaErrorHasta("")
+    }
+  }
 
   return (
     <Hidden xsDown>
@@ -44,11 +97,6 @@ function Category({handleClickForCategories, handleClickForSubcategories}) {
             key={category}
             onClick={() => handleClickForCategories(category.name)}
             disableGutters
-            secondaryAction={
-                <IconButton aria-label="comment">
-                  <CommentIcon />
-                </IconButton>
-            }
             >
             <ListItemText primary={category.name}  />
             </ListItemButton>
@@ -56,14 +104,11 @@ function Category({handleClickForCategories, handleClickForSubcategories}) {
                 return <>
             <List component="div" disablePadding>
                       <ListItemButton 
-                      key={subCategory} 
-                      sx={{ pl: 3 }}
-                      onClick={() => handleClickForSubcategories(subCategory.name)}
+                        key={subCategory} 
+                        sx={{ pl: 3 }}
+                        onClick={() => handleClickForSubcategories(subCategory.name)}
                       >
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary={subCategory.name}/>
+                          <ListItemText primary={subCategory.name}/>
                       </ListItemButton>
               </List>
                 </>
@@ -81,7 +126,47 @@ function Category({handleClickForCategories, handleClickForSubcategories}) {
               Precio
             </ListSubheader>
           }>
-
+            <ListItemButton onClick={() => {
+              handleClickSubmitPerPrice({Desde: 0, Hasta: 50000});
+              }}>
+            <ListItemText primary={"Hasta $50.000"}  />
+            </ListItemButton>
+            <ListItemButton onClick={() => {
+              handleClickSubmitPerPrice({Desde: 0, Hasta: 200000});
+            }}>
+            <ListItemText primary={"Hasta $200.000"}  />
+            </ListItemButton>
+            <ListItem>
+              <Box  >
+                <TextField 
+                value={value.Desde} 
+                name="Desde"
+                onChange={handleChange} 
+                placeholder='Desde'
+                helperText={leyendaErrorDesde}
+                error={errorDesde} 
+                /> 
+                <TextField
+                  value={value.Hasta}
+                  name="Hasta"
+                  onChange={handleChange}
+                  placeholder='Hasta'
+                  helperText={leyendaErrorHasta}
+                  error={errorHasta} 
+                />                               
+              <Button onClick={(e) => {
+                handleClick(e);
+                if(errors.Desde || errors.Hasta){
+                  e.preventDefault();
+                  alert("Los campos deben ser númericos.");
+                }else{
+                  handleClickSubmitPerPrice(value);
+                }
+                }}>
+                Filtrar
+              </Button>
+              </Box>
+            </ListItem>
         </List>
         </Box>
     </Hidden>
@@ -90,17 +175,7 @@ function Category({handleClickForCategories, handleClickForSubcategories}) {
 }
 
 export default withWidth()(Category);
-//  <Collapse in={open} timeout="auto" unmountOnExit>
-//           <List component="div" disablePadding>
-//             {categories.subCategories.length ? categories.subCategories.map(subCategory => {
-//               <ListItemButton sx={{ pl: 4 }}>
-//                 <ListItemText primary={subCategory} />
-//               </ListItemButton>
-//             }) :
-//             <></>
-//             }
-//           </List>
-//       </Collapse>
+
         
 
         

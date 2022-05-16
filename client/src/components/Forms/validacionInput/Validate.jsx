@@ -38,7 +38,7 @@ export const validate = (input) => {
     if (input.description) {
       if (input.description.trim() === "") {
         errors.description = "Se requiere la descripción del producto";
-      } else if (input.description.length > 10) {
+      } else if (input.description.length > 20) {
         errors.description = "La descripción no puede contener mas de 500 caracteres";
       }
     };
