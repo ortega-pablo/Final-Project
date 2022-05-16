@@ -21,13 +21,14 @@ export const SelectPage = ({setCurrentPage, currentPage, productsPerPage, produc
   return (
     <Box sx={{ minWidth: 120,  }}>
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="go-to-page">Page</InputLabel>
+        <InputLabel id="go-to-page">Pagina</InputLabel>
         <Select
           labelId="go-to-page"
           id="go-to-page"
           value={currentPage}
           label="page"
           onChange={handleSelectPage}
+          color="primary"
         >
         {
             numbers?.map(number =>(

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    color: 'primary',
   },
 }));
 
@@ -40,7 +40,7 @@ export const Home = () => {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(9);
+  const [productsPerPage, setProductsPerPage] = useState(10);
   //calculos pagination
   const lastProduct = currentPage * productsPerPage;
   const firstProduct = lastProduct - productsPerPage;
@@ -109,7 +109,7 @@ export const Home = () => {
                 return (
                   <Grid
                     sx={{
-                      m: "10px", width:"235px", justifyContent:"stretch"
+                      m: "20px", width:"235px", justifyContent:"stretch"
                     }}
                   >
                       <Paper className={classes.paper} sx={{display: 'flex', heigth: "360px", padding: 2}} >
