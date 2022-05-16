@@ -1,11 +1,13 @@
-import { GET_PRODUCTS, GET_DETAIL, POST_PRODUCT, GET_ALL_CATEGORIES, POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT } from "../actions";
+
+import { GET_PRODUCTS, GET_DETAIL, GET_CATEGORIES, FILTER_PER_CATEGORY, FILTER_PER_SUBCATEGORY, POST_PRODUCT,  POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT, ADD_CATEGORY } from "../actions";
 
 
 const initialState = {
     products: [],
     productsAux: [],
     productDetail: {},
-    allCategories: []
+    categories: [],
+    categoriesAux:[]
 }
 
 const rootReducer = (state = initialState, action ) => {
@@ -22,6 +24,43 @@ const rootReducer = (state = initialState, action ) => {
                 ...state,
                 productDetail: action.payload
             }
+        case GET_CATEGORIES:{
+            
+            return {
+                ...state,
+                categories: action.payload,
+           }
+        }
+        case FILTER_PER_CATEGORY:{
+            const allProducts = state.productsAux;
+            let filterProducts = [];
+            allProducts.forEach((p) => {
+                let filterCat = p.categories.filter(c => c.name === action.payload);
+                if (filterCat.length) filterProducts.push(p);
+            })
+            return {
+                ...state,
+                products: filterProducts
+            }
+        }
+        case FILTER_PER_SUBCATEGORY:{
+            const allProducts = state.productsAux;
+            console.log(allProducts);
+            console.log(allProducts[0]);
+            let filterProducts = [];
+            allProducts.forEach((p) => {
+                 p.categories.forEach(c => {
+                     let filterSubCat = c.subCategories.filter(sc => sc.name === action.payload);
+                     if(filterSubCat.length) filterProducts.push(p)
+                 });
+            })
+            console.log(filterProducts)
+            return{
+                ...state,
+                products: filterProducts
+            }
+        }
+
         
         case POST_PRODUCT:{
             return {
@@ -29,12 +68,12 @@ const rootReducer = (state = initialState, action ) => {
 
             } 
         }
-        case GET_ALL_CATEGORIES:{
-            return {
-                ...state,
-                allCategories:action.payload
+        case ADD_CATEGORY:{
+            return{
+                ...state
             }
         }
+        
         case POST_ADD_CATEROY_TO_PRODUCT:{
             return{
                 ...state
