@@ -19,10 +19,10 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   
-  const {name, productId} = req.query
+  const {specName, productId} = req.query
 
   try{
-    if(name){
+    if(specName){
 
       const getProduct = await Product.findAll({
         include: [
@@ -30,17 +30,25 @@ router.get("/", async (req, res, next) => {
             model: Specification,
             attributes: ["id", "name"],
             through: {
-                as:"value:",
                 attributes: ["value"],
             },
         }
         ]
       })
-      // res.status(200).send(getProduct)
-      // const found = await getProduct?.filter(e => e.name.toLowerCase().includes(e.specifications.name.toLowerCase()));
+    
+      const mapped = getProduct.map(e => {
+        return {
+          productId: e.id,
+          name: e.name,
+          specifications:  e.specifications && e.specifications
+        }
+      })
 
-      // found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
-      res.status(200).send(getProduct)
+      
+      //  console.log(mapped.map(e => e.specifications.map(v => v.name)))  // Puta mierda
+      // const found = await mapped?.map(e => e.specifications.map(v => v.name)).flat().filter(e => e.toLowerCase().includes(specName.toLowerCase()));
+      // found.length ? res.status(200).json(found) : res.json("Specification not found, please try another search");
+      res.status(200).send(mapped)
 
     }
    
