@@ -371,7 +371,7 @@ console.log(category)
           variant="outlined"
           name="netWeight"
           InputProps={{
-            endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+            endAdornment: <InputAdornment position="end">gr</InputAdornment>,
           }}
           helperText={leyendaErrorNetWei}
           error={errorNetWei}
@@ -382,7 +382,7 @@ console.log(category)
           variant="outlined"
           name="grossWeight"
           InputProps={{
-            endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
+            endAdornment: <InputAdornment position="end">gr</InputAdornment>,
           }}
           helperText={leyendaerrorGrossWei}
           error={errorGrossWei}
