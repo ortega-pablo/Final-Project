@@ -9,35 +9,15 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
-import GroupIcon from '@mui/icons-material/Group';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link } from '@mui/material';
+import { Link, Input} from '@mui/material';
 import Button from '@mui/material/Button';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Slide from '@mui/material/Slide';
-
-
-function HideOnScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
+import { useNavigate } from "react-router-dom";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -66,7 +46,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(Input)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -83,6 +63,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
+  const [name, setName] = React.useState('');
+
+
+  const handleChangeForName = (e) => {
+    setName(e.target.value)
+  }
 
   const isMenuProfileOpen = Boolean(anchorProfileEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -193,11 +180,10 @@ export const NavBar = (props) => {
   );
 
   return (
-    <Box  sx={{ flexGrow: 1,}}>
-       <HideOnScroll {...props}>
-       <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", } }  >
+    <Box  sx={{ flexGrow: 1}} >
+       
+       <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", position: "fixed" } }  >
         <Toolbar>
-
           <Typography
             variant="h6"
             noWrap
@@ -222,21 +208,28 @@ export const NavBar = (props) => {
           >
             NombreShop
           </Typography>
-          <Search>
+          <form onSubmit={(e) => {
+            navigate(`/${name}`)            
+            }}
+            
+            >
+          <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Buscar…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChangeForName}
             />
           </Search>
+          </form>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
             <Box sx={{margin: '5px'}}>
               <Button
               variant='outlined'
                 sx={{ my: 2, color: 'white', display: 'block', borderColor: '#E8E9F2'}}
-                href="/"
+                href="/#container"
               >
                 Productos
               </Button>
@@ -289,7 +282,7 @@ export const NavBar = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-       </HideOnScroll>
+      
        <Toolbar></Toolbar>
       {renderMobileMenu}
       {renderProfileMenu}

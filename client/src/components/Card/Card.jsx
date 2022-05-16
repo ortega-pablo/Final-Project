@@ -9,13 +9,12 @@
 //   navigate("/detail")
 // }
 
-
 //   return (
 //     <>
 //     <h2>{name}</h2>
 //     <h3>$ {price}</h3>
 //     <h3>{brand}</h3>
-    
+
 //     <img
 //       src={thumbnail}
 //       alt="soy la foto"/>
@@ -26,47 +25,53 @@
 //     </>
 //   )
 // }
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, Link } from '@mui/material';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea, } from "@mui/material";
 
-export default function MultiActionAreaCard({name, price,brand, thumbnail}) {
+export default function MultiActionAreaCard({
+  name,
+  price,
+  brand,
+  thumbnail,
+}) {
   return (
-
-
-    <Card sx={{ width: 200 }}>
-
-      <CardActionArea>
-
-      <Link href="/detail" underline="none">
-       
-        <CardMedia
-          component="img"
-          height="140"
-          image={thumbnail}
-          alt="green iguana"
-        />
-
-      </Link>
+    <Card sx={{ width: 200, hover: "true", maxHeight:'360px', minHeight:'360px'}}>
+      <CardActionArea sx={[
+    {
+      '&:hover': {
+        transform: "scale(1.05)",
+        boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.6)",
+        transitionDuration: "1s",
+        background: "rgba(138, 151, 165, 0.21)",
+        maxHeight:'360px', 
+        minHeight:'360px'
+      },
+    }
+  ]}>        
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={{mb:'auto'}}>
             {name}
           </Typography>
-          <h3>$ {price}</h3>
-          <h3>{brand}</h3>
-          <Typography variant="body2" color="text.secondary">
-            Con esta minadora te vas a hacer millonario!
-          </Typography>
+          <CardMedia
+            component="img"
+            height="140"
+            image={thumbnail}
+            alt="green iguana"
+          />
+          <h3>Precio: {"$"}{price}</h3>
+          <h3>Marca: {brand}</h3>
         </CardContent>
+        
       </CardActionArea>
-      <CardActions>
+ {/*      <CardActions>
         <Button size="small" color="primary">
           Comparar
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

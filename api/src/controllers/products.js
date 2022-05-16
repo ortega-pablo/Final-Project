@@ -43,22 +43,8 @@ const getAllProducts = async () => {
 };
 
 const getProductsByName = async (name) => {
-  return await Product.findAll({
-   
-    where: {
-      name: {
-        [Op.substring]: name,
-      },
-    },
+   let products = await Product.findAll({
     include: [
-      {
-        model: Specification,
-        attributes: ["id", "name"],
-        through: {
-            as:"value:",
-            attributes: ["value"],
-        },
-      },
       {
         model: ProductInventory,
         attributes: ["quantity"],
@@ -84,8 +70,18 @@ const getProductsByName = async (name) => {
           },
         },
       },
+      {
+        model: Specification,
+        attributes: ["id", "name"],
+        through: {
+            as:"value:",
+            attributes: ["value"],
+        },
+      }
     ],
   });
+  let fixedProducts = products.filter(p => p.dataValues.name.toLowerCase().includes(name.toLowerCase()))
+  return fixedProducts;
 };
 
 const orderProducts = async (arr) => {

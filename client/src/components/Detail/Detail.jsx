@@ -1,56 +1,104 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {useParams ,useNavigate  } from "react-router-dom"
-import { getProducts } from '../../redux/actions';
-import CarouselDetail from "./CarouselDetail"
-import TableDetail from './TableDetail';
-import QuestionsAndAnswers from "./QuestionsAndAnswers"
-
-
-
-
-
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getDetail } from "../../redux/actions";
+import CarouselDetail from "./CarouselDetail";
+import TableDetail from "./TableDetail";
+import QuestionsAndAnswers from "./QuestionsAndAnswers";
+import {
+  Chip,
+  CircularProgress,
+  Container,
+  Divider,
+  Typography,
+} from "@mui/material";
+import { Box, maxWidth } from "@mui/system";
+import { Footer } from "../Footer/Footer";
 
 export const Detail = () => {
-const dispatch = useDispatch();
-//deberia ser un state.detail
-const products = useSelector( state=> state.products)
+  const dispatch = useDispatch();
+  //deberia ser un state.detail
+  const productDetail = useSelector((state) => state.productDetail);
+  let { id } = useParams();
 
-// let id = useParams()
-
-
-useEffect(()=>{
+  useEffect(() => {
     //tendria que ser un getDitail(id) desde las action
-    dispatch(getProducts()) 
+    dispatch(getDetail(id));
     // return (()=>{
     //     dispatch(clearDetail())
     // })
-}, [dispatch])
+  }, [dispatch]);
 
   return (
-      <div>
-            <div>Detail</div>
-            {
-                products.length &&
-                    <CarouselDetail
-                        products={products}/>
-            }
-            {   
-                products.length &&
-                    products[0].id ?
-                        <div>
-                            hola
-                        </div> 
-                : <div>Cargando...</div>
-            }
-            {
-                products.length &&
-                    <TableDetail
-                        products={products}/>
-            }
-            <h3>Preguntas y respuestas</h3>
-            <QuestionsAndAnswers/>
-      </div>
-  )
-}
+    <div>
+   
+        {productDetail.length > 0 ? (
+          <Container
+          maxWidth="vp"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            mt: "3%",
+            width: "100%",
+            justifyContent: "space-between",
+          }}>
+            <Divider>
+              <Chip
+                label={productDetail[0].name}
+                size="string"
+                sx={{ fontSize: "20px" }}
+              />
+            </Divider>
+
+            <CarouselDetail
+              productDetail={productDetail}
+              sx={{
+                display: "flex",
+                width: "100%",
+              }}
+            />
+
+            <Divider textAlign="left">
+              <Chip
+                label="Descripción"
+                size="string"
+                sx={{ fontSize: "15px" }}
+              />
+            </Divider>
+              <Box sx={{ m: "2%", maxWidth:"90%"}}>
+
+            <Typography >
+              {productDetail[0].description}
+            </Typography>
+              </Box>
+
+            <Divider textAlign="left">
+              <Chip
+                label="Especificaciones"
+                size="string"
+                sx={{ fontSize: "15px" }}
+              />
+            </Divider>
+
+            <TableDetail productDetail={productDetail} />
+
+            <Divider textAlign="left" sx={{ mt: "2%", mb: "2%" }}>
+              <Chip label="Consultas" size="string" sx={{ fontSize: "15px" }} />
+            </Divider>
+
+            <QuestionsAndAnswers asks={productDetail[0].asks} />
+          </Container>
+        ) : (
+          <CircularProgress
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          />
+        )}  
+          
+        <Footer/>
+
+    </div>
+  );
+};
