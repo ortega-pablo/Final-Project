@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, Discount, Category, Specification, SubCategory } = require("../db");
+const { Product, Discount, Category, Specification, ProductSpecification, SubCategory  } = require("../db");
 const { getAllProducts, getProductsByName , orderProducts } = require("../controllers/products");
 const router = Router();
 
@@ -110,7 +110,6 @@ router.post("/addSubCategory", async (req, res, next) => {
     next(error);
   }
 });
-
 
 router.post("/addDiscount", async (req, res, next) => {
   try {

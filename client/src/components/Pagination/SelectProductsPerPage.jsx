@@ -16,7 +16,7 @@ export const SelectProductsPerPage = ({setProductsPerPage, productsPerPage, setC
     return (
     <Box sx={{ minWidth: 120,  }}>
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="products-per-page">Products</InputLabel>
+            <InputLabel id="products-per-page">Productos</InputLabel>
             <Select
                 labelId="products-per-page"
                 id="products-per-page"
@@ -24,10 +24,11 @@ export const SelectProductsPerPage = ({setProductsPerPage, productsPerPage, setC
                 label="page"
                 onChange={handleSelectProductsPerPage}
             >
-                <MenuItem value={9}>9</MenuItem>
-                <MenuItem value={12}>12</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={15}>15</MenuItem>
-                <MenuItem value={18}>18</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+                <MenuItem value={25}>25</MenuItem>
             </Select>
         </FormControl>
     </Box>

@@ -9,8 +9,8 @@ import TableRow from "@mui/material/TableRow";
 
 export default function TableDetail({ productDetail }) {
   return (
-    <TableContainer sx={{ ml: "auto", mr: "auto", mt: "2%" }}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer sx={{ ml: "auto", mr: "auto", mt: "2%", display: "flex", justifyContent: "center" }}>
+      <Table sx={{ minWidth: 650, width: "80%" }} aria-label="simple table">
         <TableBody >
           <TableRow>
             <TableCell>Nombre</TableCell>

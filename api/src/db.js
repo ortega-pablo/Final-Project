@@ -91,6 +91,9 @@ SubCategory.belongsToMany(Product, { through: "product-subCategory"});
 Category.belongsToMany(SubCategory, { through: "sub_Categories"});
 SubCategory.belongsToMany(Category, { through: "sub_Categories"});
 
+Product.belongsToMany(SubCategory, { through: "product-subCategory"});
+SubCategory.belongsToMany(Product, { through: "product-subCategory"});
+
 Product.hasOne(ProductInventory)
 ProductInventory.belongsTo(Product)
 

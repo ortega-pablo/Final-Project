@@ -5,6 +5,7 @@ import {
   getProducts,
   filterPerCategory,
   filterPerSubCategory,
+  filterPerPrice
 } from "../redux/actions";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
@@ -14,13 +15,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Category from "./Category/Category";
 import { Footer } from "./Footer/Footer";
-
+import { useParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
 
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    color: 'primary',
   },
 }));
 
@@ -31,8 +32,12 @@ export const Home = () => {
 
   const categories = useSelector((state) => state.categories);
 
+  const {name} = useParams();
+  
+  console.log(name);
+
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts(name));
   }, [dispatch]);
 
   //reRenderizador
@@ -40,7 +45,7 @@ export const Home = () => {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(9);
+  const [productsPerPage, setProductsPerPage] = useState(5);
   //calculos pagination
   const lastProduct = currentPage * productsPerPage;
   const firstProduct = lastProduct - productsPerPage;
@@ -59,6 +64,14 @@ export const Home = () => {
     setReRender(`Ultimo ordenamiento ${subCategory}`);
     setCurrentPage(1);
   };
+
+  const handleClickSubmitPerPrice = (value) => {
+      dispatch(filterPerPrice(value));
+      setReRender(`Ultimo ordenamiento ${value}`)
+      setCurrentPage(1);
+  }
+
+
 
   return (
     <div>
@@ -87,12 +100,18 @@ export const Home = () => {
             padding: 0,
           }}
         >
-
-            <Category
-              handleClickForCategories={handleClickForCategories}
-              handleClickForSubcategories={handleClickForSubcategories}
-            ></Category>
-      
+          <Container
+            sx={{
+              width: "15%",
+            }}
+          >
+            <Category 
+              handleClickForCategories = {handleClickForCategories} 
+              handleClickForSubcategories= {handleClickForSubcategories}
+              handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
+            >
+            </Category>
+          </Container>
           <Grid
           id="container"
             container 
@@ -109,7 +128,7 @@ export const Home = () => {
                 return (
                   <Grid
                     sx={{
-                      m: "10px", width:"235px", justifyContent:"stretch"
+                      m: "20px", width:"235px", justifyContent:"stretch"
                     }}
                   >
                       <Paper className={classes.paper} sx={{display: 'flex', heigth: "360px", padding: 2}} >
