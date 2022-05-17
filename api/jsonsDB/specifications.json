@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Memoria RAM"
+    },
+    {
+        "name": "Tipo de RAM"
+    },
+    {
+        "name": "Reloj de gráficos"
+    },
+    {
+        "name": "Potencia"
+    },
+    {
+        "name": "Mh/s"
+    }
+]

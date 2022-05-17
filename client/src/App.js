@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Detail } from "./components/Detail/Detail";
 import { Home } from "./components/Home";
-import {NavBar} from "./components/NavBar/NavBar";
+import { Footer } from "./components/Footer/Footer";
+import { NavBar } from "./components/NavBar/NavBar";
 import { NotFound } from "./components/NotFound/NotFound";
 import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
@@ -23,7 +24,6 @@ function App() {
             <Route path="*" element={<NotFound/>}/>
           </Routes>
     </BrowserRouter>
-
   );
 }
 

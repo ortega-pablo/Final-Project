@@ -36,7 +36,13 @@ router.post("/create", async (req, res, next) => {
   const { userName, email, password, firstName, lastName, phone } = req.body;
 
   try {
-
+    let Hashpassword = bcrypt.hashSync(password, 10);
+    const userFound = await User.findOne({ where: { email } });
+    if (userFound) {
+      return res.status(200).json({
+        error: "email is already used",
+      });
+    }
     const newUser = await User.create({
       userName,
       email,
@@ -46,7 +52,7 @@ router.post("/create", async (req, res, next) => {
       phone,
     });
 
-    res.status(200).send(newUser);
+    res.status(200).send("done");
   } catch (error) {
     next(error);
   }
@@ -63,7 +69,7 @@ router.post("/login", async (req, res, next) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
-      response.status(401).json({
+      response.status(400).json({
         error: "invalid user or password",
       });
     }
