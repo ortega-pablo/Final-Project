@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -58,6 +59,43 @@ export const Login = () => {
     console.log("errors ====> ", errors);
     console.log("input ====> ", input);
   };
+=======
+import React, { useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import * as yup from 'yup';
+import Button from '@material-ui/core/Button';
+import { useFormik } from 'formik';
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
+
+export const Login = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+>>>>>>> 735a80ce980f60b29536f302b4d16d4add36cf39
 
   return (
     <>
@@ -76,6 +114,7 @@ export const Login = () => {
           <Typography component="h1" variant="h5">
             LOGIN
           </Typography>
+<<<<<<< HEAD
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -84,16 +123,21 @@ export const Login = () => {
             sx={{ mt: 1 }}
           >
             <TextField
+=======
+          <Box component="form" onSubmit={formik.handleSubmit}  noValidate sx={{ mt: 1 }}>
+
+              <TextField
+>>>>>>> 735a80ce980f60b29536f302b4d16d4add36cf39
               margin="normal"
               required
               fullWidth
               id="email"
               label="Correo Electronico"
               name="email"
-              autoComplete="email"
-              error={errors.email}
-              helperText={errors.email}
-              autoFocus
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
               margin="normal"
@@ -102,9 +146,10 @@ export const Login = () => {
               name="password"
               label="Contraseña"
               type="password"
-              id="password"
-              autoComplete="current-password"
-              error={errors.password}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
