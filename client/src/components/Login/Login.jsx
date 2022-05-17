@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import { useFormik } from 'formik';
+import { Footer } from '../Footer/Footer';
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')

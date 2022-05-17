@@ -29,12 +29,12 @@ const productInfo = async function (id) {
             through: {
               attributes: [],
             },
-            include: {
-              model: SubCategory,
-              attributes: ["id", "name", "description", "thumbnail"],
-              through: {
-                attributes: [],
-              },
+          },
+          {
+            model: SubCategory,
+            attributes: ["id", "name", "description", "thumbnail"],
+            through: {
+              attributes: [],
             },
           },
           {

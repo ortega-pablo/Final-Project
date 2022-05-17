@@ -134,6 +134,7 @@ router.post("/addDiscount", async (req, res, next) => {
   }
 });
 
+
 router.post("/addSpecification", async (req, res, next) => {
   try {
     const { value } = req.body;

@@ -36,9 +36,7 @@ router.post("/create", async (req, res, next) => {
   const { userName, email, password, firstName, lastName, phone } = req.body;
 
   try {
-<<<<<<< HEAD
 
-=======
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
     if (userFound) {
@@ -46,7 +44,7 @@ router.post("/create", async (req, res, next) => {
         error: "email is already used",
       });
     }
->>>>>>> a427894a8d5b131c1069b49837832805b1c96bd3
+
     const newUser = await User.create({
       userName,
       email,
