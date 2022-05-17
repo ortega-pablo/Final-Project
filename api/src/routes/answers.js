@@ -73,7 +73,7 @@ router.get("/", async (req, res) => {
           firstName: e.firstName,
           lastName: e.lastName,
           // questions: e.asks?.map(v => v.content),
-          answers: e.asks?.map(v => v.answer.content)
+          answer: e.asks?.map(v => v.answer.content)
         }
       })
 
@@ -116,7 +116,7 @@ router.get("/", async (req, res) => {
             id: e.id,
             name: e.name,
             // questions: e.asks?.map(v => v.content),
-            answers: e.asks?.map(v => v.answer.content)
+            answer: e.asks?.map(v => v.answer.content)
           }
         })
 
@@ -150,7 +150,7 @@ router.get("/", async (req, res) => {
         return {
           id: e.id,
           question: e.content,
-          answers: e.answer.content
+          answer: e.answer.content
         }
       })
 

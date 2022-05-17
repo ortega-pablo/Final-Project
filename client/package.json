@@ -15,6 +15,7 @@
     "@types/styled-components": "^5.1.25",
     "axios": "^0.27.2",
     "dotenv": "^16.0.0",
+    "formik": "^2.2.9",
     "material-ui-icons": "^1.0.0-beta.36",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -26,7 +27,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "sweetalert": "^2.1.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
