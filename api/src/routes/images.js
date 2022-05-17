@@ -5,14 +5,9 @@ const axios = require ("axios")
 
 
 router.post("/",uploadFile(), async (req, res, next) => {
-  const { productId } = req.query
   try {
-
     console.log(req.file)
-
     res.status(200).send("Upload image succesfuly")
-   
-    
   } catch (error) {
     next(error);
   }
