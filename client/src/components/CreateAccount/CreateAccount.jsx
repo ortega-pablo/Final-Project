@@ -5,102 +5,77 @@ import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Link } from "@mui/material";
-import { FormControlLabel } from "@mui/material";
-import { Checkbox } from "@mui/material";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Avatar from '@mui/material/Avatar';
+import {useFormik} from 'formik'
+import * as yup from 'yup';
+import {postRegisterUser} from '../../redux/actions'
+import { useDispatch } from 'react-redux';
+const validationSchema = yup.object({
+  userName: yup.string() 
+  .min(2, "Too Short!")
+  .max(50, "Too Long!")
+  .required("Firstname is required"),
 
-const validate = (input) => {
-  let errors = {};
-  //email validations
-  if (input.email) {
-    if (!/\S+@\S+\.\S+/.test(input.email)) {
-      errors.email = "Invalid Email";
-    }
-  } else {
-    errors.email = "Field required";
-  }
-  // userName validations
-  if (input.userName) {
-    if (input.userName.match(/[^A-Za-z0-9]/)) {
-      errors.userName = "This field can only contains letters and numbers";
-    }
-  } else {
-    errors.userName = "Field required";
-  }
-  //password validations /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
-  if (input.password) {
-    if (input.password.match(/^([^ ]){8,15}$/)) {
-      //hay que arreglar
-    }
-  } else {
-    errors.password = "Field required";
-  }
-  //firstName validations
-  if (input.firstName) {
-    if (input.firstName.replace(/ /g, "").match(/[^A-Za-z]/)) {
-      errors.firstName = "This field can only contains letters";
-    } else if (input.firstName.lenght > 20) {
-      errors.firstName = "This field cannot contain more than 20 characters";
-    }
-  } else {
-    errors.firstName = "Field required";
-  }
-  //lastName validations
-  if (input.lastName) {
-    if (input.lastName.replace(/ /g, "").match(/[^A-Za-z]/)) {
-      errors.lastName = "This field can only contains letters";
-    } else if (input.lastName.lenght > 20) {
-      errors.lastName = "This field cannot contain more than 20 characters";
-    }
-  } else {
-    errors.lastName = "Field required";
-  }
+  firstName: yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Firstname is required"),
 
-  //phone validations
-  // no anda
-  if (input.phone) {
-    if (input.phone.toString().lenght > 20) {
-      errors.phone = "Phone numbers do not contain more than 20 characters";
-    }
-  } else {
-    errors.phone = "Field required";
-  }
+  lastName: yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Lastname is required"),
 
-  return errors;
-};
+  phone: yup.string()
+    .required("Phone number is required")
+    /* .matches(
+/^([0]{1}|\+?[234]{3})([7-9]{1})([0|1]{1})([\d]{1})([\d]{7})$/g,
+      "Invalid phone number"
+    ) */,
+
+  email: yup.string().email().required("Email is required"),
+
+  password: yup.string()
+    .required("Password is required")
+    .min(6, "Password is too short - should be 6 chars minimum"),
+});
+
 
 export const CreateAccount = () => {
-  const [input, setInput] = useState({
-    email: "",
-    userName: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
+  const dispatch  = useDispatch();
+  const [errorValidate, setErrorValidate]  = useState (null)
+  const formik = useFormik({
+    initialValues: {
+      userName: 'aaa',
+      firstName: 'aaa', 
+      lastName: 'aaa',
+      phone: '123',
+      email: 'jose@gmail.com',
+      password: '12312213',
+
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      console.log("antes de la alerta")
+      //alert(JSON.stringify(values, null, 2));
+      console.log("antes")
+      const result =  await dispatch(postRegisterUser(values))
+      console.log("COMO LO TRAIGO",result)
+      if (result?.data?.error ){
+        setErrorValidate(true)
+        console.log("entre al validate error")
+      }
+      else {
+        setErrorValidate(null)
+        console.log("entreeee nulll")
+      }
+    },
   });
-  const [errors, setErrors] = useState({});
 
-  const handleSetInput = (event) => {
-    event.preventDefault();
-    setInput({
-      ...input,
-      [event.target.name]: event.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [event.target.name]: event.target.value,
-      })
-    );
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("submit errors ====> ", errors);
-    console.log("submit input ====> ", input);
-  };
 
   return (
-    <Container
+   /*  <Container
       component="main"
       maxWidth="xs"
       sx={{ textAlign: "center", mb: "6.5%" }}
@@ -110,15 +85,18 @@ export const CreateAccount = () => {
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
+          alignItems: 'center',
         }}
-      >
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          onChange={handleSetInput}
-          noValidate
-          sx={{ mt: 1 }}
-        >
+      > */
+      <>
+        <Avatar sx={{  m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+        <form onSubmit={formik.handleSubmit} >
+          
           <TextField
             margin="normal"
             required
@@ -126,10 +104,10 @@ export const CreateAccount = () => {
             id="email"
             label="Email Address"
             name="email"
-            autoComplete="email"
-            error={errors.email}
-            helperText={errors.email}
-            autoFocus
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
 
           <TextField
@@ -139,9 +117,10 @@ export const CreateAccount = () => {
             id="userName"
             label="Username"
             name="userName"
-            autoComplete="userName"
-            error={errors.userName}
-            helperText={errors.userName}
+            value={formik.values.userName}
+            onChange={formik.handleChange}
+            error={formik.touched.userName && Boolean(formik.errors.userName)}
+            helperText={formik.touched.userName && formik.errors.userName}
           />
 
           <TextField
@@ -151,9 +130,11 @@ export const CreateAccount = () => {
             id="password"
             label="Password"
             name="password"
-            autoComplete="password"
-            error={errors.password}
-            helperText={errors.password}
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
 
           <TextField
@@ -163,9 +144,10 @@ export const CreateAccount = () => {
             id="firstName"
             label="First Name"
             name="firstName"
-            autoComplete="firstName"
-            error={errors.firstName}
-            helperText={errors.firstName}
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
           />
 
           <TextField
@@ -175,9 +157,10 @@ export const CreateAccount = () => {
             id="lastName"
             label="Last Name"
             name="lastName"
-            autoComplete="lastName"
-            error={errors.lastName}
-            helperText={errors.lastName}
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
           />
 
           <TextField
@@ -188,20 +171,12 @@ export const CreateAccount = () => {
             id="phone"
             label="Phone Number"
             name="phone"
-            autoComplete="phone"
-            error={errors.phone}
-            helperText={errors.phone}
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            error={formik.touched.phone && Boolean(formik.errors.phone)}
+            helperText={formik.touched.phone && formik.errors.phone}
           />
 
-          {/* <FormControlLabel
-            control={<Checkbox value="aceptTerms" color="primary" />}
-            label="Acepto los terminos y condiciones"
-            id="aceptTerms"
-          />
-
-          <Link href="https://google.com" target="_blank">
-            <Typography>Ver terminos y condiciones</Typography>
-          </Link> */}
 
           <Button
             type="submit"
@@ -211,8 +186,9 @@ export const CreateAccount = () => {
           >
             Sign In
           </Button>
-        </Box>
-      </Box>
-    </Container>
+          {errorValidate && <p> {"ERROR"}</p>}
+          </form>
+     
+    </>
   );
 };

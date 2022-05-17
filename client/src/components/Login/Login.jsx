@@ -1,65 +1,38 @@
 import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
-
-
-const validate = (input) => {
-  let errors = {};
-    if(input.email){
-      if(!/\S+@\S+\.\S+/.test(input.email)){
-        errors.email = 'Email invalido'
-      }
-    } else {
-      errors.email = 'Campo requerido'
-    }
-
-    if(input.password) {
-      if(input.password.length > 18){
-        errors.password = 'La contraseña no puede contener mas de 18 caracteres'
-      }
-    } else {
-      errors.password = 'Campo requerido'
-    }
-  return errors 
-}
-
-
+import * as yup from 'yup';
+import Button from '@material-ui/core/Button';
+import { useFormik } from 'formik';
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
 
 export const Login = () => {
-  const [input, setInput] = useState({
-    email: '',
-    password: '',
-  })
-  const [errors, setErrors] = useState({})
-  
-  const handleSetInput = (event) =>{
-    event.preventDefault();
-    setInput({
-      ...input,
-      [event.target.name]: event.target.value,
-    })
-    setErrors(validate({
-      ...input,
-      [event.target.name]: event.target.value,
-    }))
-  }
-  
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('errors ====> ',errors);
-    console.log('input ====> ', input)
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
       <Container component="main" maxWidth="xs" >
@@ -77,7 +50,7 @@ export const Login = () => {
           <Typography component="h1" variant="h5">
             LOGIN
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} onChange={handleSetInput} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={formik.handleSubmit}  noValidate sx={{ mt: 1 }}>
 
               <TextField
               margin="normal"
@@ -86,10 +59,10 @@ export const Login = () => {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
-              error={errors.email}
-              helperText={errors.email}
-              autoFocus
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
               margin="normal"
@@ -98,9 +71,10 @@ export const Login = () => {
               name="password"
               label="Password"
               type="password"
-              id="password"
-              autoComplete="current-password"
-              error={errors.password}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
