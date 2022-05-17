@@ -1,0 +1,12 @@
+[
+  {
+    "name": "NVIDIA",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  },
+  {
+    "name": "AMD",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  }
+]

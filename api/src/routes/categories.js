@@ -46,7 +46,6 @@ router.get("/", async (req, res, next) => {
       const getCategories = await Category.findAll({
         include: {
           model: SubCategory,
-          attributes: ["name", "description", "thumbnail"],
           through: {
             attributes: [],
           },
@@ -64,7 +63,6 @@ router.get("/", async (req, res, next) => {
       const getAll = await Category.findAll({
         include: {
           model: SubCategory,
-          attributes: ["name", "description", "thumbnail"],
           through: {
             attributes: [],
           },
