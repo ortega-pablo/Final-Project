@@ -2,65 +2,29 @@ import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import { ButtonBase } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-// const images = [
-//   {
-//     label: 'San Francisco – Oakland Bay Bridge, United States',
-//     imgPath:
-//       'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-//   },
-//   {
-//     label: 'Bird',
-//     imgPath:
-//       'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-//   },
-//   {
-//     label: 'Bali, Indonesia',
-//     imgPath:
-//       'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-//   },
-//   {
-//     label: 'Goč, Serbia',
-//     imgPath:
-//       'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-//   },
-//   {
-//     label: productDetail.name
-//   }
-// ];
+
 
 function CarouselDetail({ productDetail }) {
-  const images = [
-    {
-      label: productDetail[0].name,
-      imgPath: productDetail[0].image,
-    },
-    {
-      label: "Bird",
-      imgPath:
-        "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
-    },
-    {
-      label: "Bali, Indonesia",
-      imgPath:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80",
-    },
-    {
-      label: "Goč, Serbia",
-      imgPath:
-        "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
-    },
-  ];
+  let arrayImage = productDetail[0].image.split(",");
+
+  const images = [];
+
+  for (let i = 0; i < arrayImage.length; i++) {
+    let object = {
+      label: `${productDetail[0].name}-${i}`,
+      imgPath: arrayImage[i],
+    };
+    images.push(object);
+  }
+
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -76,39 +40,10 @@ function CarouselDetail({ productDetail }) {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-  
+
   return (
     <Box sx={{ maxWidth: 400, flexGrow: 1, ml: "auto", mr: "auto", mt: 1 }}>
-      <h3>{productDetail[0].name}</h3>
-      <h3>Function: ?????</h3>
-      <h3>$ {productDetail[0].price}</h3>
-      {productDetail[0].specifications?.map((s) => {
 
-        return (
-          <h3>
-            {s.name}: {s['value:'].value}
-          </h3>
-        );
-      })}
-      {/* <h3>Specification: ??????</h3>
-        <h3> {productDetail.}</h3> */}
-      {/* <button>Agregar al carrito</button>
-        <button>Volver</button> */}
-      <Button variant="contained">Agregar al carrito</Button>
-      <Button variant="contained">Volver</Button>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          height: 50,
-          pl: 2,
-          bgcolor: "background.default",
-        }}
-      >
-        <Typography>{images[activeStep].label}</Typography>
-      </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
@@ -163,6 +98,7 @@ function CarouselDetail({ productDetail }) {
           </Button>
         }
       />
+      
     </Box>
   );
 }
