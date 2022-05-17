@@ -5,11 +5,6 @@ import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Link } from "@mui/material";
-<<<<<<< HEAD
-import { FormControlLabel } from "@mui/material";
-import { Checkbox } from "@mui/material";
-import { Footer } from "../Footer/Footer";
-=======
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import {useFormik} from 'formik'
@@ -21,7 +16,6 @@ const validationSchema = yup.object({
   .min(2, "Too Short!")
   .max(50, "Too Long!")
   .required("Firstname is required"),
->>>>>>> 735a80ce980f60b29536f302b4d16d4add36cf39
 
   firstName: yup.string()
     .min(2, "Too Short!")
@@ -81,127 +75,6 @@ export const CreateAccount = () => {
 
 
   return (
-<<<<<<< HEAD
-    <>
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{ textAlign: "center", mb: 7 }}
-      >
-      <Typography variant='h3' sx={{mt:10}}>
-      Crea tu cuenta
-      </Typography>
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            onChange={handleSetInput}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              error={errors.email}
-              helperText={errors.email}
-              autoFocus
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="userName"
-              label="Username"
-              name="userName"
-              autoComplete="userName"
-              error={errors.userName}
-              helperText={errors.userName}
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              name="password"
-              autoComplete="password"
-              error={errors.password}
-              helperText={errors.password}
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="firstName"
-              label="First Name"
-              name="firstName"
-              autoComplete="firstName"
-              error={errors.firstName}
-              helperText={errors.firstName}
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lastName"
-              error={errors.lastName}
-              helperText={errors.lastName}
-            />
-
-            <TextField
-              margin="normal"
-              type="number"
-              required
-              fullWidth
-              id="phone"
-              label="Phone Number"
-              name="phone"
-              autoComplete="phone"
-              error={errors.phone}
-              helperText={errors.phone}
-            />
-
-            {/* <FormControlLabel
-            control={<Checkbox value="aceptTerms" color="primary" />}
-            label="Acepto los terminos y condiciones"
-            id="aceptTerms"
-          />
-
-          <Link href="https://google.com" target="_blank">
-            <Typography>Ver terminos y condiciones</Typography>
-          </Link> */}
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-      <Footer />
-=======
    /*  <Container
       component="main"
       maxWidth="xs"
@@ -316,7 +189,6 @@ export const CreateAccount = () => {
           {errorValidate && <p> {"ERROR"}</p>}
           </form>
      
->>>>>>> 735a80ce980f60b29536f302b4d16d4add36cf39
     </>
   );
 };

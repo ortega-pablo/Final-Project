@@ -134,28 +134,6 @@ router.post("/addDiscount", async (req, res, next) => {
   }
 });
 
-router.post("/addImage", async (req, res, next) => {
-  try {
-    /* const {productId}=req.query
-    const { urlImage } = req.body;
-
-    const product = await Product.findOne({
-      where: {
-        id: productId,
-      },
-    });
-    const image = await Image.create({
-      urlFile: urlImage
-    })
-
-    await product.addImage(image); */
-
-    res.status(200).send("uno");
-    console.log("hola")
-  } catch (error) {
-    next(error);
-  }
-});
 
 router.post("/addSpecification", async (req, res, next) => {
   try {

@@ -1,65 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { Footer } from "../Footer/Footer";
-
-const validate = (input) => {
-  let errors = {};
-  if (input.email) {
-    if (!/\S+@\S+\.\S+/.test(input.email)) {
-      errors.email = "Email invalido";
-    }
-  } else {
-    errors.email = "Campo requerido";
-  }
-
-  if (input.password) {
-    if (input.password.length > 18) {
-      errors.password = "La contraseña no puede contener mas de 18 caracteres";
-    }
-  } else {
-    errors.password = "Campo requerido";
-  }
-  return errors;
-};
-
-export const Login = () => {
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
-
-  const handleSetInput = (event) => {
-    event.preventDefault();
-    setInput({
-      ...input,
-      [event.target.name]: event.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [event.target.name]: event.target.value,
-      })
-    );
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("errors ====> ", errors);
-    console.log("input ====> ", input);
-  };
-=======
 import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
@@ -73,6 +11,7 @@ import Container from '@mui/material/Container';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import { useFormik } from 'formik';
+import { Footer } from '../Footer/Footer';
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
@@ -95,7 +34,6 @@ export const Login = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
->>>>>>> 735a80ce980f60b29536f302b4d16d4add36cf39
 
   return (
     <>
@@ -114,20 +52,9 @@ export const Login = () => {
           <Typography component="h1" variant="h5">
             LOGIN
           </Typography>
-<<<<<<< HEAD
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            onChange={handleSetInput}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-=======
           <Box component="form" onSubmit={formik.handleSubmit}  noValidate sx={{ mt: 1 }}>
 
               <TextField
->>>>>>> 735a80ce980f60b29536f302b4d16d4add36cf39
               margin="normal"
               required
               fullWidth
