@@ -55,6 +55,7 @@ const {
   Specification,
   User,
   SubCategory,
+  Image,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -66,6 +67,9 @@ Specification.belongsToMany(Product, { through: ProductSpecification});
 
 Product.belongsToMany(Order, { through: "orderItems"});
 Order.belongsToMany(Product, { through: "orderItems"});
+
+Product.belongsToMany(Image, { through: "productImage"});
+Image.belongsToMany(Product, { through: "productImage"});
 
 Order.hasMany(Ask);
 Ask.belongsTo(Order)

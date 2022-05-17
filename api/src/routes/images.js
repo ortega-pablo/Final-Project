@@ -1,16 +1,22 @@
 const { Router } = require("express");
 const router = Router();
-const {uploadImage} = require("../middleware/multer")
+const uploadFile = require("../middleware/multer")
+const axios = require ("axios")
 
 
-router.post("/", async (req, res, next) => {
-const  image  = require.body
+router.post("/",uploadFile(), async (req, res, next) => {
+  const { productId } = req.query
   try {
-   uploadImage(image)
-   res.status(200).send("Upload image succesfuly")
+
+    console.log(req.file)
+
+    res.status(200).send("Upload image succesfuly")
+   
+    
   } catch (error) {
     next(error);
   }
+  
 });
 
 module.exports = router;

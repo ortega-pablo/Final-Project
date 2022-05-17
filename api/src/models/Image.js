@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define("image", {
     fileName: {
       type: DataTypes.TEXT,
-      allowNull: false,
+
     },
     urlFile: {
       type: DataTypes.TEXT,
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
     },
     dateUpload: {
       type: DataTypes.TEXT,
-      allowNull: false,
+
     },
   });
 };
