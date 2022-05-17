@@ -12,9 +12,9 @@ router.post("/create", async (req, res, next) => {
 
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
-    const userFound = User.findOne({ where: { email } });
+    const userFound = await User.findOne({ where: { email } });
     if (userFound) {
-      return response.status(401).json({
+      return res.status(401).json({
         error: "email is already used",
       });
     }
