@@ -86,45 +86,15 @@ router.post("/login", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   const { firstName } = req.query;
 
-  try {
-    if (firstName) {
-      const findByName = await User.findAll({
-        include: [
-          {
-            model: Ask,
-            attributes: ["content"],
-            include: [
-              {
-                model: Answer,
-                attributes: ["content"],
-              },
-            ],
-          },
-        ],
-      });
-      const found = await findByName?.filter((e) =>
-        e.firstName.toLowerCase().includes(firstName.toLowerCase())
-      );
+      const findByName = await User.findAll()
+      const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
 
-      found.length
-        ? res.status(200).json(found)
-        : res.json("User not found, please try another search");
+      
+      found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
+
     } else {
-      const getAll = await User.findAll({
-        include: [
-          {
-            model: Ask,
-            attributes: ["content"],
-            include: [
-              {
-                model: Answer,
-                attributes: ["content"],
-              },
-            ],
-          },
-        ],
-      });
-      return res.status(200).send(getAll);
+      const findByName = await User.findAll()
+      return res.status(200).send(findByName)
     }
   } catch (error) {
     res.send(error);
@@ -138,26 +108,14 @@ router.get("/:userId", async (req, res) => {
     if (userId) {
       const findById = await User.findOne({
         where: {
-          id: userId,
-        },
-        include: [
-          {
-            model: Ask,
-            attributes: ["content"],
-            include: [
-              {
-                model: Answer,
-                attributes: ["content"],
-              },
-            ],
-          },
-        ],
-      });
-
-      console.log(findById);
-      return res.send(findById);
-    } else {
-      return res.status(404).send("User not found");
+          id: userId
+        }
+      })
+  
+      return res.send(findById)
+  
+    } else{
+      return res.status(404).send("User not found")
     }
   } catch (error) {
     res.send(error);

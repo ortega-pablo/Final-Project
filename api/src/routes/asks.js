@@ -1,11 +1,13 @@
 const { Router } = require("express");
 const { User, Product, Ask, Answer } = require("../db");
+const { getUser, getProduct } = require("../controllers/getAsks");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
   const { content } = req.body;
   const { userId, productId, orderId, } = req.query;
   try {
+
     if (productId) {
 
       const newAsk = await Ask.create({
@@ -34,33 +36,36 @@ router.post("/", async (req, res, next) => {
 });
 
 
-router.get("/", async (req, res) => {          
+router.get("/", async (req, res, next) => {          
 
   const {userId, productId} = req.query
 
   try{
-    if(userId) {
-    //////////////////// USER STARTS HERE ///////////////////////// 
-      const getUser = await User.findOne({
-        where: {
-          id: userId
-        },
-        include:[
-          {
-            model: Ask,
-            attributes: ["content"],
-            include: [
-              {
-                model: Answer,
-                attributes: ["content"]
-              }
-          ]
-          },
-        ]
-      })
 
+    if(userId && productId){
+  
+      const getBoth = await Ask.findAll({
+        where: {
+          productId,
+          userId
+        }
+      })
+      
+     if(!getBoth.length){
+      return res.send("User does not have any questions for this product")
+      
+     }
+     else{
+      return res.send(getBoth)  
+     }
+
+    } else if(userId) {
+    //////////////////// USER STARTS HERE ///////////////////////// 
+
+      const getOneUser = await getUser(userId)
+      
       let userArray = [];
-      userArray.push(getUser)
+      userArray.push(getOneUser)
 
       const userSimplified = userArray?.map(e => {
         return {
@@ -68,12 +73,17 @@ router.get("/", async (req, res) => {
           userName: e.userName,
           firstName: e.firstName,
           lastName: e.lastName,
-          questions: e.asks?.map(v => v.content)
+          asks: e.asks?.map(v => {
+            return {
+              question: v.content && v.content,
+              product: v.answer && v.product
+            }
+          })
         }
       })
 
     
-      if(getUser.asks.length === 0){
+      if(getOneUser.asks.length === 0){
         return res.send("No questions found for this user")
 
       } else {
@@ -84,43 +94,42 @@ router.get("/", async (req, res) => {
     //////////////////// PRODUCT STARTS HERE ///////////////////////// 
     } else if(productId){
       
-      const getProduct = await Product.findOne({
-        where: {
-          id: productId
-        }, 
-        include: [{
-          model: Ask,
-          attributes: ["content"],
-        }]
-      })
-
-        let productArray = [];
-        productArray.push(getProduct)
+        const getOneProduct = await getProduct(productId)
         
+        let productArray = [];
+        productArray.push(getOneProduct)
+
+
         const productSimplified = productArray?.map(e => {
           return {
             id: e.id,
             name: e.name,
-            questions: e.asks?.map(v => v.content)
+            asks: e.asks?.map(v => {
+              return {
+                question: v?.content,
+                answer: v.answer && v.answer.content
+              }
+            }),
           }
         })
 
       
-        if(getProduct.asks.length === 0){
+        if(getOneProduct.asks.length === 0){
           return res.send("No questions found for this product")
 
       } else {
         return res.status(200).send(productSimplified)
       }
-    
-    } else {
+
+    }
+     else {
       const getAllQuestions = await Ask.findAll();
 
       return res.status(200).send(getAllQuestions)
 
     }
   } catch(error){
-    res.send(error)
+    next(error)
   }
 })
 
