@@ -1,108 +1,47 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Version', 1590, "algoritmo", 45),
-  createData('Algoritmo', 2373),
-  createData('Hashrate', 262.0),
-  createData('Power', 3053),
-  createData('Tamaño', 356.9),
-  createData('Peso', 356.9)
-];
-
-export default function TableDetail({productDetail}) {
+import TableRow from "@mui/material/TableRow";
 
 
-
-
+export default function TableDetail({ productDetail }) {
   return (
+    <TableContainer sx={{ ml: "auto", mr: "auto", mt: "2%", display: "flex", justifyContent: "center" }}>
+      <Table sx={{ minWidth: 650, width: "80%" }} aria-label="simple table">
+        <TableBody >
+          <TableRow>
+            <TableCell>Nombre</TableCell>
+            <TableCell>{productDetail[0].name}</TableCell>
+          </TableRow>
 
-    <Paper>
+          <TableRow>
+            <TableCell>Marca</TableCell>
+            <TableCell>{productDetail[0].brand}</TableCell>
+          </TableRow>
 
-    <TableContainer component={Paper} sx={{ maxWidth: 700, flexGrow: 1, ml:"auto", mr:"auto", mt:1 }} >
-        <h3>Especificaciones técnicas</h3>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          {/* <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow> */}
-        </TableHead>
-        <TableBody>
-          {<>
-            <TableRow
-               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-               Nombre
-              </TableCell>
-              <TableCell component="th" scope="row">
-               {productDetail[0].name}
-              </TableCell>
-            
-            </TableRow>
-          
-          </>
-         }
-         {<>
-            <TableRow
-               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                <TableCell component="th" scope="row">
-               Tamaño
-              </TableCell>
-              <TableCell component="th" scope="row">
-               {productDetail[0].productDimensions}
-              </TableCell>
-            </TableRow>
-          </>
-         }
-          {<>
-            <TableRow
-               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                <TableCell component="th" scope="row">
-               Codigo
-              </TableCell>
-              <TableCell component="th" scope="row">
-               {productDetail[0].sku}
-              </TableCell>
-             
-            </TableRow>
-          
-          </>
-         }
-            {<>
-            <TableRow
-               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                <TableCell component="th" scope="row">
-               Peso
-              </TableCell>
-              <TableCell component="th" scope="row">
-               {productDetail[0].netWeight}
-              </TableCell>
-             
-            </TableRow>
-          
-          </>
-         }
+          <TableRow>
+            <TableCell>Peso</TableCell>
+            <TableCell>{productDetail[0].name + "gr"}</TableCell>
+          </TableRow>
+          {productDetail[0].specifications.map((s) => {
+            return (
+              <TableRow>
+                <TableCell>{s.name}</TableCell>
+                <TableCell>{s["value:"].value}</TableCell>
+              </TableRow>
+            );
+          })}
+
+          <TableRow>
+            <TableCell>Garantía</TableCell>
+            <TableCell>{productDetail[0].warranty}</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
-    </Paper>
+
   );
 }
