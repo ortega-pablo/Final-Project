@@ -45,7 +45,7 @@ export const Home = () => {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(10);
+  const [productsPerPage, setProductsPerPage] = useState(5);
   //calculos pagination
   const lastProduct = currentPage * productsPerPage;
   const firstProduct = lastProduct - productsPerPage;

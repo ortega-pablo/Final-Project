@@ -65,9 +65,9 @@ export const Detail = () => {
                 sx={{ fontSize: "15px" }}
               />
             </Divider>
-              <Box sx={{ m: "2%", maxWidth:"90%"}}>
+              <Box sx={{ m: "2%", maxWidth:"90%", display: "flex", justifyContent: "center"}}>
 
-            <Typography >
+            <Typography  >
               {productDetail[0].description}
             </Typography>
               </Box>

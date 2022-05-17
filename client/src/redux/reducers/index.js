@@ -42,17 +42,13 @@ const rootReducer = (state = initialState, action ) => {
                 products: filterProducts
             }
         }
-        case FILTER_PER_SUBCATEGORY:{
-            const allProducts = state.productsAux;
+        case FILTER_PER_SUBCATEGORY:{            const allProducts = state.productsAux;
             let filterProducts = [];
             allProducts.forEach((p) => {
-                 p.categories.forEach(c => {
-                     let filterSubCat = c.subCategories.filter(sc => sc.name === action.payload);
-                     if(filterSubCat.length) filterProducts.push(p)
-                 });
+                let filterCat = p.subCategories.filter(c => c.name === action.payload);
+                if (filterCat.length) filterProducts.push(p);
             })
-            console.log(filterProducts)
-            return{
+            return {
                 ...state,
                 products: filterProducts
             }

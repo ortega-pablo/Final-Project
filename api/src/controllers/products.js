@@ -21,13 +21,13 @@ const getAllProducts = async () => {
         through: {
           attributes: [],
         },
-        include: {
-          model: SubCategory,
+      },
+      {
+        model: SubCategory,
           attributes: ["id", "name", "description", "thumbnail"],
           through: {
             attributes: [],
           },
-        },
       },
       {
         model: Specification,
@@ -62,13 +62,13 @@ const getProductsByName = async (name) => {
         through: {
           attributes: [],
         },
-        include: {
-          model: SubCategory,
+      },
+      {
+        model: SubCategory,
           attributes: ["id", "name", "description", "thumbnail"],
           through: {
             attributes: [],
           },
-        },
       },
       {
         model: Specification,
