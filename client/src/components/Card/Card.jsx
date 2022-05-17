@@ -9,13 +9,12 @@
 //   navigate("/detail")
 // }
 
-
 //   return (
 //     <>
 //     <h2>{name}</h2>
 //     <h3>$ {price}</h3>
 //     <h3>{brand}</h3>
-    
+
 //     <img
 //       src={thumbnail}
 //       alt="soy la foto"/>
@@ -26,31 +25,32 @@
 //     </>
 //   )
 // }
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, Link } from '@mui/material';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Button, CardActionArea, CardActions, Link } from "@mui/material";
 
-export default function MultiActionAreaCard({name, price,brand, thumbnail,sku, id}) {
+export default function MultiActionAreaCard({
+  name,
+  price,
+  brand,
+  thumbnail,
+  sku,
+  id,
+}) {
   return (
-
-
-    <Card sx={{ width: 200 }}>
-
+    <Card sx={{ width: 200, hover: "true" }}>
       <CardActionArea>
-
-      <Link href={"/detail/" + id}  underline="none">
-       
-        <CardMedia
-          component="img"
-          height="140"
-          image={thumbnail}
-          alt="green iguana"
-        />
-
-      </Link>
+        <Link href={"/detail/" + id} underline="none">
+          <CardMedia
+            component="img"
+            height="140"
+            image={thumbnail}
+            alt="green iguana"
+          />
+        </Link>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {name}
