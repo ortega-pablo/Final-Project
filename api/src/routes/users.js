@@ -86,16 +86,20 @@ router.post("/login", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   const { firstName } = req.query;
 
-      const findByName = await User.findAll()
-      const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
+  try {
 
-      
-      found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
-
-    } else {
+    if(firstName){
       const findByName = await User.findAll()
-      return res.status(200).send(findByName)
-    }
+    const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
+
+    
+    found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
+
+
+  } else {
+    const findByName = await User.findAll()
+    return res.status(200).send(findByName)
+  }
   } catch (error) {
     res.send(error);
   }
