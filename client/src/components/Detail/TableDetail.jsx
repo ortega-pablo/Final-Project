@@ -11,7 +11,7 @@ export default function TableDetail({ productDetail }) {
   return (
     <TableContainer sx={{ ml: "auto", mr: "auto", mt: "2%" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableBody>
+        <TableBody >
           <TableRow>
             <TableCell>Nombre</TableCell>
             <TableCell>{productDetail[0].name}</TableCell>
