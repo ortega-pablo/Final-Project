@@ -29,10 +29,10 @@ const validationSchema = yup.object({
 
   phone: yup.string()
     .required("Phone number is required")
-    /* .matches(
+  .matches(
 /^([0]{1}|\+?[234]{3})([7-9]{1})([0|1]{1})([\d]{1})([\d]{7})$/g,
       "Invalid phone number"
-    ) */,
+    ) ,
 
   email: yup.string().email().required("Email is required"),
 
@@ -47,19 +47,16 @@ export const CreateAccount = () => {
   const [errorValidate, setErrorValidate]  = useState (null)
   const formik = useFormik({
     initialValues: {
-      userName: 'aaa',
-      firstName: 'aaa', 
-      lastName: 'aaa',
-      phone: '123',
-      email: 'jose@gmail.com',
-      password: '12312213',
+      userName: '',
+      firstName: '', 
+      lastName: '',
+      phone: '',
+      email: '',
+      password: '',
 
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log("antes de la alerta")
-      //alert(JSON.stringify(values, null, 2));
-      console.log("antes")
       const result =  await dispatch(postRegisterUser(values))
       console.log("COMO LO TRAIGO",result)
       if (result?.data?.error ){
