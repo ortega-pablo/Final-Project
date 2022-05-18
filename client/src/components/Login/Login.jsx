@@ -32,8 +32,12 @@ export const Login = () => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit:  (values) => {
-      dispatch(postLoginUser(values))
+    onSubmit: async (values) => {
+      const result = await dispatch(postLoginUser(values))
+      console.log("Resultado de login", result)
+
+      window.localStorage.setItem("token", JSON.stringify(result));
+
     },
   });
 
