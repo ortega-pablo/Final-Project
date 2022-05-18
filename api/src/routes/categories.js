@@ -4,13 +4,13 @@ const router = Router();
 
 router.post("/", async (req, res, next) => {
   const { name, description, thumbnail } = req.body;
-  const { categoryName } = req.query;
+  const { categoryId} = req.query;
 
   try {
-    if (categoryName) {
+    if (categoryId) {
       const category = await Category.findAll({
         where: {
-          name: categoryName,
+          id: categoryId,
         },
       });
       const newSubCategory = await SubCategory.create({
@@ -46,6 +46,7 @@ router.get("/", async (req, res, next) => {
       const getCategories = await Category.findAll({
         include: {
           model: SubCategory,
+          
           through: {
             attributes: [],
           },
@@ -63,6 +64,7 @@ router.get("/", async (req, res, next) => {
       const getAll = await Category.findAll({
         include: {
           model: SubCategory,
+       
           through: {
             attributes: [],
           },

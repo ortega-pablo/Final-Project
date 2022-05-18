@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: false,
     },
     description: {
       type: DataTypes.TEXT,
@@ -14,4 +14,4 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
   });
-};
+}; 
