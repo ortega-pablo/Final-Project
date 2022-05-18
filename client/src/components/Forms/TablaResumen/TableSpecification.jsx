@@ -60,7 +60,7 @@ export const TableSpecification = ({
                   </b>
                 </TableCell>
                 <TableCell>
-                  <h3>{input.name}</h3>
+                  <h3>{newProducts.name}</h3>
                 </TableCell>
                 <IconButton>
                   <EditIcon />

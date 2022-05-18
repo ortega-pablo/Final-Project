@@ -1,0 +1,252 @@
+[
+    {
+        "productId": 1,
+        "specificationId":1,
+        "value": "12 GB"
+    },
+    {
+        "productId": 1,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 1,
+        "specificationId":3,
+        "value": "1365 MHz"
+    },
+    {
+        "productId": 1,
+        "specificationId":4,
+        "value": "350 W"
+    },
+    {
+        "productId": 1,
+        "specificationId":5,
+        "value": "117 Mh/s"
+    },
+    {
+        "productId": 2,
+        "specificationId":1,
+        "value": "16 GB"
+    },
+    {
+        "productId": 2,
+        "specificationId":2,
+        "value": "GDDR6"
+    },
+    {
+        "productId": 2,
+        "specificationId":3,
+        "value": "1275 MHz"
+    },
+    {
+        "productId": 2,
+        "specificationId":4,
+        "value": "150 W"
+    },
+    {
+        "productId": 2,
+        "specificationId":5,
+        "value": "64 Mh/s"
+    },
+    {
+        "productId": 3,
+        "specificationId":1,
+        "value": "12 GB"
+    },
+    {
+        "productId": 3,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 3,
+        "specificationId":3,
+        "value": "1260 MHz"
+    },
+    {
+        "productId": 3,
+        "specificationId":4,
+        "value": "250 W"
+    },
+    {
+        "productId": 3,
+        "specificationId":5,
+        "value": "98 Mh/s"
+    },
+    {
+        "productId": 4,
+        "specificationId":1,
+        "value": "16 GB"
+    },
+    {
+        "productId": 4,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 4,
+        "specificationId":3,
+        "value": "1950 MHz"
+    },
+    {
+        "productId": 4,
+        "specificationId":4,
+        "value": "280 W"
+    },
+    {
+        "productId": 4,
+        "specificationId":5,
+        "value": "64 Mh/s"
+    },
+    {
+        "productId": 5,
+        "specificationId":1,
+        "value": "16 GB"
+    },
+    {
+        "productId": 5,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 5,
+        "specificationId":3,
+        "value": "1980 MHz"
+    },
+    {
+        "productId": 5,
+        "specificationId":4,
+        "value": "200 W"
+    },
+    {
+        "productId": 5,
+        "specificationId":5,
+        "value": "64 Mh/s"
+    },
+    {
+        "productId": 6,
+        "specificationId":1,
+        "value": "8 GB"
+    },
+    {
+        "productId": 6,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 6,
+        "specificationId":3,
+        "value": "1575 MHz"
+    },
+    {
+        "productId": 6,
+        "specificationId":4,
+        "value": "310 W"
+    },
+    {
+        "productId": 6,
+        "specificationId":5,
+        "value": "80 Mh/s"
+    },
+    {
+        "productId": 7,
+        "specificationId":1,
+        "value": "8 GB"
+    },
+    {
+        "productId": 7,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 7,
+        "specificationId":3,
+        "value": "1410 MHz"
+    },
+    {
+        "productId": 7,
+        "specificationId":4,
+        "value": "200 W"
+    },
+    {
+        "productId": 7,
+        "specificationId":5,
+        "value": "60 Mh/s"
+    },
+    {
+        "productId": 8,
+        "specificationId":1,
+        "value": "6 GB"
+    },
+    {
+        "productId": 8,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 8,
+        "specificationId":3,
+        "value": "1243 MHz"
+    },
+    {
+        "productId": 8,
+        "specificationId":4,
+        "value": "2520 W"
+    },
+    {
+        "productId": 8,
+        "specificationId":5,
+        "value": "39 Mh/s"
+    },
+    {
+        "productId": 9,
+        "specificationId":1,
+        "value": "12 GB"
+    },
+    {
+        "productId": 9,
+        "specificationId":2,
+        "value": "GDDR6X"
+    },
+    {
+        "productId": 9,
+        "specificationId":3,
+        "value": "2424 MHz"
+    },
+    {
+        "productId": 9,
+        "specificationId":4,
+        "value": "230 W"
+    },
+    {
+        "productId": 9,
+        "specificationId":5,
+        "value": "48 Mh/s"
+    },
+    {
+        "productId": 10,
+        "specificationId":1,
+        "value": "6 GB"
+    },
+    {
+        "productId": 10,
+        "specificationId":2,
+        "value": "GDDR6"
+    },
+    {
+        "productId": 10,
+        "specificationId":3,
+        "value": "1830  MHz"
+    },
+    {
+        "productId": 10,
+        "specificationId":4,
+        "value": "125 W"
+    },
+    {
+        "productId": 10,
+        "specificationId":5,
+        "value": "29 Mh/s"
+    }
+]

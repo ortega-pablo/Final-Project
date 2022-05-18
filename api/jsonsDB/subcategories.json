@@ -1,0 +1,32 @@
+[
+  {
+    "cetegoryId": 1,
+    "name": "PALIT",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  },
+  {
+    "cetegoryId": 1,
+    "name": "PNI",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  },
+  {
+    "cetegoryId": 1,
+    "name": "MSI",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  },
+  {
+    "cetegoryId": 2,
+    "name": "ASROCK",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  },
+  {
+    "cetegoryId": 2,
+    "name": "SAPHIRE",
+    "description": "Esto es la segunda categoria",
+    "thumbnail": "aca va el thumbnail"
+  }
+]
