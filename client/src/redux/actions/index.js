@@ -5,7 +5,8 @@ export const GET_DETAIL = "GET_DETAIL";
 export const POST_PRODUCT = "POST_PRODUCT";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const POST_ADD_CATEROY_TO_PRODUCT = "POST_ADD_CATEROY_TO_PRODUCT";
-export const POST_ADD_SPECIFICATION_TO_PRODUCT = "POST_ADD_SPECIFICATION_TO_PRODUCT";
+export const POST_ADD_SPECIFICATION_TO_PRODUCT =
+  "POST_ADD_SPECIFICATION_TO_PRODUCT";
 
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
@@ -17,17 +18,14 @@ export const FILTER_PER_NAME = "FILTER_PER_NAME";
 export const POST_CREATE_USER = "POST_CREATE_USER";
 export const POST_LOGIN_USER = "POST_LOGIN_USER";
 
-export const POST_ADD_SUB_CATEGORY_TO_PRODUCT = "POST_ADD_SUB_CATEGORY_TO_PRODUCT";
+export const POST_ADD_SUB_CATEGORY_TO_PRODUCT =
+  "POST_ADD_SUB_CATEGORY_TO_PRODUCT";
 export const POST_ADD_SUB_CATEGORY = "POST_ADD_SUB_CATEGORY";
 export const POST_ADD_QUANTITY = "POST_ADD_QUANTITY";
 export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
 
-export const GET_ALL_SPECIFICATIONS ="GET_ALL_SPECIFICATIONS"
-
-
-
-
+export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -58,7 +56,7 @@ export const getDetail = (id) => {
 export const postProduct = (payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/products`, payload); 
+      let json = await axios.post(`http://localhost:3001/products`, payload);
 
       return json;
     } catch (error) {
@@ -96,11 +94,10 @@ export const postAddSubCateroryToProduct = (idP, idSC, payload) => {
   };
 };
 
-
 export const postAddCaterory = (payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/categories`, payload); 
+      let json = await axios.post(`http://localhost:3001/categories`, payload);
 
       return json;
     } catch (error) {
@@ -113,7 +110,9 @@ export const postAddSubCategory = (idC, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/categories?categoryId=${idC}`, payload); 
+        `http://localhost:3001/categories?categoryId=${idC}`,
+        payload
+      );
 
       return json;
     } catch (error) {
@@ -126,7 +125,9 @@ export const postAddQuantity = (idP, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/inventory?productId=${idP}`,  payload ); 
+        `http://localhost:3001/inventory?productId=${idP}`,
+        payload
+      );
 
       return json;
     } catch (error) {
@@ -139,7 +140,9 @@ export const postAddNewSpecification = (payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/specifications`,  payload ); 
+        `http://localhost:3001/specifications`,
+        payload
+      );
 
       return json;
     } catch (error) {
@@ -152,7 +155,8 @@ export const postAddSpecificationToProduct = (idP, idE, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/products/addSpecification?productId=${idP}&specificationId=${idE}`, payload
+        `http://localhost:3001/products/addSpecification?productId=${idP}&specificationId=${idE}`,
+        payload
       ); //url + body
 
       return json;
@@ -161,7 +165,6 @@ export const postAddSpecificationToProduct = (idP, idE, payload) => {
     }
   };
 };
-
 
 export const getAllSpecifications = () => {
   return async (dispatch) => {
@@ -177,30 +180,16 @@ export const postAddDiscountToProduct = (idP, idD) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/products/addDiscount?productId=${idP}&discountId=${idD}` );
+        `http://localhost:3001/products/addDiscount?productId=${idP}&discountId=${idD}`
+      );
 
       return json;
     } catch (error) {
       console.log(error);
     }
   };
-}
+};
 
-
-export const postRegisterUser = (payload) => {
-  return async (dispatch) => {
-    try {
-      let response = await axios.post(
-        "http://localhost:3001/users/create",
-        payload
-      );
-      console.log(response);
-      return response;
-    } catch (error) {
-      console.log("hubo un error");
-      console.log(error);
-    }
-  }}
 export const getCategories = () => {
   return async (dispatch) => {
     let response = await axios("http://localhost:3001/categories");
@@ -210,8 +199,6 @@ export const getCategories = () => {
     });
   };
 };
-
-
 
 export const filterPerCategory = (category) => {
   return async (dispatch) => {
