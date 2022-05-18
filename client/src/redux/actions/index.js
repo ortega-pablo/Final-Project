@@ -15,9 +15,7 @@ export const ADD_CATEGORY = "ADD_CATEGORY";
 export const FILTER_PER_PRICE = "FILTER_PER_PRICE";
 export const FILTER_PER_NAME = "FILTER_PER_NAME";
 export const POST_CREATE_USER = "POST_CREATE_USER";
-
-
-
+export const POST_LOGIN_USER = "POST_LOGIN_USER";
 
 export const POST_ADD_SUB_CATEGORY_TO_PRODUCT = "POST_ADD_SUB_CATEGORY_TO_PRODUCT";
 export const POST_ADD_SUB_CATEGORY = "POST_ADD_SUB_CATEGORY";
@@ -56,7 +54,6 @@ export const getDetail = (id) => {
     });
   };
 };
-
 
 export const postProduct = (payload) => {
   return async function (dispatch) {
@@ -189,6 +186,7 @@ export const postAddDiscountToProduct = (idP, idD) => {
   };
 }
 
+
 export const postRegisterUser = (payload) => {
   return async (dispatch) => {
     try {
@@ -229,6 +227,38 @@ export const filterPerSubCategory = (subCategory) => {
       type: FILTER_PER_SUBCATEGORY,
       payload: subCategory,
     });
+  };
+};
+
+export const postRegisterUser = (payload) => {
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(
+        "http://localhost:3001/users/create",
+        payload
+      );
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log("hubo un error");
+      console.log(error);
+    }
+  };
+};
+export const postLoginUser = (payload) => {
+  console.log(payload);
+  return async (dispatch) => {
+    try {
+      let response = await axios.post(
+        "http://localhost:3001/users/login",
+        payload
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log("hubo un error en el login");
+      console.log(error);
+    }
   };
 };
 
