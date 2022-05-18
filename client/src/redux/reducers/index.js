@@ -6,8 +6,19 @@ import {
   FILTER_PER_SUBCATEGORY,
   FILTER_PER_PRICE,
   FILTER_PER_NAME,
+  POST_PRODUCT,
+  POST_ADD_CATEROY_TO_PRODUCT,
+  POST_ADD_SPECIFICATION_TO_PRODUCT,
+  ADD_CATEGORY,
+  POST_ADD_SUB_CATEGORY_TO_PRODUCT,
+  POST_ADD_SUB_CATEGORY,
+  POST_ADD_QUANTITY,
+  POST_ADD_NEW_SPECIFICATION,
+  GET_ALL_SPECIFICATIONS,
+  POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
+
 } from "../actions";
 
 const initialState = {
@@ -16,6 +27,7 @@ const initialState = {
   productDetail: {},
   categories: [],
   categoriesAux: [],
+  allSpecifications: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -32,6 +44,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productDetail: action.payload,
       };
+      
     case GET_CATEGORIES: {
       return {
         ...state,
@@ -50,7 +63,7 @@ const rootReducer = (state = initialState, action) => {
         products: filterProducts,
       };
     }
-
+      
     case FILTER_PER_SUBCATEGORY: {
       const allProducts = state.productsAux;
       let filterProducts = [];
@@ -88,6 +101,61 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: filterProducts,
+      };
+    }
+
+    case POST_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+    case ADD_CATEGORY: {
+      return {
+        ...state,
+      };
+    }
+    case POST_ADD_SUB_CATEGORY: {
+      return {
+        ...state,
+      };
+    }
+
+    case POST_ADD_CATEROY_TO_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+    case POST_ADD_SUB_CATEGORY_TO_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+    case POST_ADD_QUANTITY: {
+      return {
+        ...state,
+      };
+    }
+    case POST_ADD_NEW_SPECIFICATION: {
+      return {
+        ...state,
+      };
+    }
+    case POST_ADD_SPECIFICATION_TO_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+
+    case POST_ADD_DISCOUNT_TO_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+
+    case GET_ALL_SPECIFICATIONS: {
+      return {
+        ...state,
+        allSpecifications: action.payload,
       };
     }
 

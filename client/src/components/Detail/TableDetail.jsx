@@ -24,7 +24,7 @@ export default function TableDetail({ productDetail }) {
 
           <TableRow>
             <TableCell>Peso</TableCell>
-            <TableCell>{productDetail[0].name + "gr"}</TableCell>
+            <TableCell>{productDetail[0].netWeight + " gr"}</TableCell>
           </TableRow>
           {productDetail[0].specifications.map((s) => {
             return (
