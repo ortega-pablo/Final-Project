@@ -16,6 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import Category from "./Category/Category";
 import { Footer } from "./Footer/Footer";
 import { useParams } from "react-router-dom";
+import SwipeableDrawerFilters from './SwipeableFilters/SipeableFilters'
 const useStyles = makeStyles((theme) => ({
 
   paper: {
@@ -85,12 +86,28 @@ export const Home = () => {
           justifyContent: "space-between",
         }}
       >
+        <Container 
+           maxWidth="vp"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            padding: 0,
+          }}>
         <SwipeableTextMobileStepper
           sx={{
             display: "flex",
             width: "100%",
           }}
         />
+        </Container>
+
+        <SwipeableDrawerFilters
+              handleClickForCategories = {handleClickForCategories} 
+              handleClickForSubcategories= {handleClickForSubcategories}
+              handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
+            >
+        </SwipeableDrawerFilters>
         <Container
           maxWidth="vp"
           sx={{
@@ -100,18 +117,13 @@ export const Home = () => {
             padding: 0,
           }}
         >
-          <Container
-            sx={{
-              width: "15%",
-            }}
+          <Category
+            handleClickForCategories = {handleClickForCategories} 
+            handleClickForSubcategories= {handleClickForSubcategories}
+            handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
           >
-            <Category 
-              handleClickForCategories = {handleClickForCategories} 
-              handleClickForSubcategories= {handleClickForSubcategories}
-              handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
-            >
-            </Category>
-          </Container>
+
+          </Category>
           <Grid
           id="container"
             container 
