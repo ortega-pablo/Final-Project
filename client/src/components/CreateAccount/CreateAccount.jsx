@@ -29,10 +29,10 @@ const validationSchema = yup.object({
 
   phone: yup.string()
     .required("Phone number is required")
-  .matches(
+  /* .matches(
 /^([0]{1}|\+?[234]{3})([7-9]{1})([0|1]{1})([\d]{1})([\d]{7})$/g,
       "Invalid phone number"
-    ) ,
+    ) */ ,
 
   email: yup.string().email().required("Email is required"),
 
@@ -180,6 +180,7 @@ export const CreateAccount = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={!(formik.isValid && formik.dirty)}
           >
             Sign In
           </Button>
