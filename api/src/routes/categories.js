@@ -4,13 +4,13 @@ const router = Router();
 
 router.post("/", async (req, res, next) => {
   const { name, description, thumbnail } = req.body;
-  const { categoryName } = req.query;
+  const { categoryId} = req.query;
 
   try {
-    if (categoryName) {
+    if (categoryId) {
       const category = await Category.findAll({
         where: {
-          name: categoryName,
+          id: categoryId,
         },
       });
       const newSubCategory = await SubCategory.create({
@@ -46,7 +46,7 @@ router.get("/", async (req, res, next) => {
       const getCategories = await Category.findAll({
         include: {
           model: SubCategory,
-          attributes: ["name", "description", "thumbnail"],
+          
           through: {
             attributes: [],
           },
@@ -64,7 +64,7 @@ router.get("/", async (req, res, next) => {
       const getAll = await Category.findAll({
         include: {
           model: SubCategory,
-          attributes: ["name", "description", "thumbnail"],
+       
           through: {
             attributes: [],
           },
@@ -89,13 +89,34 @@ router.get("/subcategories", async (req, res) => {
   try{
     if(name) {
 
-      const findByName = await SubCategory.findAll()
+      const findByName = await SubCategory.findAll({
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            through: {
+              attributes: []
+            }
+          }
+        ]
+      })
+      
       const found = await findByName?.filter(e => e.name.toLowerCase().includes(name.toLowerCase()));
 
       found.length ? res.status(200).json(found) : res.json("Subcategory not found, please try another search");
 
     } else {
-      const getAll = await SubCategory.findAll()
+      const getAll = await SubCategory.findAll({
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            through: {
+              attributes: []
+            }
+          }
+        ]
+      })
       return res.status(200).send(getAll)
     }
   } catch(error){
