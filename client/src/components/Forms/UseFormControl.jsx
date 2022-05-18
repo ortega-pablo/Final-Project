@@ -1,34 +1,40 @@
 import React, { useEffect, useState } from "react";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
+
 import Box from "@mui/material/Box";
-import FormHelperText from "@mui/material/FormHelperText";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField } from "@mui/material";
 import {
   postProduct,
   getProducts,
-  getAllCategories,
+  // getAllCategories,
   getCategories,
   postAddCateroryToProduct,
+  // postAddSpecificationToProduct,
+  // postAddCaterory,
+  postAddSubCateroryToProduct,
+  postAddQuantity,
+  getAllSpecifications,
   postAddSpecificationToProduct,
-  postAddCaterory,
 } from "../../redux/actions";
 import InputAdornment from "@mui/material/InputAdornment";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Link from "@mui/material/Link";
+
 import { useNavigate } from "react-router-dom";
 
 import Select from "@mui/material/Select";
-import Swal from "sweetalert2";
-import Category from "../Category/Category";
+
 import { AddCategory } from "./AddCategory";
 
-import { validate } from "./validacionInput/Validate";
+import { validate } from "./validacionInputProduct/Validate";
+
+import { AddSubCategoty } from "./AddSubCategoty";
+import { AddQuantity } from "./AddQuantity";
+import { AddSpecification } from "./AddSpecification/AddSpecification";
+import { AddDiscount } from "./AddDiscount";
+import { TableSpecification } from "./TablaResumen/TableSpecification";
 // function MyFormHelperText() {
 //   const { focused } = useFormControl() || {};
 
@@ -47,8 +53,9 @@ export function UseFormControl() {
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
+  const allSpecifications = useSelector((state) => state.allSpecifications);
   let navigate = useNavigate();
-
+ 
   const [errorName, setErrorName] = useState(false);
   const [leyendaErrorName, setLeyendaErrorName] = useState("");
   const [errorBrand, setErrorBrand] = useState(false);
@@ -65,7 +72,19 @@ export function UseFormControl() {
   const [leyendaerrorGrossWei, setLeyendaErrorGrossWei] = useState("");
   const [errorWarr, setErrorWarr] = useState(false);
   const [leyendaerrorWarr, setLeyendaErrorWarr] = useState("");
-  //const [ render, setRender ]= useState("")
+  const [errorImage, setErrorImage] = useState(false);
+  const [leyendaerrorImage, setLeyendaErrorImage] = useState("");
+
+  //control de error de los input de new Category-----
+
+  // const [errorName2, setErrorName2] = useState(false);
+  // const [leyendaErrorName2, setLeyendaErrorName2] = useState("");
+  // const [errorDescription2, setErrorDescription2] = useState(false);
+  // const [leyendaErrorDescription2, setLeyendaErrorDescription2] = useState("");
+  // const [errorThumbnail, setErrorThumbnailn] = useState(false);
+  // const [leyendaErrorThumbnail, setLeyendaErrorThumbnail] = useState("");
+
+  const [inputQ, setInputQ] = useState({ quantity: 0 });
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
@@ -82,29 +101,29 @@ export function UseFormControl() {
     thumbnail: "",
   });
 
-  const [newCat, setNewCat] = useState({
-    name: "",
-    description: "",
-    thumbnail: "",
-  });
+  // const [newCat, setNewCat] = useState({
+  //   name: "",
+  //   description: "",
+  //   thumbnail: "",
+  // });
 
   const [category, setCategory] = React.useState("");
   const [subCategory, setsubCategory] = React.useState("");
+  const [newProdId, setNewProdId] = React.useState(0);
+  // const [newProducto ,setNewProducto] = React.useState(0);
 
-console.log(category)
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
+    dispatch(getAllSpecifications());
   }, [dispatch]);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setCategory(e.target.value);
-  };
-
+  //---------
   async function handleSubmit(e) {
     e.preventDefault();
     const NameRepetido = productosExistentes.find((p) => p.name === input.name);
+
+    //validar nombre existente
 
     if (NameRepetido) {
       setErrorName(true);
@@ -112,7 +131,7 @@ console.log(category)
         "El nombre esta utilizado en otro producto existente"
       );
     }
-
+    //validad error de input
     if (errors.name) {
       setErrorName(true);
       setLeyendaErrorName(errors?.name);
@@ -123,6 +142,7 @@ console.log(category)
       setLeyendaErrorPrice(errors.price);
       console.log("error de precio");
     }
+    //validar sku repetido
     const SKURepetido = productosExistentes.find((p) => p.sku === input.sku);
 
     if (SKURepetido) {
@@ -135,6 +155,8 @@ console.log(category)
 
       console.log("error de sku");
     }
+
+    //validar error de imput
     if (errors.description) {
       setErrorDesc(true);
       setLeyendaErrorDesc(errors.description);
@@ -162,64 +184,62 @@ console.log(category)
       console.log("error de garantia");
     }
 
-    if (
-      NameRepetido ||
-      SKURepetido ||
-      errors?.name ||
-      errors?.sku ||
-      errors?.price ||
-      errors?.brand ||
-      errors?.description ||
-      errors?.netWeight ||
-      errors?.grossWeight ||
-      errors?.warranty
-    ) {
-      console.log("hay errores");
-      e.preventDefault();
-      alert("hay errores");
-    }
+    // if (
+    //   NameRepetido ||
+    //   SKURepetido ||
+    //   errors?.name ||
+    //   errors?.sku ||
+    //   errors?.price ||
+    //   errors?.brand ||
+    //   errors?.description ||
+    //   errors?.netWeight ||
+    //   errors?.grossWeight ||
+    //   errors?.warranty
+    // ) {
+    //   console.log("hay errores");
+    //   e.preventDefault();
+    //   alert("hay errores");
+    // }
 
-    if (!input.sku) {
-      e.preventDefault();
-      setErrorSku(true);
-      setLeyendaErrorSku("El sku es obligatorio");
-    }
+    //validacion de input vacio
     if (!input.name) {
       e.preventDefault();
       setErrorName(true);
       setLeyendaErrorName("El nombre es obligatorio");
-    }
-    if (!input.brand) {
+    } else if (!input.sku) {
+      e.preventDefault();
+      setErrorSku(true);
+      setLeyendaErrorSku("El sku es obligatorio");
+    } else if (!input.brand) {
       e.preventDefault();
       setErrorBrand(true);
       setLeyendaErrorBrand("La marca es obligatoria");
-    }
-    if (!input.price) {
+    } else if (!input.price) {
       e.preventDefault();
       setErrorPrice(true);
       setLeyendaErrorPrice("El precio es obligatorio, puede ser 0 ");
-    }
-    if (!input.description) {
+    } else if (!input.description) {
       e.preventDefault();
       setErrorDesc(true);
       setLeyendaErrorDesc("La descripción es obligatoria");
-    }
-    if (!input.netWeight) {
+    } else if (!input.netWeight) {
       e.preventDefault();
       setErrorNetWei(true);
       setLeyendaErrorNetWei("El peso bruto es obligatorio");
-    }
-    if (!input.grossWeight) {
+    } else if (!input.grossWeight) {
       e.preventDefault();
       setErrorGrossWei(true);
       setLeyendaErrorGrossWei("El peso bruto es obligatorio");
-    }
-    if (!input.warranty) {
+    } else if (!input.warranty) {
       e.preventDefault();
       setErrorWarr(true);
       setLeyendaErrorWarr("La garantia es obligatoria");
-    }
-    if (
+    } else if (!input.image) {
+      e.preventDefault();
+
+      setErrorImage(true);
+      setLeyendaErrorImage("La imagen es obligatoria");
+    } else if (
       !(
         NameRepetido ||
         SKURepetido ||
@@ -233,13 +253,15 @@ console.log(category)
         errors?.warranty
       )
     ) {
-      console.log("se ha creado");
-
       const newProd = await dispatch(postProduct(input));
-
-      await dispatch(postAddCateroryToProduct(newProd.data.id, category));
-
-      navigate("/detail/" + newProd.data.id);
+      await setNewProdId(newProd.data.id);
+      await dispatch(getProducts())
+      // await setNewProducto = (newProd.data)
+      // await dispatch(postAddQuantity(newProd.data.id, inputQ));
+      // await dispatch(postAddCateroryToProduct(newProd.data.id, category));
+      // await dispatch(postAddSubCateroryToProduct(newProd.data.id, subCategory));
+      // await dispatch(postAddSpecificationToProduct(newProd.data.id,specifications, inputSpec))
+      // navigate("/detail/" + newProd.data.id);
     }
   }
 
@@ -292,24 +314,101 @@ console.log(category)
     }
   }
 
-  async function handleNewCategory(e) {
-    e.preventDefault();
-   
+  //funciones handle del componente de "creacion de nueva categoria" :
+  // async function handleNewCategory(e) {
 
-    console.log(newCat);
-    await dispatch(postAddCaterory(newCat));
-    await dispatch(getCategories());
-  }
+  //   if (errors?.name) {
+  //     setErrorName(true);
+  //     setLeyendaErrorName(errors?.name);
+  //     }
 
-  function handleInputNewCategory(e) {
-    e.preventDefault();
-    setNewCat({
-      ...newCat,
+  //   e.preventDefault();
+  //   await dispatch(postAddCaterory(newCat));
+  //   await dispatch(getCategories());
+  // };
+
+  // function handleInputNewCategory(e) {
+  //   e.preventDefault();
+  //   setNewCat({
+  //     ...newCat,
+  //     [e.target.name]: e.target.value,
+  //   });
+  //   setErrors(
+  //     validateNewCat({
+  //       ...input,
+  //       [e.target.name]: e.target.value,
+  //     })
+  //   );
+
+  //   if (!errors.name) {
+  //     setErrorName2(false);
+  //     setLeyendaErrorName2("");
+  //   }
+
+  //   if (!errors.description) {
+  //     setErrorDescription2(false);
+  //     setLeyendaErrorDescription2("");
+  //   }
+  // }
+
+  //---------  funciones de agregar cantidad
+
+  function handleInputQue(e) {
+    setInputQ({
+      ...inputQ,
       [e.target.name]: e.target.value,
     });
-   
   }
 
+  async function handleClickQue(e) {
+    e.preventDefault();
+    await dispatch(postAddQuantity(newProdId, inputQ));
+    await dispatch(getProducts())
+  }
+  //----- funciones de agregar cat y sub
+  const handleChange = (e) => {
+    e.preventDefault();
+    setCategory(e.target.value);
+    console.log("categoria");
+  };
+
+  const handleChangeSubCat = (e) => {
+    e.preventDefault();
+    setsubCategory(e.target.value);
+    console.log("sub categoria");
+  };
+
+  async function handleClickCatAndSub(e) {
+    e.preventDefault();
+    console.log("agrehando cat");
+    await dispatch(postAddCateroryToProduct(newProdId, category));
+    await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
+    await dispatch(getProducts())
+  }
+  ///------funciones agregar especificacion al producto
+  const [specifications, setSpecifications] = useState(``);
+  const [inputSpec, setInputSpec] = useState({ "value:": "" });
+
+  function handleChangeSpecification(e) {
+    e.preventDefault();
+    setSpecifications(e.target.value);
+  }
+  console.log(inputSpec);
+  function handleInputSpec(e) {
+    setInputSpec({
+      ...inputSpec,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  async function handleClickNewSpec(e){
+    e.preventDefault()
+    await dispatch(postAddSpecificationToProduct(newProdId , specifications, inputSpec))
+    await dispatch(getProducts())
+  }
+  //-------
+  const categSelect = allCategories.filter((c) => c.id === category);
+  // console.log(categSelect[0]?.subCategories[0]);
   return (
     <>
       <Box
@@ -320,7 +419,8 @@ console.log(category)
         onSubmit={(e) => handleSubmit(e)}
       >
         <h2>Creando algo</h2>
-
+        <hr />
+        <h3>Paso 1: </h3>
         <TextField
           id="outlined-basic"
           label="Nombre *"
@@ -426,17 +526,36 @@ console.log(category)
           label="Imagenes"
           variant="outlined"
           name="image"
+          helperText={leyendaerrorImage}
+          error={errorImage}
         />
 
         <Button onClick={(e) => handleSubmit(e)}>Crear</Button>
 
         <h4>(*) elementos obligatorios</h4>
-        {/* <Alert severity="success">
-        <AlertTitle>Felicidades</AlertTitle>
-        This is a success alert — <strong>check it out!</strong>
-      </Alert> */}
       </Box>
-      <br />
+      <hr />
+      <h3>Paso 2: Agregar stock</h3>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        onChange={(e) => handleInputQue(e)}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Stock"
+          variant="outlined"
+          name="quantity"
+          //   helperText={leyendaErrorName}
+          //   error={errorName}
+        />
+        <h3>Stock: {inputQ.quantity} </h3>
+        <Button onClick={(e) => handleClickQue(e)}>Agregar sotck</Button>
+      </Box>
+
+      <hr />
+      <h3>Paso 3: Agregar categoría y sub categorías</h3>
       <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
@@ -450,56 +569,91 @@ console.log(category)
         </MenuItem>
         {allCategories?.map((cat) => {
           return (
-            
             <MenuItem value={cat.id}>
               {cat.name} {cat.id}
             </MenuItem>
-            
-            
           );
         })}
       </Select>
 
-   <Select
-    value={subCategory}
-    label="Sub Categoria">
-      <MenuItem value="">
+      <InputLabel id="demo-simple-select-standard-label">
+        Sub Categoria
+      </InputLabel>
+      <Select
+        labelId="demo-simple-select-standard-label"
+        id="demo-simple-select-standard"
+        value={subCategory}
+        onChange={handleChangeSubCat}
+        label="Age"
+      >
+        <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {
-        
-        }
-   </Select>
-{/* <Select native defaultValue="" id="grouped-native-select" label="Grouping">
-          <option aria-label="None" value="" />
-            {
-              allCategories?.map(cat=> {
-                return (
-                  <optgroup label={cat.name}>
-                    {cat.subCategories.map( sub =>{
-                      return (
-                        <option value={sub.id}>{sub.name}</option>
-                      )
-                    } )
-
-                    }
-                    
-                    </optgroup>
-                )
-              })
-            }
-         
-        
-          
-        </Select> */}
-        
+        {categSelect[0]?.subCategories?.map((subc) => {
+          return <MenuItem value={subc.id}>{subc.name}</MenuItem>;
+        })}
+      </Select>
+      <Button onClick={(e) => handleClickCatAndSub(e)}>
+        Agregar categoria y sub categoría
+      </Button>
       <AddCategory
-        handleInputNewCategory={handleInputNewCategory}
-        handleNewCategory={handleNewCategory}
+        allCategories={allCategories}
+        // handleInputNewCategory={handleInputNewCategory}
+        // handleNewCategory={handleNewCategory}
+        // errorName2 = {errorName2}
+        // leyendaErrorName2 ={leyendaErrorName2}
+        // errorDescription2 = {errorDescription2}
+        // leyendaErrorDescription2 = {leyendaErrorDescription2}
       />
-      {
+
+      <AddSubCategoty allCategories={allCategories} />
+      <hr />
+      <h3>Paso 4: agregar especificaciones</h3>
+      <InputLabel id="demo-simple-select-standard-label">
+        Especificación
+      </InputLabel>
+      <Select
+        labelId="demo-simple-select-standard-label"
+        id="demo-simple-select-standard"
+        value={specifications}
+        onChange={handleChangeSpecification}
+        label="Age"
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {allSpecifications.map((spec) => {
+          return <MenuItem value={spec.id}>{spec.name.toLowerCase()}</MenuItem>;
+        })}
+      </Select>
+       
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        onChange={(e) => handleInputSpec(e)}
+        // onSubmit={(e) => handleSubmit(e)}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Valor de la especificación"
+          variant="outlined"
+          name="value"
+          // helperText={leyendaErrorName}
+          // error={errorName}
+        />
+      </Box>
+      <Button onClick={e=> handleClickNewSpec(e)}>Agregar especificación</Button>
+      <AddSpecification newProdId={newProdId} />
+      <hr />
+      <h3>Paso 5: Agregar descuento</h3>
+      <AddDiscount/>
+      <TableSpecification
+        newProdId={newProdId}
+      
         
-      }
+         />
+        
     </>
   );
 }

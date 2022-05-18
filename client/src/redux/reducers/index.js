@@ -2,7 +2,7 @@
 
 
 
-import { GET_PRODUCTS, GET_DETAIL, GET_CATEGORIES, FILTER_PER_CATEGORY, FILTER_PER_SUBCATEGORY, FILTER_PER_PRICE, FILTER_PER_NAME,  POST_PRODUCT,  POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT, ADD_CATEGORY } from "../actions";
+import { GET_PRODUCTS, GET_DETAIL, GET_CATEGORIES, FILTER_PER_CATEGORY, FILTER_PER_SUBCATEGORY, FILTER_PER_PRICE, FILTER_PER_NAME,  POST_PRODUCT,  POST_ADD_CATEROY_TO_PRODUCT, POST_ADD_SPECIFICATION_TO_PRODUCT, ADD_CATEGORY, POST_ADD_SUB_CATEGORY_TO_PRODUCT, POST_ADD_SUB_CATEGORY, POST_ADD_QUANTITY, POST_ADD_NEW_SPECIFICATION, GET_ALL_SPECIFICATIONS, POST_ADD_DISCOUNT_TO_PRODUCT } from "../actions";
 
 
 const initialState = {
@@ -10,7 +10,9 @@ const initialState = {
     productsAux: [],
     productDetail: {},
     categories: [],
-    categoriesAux:[]
+    categoriesAux:[],
+    allSpecifications: [],
+   
 }
 
 const rootReducer = (state = initialState, action ) => {
@@ -89,19 +91,52 @@ const rootReducer = (state = initialState, action ) => {
                 ...state
             }
         }
+        case POST_ADD_SUB_CATEGORY:{
+            return{
+                ...state
+            }
+        }
         
         case POST_ADD_CATEROY_TO_PRODUCT:{
             return{
                 ...state
             }
         }
-        // case POST_ADD_SPECIFICATION_TO_PRODUCT:{
-        //     return{
-        //         ...state
-        //     }
-        // }
+        case POST_ADD_SUB_CATEGORY_TO_PRODUCT:{
+            return{
+                ...state
+            }
+        }
+        case POST_ADD_QUANTITY :{
+            return{
+                ...state
+            }
+        }
+        case POST_ADD_NEW_SPECIFICATION :{
+            return{
+                ...state
+            }
+        }
+        case POST_ADD_SPECIFICATION_TO_PRODUCT:{
+            return{
+                ...state
+            }
+        }
 
-            
+        case POST_ADD_DISCOUNT_TO_PRODUCT:{
+            return{
+                ...state
+            }
+        }
+
+        case GET_ALL_SPECIFICATIONS : {
+            return {
+                ...state,
+                allSpecifications: action.payload
+            }
+        }    
+
+    
 
         default:
             return state;

@@ -15,8 +15,20 @@ router.post("/", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+}
 
+
+);
+router.get("/all", async (req, res, next) => {
+  try {
+    const specifications = await Specification.findAll({
+      
+    });
+    res.status(200).send(specifications)
+  } catch (error) {
+    sen.status(400)
+  }
+});
 
 
 module.exports = router;
