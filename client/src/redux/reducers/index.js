@@ -17,6 +17,8 @@ import {
   GET_ALL_SPECIFICATIONS,
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
+  POST_LOGIN_USER,
+
 } from "../actions";
 
 const initialState = {
@@ -42,6 +44,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productDetail: action.payload,
       };
+      
     case GET_CATEGORIES: {
       return {
         ...state,
@@ -60,7 +63,7 @@ const rootReducer = (state = initialState, action) => {
         products: filterProducts,
       };
     }
-
+      
     case FILTER_PER_SUBCATEGORY: {
       const allProducts = state.productsAux;
       let filterProducts = [];
@@ -157,6 +160,10 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case POST_CREATE_USER:
+      return {
+        ...state,
+      };
+    case POST_LOGIN_USER:
       return {
         ...state,
       };

@@ -11,11 +11,11 @@ import Container from '@mui/material/Container';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import { useFormik } from 'formik';
-import { Footer } from '../Footer/Footer';
+import {postLoginUser} from '../../redux/actions'
+import { useDispatch } from 'react-redux';
 const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
+  userName: yup
+    .string('Enter your User Name')
     .required('Email is required'),
   password: yup
     .string('Enter your password')
@@ -24,28 +24,26 @@ const validationSchema = yup.object({
 });
 
 export const Login = () => {
+  
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      email: '',
+      userName: '',
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      const result = await dispatch(postLoginUser(values))
+      console.log("Resultado de login", result)
+
+      window.localStorage.setItem("token", JSON.stringify(result));
+
     },
   });
 
   return (
     <>
-      <Container component="main" maxWidth="xs" sx={{mb: 31}}>
-        <Box
-          sx={{
-            marginTop: 27,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+     
           <Avatar sx={{ m: 1, bgcolor: "#375CFF" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -58,13 +56,13 @@ export const Login = () => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Correo Electronico"
-              name="email"
-              value={formik.values.email}
+              id="userName"
+              label="User Name"
+              name="userName"
+              value={formik.values.userName}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              error={formik.touched.userName && Boolean(formik.errors.userName)}
+              helperText={formik.touched.userName && formik.errors.userName}
             />
             <TextField
               margin="normal"
@@ -103,8 +101,6 @@ export const Login = () => {
               </Grid>
             </Grid>
           </Box>
-        </Box>
-      </Container>
       <footer/>
     </>
   );
