@@ -36,17 +36,24 @@ router.post("/create", async (req, res, next) => {
   const { userName, email, password, firstName, lastName, phone } = req.body;
 
   try {
+    let Hashpassword = bcrypt.hashSync(password, 10);
+    const userFound = await User.findOne({ where: { email } });
+    if (userFound) {
+      return res.status(200).json({
+        error: "email is already used",
+      });
+    }
 
     const newUser = await User.create({
       userName,
       email,
-      password,
+      password: Hashpassword,
       firstName,
       lastName,
       phone,
     });
 
-    res.status(200).send(newUser);
+    res.status(200).send("done");
   } catch (error) {
     next(error);
   }
@@ -63,7 +70,7 @@ router.post("/login", async (req, res, next) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
-      response.status(401).json({
+      response.status(400).json({
         error: "invalid user or password",
       });
     }
@@ -87,19 +94,45 @@ router.get("/", async (req, res, next) => {
   const { firstName } = req.query;
 
   try {
+    if (firstName) {
+      const findByName = await User.findAll({
+        include: [
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"],
+              },
+            ],
+          },
+        ],
+      });
+      const found = await findByName?.filter((e) =>
+        e.firstName.toLowerCase().includes(firstName.toLowerCase())
+      );
 
-    if(firstName){
-      const findByName = await User.findAll()
-    const found = await findByName?.filter(e => e.firstName.toLowerCase().includes(firstName.toLowerCase()));
-
-    
-    found.length ? res.status(200).json(found) : res.json("User not found, please try another search");
-
-
-  } else {
-    const findByName = await User.findAll()
-    return res.status(200).send(findByName)
-  }
+      found.length
+        ? res.status(200).json(found)
+        : res.json("User not found, please try another search");
+    } else {
+      const getAll = await User.findAll({
+        include: [
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"],
+              },
+            ],
+          },
+        ],
+      });
+      return res.status(200).send(getAll);
+    }
   } catch (error) {
     res.send(error);
   }
@@ -112,14 +145,26 @@ router.get("/:userId", async (req, res) => {
     if (userId) {
       const findById = await User.findOne({
         where: {
-          id: userId
-        }
-      })
-  
-      return res.send(findById)
-  
-    } else{
-      return res.status(404).send("User not found")
+          id: userId,
+        },
+        include: [
+          {
+            model: Ask,
+            attributes: ["content"],
+            include: [
+              {
+                model: Answer,
+                attributes: ["content"],
+              },
+            ],
+          },
+        ],
+      });
+
+      console.log(findById);
+      return res.send(findById);
+    } else {
+      return res.status(404).send("User not found");
     }
   } catch (error) {
     res.send(error);
