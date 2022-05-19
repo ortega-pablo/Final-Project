@@ -163,4 +163,92 @@ router.post("/addSpecification", async (req, res, next) => {
 });
 
 
+router.put("/:productId", async (req, res, next) => {
+  const {productId} = req.params;
+  const {
+      name,
+      sku,
+      brand,
+      keyWords,
+      price,
+      netWeight,
+      description,
+      thumbnail,
+      image,
+      productDimensions,
+      packageDimensions,
+      grossWeight,
+      warranty,
+    } = req.body;
+
+  try {
+
+    const findProduct = await Product.findOne({
+      where: {
+          id: productId
+      }
+  })
+      if(findProduct){
+          await Product.update({
+              name,
+              sku,
+              brand,
+              keyWords,
+              price,
+              netWeight,
+              description,
+              thumbnail,
+              image,
+              productDimensions,
+              packageDimensions,
+              grossWeight,
+              warranty,
+          },
+          {
+              where: {
+                  id: productId
+              }
+          }
+          )
+
+          res.send("Entry updated successfully!")
+          
+      } else {
+        res.send("Product ID not found");
+      }
+
+  } catch(error){
+    next(error)
+  }
+})
+
+router.delete("/:productId", async (req, res, next) => {
+
+  const {productId} = req.params
+  try {
+    
+      const deleteProduct = await Product.findOne({
+          where: {
+              id: productId
+          }
+      })
+
+      if(deleteProduct){
+        await Product.destroy({
+          where: {
+              id: productId
+          }
+      })
+
+      res.send("Product removed successfully!")
+     
+      } else {
+        res.send("Product ID not found");
+      }
+
+  } catch(error){
+    res.send(error)
+  }
+})
+
 module.exports = router;
