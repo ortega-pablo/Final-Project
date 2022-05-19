@@ -76,11 +76,14 @@ router.get("/:productId", async (req, res, next) => {
             const productFound = await productInfo(productId, categoryId)
 
             return res.status(200).send(productFound)
-        }
+        } 
+        
     } catch (error) {
         next("Product not found")
     }
 })
+
+
 
 
 module.exports = router;

@@ -36,7 +36,6 @@ router.post("/create", async (req, res, next) => {
   const { userName, email, password, firstName, lastName, phone } = req.body;
 
   try {
-
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
     if (userFound) {
@@ -48,7 +47,7 @@ router.post("/create", async (req, res, next) => {
     const newUser = await User.create({
       userName,
       email,
-      password,
+      password: Hashpassword,
       firstName,
       lastName,
       phone,
@@ -171,5 +170,7 @@ router.get("/:userId", async (req, res) => {
     res.send(error);
   }
 });
+
+
 
 module.exports = router;

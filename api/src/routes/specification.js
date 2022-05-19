@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const { ProductSpecification, Specification, Product } = require("../db");
+const { Specification, ProductSpecification } = require("../db");
 
 router.post("/", async (req, res, next) => {
   const { name } = req.body;
@@ -29,6 +29,8 @@ router.get("/all", async (req, res, next) => {
     sen.status(400)
   }
 });
+
+
 router.get("/", async (req, res, next) => {
   
   const {specName, productId} = req.query
@@ -68,6 +70,8 @@ router.get("/", async (req, res, next) => {
     next(error)
   }
 })
+
+
 
 
 module.exports = router;
