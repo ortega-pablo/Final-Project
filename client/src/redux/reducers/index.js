@@ -18,7 +18,9 @@ import {
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
-  DELETE_PRODUCT
+  DELETE_PRODUCT,
+  PUT_PRODUCT,
+  PUT_QUANTITY
 
 } from "../actions";
 
@@ -170,17 +172,31 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case DELETE_PRODUCT :
-      console.log("Reducer")
-      console.log(action.payload)
       let allProductsForDelete = state.products
       const newListProduct = allProductsForDelete.filter ( product => product.id !== action.payload)
-      console.log(newListProduct)
       return{
         ...state,
         products : newListProduct
        
       }
 
+    case PUT_PRODUCT : 
+     const index = state.products.findIndex( p => p.id === action.payload.id )
+     const newArray = [...state.products]
+     newArray[index] =  action.payload
+      return {
+        ...state,
+        products: newArray
+    }
+
+    case PUT_QUANTITY:
+      const index2 = state.products.findIndex( p => p.id === action.payload.id )
+      const newArray2 = [...state.products]
+      newArray2[index2] =  action.payload
+      return {
+        ...state,
+        products: newArray
+    }
     default:
       return state;
   }

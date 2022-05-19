@@ -4,19 +4,7 @@ import Box from "@mui/material/Box";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField } from "@mui/material";
-import {
-  postProduct,
-  getProducts,
-  // getAllCategories,
-  getCategories,
-  postAddCateroryToProduct,
-  // postAddSpecificationToProduct,
-  // postAddCaterory,
-  postAddSubCateroryToProduct,
-  postAddQuantity,
-  getAllSpecifications,
-  postAddSpecificationToProduct,
-} from "../../redux/actions";
+
 import InputAdornment from "@mui/material/InputAdornment";
 
 import InputLabel from "@mui/material/InputLabel";
@@ -26,27 +14,32 @@ import { useNavigate } from "react-router-dom";
 
 import Select from "@mui/material/Select";
 
-import { AddCategory } from "./AddCategory";
 
 
-import { AddSubCategoty } from "./AddSubCategoty";
-import { AddQuantity } from "./AddQuantity";
-import { AddSpecification } from "./AddSpecification/AddSpecification";
-import { AddDiscount } from "./AddDiscount";
-import { TableSpecification } from "./TablaResumen/TableSpecification";
+
+import { AddSubCategoty } from "../AddSubCategoty";
+import { AddQuantity } from "../AddQuantity";
+import { AddSpecification } from "../AddSpecification/AddSpecification";
+import { AddDiscount } from "../AddDiscount";
+import { TableSpecification } from "../TablaResumen/TableSpecification";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { AddSpecificationToProduct } from "./AddSpecificationToProduct";
-import { DeleteProduct } from "./AdminProduct/AdminProduct";
+import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
+import { DeleteProduct } from "./AdminProduct";
+import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSpecificationToProduct, postAddSubCateroryToProduct, postProduct, putProduct } from "../../../redux/actions";
+import { UpdateQuantity } from "./UpdateQuantity";
 
 
-export function UseFormControl() {
+export function  UpdateProduct({idUpdate}) {
+
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
-  let navigate = useNavigate();
+  const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
+  
  
+  
   const [inputQ, setInputQ] = useState({ quantity: 0 });
 
 
@@ -54,6 +47,7 @@ export function UseFormControl() {
   const [subCategory, setsubCategory] = React.useState("");
   const [newProdId, setNewProdId] = React.useState(0);
   
+ 
 
   useEffect(() => {
     dispatch(getProducts());
@@ -61,8 +55,21 @@ export function UseFormControl() {
     dispatch(getAllSpecifications());
   }, [dispatch]);
 
-  const NameRepetido = productosExistentes.map((p) => p.name);
-  const skuRepetido = productosExistentes.map((p) => p.sku);
+// if(updateName){
+//   if(updateName !==productToUpdate.name){
+//     // const nameRepetido = productosExistentes.filter( p => p.id !==idUpdate )
+//     // const NameRepetido = nameRepetido.map((p) => p.name);
+//     // console.log(NameRepetido)
+//     return NameRepetido
+//   }
+  
+// }
+const nameRepetido = productosExistentes.filter( p => p.id !=idUpdate )
+const NameRepetido = nameRepetido.map((p) => p.name);
+
+
+  // const skuRepetido = productosExistentes.filter((p) => p.);
+  const SkuRepetido = nameRepetido.map((p) => p.sku);
 
 
   const validationSchema = yup.object({
@@ -74,37 +81,35 @@ export function UseFormControl() {
     
       sku: yup
       .string("Ingrese la descripción")
-    .notOneOf(skuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
+    .notOneOf(SkuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
       .required("La descripción es requerida"),
       brand: yup
       .string("Ingrese la descripción")
       .required("La descripción es requerida"),
       price: yup
       .number("El precio es numerico.").typeError("El precio deber ser numerico").positive("El precio debe ser positivo")
-      // .string()
+      
       .required("La descripción es requerida"),
       description: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
+     
       .required("La descripción es requerida"),
       warranty: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
+    
       .required("La descripción es requerida"),
       netWeight: yup
      .number("El peso neto debe ser numerico").typeError("El peso neto deber ser numerico").positive("El peso neto debe ser positivo")
-    //  .string()
-      // .min(8, 'Password should be of minimum 8 characters length')
+    
       .required("La descripción es requerida"),
 
       grossWeight: yup
       .number("El peso bruto es numerico").typeError("El peso bruto deber ser numerico").positive("El peso bruto debe ser positivo")
-      // .string()
-      // .min(8, 'Password should be of minimum 8 characters length')
+    
       .required("La descripción es requerida"),
       image: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
+   
       .required("La descripción es requerida"),
 
 
@@ -113,32 +118,36 @@ export function UseFormControl() {
 
   const formik = useFormik({
     initialValues: {
-    name: "",
-    sku: "",
-    brand: "",
-    keyWords: "",
-    price: "",
-    description: "",
-    warranty: "",
-    productDimensions: "",
-    packageDimensions: "",
-    netWeight: "",
-    grossWeight: "",
-    thumbnail: "",
-    image: ""
-    },
+    id: idUpdate,
+    name: productToUpdate.name,
+    sku: productToUpdate.sku,
+    brand: productToUpdate.brand,
+    keyWords: productToUpdate.keyWords,
+    price: productToUpdate.price,
+    description: productToUpdate.description,
+    warranty: productToUpdate.warranty,
+    productDimensions: productToUpdate.productDimensions,
+    packageDimensions: productToUpdate.packageDimensions,
+    netWeight:productToUpdate.netWeight,
+    grossWeight:productToUpdate.grossWeight,
+    thumbnail: productToUpdate.thumbnail,
+    image: productToUpdate.image
+      },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       alert(JSON.stringify(values, null, 2));
      
-      const newProd = await dispatch(postProduct(values));
-       await setNewProdId(newProd.data.id);
+      await dispatch(putProduct(idUpdate,values))
       await dispatch(getProducts())
+     
     },
   });
 
 
-  //---------  funciones de agregar cantidad
+  
+
+
+
 
 
   //----- funciones de agregar cat y sub
@@ -195,7 +204,7 @@ export function UseFormControl() {
       //  onSubmit={(e) => handleSubmit(e)}
       onSubmit={formik.handleSubmit}
       >
-        <h2>Creando algo</h2>
+        <h2>Editar Producto</h2>
         <hr />
         <h3>Paso 1: </h3>
         <TextField
@@ -343,15 +352,16 @@ export function UseFormControl() {
           helperText={formik.touched.image && formik.errors.image}
         />
 
-        <Button type="submit">Crear</Button>
+        <Button type="submit">Editar</Button>
 
         <h4>(*) elementos obligatorios</h4>
       </Box>
       <hr />
       <h3>Paso 2: Agregar stock</h3>
           
-      <AddQuantity
-         newProdId={newProdId}/> 
+      <UpdateQuantity
+       productToUpdate={productToUpdate}
+         idUpdate={idUpdate}/> 
 
       <hr />
 
@@ -397,10 +407,10 @@ export function UseFormControl() {
         Agregar categoria y sub categoría
       </Button>
 
-      <AddCategory
+      {/* <AddCategory
         allCategories={allCategories}
         
-      />
+      /> */}
 
       <AddSubCategoty allCategories={allCategories} />
 
@@ -439,20 +449,8 @@ export function UseFormControl() {
       <hr />
       <h3>Paso 5: Agregar descuento</h3>
       <AddDiscount/>
-      <TableSpecification
-        newProdId={newProdId}
-        // newProd={newProd}
-       // input={input}
-        inputQ={inputQ}
-        allCategories={allCategories}
-        subCategory={subCategory}
-        category={category}
-        productosExistentes={productosExistentes}
-        specifications={specifications}
-        inputSpec={inputSpec}
-        
-         />
-        <DeleteProduct/>
+      
+    
     </>
   );
 }

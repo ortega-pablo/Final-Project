@@ -27,7 +27,7 @@ const validationSchema = yup.object({
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       alert(JSON.stringify(values, null, 2));
-      console.log("hola Q")
+    
       await dispatch(postAddQuantity(newProdId, values));
       await dispatch(getProducts())
     },

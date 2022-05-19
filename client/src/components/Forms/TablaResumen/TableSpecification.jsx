@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,7 +10,7 @@ import React, { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getProducts } from "../../../redux/actions";
+import { deleteProduct, getProducts } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 export const TableSpecification = ({
   newProdId,
@@ -36,6 +37,17 @@ export const TableSpecification = ({
 
   const newProducts = products.find((p) => p.id === newProdId);
  
+
+
+//-----FUNCIONES PARA ELIMINAR PRODUCTO RECIEN CREADO
+async function handleDeleteProduct(e){
+  e.preventDefault();
+
+  await dispatch(deleteProduct(e.target.value));
+  await dispatch(getProducts());
+ }
+
+
   return (
     <>
       <h3>Aca va la tabla</h3>
@@ -64,9 +76,7 @@ export const TableSpecification = ({
                 <IconButton>
                   <EditIcon />
                 </IconButton>
-                <IconButton>
-                  <DeleteIcon />
-                </IconButton>
+                <Button  value={newProducts.id} onClick={ e => handleDeleteProduct(e)}   name="delete" startIcon={<DeleteIcon />}> Eliminar producto creado</Button >
               </TableRow>
             )}
             {newProducts?.id && (

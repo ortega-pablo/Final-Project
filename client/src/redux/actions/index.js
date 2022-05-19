@@ -27,6 +27,8 @@ export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
 
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const PUT_PRODUCT = "PUT_PRODUCT";
+export const PUT_QUANTITY = "PUT_QUANTITY";
 
 
 
@@ -204,6 +206,9 @@ export const getCategories = () => {
   };
 };
 
+
+
+
 export const filterPerCategory = (category) => {
   return async (dispatch) => {
     return dispatch({
@@ -272,6 +277,42 @@ export function deleteProduct (id){
               type: DELETE_PRODUCT,
               payload: id
               
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putProduct (id, payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products/${id}` , payload )
+           console.log("editando action")
+           console.log(id)
+          console.log(payload)  
+          return dispatch({
+              type: PUT_PRODUCT,
+              payload: payload,
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putQuantity (id, payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/inventory/=${id}` , payload )
+           console.log("editando action")
+           console.log(id)
+          console.log(payload)  
+          return dispatch({
+              type: PUT_QUANTITY,
+              payload: payload,
+                            
           })
       } catch (error) {
           console.log(error)
