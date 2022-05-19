@@ -8,6 +8,7 @@ import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 import { ForgotPassword } from "./components/Login/ForgotPassword";
+import  ImageUpload  from "./components/ImageUpload/ImageUpload";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/createaccount" element={<CreateAccount/>}/>
             <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
+            <Route path="/upload" element={<ImageUpload/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
     </BrowserRouter>

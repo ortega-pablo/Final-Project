@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, Discount, Category, Specification, ProductSpecification, SubCategory  } = require("../db");
+const { Product, Discount, Category, Specification, ProductSpecification, SubCategory , Image} = require("../db");
 const { getAllProducts, getProductsByName , orderProducts } = require("../controllers/products");
 const router = Router();
 
@@ -162,5 +162,22 @@ router.post("/addSpecification", async (req, res, next) => {
   }
 });
 
+router.post("/addImage", async (req, res, next) => {
+  const { urlFile, productId } = req.query;
+  try {
+    const newImage = await Image.create({ urlFile });
 
+    const product = await Product.findOne({
+      where: {
+        id: productId,
+      },
+    });
+
+    product.addImage(newImage)
+
+    res.status(200).send("Image was add successfully");
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;
