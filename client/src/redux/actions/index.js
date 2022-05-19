@@ -26,6 +26,10 @@ export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
 
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+
+
+
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -35,7 +39,7 @@ export const getProducts = (name) => {
     else {
       response = await axios(`http://localhost:3001/products?name=${name}`);
     }
-    console.log(response);
+ 
     return dispatch({
       type: GET_PRODUCTS,
       payload: response.data,
@@ -256,4 +260,21 @@ export const filterPerPrice = (range) => {
       payload: range,
     });
   };
+};
+
+export function deleteProduct (id){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/products/${id}` )
+           console.log("redicer")
+
+          return dispatch({
+              type: DELETE_PRODUCT,
+              payload: id
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
 };

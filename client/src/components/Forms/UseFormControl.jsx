@@ -38,6 +38,7 @@ import { TableSpecification } from "./TablaResumen/TableSpecification";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AddSpecificationToProduct } from "./AddSpecificationToProduct";
+import { DeleteProduct } from "./deleteProduct/DeleteProduct";
 
 
 export function UseFormControl() {
@@ -452,7 +453,7 @@ export function UseFormControl() {
         inputSpec={inputSpec}
         
          />
-        
+        <DeleteProduct/>
     </>
   );
 }

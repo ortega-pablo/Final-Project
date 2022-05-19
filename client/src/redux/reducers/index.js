@@ -18,6 +18,7 @@ import {
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
+  DELETE_PRODUCT
 
 } from "../actions";
 
@@ -167,6 +168,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+    case DELETE_PRODUCT :
+      console.log("Reducer")
+      console.log(action.payload)
+      let allProductsForDelete = state.products
+      const newListProduct = allProductsForDelete.filter ( product => product.id !== action.payload)
+      console.log(newListProduct)
+      return{
+        ...state,
+        products : newListProduct
+       
+      }
 
     default:
       return state;
