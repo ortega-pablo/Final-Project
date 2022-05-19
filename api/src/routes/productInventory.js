@@ -86,4 +86,49 @@ router.get("/", async (req, res, next) => {
   
 })
 
+router.put("/:productId", async (req, res, next) =>{
+
+  const {productId} = req.params;
+  const { quantity } = req.body;
+
+  try {
+
+    const findProduct = await Product.findOne({
+      where: {
+        id: productId
+      }, 
+      include: [
+        {
+          model: ProductInventory,
+          attributes: ["quantity"],
+        },
+      ]
+    })
+
+    console.log(findProduct)
+
+    
+    if(findProduct && findProduct.productInventory) {
+
+      await ProductInventory.update({
+        quantity,
+        },
+        {
+        where: {
+            productId
+        }
+      })
+      res.status(200).send("Stock updated successfully!")
+
+    } else {
+      res.send("Product or stock not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
+
+
+
 module.exports = router;
