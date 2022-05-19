@@ -7,12 +7,19 @@ import { NotFound } from "./components/NotFound/NotFound";
 import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
+
+import { UseFormControl} from "./components/Forms/UseFormControl"
+
+
+
 import { ForgotPassword } from "./components/Login/ForgotPassword";
 import  ImageUpload  from "./components/ImageUpload/ImageUpload";
+
 
 function App() {
   return (
     <BrowserRouter>
+
         <NavBar/>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -22,9 +29,10 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/createaccount" element={<CreateAccount/>}/>
             <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
-            <Route path="/upload" element={<ImageUpload/>}/>
+            <Route path="/createProduct" element={<UseFormControl/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
+
     </BrowserRouter>
   );
 }
