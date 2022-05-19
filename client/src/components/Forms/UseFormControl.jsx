@@ -35,19 +35,10 @@ import { AddQuantity } from "./AddQuantity";
 import { AddSpecification } from "./AddSpecification/AddSpecification";
 import { AddDiscount } from "./AddDiscount";
 import { TableSpecification } from "./TablaResumen/TableSpecification";
-// function MyFormHelperText() {
-//   const { focused } = useFormControl() || {};
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { AddSpecificationToProduct } from "./AddSpecificationToProduct";
 
-//   const helperText = React.useMemo(() => {
-//     if (focused) {
-//       return 'This field is being focused';
-//     }
-
-//     return 'Helper text';
-//   }, [focused]);
-
-//   return <FormHelperText>{helperText}</FormHelperText>;
-// }
 
 export function UseFormControl() {
   const dispatch = useDispatch();
@@ -56,37 +47,72 @@ export function UseFormControl() {
   const allSpecifications = useSelector((state) => state.allSpecifications);
   let navigate = useNavigate();
  
-  const [errorName, setErrorName] = useState(false);
-  const [leyendaErrorName, setLeyendaErrorName] = useState("");
-  const [errorBrand, setErrorBrand] = useState(false);
-  const [leyendaErrorBrand, setLeyendaErrorBrand] = useState("");
-  const [errorPrice, setErrorPrice] = useState(false);
-  const [leyendaErrorPrice, setLeyendaErrorPrice] = useState("");
-  const [errorSku, setErrorSku] = useState(false);
-  const [leyendaErrorSku, setLeyendaErrorSku] = useState("");
-  const [errorDesc, setErrorDesc] = useState(false);
-  const [leyendaErrorDesc, setLeyendaErrorDesc] = useState("");
-  const [errorNetWei, setErrorNetWei] = useState(false);
-  const [leyendaErrorNetWei, setLeyendaErrorNetWei] = useState("");
-  const [errorGrossWei, setErrorGrossWei] = useState(false);
-  const [leyendaerrorGrossWei, setLeyendaErrorGrossWei] = useState("");
-  const [errorWarr, setErrorWarr] = useState(false);
-  const [leyendaerrorWarr, setLeyendaErrorWarr] = useState("");
-  const [errorImage, setErrorImage] = useState(false);
-  const [leyendaerrorImage, setLeyendaErrorImage] = useState("");
-
-  //control de error de los input de new Category-----
-
-  // const [errorName2, setErrorName2] = useState(false);
-  // const [leyendaErrorName2, setLeyendaErrorName2] = useState("");
-  // const [errorDescription2, setErrorDescription2] = useState(false);
-  // const [leyendaErrorDescription2, setLeyendaErrorDescription2] = useState("");
-  // const [errorThumbnail, setErrorThumbnailn] = useState(false);
-  // const [leyendaErrorThumbnail, setLeyendaErrorThumbnail] = useState("");
-
   const [inputQ, setInputQ] = useState({ quantity: 0 });
-  const [errors, setErrors] = useState({});
-  const [input, setInput] = useState({
+
+
+  const [category, setCategory] = React.useState("");
+  const [subCategory, setsubCategory] = React.useState("");
+  const [newProdId, setNewProdId] = React.useState(0);
+  
+
+  useEffect(() => {
+    dispatch(getProducts());
+    dispatch(getCategories());
+    dispatch(getAllSpecifications());
+  }, [dispatch]);
+
+  const NameRepetido = productosExistentes.map((p) => p.name);
+  const skuRepetido = productosExistentes.map((p) => p.sku);
+
+
+  const validationSchema = yup.object({
+    name: yup
+      .string("Ingrese el nombre de la nueva categoria")
+     
+      .notOneOf(NameRepetido.map(name=>name), "Ya existe un producto con éste nombre" )
+      .required("El nombre es requerido"),
+    
+      sku: yup
+      .string("Ingrese la descripción")
+    .notOneOf(skuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
+      .required("La descripción es requerida"),
+      brand: yup
+      .string("Ingrese la descripción")
+      .required("La descripción es requerida"),
+      price: yup
+      .number("El precio es numerico.").typeError("El precio deber ser numerico").positive("El precio debe ser positivo")
+      // .string()
+      .required("La descripción es requerida"),
+      description: yup
+      .string("Ingrese la descripción")
+      // .min(8, 'Password should be of minimum 8 characters length')
+      .required("La descripción es requerida"),
+      warranty: yup
+      .string("Ingrese la descripción")
+      // .min(8, 'Password should be of minimum 8 characters length')
+      .required("La descripción es requerida"),
+      netWeight: yup
+     .number("El peso neto debe ser numerico").typeError("El peso neto deber ser numerico").positive("El peso neto debe ser positivo")
+    //  .string()
+      // .min(8, 'Password should be of minimum 8 characters length')
+      .required("La descripción es requerida"),
+
+      grossWeight: yup
+      .number("El peso bruto es numerico").typeError("El peso bruto deber ser numerico").positive("El peso bruto debe ser positivo")
+      // .string()
+      // .min(8, 'Password should be of minimum 8 characters length')
+      .required("La descripción es requerida"),
+      image: yup
+      .string("Ingrese la descripción")
+      // .min(8, 'Password should be of minimum 8 characters length')
+      .required("La descripción es requerida"),
+
+
+  });
+  
+
+  const formik = useFormik({
+    initialValues: {
     name: "",
     sku: "",
     brand: "",
@@ -99,288 +125,38 @@ export function UseFormControl() {
     netWeight: "",
     grossWeight: "",
     thumbnail: "",
+    image: ""
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      alert(JSON.stringify(values, null, 2));
+     
+      const newProd = await dispatch(postProduct(values));
+       await setNewProdId(newProd.data.id);
+      await dispatch(getProducts())
+    },
   });
 
-  // const [newCat, setNewCat] = useState({
-  //   name: "",
-  //   description: "",
-  //   thumbnail: "",
-  // });
-
-  const [category, setCategory] = React.useState("");
-  const [subCategory, setsubCategory] = React.useState("");
-  const [newProdId, setNewProdId] = React.useState(0);
-  // const [newProducto ,setNewProducto] = React.useState(0);
-
-  useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getCategories());
-    dispatch(getAllSpecifications());
-  }, [dispatch]);
-
-  //---------
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const NameRepetido = productosExistentes.find((p) => p.name === input.name);
-
-    //validar nombre existente
-
-    if (NameRepetido) {
-      setErrorName(true);
-      setLeyendaErrorName(
-        "El nombre esta utilizado en otro producto existente"
-      );
-    }
-    //validad error de input
-    if (errors.name) {
-      setErrorName(true);
-      setLeyendaErrorName(errors?.name);
-      console.log("error de name");
-    }
-    if (errors.price) {
-      setErrorPrice(true);
-      setLeyendaErrorPrice(errors.price);
-      console.log("error de precio");
-    }
-    //validar sku repetido
-    const SKURepetido = productosExistentes.find((p) => p.sku === input.sku);
-
-    if (SKURepetido) {
-      setErrorSku(true);
-      setLeyendaErrorSku("El codigo SKU esta utilizado en otro producto");
-    }
-    if (errors.sku) {
-      setErrorSku(true);
-      setLeyendaErrorSku(errors.sku);
-
-      console.log("error de sku");
-    }
-
-    //validar error de imput
-    if (errors.description) {
-      setErrorDesc(true);
-      setLeyendaErrorDesc(errors.description);
-
-      console.log("error de desc");
-    }
-    if (errors.brand) {
-      setErrorBrand(true);
-      setLeyendaErrorBrand(errors.brand);
-      console.log("error de marca");
-    }
-    if (errors.netWeight) {
-      setErrorNetWei(true);
-      setLeyendaErrorNetWei(errors.netWeight);
-      console.log("error de peso neto");
-    }
-    if (errors.grossWeight) {
-      setErrorGrossWei(true);
-      setLeyendaErrorGrossWei(errors.grossWeight);
-      console.log("error de peso bruto");
-    }
-    if (errors.warranty) {
-      setErrorWarr(true);
-      setLeyendaErrorWarr(errors.warranty);
-      console.log("error de garantia");
-    }
-
-    // if (
-    //   NameRepetido ||
-    //   SKURepetido ||
-    //   errors?.name ||
-    //   errors?.sku ||
-    //   errors?.price ||
-    //   errors?.brand ||
-    //   errors?.description ||
-    //   errors?.netWeight ||
-    //   errors?.grossWeight ||
-    //   errors?.warranty
-    // ) {
-    //   console.log("hay errores");
-    //   e.preventDefault();
-    //   alert("hay errores");
-    // }
-
-    //validacion de input vacio
-    if (!input.name) {
-      e.preventDefault();
-      setErrorName(true);
-      setLeyendaErrorName("El nombre es obligatorio");
-    } else if (!input.sku) {
-      e.preventDefault();
-      setErrorSku(true);
-      setLeyendaErrorSku("El sku es obligatorio");
-    } else if (!input.brand) {
-      e.preventDefault();
-      setErrorBrand(true);
-      setLeyendaErrorBrand("La marca es obligatoria");
-    } else if (!input.price) {
-      e.preventDefault();
-      setErrorPrice(true);
-      setLeyendaErrorPrice("El precio es obligatorio, puede ser 0 ");
-    } else if (!input.description) {
-      e.preventDefault();
-      setErrorDesc(true);
-      setLeyendaErrorDesc("La descripción es obligatoria");
-    } else if (!input.netWeight) {
-      e.preventDefault();
-      setErrorNetWei(true);
-      setLeyendaErrorNetWei("El peso bruto es obligatorio");
-    } else if (!input.grossWeight) {
-      e.preventDefault();
-      setErrorGrossWei(true);
-      setLeyendaErrorGrossWei("El peso bruto es obligatorio");
-    } else if (!input.warranty) {
-      e.preventDefault();
-      setErrorWarr(true);
-      setLeyendaErrorWarr("La garantia es obligatoria");
-    } else if (!input.image) {
-      e.preventDefault();
-
-      setErrorImage(true);
-      setLeyendaErrorImage("La imagen es obligatoria");
-    } else if (
-      !(
-        NameRepetido ||
-        SKURepetido ||
-        errors?.name ||
-        errors?.sku ||
-        errors?.price ||
-        errors?.brand ||
-        errors?.description ||
-        errors?.netWeight ||
-        errors?.grossWeight ||
-        errors?.warranty
-      )
-    ) {
-      const newProd = await dispatch(postProduct(input));
-      await setNewProdId(newProd.data.id);
-      await dispatch(getProducts())
-      // await setNewProducto = (newProd.data)
-      // await dispatch(postAddQuantity(newProd.data.id, inputQ));
-      // await dispatch(postAddCateroryToProduct(newProd.data.id, category));
-      // await dispatch(postAddSubCateroryToProduct(newProd.data.id, subCategory));
-      // await dispatch(postAddSpecificationToProduct(newProd.data.id,specifications, inputSpec))
-      // navigate("/detail/" + newProd.data.id);
-    }
-  }
-
-  function handleInput(e) {
-    e.preventDefault();
-
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
-
-    if (!errors.price) {
-      setErrorPrice(false);
-      setLeyendaErrorPrice("");
-    }
-    if (!errors.name) {
-      setErrorName(false);
-      setLeyendaErrorName("");
-    }
-    if (!errors.sku) {
-      setErrorSku(false);
-      setLeyendaErrorSku("");
-    }
-    if (!errors.description) {
-      setErrorDesc(false);
-      setLeyendaErrorDesc("");
-    }
-    if (!errors.netWeight) {
-      setErrorNetWei(false);
-      setLeyendaErrorNetWei("");
-    }
-    if (!errors.grosstWeight) {
-      setErrorGrossWei(false);
-      setLeyendaErrorGrossWei("");
-    }
-    if (!errors.brand) {
-      setErrorBrand(false);
-      setLeyendaErrorBrand("");
-    }
-
-    if (!errors.warranty) {
-      setErrorWarr(false);
-      setLeyendaErrorWarr("");
-    }
-  }
-
-  //funciones handle del componente de "creacion de nueva categoria" :
-  // async function handleNewCategory(e) {
-
-  //   if (errors?.name) {
-  //     setErrorName(true);
-  //     setLeyendaErrorName(errors?.name);
-  //     }
-
-  //   e.preventDefault();
-  //   await dispatch(postAddCaterory(newCat));
-  //   await dispatch(getCategories());
-  // };
-
-  // function handleInputNewCategory(e) {
-  //   e.preventDefault();
-  //   setNewCat({
-  //     ...newCat,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   setErrors(
-  //     validateNewCat({
-  //       ...input,
-  //       [e.target.name]: e.target.value,
-  //     })
-  //   );
-
-  //   if (!errors.name) {
-  //     setErrorName2(false);
-  //     setLeyendaErrorName2("");
-  //   }
-
-  //   if (!errors.description) {
-  //     setErrorDescription2(false);
-  //     setLeyendaErrorDescription2("");
-  //   }
-  // }
 
   //---------  funciones de agregar cantidad
 
-  function handleInputQue(e) {
-    setInputQ({
-      ...inputQ,
-      [e.target.name]: e.target.value,
-    });
-  }
 
-  async function handleClickQue(e) {
-    e.preventDefault();
-    await dispatch(postAddQuantity(newProdId, inputQ));
-    await dispatch(getProducts())
-  }
   //----- funciones de agregar cat y sub
-  const handleChange = (e) => {
+  const handleChangeCategoty = (e) => {
     e.preventDefault();
     setCategory(e.target.value);
-    console.log("categoria");
+    
   };
 
   const handleChangeSubCat = (e) => {
     e.preventDefault();
     setsubCategory(e.target.value);
-    console.log("sub categoria");
+  
   };
 
   async function handleClickCatAndSub(e) {
     e.preventDefault();
-    console.log("agrehando cat");
+    
     await dispatch(postAddCateroryToProduct(newProdId, category));
     await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
     await dispatch(getProducts())
@@ -393,7 +169,7 @@ export function UseFormControl() {
     e.preventDefault();
     setSpecifications(e.target.value);
   }
-  console.log(inputSpec);
+  
   function handleInputSpec(e) {
     setInputSpec({
       ...inputSpec,
@@ -408,15 +184,16 @@ export function UseFormControl() {
   }
   //-------
   const categSelect = allCategories.filter((c) => c.id === category);
-  // console.log(categSelect[0]?.subCategories[0]);
+  
   return (
     <>
       <Box
         component="form"
         noValidate
         autoComplete="off"
-        onChange={(e) => handleInput(e)}
-        onSubmit={(e) => handleSubmit(e)}
+        // onChange={(e) => handleInput(e)}
+      //  onSubmit={(e) => handleSubmit(e)}
+      onSubmit={formik.handleSubmit}
       >
         <h2>Creando algo</h2>
         <hr />
@@ -426,16 +203,24 @@ export function UseFormControl() {
           label="Nombre *"
           variant="outlined"
           name="name"
-          helperText={leyendaErrorName}
-          error={errorName}
+          // helperText={leyendaErrorName}
+          // error={errorName}
+          value={formik.values.name}
+        onChange={formik.handleChange}
+        error={formik.touched.name && Boolean(formik.errors.name)}
+        helperText={formik.touched.name && formik.errors.name}
         />
         <TextField
           id="outlined-basic"
           label="Marca *"
           variant="outlined"
           name="brand"
-          helperText={leyendaErrorBrand}
-          error={errorBrand}
+          // helperText={leyendaErrorBrand}
+          // error={errorBrand}
+          value={formik.values.brand}
+        onChange={formik.handleChange}
+        error={formik.touched.brand && Boolean(formik.errors.brand)}
+        helperText={formik.touched.brand && formik.errors.brand}
         />
         <TextField
           id="outlined-basic"
@@ -445,16 +230,24 @@ export function UseFormControl() {
           InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>,
           }}
-          helperText={leyendaErrorPrice}
-          error={errorPrice}
+          // helperText={leyendaErrorPrice}
+          // error={errorPrice}
+          value={formik.values.price}
+          onChange={formik.handleChange}
+          error={formik.touched.price && Boolean(formik.errors.price)}
+          helperText={formik.touched.price && formik.errors.price}
         />
         <TextField
           id="outlined-basic"
           label="Codigo *"
           variant="outlined"
           name="sku"
-          helperText={leyendaErrorSku}
-          error={errorSku}
+          // helperText={leyendaErrorSku}
+          value={formik.values.sku}
+          onChange={formik.handleChange}
+          error={formik.touched.sku && Boolean(formik.errors.sku)}
+          helperText={formik.touched.sku && formik.errors.sku}
+          // error={errorSku}
         />
 
         <TextField
@@ -462,8 +255,12 @@ export function UseFormControl() {
           label="Descripcion *"
           variant="outlined"
           name="description"
-          helperText={leyendaErrorDesc}
-          error={errorDesc}
+          // helperText={leyendaErrorDesc}
+          // error={errorDesc}
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          error={formik.touched.description && Boolean(formik.errors.description)}
+          helperText={formik.touched.description && formik.errors.description}
         />
         <TextField
           id="outlined-basic"
@@ -473,8 +270,12 @@ export function UseFormControl() {
           InputProps={{
             endAdornment: <InputAdornment position="end">gr</InputAdornment>,
           }}
-          helperText={leyendaErrorNetWei}
-          error={errorNetWei}
+          // helperText={leyendaErrorNetWei}
+          // error={errorNetWei}
+          value={formik.values.netWeight}
+          onChange={formik.handleChange}
+          error={formik.touched.netWeight && Boolean(formik.errors.netWeight)}
+          helperText={formik.touched.netWeight && formik.errors.netWeight}
         />
         <TextField
           id="outlined-basic"
@@ -484,16 +285,24 @@ export function UseFormControl() {
           InputProps={{
             endAdornment: <InputAdornment position="end">gr</InputAdornment>,
           }}
-          helperText={leyendaerrorGrossWei}
-          error={errorGrossWei}
+          // helperText={leyendaerrorGrossWei}
+          // error={errorGrossWei}
+          value={formik.values.grossWeight}
+          onChange={formik.handleChange}
+          error={formik.touched.grossWeight && Boolean(formik.errors.grossWeight)}
+          helperText={formik.touched.grossWeight && formik.errors.grossWeight}
         />
         <TextField
           id="outlined-basic"
           label="Garatía *"
           variant="outlined"
           name="warranty"
-          helperText={leyendaerrorWarr}
-          error={errorWarr}
+          // helperText={leyendaerrorWarr}
+          // error={errorWarr}
+          value={formik.values.warranty}
+          onChange={formik.handleChange}
+          error={formik.touched.warranty && Boolean(formik.errors.warranty)}
+          helperText={formik.touched.warranty && formik.errors.warranty}
         />
 
         <TextField
@@ -526,42 +335,33 @@ export function UseFormControl() {
           label="Imagenes"
           variant="outlined"
           name="image"
-          helperText={leyendaerrorImage}
-          error={errorImage}
+          // helperText={leyendaerrorImage}
+          // error={errorImage}
+          value={formik.values.image}
+          onChange={formik.handleChange}
+          error={formik.touched.image && Boolean(formik.errors.image)}
+          helperText={formik.touched.image && formik.errors.image}
         />
 
-        <Button onClick={(e) => handleSubmit(e)}>Crear</Button>
+        <Button type="submit">Crear</Button>
 
         <h4>(*) elementos obligatorios</h4>
       </Box>
       <hr />
       <h3>Paso 2: Agregar stock</h3>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onChange={(e) => handleInputQue(e)}
-      >
-        <TextField
-          id="outlined-basic"
-          label="Stock"
-          variant="outlined"
-          name="quantity"
-          //   helperText={leyendaErrorName}
-          //   error={errorName}
-        />
-        <h3>Stock: {inputQ.quantity} </h3>
-        <Button onClick={(e) => handleClickQue(e)}>Agregar sotck</Button>
-      </Box>
+          
+      <AddQuantity
+         newProdId={newProdId}/> 
 
       <hr />
+
       <h3>Paso 3: Agregar categoría y sub categorías</h3>
       <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
         value={category}
-        onChange={handleChange}
+        onChange={handleChangeCategoty}
         label="Age"
       >
         <MenuItem value="">
@@ -596,17 +396,14 @@ export function UseFormControl() {
       <Button onClick={(e) => handleClickCatAndSub(e)}>
         Agregar categoria y sub categoría
       </Button>
+
       <AddCategory
         allCategories={allCategories}
-        // handleInputNewCategory={handleInputNewCategory}
-        // handleNewCategory={handleNewCategory}
-        // errorName2 = {errorName2}
-        // leyendaErrorName2 ={leyendaErrorName2}
-        // errorDescription2 = {errorDescription2}
-        // leyendaErrorDescription2 = {leyendaErrorDescription2}
+        
       />
 
       <AddSubCategoty allCategories={allCategories} />
+
       <hr />
       <h3>Paso 4: agregar especificaciones</h3>
       <InputLabel id="demo-simple-select-standard-label">
@@ -627,30 +424,32 @@ export function UseFormControl() {
         })}
       </Select>
        
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onChange={(e) => handleInputSpec(e)}
-        // onSubmit={(e) => handleSubmit(e)}
-      >
-        <TextField
-          id="outlined-basic"
-          label="Valor de la especificación"
-          variant="outlined"
-          name="value"
-          // helperText={leyendaErrorName}
-          // error={errorName}
-        />
-      </Box>
-      <Button onClick={e=> handleClickNewSpec(e)}>Agregar especificación</Button>
-      <AddSpecification newProdId={newProdId} />
+     
+<hr />
+
+      <AddSpecificationToProduct
+          newProdId={newProdId}
+          specifications={specifications}/>
+
+          <hr />
+
+      <AddSpecification
+           />
+           
       <hr />
       <h3>Paso 5: Agregar descuento</h3>
       <AddDiscount/>
       <TableSpecification
         newProdId={newProdId}
-      
+        // newProd={newProd}
+       // input={input}
+        inputQ={inputQ}
+        allCategories={allCategories}
+        subCategory={subCategory}
+        category={category}
+        productosExistentes={productosExistentes}
+        specifications={specifications}
+        inputSpec={inputSpec}
         
          />
         

@@ -35,8 +35,7 @@ export const TableSpecification = ({
   }, [dispatch]);
 
   const newProducts = products.find((p) => p.id === newProdId);
-  console.log(products);
-  console.log(newProducts);
+ 
   return (
     <>
       <h3>Aca va la tabla</h3>
