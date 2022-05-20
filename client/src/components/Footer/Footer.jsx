@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import { textAlign } from '@mui/system';
 
 
 function Copyright() {
@@ -20,14 +21,13 @@ function Copyright() {
 
 export const Footer = () => {
   return (
+    <footer>
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        bottom: 0,
-        width: 1,
-        textAlign: 'center',
+        mt:"auto",
+        position:"end",
+        width: "100%",
+        textAlign: "center",
       }}
     >
     <Box
@@ -48,5 +48,6 @@ export const Footer = () => {
         </Container>
       </Box>
     </Box>
+    </footer>
   );
 }

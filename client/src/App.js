@@ -13,12 +13,15 @@ import { UseFormControl} from "./components/Forms/UseFormControl"
 
 
 import { ForgotPassword } from "./components/Login/ForgotPassword";
+import AdminMenu from "./components/AdminPanel/AdminMenu";
+
+
 
 
 function App() {
   return (
-    <BrowserRouter>
-
+    
+    <BrowserRouter >
         <NavBar/>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -30,7 +33,10 @@ function App() {
             <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
             <Route path="/createProduct" element={<UseFormControl/>}/>
             <Route path="*" element={<NotFound/>}/>
+            <Route path="/pruebaMenuAdmin" element={<AdminMenu/>}/>
           </Routes>
+        <Footer/>
+
 
     </BrowserRouter>
   );
