@@ -28,7 +28,13 @@ const productInfo = async function (id) {
             attributes: ["id", "name", "description", "thumbnail"],
             through: {
               attributes: [],
-            }
+            },
+            include: 
+               {
+               all: true,
+               excludedModels: Product
+               }
+            
         },
         {
             model: SubCategory,
@@ -41,7 +47,6 @@ const productInfo = async function (id) {
             model: Specification,
             attributes: ["id", "name"],
             through: {
-                as:"value:",
                 attributes: ["value"],
             },
         },

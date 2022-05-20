@@ -275,6 +275,7 @@ router.put("/", async (req, res, next) => {
         }
 
         else if(specificationId){
+          
           const findSpecification = await Specification.findOne({
             where: {
               id: specificationId
@@ -282,8 +283,8 @@ router.put("/", async (req, res, next) => {
           })
 
           findSpecification && findProduct.removeSpecification(specificationId) ?
-          res.status(200).send("SubCategory removed successfully!") :
-          res.send("No Subcategory associated with this product")
+          res.status(200).send("Specification removed successfully!") :
+          res.send("No specification associated with this product")
         }
 
         else {
