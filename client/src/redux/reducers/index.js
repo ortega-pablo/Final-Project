@@ -31,6 +31,7 @@ const initialState = {
   categories: [],
   categoriesAux: [],
   allSpecifications: [],
+  inventary: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -193,6 +194,7 @@ const rootReducer = (state = initialState, action) => {
       const index2 = state.products.findIndex( p => p.id === action.payload.id )
       const newArray2 = [...state.products]
       newArray2[index2] =  action.payload
+      console.log()
       return {
         ...state,
         products: newArray

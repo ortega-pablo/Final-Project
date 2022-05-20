@@ -12,7 +12,7 @@ export const UpdateQuantity = ({idUpdate,productToUpdate}) => {
 
     const validationSchema = yup.object({
         quantity: yup
-        .number("El stock es numerico")
+        .number("El stock es numerico").typeError("El stock deber ser numerico")
         .required("El stock es requerido si es que lo deseas agregar.Luego tambien lo podrás hacer desde el panel de administrador").positive("El stock debe ser positivo"),
         
         

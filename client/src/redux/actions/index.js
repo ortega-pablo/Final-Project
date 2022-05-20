@@ -302,6 +302,18 @@ export function putProduct (id, payload){
   }
 };
 
+
+export const getInventary = (id) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/inventory?productId=${id}`);
+    return dispatch({
+      type: GET_DETAIL,
+      payload: response.data,
+    });
+  };
+};
+
+
 export function putQuantity (id, payload){
   return async function (dispatch){
       try {
