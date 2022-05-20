@@ -18,7 +18,7 @@ const productInfo = async function (id) {
         },
         {
             model: Discount,
-            attributes: ["name", "description", "discountPercent", "active"],
+            attributes: ["id", "name", "description", "discountPercent", "active"],
             through: {
                 attributes: [],
             }
@@ -28,9 +28,9 @@ const productInfo = async function (id) {
             attributes: ["id", "name", "description", "thumbnail"],
             through: {
               attributes: [],
-            },
-          },
-          {
+            }
+        },
+        {
             model: SubCategory,
             attributes: ["id", "name", "description", "thumbnail"],
             through: {
@@ -47,11 +47,11 @@ const productInfo = async function (id) {
         },
         {
             model: Ask,
-            attributes: ["content"],
+            attributes: ["id", "content"],
             include: [
                 {
                     model: Answer,
-                    attributes: ["content"]
+                    attributes: ["id", "content"]
                 }
             ]
         }]
@@ -74,6 +74,7 @@ router.get("/:productId", async (req, res, next) => {
     try {
         if (productId) {
             const productFound = await productInfo(productId, categoryId)
+            
 
             return res.status(200).send(productFound)
         }
