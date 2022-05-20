@@ -9,10 +9,11 @@ import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 
 import { UseFormControl} from "./components/Forms/UseFormControl"
-
+import { UserProfile } from "./components/UserProfile/UserProfile"
 
 
 import { ForgotPassword } from "./components/Login/ForgotPassword";
+import { AdminPanel } from "./components/AdminPanel/AdminPanel";
 
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
             <Route path="/createaccount" element={<CreateAccount/>}/>
             <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
             <Route path="/createProduct" element={<UseFormControl/>}/>
+            <Route path="/profile/:username" element={<UserProfile/>} />
+            <Route path="/admin" element={<AdminPanel/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
 
