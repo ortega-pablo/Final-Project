@@ -13,7 +13,11 @@ const verifyToken = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.KEY_WORD_JWT);
       //req.username = decoded.username;
       //req.id = decoded.email;
-      next();
+      if (decoded) {
+        next();
+      } else {
+        return "token no válido";
+      }
     } catch (error) {
       console.log(error);
       return res.status(401).send(error);
