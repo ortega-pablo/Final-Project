@@ -11,6 +11,7 @@ const productInfo = async function (id) {
         where: {
             id
         },
+        // include: { all: true, nested: true }
         include: [
         {
             model: ProductInventory,
@@ -37,11 +38,10 @@ const productInfo = async function (id) {
               attributes: [],
             },
           },
-          {
+        {
             model: Specification,
             attributes: ["id", "name"],
             through: {
-                as:"value:",
                 attributes: ["value"],
             },
         },

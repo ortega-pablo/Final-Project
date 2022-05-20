@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const { Specification, ProductSpecification } = require("../db");
+const {Product, Specification, ProductSpecification } = require("../db");
 
 router.post("/", async (req, res, next) => {
   const { name } = req.body;
@@ -82,7 +82,105 @@ router.get("/:specificationId", async (req, res, next) => {
 //   }
 // })
 
+router.put("/", async (req, res, next) => {
 
+  const {specificationId, productId} = req.query;
+  const {name, value} = req.body
+
+  try {
+    if(productId) {
+
+     if(specificationId && name){
+
+      const getSpecification = await Product.findOne({
+        where: {
+          id: productId
+        }, 
+        include: [
+          {
+            model: Specification, 
+            where: {
+              id: specificationId
+            },
+            attributes: ["id", "name"],
+          }
+        ]
+      })
+
+      const updateName = await Specification.update({
+        name,
+        },
+        {
+        where: {
+            id: specificationId
+        }
+      })
+
+      
+      getSpecification && updateName ?
+      res.status(200).send("Specification value updated successfully!") :
+      res.send("No specification associated with this product")
+
+     } else if(specificationId && value){
+
+      const getSpecificationValue = await ProductSpecification.findOne({
+        where: {
+          specificationId,
+          productId
+        }
+      })
+
+      const updateValue = await ProductSpecification.update({
+        value,
+      },
+      {
+      where: {
+        specificationId,
+        productId
+        }
+        })
+
+        getSpecificationValue && updateValue ?
+        res.status(200).send("Specification value updated successfully!") :
+        res.send("No specification associated with this product")
+
+     }
+
+    } else {
+      return res.send("Product not found")
+    }
+
+  } catch(error){
+    next(error)
+  }
+})
+
+
+
+// router.delete("/", async (req, res, next) => {
+
+//   const {specificationId, productId} = req.query;
+//   try{
+    
+//     if(specificationId){
+      
+//       const deleteSpec = await Specification.destroy({
+//         where: {
+//           id: specificationId
+//       }
+//       })
+
+//       return res.send("Specification deleted successfully!")
+
+//     } else {
+//       return res.send("Product or specification not found")
+//     }
+
+
+//   }catch(error){
+//     next(error)
+//   }
+// })
 
 
 module.exports = router;
