@@ -7,13 +7,11 @@ import { NotFound } from "./components/NotFound/NotFound";
 import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
-
-import { UseFormControl} from "./components/Forms/UseFormControl"
-
-
-
+import { UseFormControl} from "./components/Forms/UseFormControl";
+import { UserProfile } from "./components/UserProfile/UserProfile";
 import { ForgotPassword } from "./components/Login/ForgotPassword";
 import AdminMenu from "./components/AdminPanel/AdminMenu";
+
 
 
 
@@ -32,6 +30,7 @@ function App() {
             <Route path="/createaccount" element={<CreateAccount/>}/>
             <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
             <Route path="/createProduct" element={<UseFormControl/>}/>
+            <Route path="/profile/:username" element={<UserProfile/>} />
             <Route path="*" element={<NotFound/>}/>
             <Route path="/pruebaMenuAdmin" element={<AdminMenu/>}/>
           </Routes>

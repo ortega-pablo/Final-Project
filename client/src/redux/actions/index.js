@@ -26,11 +26,15 @@ export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
 
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
+<<<<<<< HEAD
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const PUT_PRODUCT = "PUT_PRODUCT";
 export const PUT_QUANTITY = "PUT_QUANTITY";
 
 
+=======
+export const VERIFY_TOKEN = "VERIFY_TOKEN"
+>>>>>>> a576da1840b85a1092e5dc7befb3ac68cad06151
 
 
 export const getProducts = (name) => {
@@ -267,6 +271,7 @@ export const filterPerPrice = (range) => {
   };
 };
 
+<<<<<<< HEAD
 export function deleteProduct (id){
   return async function (dispatch){
       try {
@@ -319,3 +324,45 @@ export function putQuantity (id, payload){
       }
   }
 };
+=======
+export const verifyToken = (token) => {
+  return async(dispatch) => {
+    console.log('SOy el token EN LA ACTION   =>  ', token)
+    const config = { 
+      headers: {Authorization: `Bearer ${token}`}
+    }
+    const bodyParameters = {
+      caca: 'caconga'
+    }
+    console.log('soy el payload de la action =>  ', config)
+    try{
+      console.log(' por lo menos lo intente')
+      let response = await axios.post(
+        "http://localhost:3001/users/verifyToken",bodyParameters ,config
+      )
+      console.log('Soy la responseee =>> ' , response)
+      return dispatch({
+        type: VERIFY_TOKEN,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log('SOY EL CATCH DEL VERIFY TOKEN ')
+      console.log(error)
+    }
+  }
+}
+
+// const config = {
+//   headers: { Authorization: `Bearer ${token}` }
+// };
+
+// const bodyParameters = {
+//  key: "value"
+// };
+
+// Axios.post( 
+// 'http://localhost:8000/api/v1/get_token_payloads',
+// bodyParameters,
+// config
+// ).then(console.log).catch(console.log);
+>>>>>>> a576da1840b85a1092e5dc7befb3ac68cad06151

@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User } = require("../db");
+const { User, Ask, Answer } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
+const verifyToken = require("../middleware/auth");
 // Register User
 
 // router.post("/create", async (req, res, next) => {
@@ -70,7 +71,7 @@ router.post("/login", async (req, res, next) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
-      response.status(400).json({
+      res.status(400).json({
         error: "invalid user or password",
       });
     }
@@ -87,6 +88,15 @@ router.post("/login", async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+router.post("/verifyToken", verifyToken, async (req, res) => {
+  try {
+    res.json({msg: 'user'});
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Error en el servidor");
   }
 });
 
@@ -171,6 +181,35 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+router.delete("/:userId", async (req, res, next) =>{  // Esto para el admin de la pagina
 
+  const {userId} = req.params;
+
+  try {
+
+    const findUser = await User.findOne({
+      where: {
+        id: userId
+      }
+    })
+
+    
+    if(findUser) {
+      await Category.destroy(
+        {
+        where: {
+            id: categoryId
+        }
+      })
+      res.status(200).send("User deleted successfully!")
+
+    } else {
+      res.send("User not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
 
 module.exports = router;
