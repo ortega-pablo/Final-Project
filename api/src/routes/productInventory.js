@@ -18,9 +18,16 @@ router.post("/", async (req, res, next) => {
       },
     });
 
-    addQuantity.setProduct(productId);
+    if(product) {
+      addQuantity.setProduct(productId);
+      res.status(200).send(addQuantity);
+      
+    } else {
+      res.send("Product not found")
+    }
+    
 
-    res.status(200).send(addQuantity);
+   
   } catch (error) {
     next(error);
   }

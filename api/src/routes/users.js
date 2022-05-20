@@ -173,6 +173,35 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+router.delete("/:userId", async (req, res, next) =>{  // Esto para el admin de la pagina
 
+  const {userId} = req.params;
+
+  try {
+
+    const findUser = await User.findOne({
+      where: {
+        id: userId
+      }
+    })
+
+    
+    if(findUser) {
+      await Category.destroy(
+        {
+        where: {
+            id: categoryId
+        }
+      })
+      res.status(200).send("User deleted successfully!")
+
+    } else {
+      res.send("User not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
 
 module.exports = router;
