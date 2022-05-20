@@ -5,6 +5,7 @@ const { User } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
+const verifyToken = require("../middleware/auth");
 // Register User
 
 // router.post("/create", async (req, res, next) => {
@@ -87,6 +88,15 @@ router.post("/login", async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+router.get("/verifyToken", verifyToken, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Error en el servidor");
   }
 });
 
