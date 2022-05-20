@@ -72,7 +72,7 @@ router.post("/login", async (req, res, next) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
-      response.status(400).json({
+      res.status(400).json({
         error: "invalid user or password",
       });
     }
@@ -93,9 +93,9 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/verifyToken", verifyToken, async (req, res) => {
+router.post("/verifyToken", verifyToken, async (req, res) => {
   try {
-    res.json(true);
+    res.json({msg: 'user'});
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Error en el servidor");
