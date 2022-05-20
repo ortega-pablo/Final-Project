@@ -75,12 +75,7 @@ export const AddCategory = ({ allCategories }) => {
         error={formik.touched.description && Boolean(formik.errors.description)}
         helperText={formik.touched.description && formik.errors.description}
       />
-      {/* <TextField
-        id="outlined-basic"
-        label="Imagen miniatura"
-        variant="outlined"
-        name="thumbnail"
-      /> */}
+   
       <Button type="submit">Crear nueva categoria</Button>
     </Box>
   );

@@ -25,11 +25,12 @@ import { TableSpecification } from "../TablaResumen/TableSpecification";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
-import { DeleteProduct } from "./AdminProduct";
-import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSpecificationToProduct, postAddSubCateroryToProduct, postProduct, putProduct } from "../../../redux/actions";
+// import { DeleteProduct } from "./AdminProduct";
+import { getAllSpecifications, getCategories, getProducts, postAddSpecificationToProduct, postAddSubCateroryToProduct, postProduct, putProduct } from "../../../redux/actions";
 import { UpdateQuantity } from "./UpdateQuantity";
 import { AddCategory } from "../AddCategory";
 import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
+// import { UpdateSpecif } from "./UpdateSpecif";
 
 
 export function  UpdateProduct({idUpdate}) {
@@ -141,7 +142,8 @@ const NameRepetido = nameRepetido.map((p) => p.name);
      
       await dispatch(putProduct(idUpdate,values))
       await dispatch(getProducts())
-     
+   
+
     },
   });
 
@@ -389,23 +391,28 @@ const NameRepetido = nameRepetido.map((p) => p.name);
         })}
       </Select>
        
+       <AddSpecificationToProduct
+       newProdId={idUpdate}
+       specifications={specifications}
+       />
      
 <hr />
 
-      <AddSpecificationToProduct
+      {/* <UpdateSpecif
+         idUpdate={idUpdate}
+         productToUpdate={productToUpdate}  /> */}
+      {/* <AddSpecificationToProduct
           newProdId={newProdId}
-          specifications={specifications}/>
+          specifications={specifications}/> */}
 
           <hr />
 
-      <AddSpecification
-           />
+      <AddSpecification/>
            
       <hr />
       <h3>Paso 5: Agregar descuento</h3>
       <AddDiscount/>
       
-    
     </>
   );
 }

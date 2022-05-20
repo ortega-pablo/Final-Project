@@ -139,16 +139,8 @@ export const AddSubCategoty = ({ allCategories }) => {
           }
           helperText={formik.touched.description && formik.errors.description}
         />
-        {/* <TextField
-          id="outlined-basic"
-          label="Imagen miniatura"
-          variant="outlined"
-          name="thumbnail"
-          helperText={leyendaErrorThumbnail}
-          error={errorThumbnail}
-        /> */}
+     
         <Button type="submit">Crear nueva Sub Categoria</Button>
-       <p> Nota: Si previamente no selecciona una categoria, en lugar de crear una subcategoría, crearás una nueva categoría</p>
        
       </Box>
     </>

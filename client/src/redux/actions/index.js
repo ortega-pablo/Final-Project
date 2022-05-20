@@ -33,7 +33,8 @@ export const GET_INVENTORY = "GET_INVENTORY";
 export const PUT_INVENTORY = "PUT_INVENTORY";
 export const PUT_CATEGORY_TO_PRODUCT = "PUT_CATEGORY_TO_PRODUCT";
 export const PUT_SUBCATEGORY_TO_PRODUCT = "PUT_SUBCATEGORY_TO_PRODUCT";
-
+export const DELETE_CATEGORY = "DELETE_CATEGORY";
+export const PUT_CATEGORY = "PUT_CATEGORY";
 
 
 
@@ -88,8 +89,7 @@ export const postAddCateroryToProduct = (idP, idC, payload) => {
         `http://localhost:3001/products/addCategory?productId=${idP}&categoryId=${idC}`,
         payload
       ); //url + body
-console.log(idP)
-console.log(idC)
+
       return json;
     } catch (error) {
       console.log(error);
@@ -298,7 +298,7 @@ export function deleteProduct (id){
 export function putProduct (id, payload){
   return async function (dispatch){
       try {
-           await axios.put(`http://localhost:3001/products/${id}` , payload )
+           await axios.put(`http://localhost:3001/products?productId=${id}` , payload )
            console.log("editando action")
            console.log(id)
           console.log(payload)  
@@ -362,9 +362,44 @@ export function putSubCategoryToProduct (idP, idSc ){
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
-          
+     
           return dispatch({
               type: PUT_SUBCATEGORY_TO_PRODUCT,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function deleteCategory (idCat){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/categories/${idCat}` )
+           console.log("eliminando categoria")
+
+          return dispatch({
+              type: DELETE_CATEGORY,
+              payload: idCat
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export function putCategory (idC, payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/categories/${idC}`, payload  )
+          console.log(idC)
+          console.log(payload)
+          return dispatch({
+              type: PUT_CATEGORY,
             
                             
           })

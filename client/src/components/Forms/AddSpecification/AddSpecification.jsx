@@ -36,7 +36,7 @@ export const AddSpecification = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       alert(JSON.stringify(values, null, 1));
-      console.log("agregado")
+    console.log(values)
       await dispatch(postAddNewSpecification(values));
       await dispatch(getAllSpecifications())
     },

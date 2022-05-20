@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteProduct, getProducts, putProduct, PutProduct,  } from "../../../redux/actions";
+import { deleteProduct, getProducts, putProduct } from "../../../redux/actions";
 import { ClassNames } from "@emotion/react";
 import { UpdateProduct } from "./UpdateProduct";
 
@@ -112,6 +112,7 @@ setIdUpdate(e.target.value)
           </TableBody>
         </Table>
       </TableContainer >
+      
     </>
   );
 };

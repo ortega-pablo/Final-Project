@@ -23,7 +23,9 @@ import {
   PUT_INVENTORY,
   GET_INVENTORY,
   PUT_CATEGORY_TO_PRODUCT,
-  PUT_SUBCATEGORY_TO_PRODUCT
+  PUT_SUBCATEGORY_TO_PRODUCT,
+  DELETE_CATEGORY,
+  PUT_CATEGORY
 } from "../actions";
 
 const initialState = {
@@ -208,20 +210,42 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         inventory: action.payload,
       };
-    default:
-      return state;
-
-     case PUT_CATEGORY_TO_PRODUCT :
-       return{
-         ...state
-       } 
       
-    case PUT_SUBCATEGORY_TO_PRODUCT : 
-    return{
-      ...state
-    }
-  }
-};
+      case PUT_CATEGORY_TO_PRODUCT :
+        return{
+          ...state
+        } 
+        
+        case PUT_SUBCATEGORY_TO_PRODUCT : 
+        return{
+          ...state
+        }
+        case DELETE_CATEGORY:
+          let allCategoryForDetelete = state.categories
+          const newListCategories = allCategoryForDetelete.filter ( category => category.id !== action.payload)
+
+        return{
+          ...state,
+          categories : newListCategories
+        }
+
+        case PUT_CATEGORY:{
+          const inedex3 = state.categories.findIndex(c => c.id === action.payload.id)
+            const newArray3 =  [...state.categories]
+            newArray3[inedex3] = action.payload
+
+          return {
+            ...state,
+            categories: newArray3
+          }
+        }
+
+
+
+        default:
+          return state;
+        };
+      }
 
 
 export default rootReducer;

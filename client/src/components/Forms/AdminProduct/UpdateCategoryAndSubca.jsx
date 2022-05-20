@@ -133,7 +133,7 @@ await dispatch(getProducts())
      
      
 
-      <InputLabel id="demo-simple-select-standard-label">Agregar solamente categoria</InputLabel>
+      <InputLabel id="demo-simple-select-standard-label">Agregar categoria</InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"

@@ -15,13 +15,9 @@ export const AddSpecificationToProduct = ({newProdId, specifications}) => {
           .string("Ingrese el nombre de la nueva categoria")
         //  .notOneOf(allCategories.map( p=> p.name), "Ya existe esa categoría" )
           .required("El nombre es requerido"),
-         
-         
-        
+           
       });
-      
-      
-    
+
       const formik = useFormik({
         initialValues: {
           "value:": "",

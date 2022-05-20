@@ -14,14 +14,7 @@ import { deleteProduct, getProducts } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 export const TableSpecification = ({
   newProdId,
-  input,
-  inputQ,
-  productosExistentes,
-  subCategory,
-  category,
-  allCategories,
-  specifications,
-  inputSpec,
+
 }) => {
   //console.log(specifications);
   // console.log(inputSpec)
