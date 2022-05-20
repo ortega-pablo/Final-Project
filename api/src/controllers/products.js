@@ -96,6 +96,9 @@ const orderProducts = async (arr) => {
   });
 };
 
+
+
+
 module.exports = {
   getAllProducts,
   getProductsByName,
