@@ -34,8 +34,8 @@ const verifyToken = require("../middleware/auth");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone } = req.body;
-
+  const { userName, email, password, firstName, lastName, phone, role } =
+    req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
@@ -52,6 +52,7 @@ router.post("/create", async (req, res, next) => {
       firstName,
       lastName,
       phone,
+      role,
     });
 
     res.status(200).send("done");
@@ -78,6 +79,7 @@ router.post("/login", async (req, res, next) => {
     const userforToken = {
       id: user.id,
       username: user.username,
+      rol: user.rol,
     };
 
     const token = jwt.sign(userforToken, KEY_WORD_JWT);
@@ -181,35 +183,31 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/:userId", async (req, res, next) =>{  // Esto para el admin de la pagina
+router.delete("/:userId", async (req, res, next) => {
+  // Esto para el admin de la pagina
 
-  const {userId} = req.params;
+  const { userId } = req.params;
 
   try {
-
     const findUser = await User.findOne({
       where: {
-        id: userId
-      }
-    })
+        id: userId,
+      },
+    });
 
-    
-    if(findUser) {
-      await Category.destroy(
-        {
+    if (findUser) {
+      await Category.destroy({
         where: {
-            id: categoryId
-        }
-      })
-      res.status(200).send("User deleted successfully!")
-
+          id: categoryId,
+        },
+      });
+      res.status(200).send("User deleted successfully!");
     } else {
-      res.send("User not found")
+      res.send("User not found");
     }
-        
-  } catch(error){
-    next(error)
+  } catch (error) {
+    next(error);
   }
-})
+});
 
 module.exports = router;
