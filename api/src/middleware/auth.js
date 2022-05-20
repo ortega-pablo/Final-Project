@@ -7,12 +7,12 @@ const verifyToken = async (req, res, next) => {
     if (!headerToken) {
       return res.status(401).json({ error: "Token not found!" });
     }
+
     const token = headerToken.replace("Bearer ", "");
-    console.log(token);
     try {
       const decoded = jwt.verify(token, process.env.KEY_WORD_JWT);
-      req.username = decoded.username;
-      req.id = decoded.email;
+      //req.username = decoded.username;
+      //req.id = decoded.email;
       next();
     } catch (error) {
       console.log(error);
