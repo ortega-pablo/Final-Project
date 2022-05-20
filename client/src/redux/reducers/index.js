@@ -20,8 +20,10 @@ import {
   POST_LOGIN_USER,
   DELETE_PRODUCT,
   PUT_PRODUCT,
-  PUT_QUANTITY
-
+  PUT_INVENTORY,
+  GET_INVENTORY,
+  PUT_CATEGORY_TO_PRODUCT,
+  PUT_SUBCATEGORY_TO_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -31,7 +33,7 @@ const initialState = {
   categories: [],
   categoriesAux: [],
   allSpecifications: [],
-  inventary: []
+  inventory: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -84,7 +86,7 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case FILTER_PER_PRICE: {
-      console.log(action.payload);
+    
       const allProducts = state.products;
       let filterProducts = allProducts.filter(
         (p) =>
@@ -96,7 +98,7 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case FILTER_PER_NAME: {
-      console.log(state.productsAux);
+     
       const allProducts = state.productsAux;
       const filterProducts = allProducts.filter((p) =>
         p.name.toLowerCase().includes(action.payload.toLowerCase())
@@ -190,18 +192,36 @@ const rootReducer = (state = initialState, action) => {
         products: newArray
     }
 
-    case PUT_QUANTITY:
+    case PUT_INVENTORY:
+      
       const index2 = state.products.findIndex( p => p.id === action.payload.id )
       const newArray2 = [...state.products]
       newArray2[index2] =  action.payload
-      console.log()
+     
       return {
         ...state,
         products: newArray
     }
+
+    case GET_INVENTORY:
+      return {
+        ...state,
+        inventory: action.payload,
+      };
     default:
       return state;
+
+     case PUT_CATEGORY_TO_PRODUCT :
+       return{
+         ...state
+       } 
+      
+    case PUT_SUBCATEGORY_TO_PRODUCT : 
+    return{
+      ...state
+    }
   }
 };
+
 
 export default rootReducer;

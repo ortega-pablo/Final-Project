@@ -27,9 +27,7 @@ export const DeleteProduct = () => {
   }, [dispatch]);
 
   const [idUpdate, setIdUpdate] = useState("");
-  console.log(idUpdate);
  
-
   async function handleDeleteProduct(e) {
     e.preventDefault();
 console.log("eliminandooo")

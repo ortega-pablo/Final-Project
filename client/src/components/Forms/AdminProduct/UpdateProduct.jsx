@@ -28,6 +28,8 @@ import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
 import { DeleteProduct } from "./AdminProduct";
 import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSpecificationToProduct, postAddSubCateroryToProduct, postProduct, putProduct } from "../../../redux/actions";
 import { UpdateQuantity } from "./UpdateQuantity";
+import { AddCategory } from "../AddCategory";
+import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
 
 
 export function  UpdateProduct({idUpdate}) {
@@ -43,8 +45,8 @@ export function  UpdateProduct({idUpdate}) {
   const [inputQ, setInputQ] = useState({ quantity: 0 });
 
 
-  const [category, setCategory] = React.useState("");
-  const [subCategory, setsubCategory] = React.useState("");
+  
+  // const [subCategory, setsubCategory] = React.useState("");
   const [newProdId, setNewProdId] = React.useState(0);
   
  
@@ -144,32 +146,26 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   });
 
 
-  
-
-
-
-
-
   //----- funciones de agregar cat y sub
-  const handleChangeCategoty = (e) => {
-    e.preventDefault();
-    setCategory(e.target.value);
+  // const handleChangeCategoty = (e) => {
+  //   e.preventDefault();
+  //   setCategory(e.target.value);
     
-  };
+  // };
 
-  const handleChangeSubCat = (e) => {
-    e.preventDefault();
-    setsubCategory(e.target.value);
+  // const handleChangeSubCat = (e) => {
+  //   e.preventDefault();
+  //   setsubCategory(e.target.value);
   
-  };
+  // };
 
-  async function handleClickCatAndSub(e) {
-    e.preventDefault();
+  // async function handleClickCatAndSub(e) {
+  //   e.preventDefault();
     
-    await dispatch(postAddCateroryToProduct(newProdId, category));
-    await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
-    await dispatch(getProducts())
-  }
+  //   await dispatch(postAddCateroryToProduct(newProdId, category));
+  //   await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
+  //   await dispatch(getProducts())
+  // }
   ///------funciones agregar especificacion al producto
   const [specifications, setSpecifications] = useState(``);
   const [inputSpec, setInputSpec] = useState({ "value:": "" });
@@ -192,7 +188,7 @@ const NameRepetido = nameRepetido.map((p) => p.name);
     await dispatch(getProducts())
   }
   //-------
-  const categSelect = allCategories.filter((c) => c.id === category);
+  // const categSelect = allCategories.filter((c) => c.id === category);
   
   return (
     <>
@@ -357,7 +353,7 @@ const NameRepetido = nameRepetido.map((p) => p.name);
         <h4>(*) elementos obligatorios</h4>
       </Box>
       <hr />
-      <h3>Paso 2: Agregar stock</h3>
+      <h3>Paso 2: Editar stock</h3>
           
       <UpdateQuantity
        productToUpdate={productToUpdate}
@@ -365,52 +361,11 @@ const NameRepetido = nameRepetido.map((p) => p.name);
 
       <hr />
 
-      <h3>Paso 3: Agregar categoría y sub categorías</h3>
-      <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={category}
-        onChange={handleChangeCategoty}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {allCategories?.map((cat) => {
-          return (
-            <MenuItem value={cat.id}>
-              {cat.name} {cat.id}
-            </MenuItem>
-          );
-        })}
-      </Select>
+      <h3>Paso 3: Editar categorías y sub categorías</h3>
 
-      <InputLabel id="demo-simple-select-standard-label">
-        Sub Categoria
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={subCategory}
-        onChange={handleChangeSubCat}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {categSelect[0]?.subCategories?.map((subc) => {
-          return <MenuItem value={subc.id}>{subc.name}</MenuItem>;
-        })}
-      </Select>
-      <Button onClick={(e) => handleClickCatAndSub(e)}>
-        Agregar categoria y sub categoría
-      </Button>
-
-      {/* <AddCategory
-        allCategories={allCategories}
-        
-      /> */}
+      <UpdateCategoryAndSubca
+       productToUpdate={productToUpdate}
+       idUpdate={idUpdate}/>
 
       <AddSubCategoty allCategories={allCategories} />
 

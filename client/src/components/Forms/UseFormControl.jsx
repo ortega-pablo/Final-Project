@@ -370,7 +370,7 @@ export function UseFormControl() {
         {allCategories?.map((cat) => {
           return (
             <MenuItem value={cat.id}>
-              {cat.name} {cat.id}
+              {cat.name}
             </MenuItem>
           );
         })}

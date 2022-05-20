@@ -9,45 +9,42 @@ import { validate } from "./validacionInputNewSubCat/validate";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-
 export const AddSubCategoty = ({ allCategories }) => {
   const allCategory = useSelector((state) => state.categories);
   const [category, setCategory] = useState("");
-  const [newCategoryName, setNewCategoryName ] = useState("")
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const dispatch = useDispatch();
 
-  
- // validacion de nombre existente en la categoria en cuestion
-    // const allCategoriesMod = allCategory.filter((c) => c.id === category);
+  let comprobacionName = [];
+  const allCategoriesMod = allCategory?.filter((c) => c.id === category);
+  const comprobarNombre = allCategoriesMod[0]?.subCategories?.filter(
+    (subC) => subC?.name === newCategoryName
+  );
+  comprobacionName = comprobarNombre?.map((s) => s.name) || ["", ""];
 
-    // const comprobarNombre = allCategoriesMod[0]?.subCategories.filter(
-    //   (subC) => subC.name === input.name
-    // );
+// console.log(category)
+// if(!category) {
+//   allCategories.map( p=> p.name)
+// }
 
-//     if (comprobarNombre.length > 0) {
-//       setErrorName(true);
-//       setLeyendaErrorName("Esa subCategoría ya existe para ésta categoría");
-//     }
-// let comprobacionName = ["", ""]
-let comprobacionName = []
-const allCategoriesMod = allCategory?.filter((c) => c.id === category);
-const comprobarNombre = allCategoriesMod[0]?.subCategories?.filter( (subC) => subC?.name === newCategoryName )
- comprobacionName = comprobarNombre?.map( s => s.name) || ["", ""]
-
-
-
- 
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
       .required("El nombre es requerido")
-      .notOneOf(comprobacionName.map( p => p) ,  "Ya existe esa subcategoría en la categoria seleccionada" ),
-     
+      .notOneOf(
+       comprobacionName.map((p) => p)  ,
+        "Ya existe esa sub categoria en la categoría seleccionada "
+      ),
+      
+
     description: yup
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
+     
+   
   });
- 
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -55,48 +52,37 @@ const comprobarNombre = allCategoriesMod[0]?.subCategories?.filter( (subC) => su
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
+      
+    if(category){
       await dispatch(postAddSubCategory(category, values));
       await dispatch(getCategories());
+
+    }else {
+      alert("seleccione una categoria")
+    }
+
+
     },
   });
 
-  
-
-
-
-
-function handleInputNewSubCat(e){
-  e.preventDefault()
-  setNewCategoryName(e.target.value)
- 
-}
-  
-  const dispatch = useDispatch();
-  
-  
+  function handleInputNewSubCat(e) {
+    e.preventDefault();
+    setNewCategoryName(e.target.value);
+  }
 
  
 
-  
-  
-// }
-//   }
-
-   function handleChangeSelect(e) {
+  function handleChangeSelect(e) {
     e.preventDefault();
     setCategory(e.target.value);
 
-   
-    // setSelecCat(true)
-    
   }
 
   return (
     <>
       <div>AddSubCategoty</div>
       <InputLabel id="demo-simple-select-standard-label">
-        Agregar categoria a:
+        Agregar Sub categoria a:
       </InputLabel>
 
       <Select
@@ -106,6 +92,9 @@ function handleInputNewSubCat(e){
         onChange={handleChangeSelect}
         label="Age"
         type="click"
+        name="select"
+        
+
       >
         <MenuItem value="">
           <em>None</em>
@@ -113,7 +102,7 @@ function handleInputNewSubCat(e){
         {allCategories?.map((cat) => {
           return (
             <MenuItem value={cat.id}>
-              {cat.name} {cat.id}
+              {cat.name}
             </MenuItem>
           );
         })}
@@ -122,13 +111,13 @@ function handleInputNewSubCat(e){
         component="form"
         noValidate
         autoComplete="off"
-         onChange={handleInputNewSubCat}
+        onChange={handleInputNewSubCat}
         // onChange={handleInput}
         onSubmit={formik.handleSubmit}
       >
         <TextField
           id="outlined-basic"
-          label="Nombre"
+          label="Nombre de la nueva sub categoría"
           variant="outlined"
           name="name"
           value={formik.values.name}
@@ -145,7 +134,9 @@ function handleInputNewSubCat(e){
           // error={errorDescription}
           value={formik.values.description}
           onChange={formik.handleChange}
-          error={formik.touched.description && Boolean(formik.errors.description)}
+          error={
+            formik.touched.description && Boolean(formik.errors.description)
+          }
           helperText={formik.touched.description && formik.errors.description}
         />
         {/* <TextField
@@ -157,6 +148,8 @@ function handleInputNewSubCat(e){
           error={errorThumbnail}
         /> */}
         <Button type="submit">Crear nueva Sub Categoria</Button>
+       <p> Nota: Si previamente no selecciona una categoria, en lugar de crear una subcategoría, crearás una nueva categoría</p>
+       
       </Box>
     </>
   );
