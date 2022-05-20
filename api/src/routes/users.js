@@ -5,6 +5,7 @@ const { User, Ask, Answer } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
+const verifyToken = require("../middleware/auth");
 // Register User
 
 // router.post("/create", async (req, res, next) => {
@@ -70,7 +71,7 @@ router.post("/login", async (req, res, next) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
-      response.status(400).json({
+      res.status(400).json({
         error: "invalid user or password",
       });
     }
@@ -87,6 +88,15 @@ router.post("/login", async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+router.get("/verifyToken", verifyToken, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Error en el servidor");
   }
 });
 

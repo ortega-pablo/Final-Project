@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, Input} from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -60,6 +61,8 @@ const StyledInputBase = styled(Input)(({ theme }) => ({
   },
 }));
 
+
+
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -92,6 +95,9 @@ export const NavBar = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const ls = JSON.parse(localStorage.getItem('token'))
+  console.log('soy local storage => ', ls)
+
   const menuProfileId = 'primary-search-account-menu';
   const renderProfileMenu = (
     <Menu
@@ -109,8 +115,34 @@ export const NavBar = (props) => {
       open={isMenuProfileOpen}
       onClose={handleMenuProfileClose}
     >
-      <MenuItem onClick={handleMenuProfileClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuProfileClose}>My account</MenuItem>
+     {
+       ls?.token?
+       <>
+      <MenuItem onClick={handleMenuProfileClose} >
+          <Link sx={{textDecoration:'none',  color:'inherit'}} href='/profile/asd'>
+            Perfil
+          </Link>
+      </MenuItem>
+      <MenuItem onClick={() => window.localStorage.clear()}>
+        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/'>
+          Desloguear
+        </Link>
+      </MenuItem>
+       </>
+      : 
+      <>
+      <MenuItem onClick={handleMenuProfileClose}>
+        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/login'>
+          Login
+        </Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuProfileClose}>
+        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/createaccount'>
+          Crear cuenta
+        </Link>
+      </MenuItem>
+      </>
+     }
     </Menu>
   );
 
