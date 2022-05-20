@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
     quantity: {
       type: DataTypes.REAL,
       allowNull: false,
+      defaultValue: 0
     },
   });
 };

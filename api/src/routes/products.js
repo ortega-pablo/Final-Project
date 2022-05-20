@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, Discount, Category, Specification, ProductSpecification, SubCategory  } = require("../db");
+const { Product, Discount, Category, Specification, ProductSpecification, SubCategory, ProductInventory  } = require("../db");
 const { getAllProducts, getProductsByName , orderProducts } = require("../controllers/products");
 const router = Router();
 
@@ -41,6 +41,7 @@ router.post("/", async (req, res, next) => {
     packageDimensions,
     grossWeight,
     warranty,
+    quantity
   } = req.body;
 
   try {
@@ -59,6 +60,14 @@ router.post("/", async (req, res, next) => {
       grossWeight,
       warranty,
     });
+
+    const addQuantity = await ProductInventory.create({
+      quantity,
+    });
+
+
+    addQuantity.setProduct(newProduct);
+
     res.status(200).send(newProduct);
   } catch (error) {
     next(error);
