@@ -157,4 +157,30 @@ router.put("/", async (req, res, next) => {
 
 
 
+// router.delete("/", async (req, res, next) => {
+
+//   const {specificationId, productId} = req.query;
+//   try{
+    
+//     if(specificationId){
+      
+//       const deleteSpec = await Specification.destroy({
+//         where: {
+//           id: specificationId
+//       }
+//       })
+
+//       return res.send("Specification deleted successfully!")
+
+//     } else {
+//       return res.send("Product or specification not found")
+//     }
+
+
+//   }catch(error){
+//     next(error)
+//   }
+// })
+
+
 module.exports = router;
