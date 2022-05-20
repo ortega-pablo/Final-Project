@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User } = require("../db");
+const { User, Ask, Answer } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -180,5 +180,36 @@ router.get("/:userId", async (req, res) => {
     res.send(error);
   }
 });
+
+router.delete("/:userId", async (req, res, next) =>{  // Esto para el admin de la pagina
+
+  const {userId} = req.params;
+
+  try {
+
+    const findUser = await User.findOne({
+      where: {
+        id: userId
+      }
+    })
+
+    
+    if(findUser) {
+      await Category.destroy(
+        {
+        where: {
+            id: categoryId
+        }
+      })
+      res.status(200).send("User deleted successfully!")
+
+    } else {
+      res.send("User not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
 
 module.exports = router;

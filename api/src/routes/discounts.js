@@ -96,6 +96,75 @@ router.get("/:discountId", async (req, res) => {
   }
 })
 
+router.put("/:discountId", async (req, res, next) =>{
+
+  const {discountId} = req.params;
+  const { name, description, discountPercent, active } = req.body;
+
+  try {
+
+    const findDiscount = await Discount.findOne({
+      where: {
+        id: discountId
+      }
+    })
+
+    
+    if(findDiscount) {
+      await Discount.update({
+        name,
+        description,
+        discountPercent,
+        active
+        },
+        {
+        where: {
+            id: discountId
+        }
+      })
+      res.status(200).send("Discount updated successfully!")
+
+    } else {
+      res.send("Discount not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
+
+
+router.delete("/:discountId", async (req, res, next) => {
+
+  const {discountId} = req.params;
+
+  try {
+    
+  const findDiscount = await Discount.findOne({
+    where: {
+      id: discountId
+    }
+  })
+
+  if(findDiscount) {
+
+    await Discount.destroy({
+      where: {
+        id: discountId
+      }
+    })
+
+    res.status(200).send("Discount deleted successfully")
+  } 
+  else {
+    res.send("Discount not found")
+  }
+
+  } catch(error){
+    next(error)
+  }
+})
+
 
 
 module.exports = router;

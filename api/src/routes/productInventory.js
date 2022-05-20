@@ -18,9 +18,16 @@ router.post("/", async (req, res, next) => {
       },
     });
 
-    addQuantity.setProduct(productId);
+    if(product) {
+      addQuantity.setProduct(productId);
+      res.status(200).send(addQuantity);
+      
+    } else {
+      res.send("Product not found")
+    }
+    
 
-    res.status(200).send(addQuantity);
+   
   } catch (error) {
     next(error);
   }
@@ -85,5 +92,50 @@ router.get("/", async (req, res, next) => {
   }
   
 })
+
+router.put("/:productId", async (req, res, next) =>{
+
+  const {productId} = req.params;
+  const { quantity } = req.body;
+
+  try {
+
+    const findProduct = await Product.findOne({
+      where: {
+        id: productId
+      }, 
+      include: [
+        {
+          model: ProductInventory,
+          attributes: ["quantity"],
+        },
+      ]
+    })
+
+    console.log(findProduct)
+
+    
+    if(findProduct && findProduct.productInventory) {
+
+      await ProductInventory.update({
+        quantity,
+        },
+        {
+        where: {
+            productId
+        }
+      })
+      res.status(200).send("Stock updated successfully!")
+
+    } else {
+      res.send("Product or stock not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
+
+
 
 module.exports = router;
