@@ -18,7 +18,7 @@ import {
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
-
+  VERIFY_TOKEN,
 } from "../actions";
 
 const initialState = {
@@ -28,6 +28,7 @@ const initialState = {
   categories: [],
   categoriesAux: [],
   allSpecifications: [],
+  userStatus:{}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -166,6 +167,12 @@ const rootReducer = (state = initialState, action) => {
     case POST_LOGIN_USER:
       return {
         ...state,
+      };
+
+    case VERIFY_TOKEN:
+    return{
+        ...state,
+        userStatus: action.payload
       };
 
     default:
