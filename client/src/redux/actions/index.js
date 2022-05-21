@@ -328,43 +328,25 @@ export function putQuantity (id, payload){
       }
   }
 };
+
+
 export const verifyToken = (token) => {
-  return async(dispatch) => {
-    console.log('SOy el token EN LA ACTION   =>  ', token)
-    const config = { 
-      headers: {Authorization: `Bearer ${token}`}
-    }
-    const bodyParameters = {
-      caca: 'caconga'
-    }
-    console.log('soy el payload de la action =>  ', config)
-    try{
-      console.log(' por lo menos lo intente')
-      let response = await axios.post(
-        "http://localhost:3001/users/verifyToken",bodyParameters ,config
-      )
-      console.log('Soy la responseee =>> ' , response)
+  return async (dispatch) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let response = await axios.get(
+        "http://localhost:3001/users/verifyToken",
+        config
+      );
       return dispatch({
         type: VERIFY_TOKEN,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log('SOY EL CATCH DEL VERIFY TOKEN ')
-      console.log(error)
+      console.log('Usuario no logeado')
     }
-  }
-}
+  };
+};
 
-// const config = {
-//   headers: { Authorization: `Bearer ${token}` }
-// };
-
-// const bodyParameters = {
-//  key: "value"
-// };
-
-// Axios.post( 
-// 'http://localhost:8000/api/v1/get_token_payloads',
-// bodyParameters,
-// config
-// ).then(console.log).catch(console.log);

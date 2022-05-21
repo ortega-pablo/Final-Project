@@ -206,7 +206,7 @@ const rootReducer = (state = initialState, action) => {
     case VERIFY_TOKEN:
     return{
         ...state,
-        userStatus: action.payload
+        userStatus: action.payload.msg
       };
 
     default:

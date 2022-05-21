@@ -63,6 +63,9 @@ const StyledInputBase = styled(Input)(({ theme }) => ({
   },
 }));
 
+
+
+
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -71,7 +74,10 @@ export const NavBar = (props) => {
   const dispatch = useDispatch();
 
   const ls = JSON.parse(localStorage.getItem("token"));
-  console.log("soy el token que estas despachando  => ", ls?.token);
+
+  useEffect(()=>{
+    dispatch(verifyToken(ls?.token))
+  },[dispatch])
 
   useEffect(() => {
     dispatch(verifyToken(ls?.token));

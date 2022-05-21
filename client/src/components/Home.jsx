@@ -39,6 +39,17 @@ export const Home = () => {
 
   const categories = useSelector((state) => state.categories);
 
+  const userStatus = useSelector((state) => state.userStatus);
+
+  if(userStatus === 'user'){
+    console.log('usruario logueado y esto funciona')
+  }
+   else if(userStatus === 'admin'){
+    console.log('llego el admin')
+  } else {
+    console.log('visitor')
+  }
+
   const {name} = useParams();
   
   console.log(name);

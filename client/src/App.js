@@ -35,8 +35,6 @@ function App() {
             <Route path="/pruebaMenuAdmin" element={<AdminMenu/>}/>
           </Routes>
         <Footer/>
-
-
     </BrowserRouter>
   );
 }
