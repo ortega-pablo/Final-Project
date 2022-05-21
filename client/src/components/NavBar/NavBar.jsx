@@ -77,7 +77,7 @@ export const NavBar = (props) => {
   //console.log('soy el token que estas despachando  => ', ls?.token)
 
   useEffect(()=>{
-    dispatch(verifyToken(123))
+    dispatch(verifyToken(ls?.token))
   },[dispatch])
 
 

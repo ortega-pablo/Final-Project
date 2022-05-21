@@ -96,6 +96,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.get("/verifyToken", [cors(), verifyToken], async (req, res) => {
+  //console.log(req);
   try {
     res.json({ msg: "user" });
   } catch (error) {
