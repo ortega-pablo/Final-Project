@@ -4,8 +4,6 @@ import Box from "@mui/material/Box";
 import { Button, InputLabel, Select, MenuItem } from "@mui/material";
 import { getCategories, postAddSubCategory } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-
-import { validate } from "./validacionInputNewSubCat/validate";
 import { useFormik } from "formik";
 import * as yup from "yup";
 

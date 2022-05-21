@@ -1,7 +1,5 @@
 import {
   Button,
-  IconButton,
-  Input,
   Table,
   TableBody,
   TableCell,
@@ -12,8 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteProduct, getProducts, putProduct, PutProduct,  } from "../../../redux/actions";
-import { ClassNames } from "@emotion/react";
+import { deleteProduct, getProducts } from "../../../redux/actions";
 import { UpdateProduct } from "./UpdateProduct";
 
 export const DeleteProduct = () => {

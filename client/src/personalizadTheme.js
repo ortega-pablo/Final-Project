@@ -11,11 +11,35 @@ const theme = createTheme({
       white: "#fff",
     },
 
+    ambar1:{
+      main: "#DFDCD3",
+    },
+
+    ambar2:{
+      main: "#DEA03C",
+    },
+
+    ambar3:{
+      main: "#B6893E",
+    },
+
+    ambar4:{
+      main: "#8F7241",
+    },
+
+    ambar5:{
+      main: "#685C44",
+    },
+
+    ambar6:{
+      main: "#473F2E",
+    },
+
     primary: {
-      main: "#8f7241",
-      light: "#b6893e",
-      dark: "#685c44",
-      contrastText: "#dfdcd3",
+      main: "#dea03c",
+      light: "#dfdcd3",
+      dark: "#b6893e",
+      contrastText: "#DEA03C",
     },
 
     secondary: {
@@ -54,15 +78,15 @@ const theme = createTheme({
     },
 
     text: {
-      primary: "rgba(0, 0, 0, 0.87)",
-      secondary: "rgba(0, 0, 0, 0.6)",
-      disabled: "rgba(0, 0, 0, 0.38)",
+      primary: "#685C44",
+      secondary: "#B6893E",
+      disabled: "#DFDCD3",
     },
 
     divider: "rgba(0, 0, 0, 0.12)",
 
     background: {
-      paper: "#dfdcd3",
+      paper: "#D1C2B0",
       default: "#dfdcd3",
     },
 
@@ -95,8 +119,10 @@ const theme = createTheme({
 
 const CustomizedContainer = styled(Container)`
   background-color: #dfdcd3;
-  padding: 110px;
   margin-top: 10px;
+  root: {
+    padding: 300px
+  }
 
 `;
 
@@ -108,18 +134,22 @@ const CustomPaper = styled(Paper)`
 display: flex;
 margin: 0;
 padding: 0;
-background-color: #dfdcd3;
+
 `
 
-const CustomHidden = styled(Box)`
+const HiddensmUp = styled(Box)`
 @media (min-width: 600px) {
+    display: none;
+  }
+`
+const HiddenxsDown = styled(Box)`
+@media (max-width: 600px) {
     display: none;
   }
 `
 
 
-
-export  {theme , CustomizedContainer, BoxGeneral, CustomPaper, CustomHidden};
+export  {theme , CustomizedContainer, BoxGeneral, CustomPaper, HiddensmUp, HiddenxsDown};
 
 
 

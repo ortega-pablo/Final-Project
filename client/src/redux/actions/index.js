@@ -24,17 +24,12 @@ export const POST_ADD_SUB_CATEGORY = "POST_ADD_SUB_CATEGORY";
 export const POST_ADD_QUANTITY = "POST_ADD_QUANTITY";
 export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
-
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
-<<<<<<< HEAD
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const PUT_PRODUCT = "PUT_PRODUCT";
 export const PUT_QUANTITY = "PUT_QUANTITY";
-
-
-=======
 export const VERIFY_TOKEN = "VERIFY_TOKEN"
->>>>>>> a576da1840b85a1092e5dc7befb3ac68cad06151
+
 
 
 export const getProducts = (name) => {
@@ -271,7 +266,6 @@ export const filterPerPrice = (range) => {
   };
 };
 
-<<<<<<< HEAD
 export function deleteProduct (id){
   return async function (dispatch){
       try {
@@ -324,7 +318,6 @@ export function putQuantity (id, payload){
       }
   }
 };
-=======
 export const verifyToken = (token) => {
   return async(dispatch) => {
     console.log('SOy el token EN LA ACTION   =>  ', token)
@@ -365,4 +358,3 @@ export const verifyToken = (token) => {
 // bodyParameters,
 // config
 // ).then(console.log).catch(console.log);
->>>>>>> a576da1840b85a1092e5dc7befb3ac68cad06151

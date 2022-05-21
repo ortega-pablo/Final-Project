@@ -1,25 +1,18 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import { Box, ListItemButton, FormControl, Input, FormHelperText, TextField, ListItem, Button, Container, Collapse } from '@mui/material';
-import { ListItemIcon, ListSubheader } from '@mui/material';
-import StarBorder from '@mui/icons-material/StarBorder';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getCategories } from '../../redux/actions';
-import { withWidth } from '@material-ui/core';
-import { Hidden } from '@material-ui/core';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { Box, ListItemButton, TextField, ListItem, Button, Container, Collapse, List, ListItemIcon, ListSubheader, ListItemText } from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { HiddensmUp } from '../../personalizadTheme';
+import { getCategories } from '../../redux/actions';
 
 
 function validate (value) {
   let errors = {};
   if(isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número."
   if(isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número."
-  if(value.Desde > value.Hasta) errors.Desde = "El primero valor debe ser menor."
+  if(value.Desde > value.Hasta) errors.Desde = "La concha de tu madre."
   return errors;
 }
 
@@ -40,7 +33,7 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
   const [errorHasta, setErrorHasta] = React.useState(false)
   const [leyendaErrorHasta, setLeyendaErrorHasta] = React.useState("")
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -90,10 +83,10 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
   }
 
   return (
-    <Hidden smUp>
+    <HiddensmUp>
       <ListItemButton onClick={handleClick}>
             <ListItemIcon>
-              <InboxIcon />
+              <FilterListIcon />
             </ListItemIcon>
             <ListItemText primary="Filtros" />
             {open ? <ExpandLess /> : <ExpandMore />}
@@ -198,67 +191,9 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
             </ListItem>
         </List>
         </Collapse>
-    </Hidden>
+    </HiddensmUp>
     
   );
 }
 
-export default withWidth()(SwipeableFilters);
-
-// const [bottonFilters, setState] = React.useState({top: false});
-
-// const toggleDrawer = (anchor, open) => (event) => {
-//   if (
-//     event &&
-//     event.type === 'keydown' &&
-//     (event.key === 'Tab' || event.key === 'Shift')
-//   ) {
-//     return;
-//   }
-
-//   setState({ ...bottonFilters, [anchor]: open });
-// };
-// const list = () => (
-//     <Box
-//         sx={{ width: "100%" }}
-//         role="presentation"
-//     >
-//         <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
-//         component="nav"
-//         aria-labelledby="nested-list-subheader"
-//         subheader={
-//             <ListSubheader component="div" id="nested-list-subheader">
-//             Categorias
-//             </ListSubheader>
-//         }
-//         >
-//         {categories.length ?  categories.map((category) => {
-//         return <>
-//         <ListItemButton
-//             key={category}
-//             onClick={() => handleClickForCategories(category.name)}
-//             disableGutters
-//             >
-//             <ListItemText primary={category.name}  />
-//             </ListItemButton>
-//             {category.subCategories ? category.subCategories.map(subCategory => {
-//                 return <>
-//             <List component="div" disablePadding>
-//                     <ListItemButton 
-//                         key={subCategory} 
-//                         sx={{ pl: 3 }}
-//                         onClick={() => handleClickForSubcategories(subCategory.name)}
-//                     >
-//                         <ListItemText primary={subCategory.name}/>
-//                     </ListItemButton>
-//             </List>
-//                 </>
-//             }) : <></>}
-//         </>}) : 
-//         <></>
-//         }
-
-//         </List>
-//     </Box>
-
-// )
+export default (SwipeableFilters);

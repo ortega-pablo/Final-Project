@@ -18,14 +18,10 @@ import {
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
-<<<<<<< HEAD
   DELETE_PRODUCT,
   PUT_PRODUCT,
-  PUT_QUANTITY
-
-=======
+  PUT_QUANTITY,
   VERIFY_TOKEN,
->>>>>>> a576da1840b85a1092e5dc7befb3ac68cad06151
 } from "../actions";
 
 const initialState = {
@@ -176,7 +172,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
 
-<<<<<<< HEAD
     case DELETE_PRODUCT :
       let allProductsForDelete = state.products
       const newListProduct = allProductsForDelete.filter ( product => product.id !== action.payload)
@@ -203,14 +198,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: newArray
     }
-=======
     case VERIFY_TOKEN:
     return{
         ...state,
         userStatus: action.payload
       };
 
->>>>>>> a576da1840b85a1092e5dc7befb3ac68cad06151
     default:
       return state;
   }
