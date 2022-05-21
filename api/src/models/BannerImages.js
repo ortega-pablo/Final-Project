@@ -1,10 +1,12 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("image", {
-    urlFile: {
+  sequelize.define("bannerImages", {
+
+    urlImage: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    
   });
 };

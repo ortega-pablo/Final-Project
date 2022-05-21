@@ -7,12 +7,9 @@ import { NotFound } from "./components/NotFound/NotFound";
 import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
-
 import { UseFormControl} from "./components/Forms/UseFormControl"
-
-
-
 import { ForgotPassword } from "./components/Login/ForgotPassword";
+import  ImageUpload  from "./components/ImageUpload/ImageUpload";
 
 
 function App() {
