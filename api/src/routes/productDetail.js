@@ -11,7 +11,6 @@ const productInfo = async function (id) {
         where: {
             id
         },
-        // include: { all: true, nested: true }
         include: [
         {
             model: ProductInventory,
@@ -28,8 +27,8 @@ const productInfo = async function (id) {
             model: Category,
             attributes: ["id", "name", "description", "thumbnail"],
             through: {
-              attributes: [],
-            }
+                attributes: [],
+            },
         },
         {
             model: SubCategory,
@@ -37,6 +36,15 @@ const productInfo = async function (id) {
             through: {
               attributes: [],
             },
+            include:[
+                {
+                    model: Category,
+                    attributes: ["id", "name", "description", "thumbnail"],
+                    through: {
+                        attributes: [],
+                    },
+                }
+            ]
           },
         {
             model: Specification,
@@ -54,7 +62,8 @@ const productInfo = async function (id) {
                     attributes: ["id", "content"]
                 }
             ]
-        }]
+        }
+        ]
     })
 
 
