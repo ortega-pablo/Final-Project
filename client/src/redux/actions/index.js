@@ -12,6 +12,8 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
 export const FILTER_PER_SUBCATEGORY = "FILTER_PER_SUBCATEGORY";
 export const ADD_CATEGORY = "ADD_CATEGORY";
+export const CLEAR_FILTERS = "CLEAR_FILTERS"
+
 
 export const FILTER_PER_PRICE = "FILTER_PER_PRICE";
 export const FILTER_PER_NAME = "FILTER_PER_NAME";
@@ -262,6 +264,14 @@ export const filterPerPrice = (range) => {
     return dispatch({
       type: FILTER_PER_PRICE,
       payload: range,
+    });
+  };
+};
+
+export const clearFilters = () => {
+  return async (dispatch) => {
+    return dispatch({
+      type: CLEAR_FILTERS
     });
   };
 };

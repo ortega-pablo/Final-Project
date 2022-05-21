@@ -22,6 +22,7 @@ import {
   PUT_PRODUCT,
   PUT_QUANTITY,
   VERIFY_TOKEN,
+  CLEAR_FILTERS
 } from "../actions";
 
 const initialState = {
@@ -84,7 +85,6 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case FILTER_PER_PRICE: {
-      console.log(action.payload);
       const allProducts = state.products;
       let filterProducts = allProducts.filter(
         (p) =>
@@ -96,16 +96,21 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case FILTER_PER_NAME: {
-      console.log(state.productsAux);
       const allProducts = state.productsAux;
       const filterProducts = allProducts.filter((p) =>
         p.name.toLowerCase().includes(action.payload.toLowerCase())
       );
-      console.log(filterProducts);
       return {
         ...state,
         products: filterProducts,
       };
+    }
+
+    case CLEAR_FILTERS:{
+      return{
+        ...state,
+        products: state.productsAux
+      }
     }
 
     case POST_PRODUCT: {

@@ -12,7 +12,7 @@ import {
   Paper,
 } from "@mui/material";
 import { HiddenxsDown } from "../../personalizadTheme";
-import { getCategories } from "../../redux/actions";
+import { clearFilters, getCategories } from "../../redux/actions";
 
 function validate(value) {
   let errors = {};
@@ -85,10 +85,14 @@ function Category({
     }
   };
 
+  const handleClearFilters = (e) => {
+    dispatch(clearFilters())
+  }
+
   return (
     <HiddenxsDown sx={{ borderRadius: "10px" }}>
       <Paper sx={{ height: "100%", display: "flex"}}>
-        <List sx={{ width: "90%", maxWidth: 360, alignItems: "center"  }}>
+        <List sx={{ width: "100%", maxWidth: 360, alignItems: "center"  }}>
           <ListSubheader component="div" id="nested-list-subheader">
             Categorias
           </ListSubheader>
@@ -99,7 +103,6 @@ function Category({
                   <ListItemButton
                     key={category}
                     onClick={() => handleClickForCategories(category.name)}
-                    
                   >
                     <ListItemText primary={category.name} />
                   </ListItemButton>
@@ -167,10 +170,10 @@ function Category({
                 helperText={leyendaErrorHasta}
                 error={errorHasta}
               />
-              <Box m={2} sx={{ alignItems: "right" }}>
+              <Box m={2} sx={{ display:"flex"  }}>
                 <Button
                   variant="outlined"
-                  color="secondary"
+                  color="ambar5"
                   onClick={(e) => {
                     handleClick(e);
                     if (errors.Desde || errors.Hasta) {
@@ -180,8 +183,17 @@ function Category({
                       handleClickSubmitPerPrice(value);
                     }
                   }}
+                  sx={{mr:1}}
+
                 >
                   Filtrar
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="ambar5"
+                  onClick={(e) => {handleClearFilters()}}
+                >
+                  Limpiar filtros
                 </Button>
               </Box>
             </Box>
