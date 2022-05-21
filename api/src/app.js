@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const upload = require("./middleware/multer")
+const cloudinary = require("./middleware/cloudinary")
 
 require('./db.js');
 
