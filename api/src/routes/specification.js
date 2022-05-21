@@ -192,9 +192,9 @@ router.put("/", async (req, res, next) => {
 
 
 
-router.delete("/", async (req, res, next) => {
+router.delete("/:specificationId", async (req, res, next) => {
 
-  const {specificationId, productId} = req.query;
+  const {specificationId} = req.params;
   try{
     
     if(specificationId){
