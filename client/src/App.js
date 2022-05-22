@@ -16,8 +16,8 @@ import AllProducts from "./components/AdminPanel/AllProducts";
 import AdminProducts from "./components/AdminPanel/AdminProducts";
 import AllDiscounts from "./components/AdminPanel/AllDiscounts";
 import AdminDiscount from "./components/AdminPanel/AdminDiscounts";
-
-
+// IMPORTS PARA TESTEAR (HAY QUE ELIMINAR)
+import { AdminCatAndSubc } from "./components/Forms/AdminCatAndSubca/AdminCatAndSubc";
 
 
 function App() {
@@ -42,6 +42,10 @@ function App() {
             <Route path="/adminProducts" element={<AdminProducts/>}/>
             <Route path="/allDiscounts" element={<AllDiscounts/>}/>
             <Route path="/adminDiscounts" element={<AdminDiscount/>}/>
+
+            {/* rutas para testear  */}
+            <Route path='/agregarcategoria' element={<AdminCatAndSubc />}/>
+          
           </Routes>
         <Footer/>
     </BrowserRouter>
