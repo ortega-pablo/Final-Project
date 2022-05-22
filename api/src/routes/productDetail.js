@@ -47,12 +47,12 @@ const productInfo = async function (id) {
         },
         {
             model: Ask,
-            attributes: ["content"],
+            attributes: ["content", "id"],
             include: [
                 {
                     model: Answer,
                     attributes: ["content"]
-                }
+                                 }
             ]
         }]
     })

@@ -18,6 +18,8 @@ import {
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
+  POST_NEW_ASK,
+  POST_NEW_ANSWER
 
 } from "../actions";
 
@@ -40,9 +42,26 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_DETAIL:
+      // const asksFixed = action.payload[0].asks.map(ask => {
+      //   let date = ask.createdAt.split('T')[0];
+      //   let time = ask.createdAt.split('T')[1].substring(0, 8);
+      //   return ask.createdAt2 = [date, time];
+      // });
+
+      // const productDetail1 = action.payload[0];
+
+      // const productDetail = productDetail1.asks.forEach((ask, i) => ask.createdAt = asksFixed[i]) 
+
+      let productFixed = action.payload;
+
+      productFixed[0].asks.sort((aA, aB) => {
+        return aA.id - aB.id;
+      }
+      )
+
       return {
         ...state,
-        productDetail: action.payload,
+        productDetail: productFixed,
       };
       
     case GET_CATEGORIES: {
@@ -167,6 +186,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case POST_NEW_ASK: {
+      return {
+        ...state
+      };
+    }
+    case POST_NEW_ANSWER:{
+      return {
+        ...state
+      }
+    }
 
     default:
       return state;
