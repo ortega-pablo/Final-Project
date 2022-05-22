@@ -11,27 +11,27 @@ const theme = createTheme({
       white: "#fff",
     },
 
-    ambar1:{
+    ambar1: {
       main: "#DFDCD3",
     },
 
-    ambar2:{
+    ambar2: {
       main: "#DEA03C",
     },
 
-    ambar3:{
+    ambar3: {
       main: "#B6893E",
     },
 
-    ambar4:{
+    ambar4: {
       main: "#8F7241",
     },
 
-    ambar5:{
+    ambar5: {
       main: "#685C44",
     },
 
-    ambar6:{
+    ambar6: {
       main: "#473F2E",
     },
 
@@ -114,40 +114,42 @@ const theme = createTheme({
     fontWeightMedium: 500,
     fontWeightBold: 700,
   },
-
 });
 
 const CustomizedContainer = styled(Container)`
   background-color: #dfdcd3;
   margin-top: 10px;
   root: {
-    padding: 300px
+    padding: 300px;
   }
-
 `;
 
-const BoxGeneral =styled(Box)`
+const BoxGeneral = styled(Box)`
   background-color: #dfdcd3;
 `;
 
 const CustomPaper = styled(Paper)`
-display: flex;
-margin: 0;
-padding: 0;
-
-`
+  display: flex;
+  margin: 0;
+  padding: 0;
+`;
 
 const HiddensmUp = styled(Box)`
-@media (min-width: 600px) {
+  @media (min-width: 600px) {
     display: none;
   }
-`
+`;
 const HiddenxsDown = styled(Box)`
-@media (max-width: 600px) {
+  @media (max-width: 600px) {
     display: none;
   }
-`
+`;
 
-
-export  {theme , CustomizedContainer, BoxGeneral, CustomPaper, HiddensmUp, HiddenxsDown};
-
+export {
+  theme,
+  CustomizedContainer,
+  BoxGeneral,
+  CustomPaper,
+  HiddensmUp,
+  HiddenxsDown,
+};
