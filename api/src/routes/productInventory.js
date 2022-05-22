@@ -8,19 +8,28 @@ router.post("/", async (req, res, next) => {
   const { productId } = req.query;
 
   try {
-    const addQuantity = await ProductInventory.create({
-      quantity,
-    });
-
+  
     const product = await Product.findOne({
       where: {
         id: productId,
       },
     });
 
-    addQuantity.setProduct(productId);
+    if(product) {
 
-    res.status(200).send(addQuantity);
+      const addQuantity = await ProductInventory.create({
+        quantity,
+      });
+  
+
+      addQuantity.setProduct(productId);
+      res.status(200).send(addQuantity);
+      
+    } else {
+      res.send("Product not found")
+    }
+    
+   
   } catch (error) {
     next(error);
   }
@@ -46,16 +55,18 @@ router.get("/", async (req, res, next) => {
       ]
     })
 
-    const info = {
-      name: getStockOne.product.name,
-      productId: getStockOne.productId,
-      quantity: getStockOne.quantity,
-      createdAt: getStockOne.createdAt,
-      updatedAt: getStockOne.updatedAt
-    }
-
    
-    return res.status(200).send(info)
+
+      const info = {
+        name: getStockOne.product.name,
+        productId: getStockOne.productId,
+        quantity: getStockOne.quantity,
+        createdAt: getStockOne.createdAt,
+        updatedAt: getStockOne.updatedAt
+      }
+     
+      return res.status(200).send(info)
+    
 
    } else {
     const getAllInventory = await ProductInventory.findAll({
@@ -71,7 +82,7 @@ router.get("/", async (req, res, next) => {
       return {
         name: e.product.name,
         productId: e.productId,
-        quantity: e.quantity,
+        quantity: e.quantity && e.quantity,
         createdAt: e.createdAt,
         updatedAt: e.updatedAt
       }
@@ -85,5 +96,49 @@ router.get("/", async (req, res, next) => {
   }
   
 })
+
+router.put("/:productId", async (req, res, next) =>{
+
+  const {productId} = req.params;
+  const { quantity } = req.body;
+
+  try {
+
+    const findProduct = await Product.findOne({
+      where: {
+        id: productId
+      }, 
+      include: [
+        {
+          model: ProductInventory,
+          attributes: ["quantity"],
+        },
+      ]
+    })
+
+
+    
+    if(findProduct && findProduct.productInventory) {
+
+      await ProductInventory.update({
+        quantity,
+        },
+        {
+        where: {
+            productId
+        }
+      })
+      res.status(200).send("Stock updated successfully!")
+
+    } else {
+      res.send("Product or stock not found")
+    }
+        
+  } catch(error){
+    next(error)
+  }
+})
+
+
 
 module.exports = router;

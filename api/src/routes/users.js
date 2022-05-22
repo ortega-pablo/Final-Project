@@ -1,10 +1,13 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User } = require("../db");
+const { User, Ask, Answer } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
+const verifyToken = require("../middleware/auth");
+const cors = require("cors");
+
 // Register User
 
 // router.post("/create", async (req, res, next) => {
@@ -33,8 +36,8 @@ const { KEY_WORD_JWT } = process.env;
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone } = req.body;
-
+  const { userName, email, password, firstName, lastName, phone, role } =
+    req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
@@ -51,6 +54,7 @@ router.post("/create", async (req, res, next) => {
       firstName,
       lastName,
       phone,
+      role,
     });
 
     res.status(200).send("done");
@@ -70,13 +74,14 @@ router.post("/login", async (req, res, next) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
-      response.status(400).json({
+      res.status(400).json({
         error: "invalid user or password",
       });
     }
     const userforToken = {
       id: user.id,
       username: user.username,
+      rol: user.rol,
     };
 
     const token = jwt.sign(userforToken, KEY_WORD_JWT);
@@ -87,6 +92,16 @@ router.post("/login", async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+router.get("/verifyToken", [cors(), verifyToken], async (req, res) => {
+  //console.log(req);
+  try {
+    res.json({ msg: req.role });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Error en el servidor");
   }
 });
 
@@ -131,6 +146,8 @@ router.get("/", async (req, res, next) => {
           },
         ],
       });
+
+      
       return res.status(200).send(getAll);
     }
   } catch (error) {
@@ -168,6 +185,33 @@ router.get("/:userId", async (req, res) => {
     }
   } catch (error) {
     res.send(error);
+  }
+});
+
+router.delete("/:userId", async (req, res, next) => {
+  // Esto para el admin de la pagina
+
+  const { userId } = req.params;
+
+  try {
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (findUser) {
+      await Category.destroy({
+        where: {
+          id: categoryId,
+        },
+      });
+      res.status(200).send("User deleted successfully!");
+    } else {
+      res.send("User not found");
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
