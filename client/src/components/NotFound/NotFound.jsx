@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { Box, Link } from "@material-ui/core";
-import { Footer } from "../Footer/Footer";
+
 
 export function NotFound() {
   return (
@@ -33,7 +33,6 @@ export function NotFound() {
           </CardActions>
         </Card>
       </Box>
-      <Footer/>
     </>
   );
 }

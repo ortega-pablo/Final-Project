@@ -32,7 +32,7 @@ const initialState = {
   categories: [],
   categoriesAux: [],
   allSpecifications: [],
-  userStatus:{}
+  userStatus: null
 };
 
 const rootReducer = (state = initialState, action) => {

@@ -20,7 +20,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { verifyToken } from "../../redux/actions";
 
 const Search = styled("div")(({ theme }) => ({
@@ -63,9 +63,6 @@ const StyledInputBase = styled(Input)(({ theme }) => ({
   },
 }));
 
-
-
-
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -73,12 +70,10 @@ export const NavBar = (props) => {
   const [name, setName] = React.useState("");
   const dispatch = useDispatch();
 
+  const userStatus = useSelector((state) => state.userStatus);
+  console.log("user status  => ", userStatus);
+
   const ls = JSON.parse(localStorage.getItem("token"));
-
-  useEffect(()=>{
-    dispatch(verifyToken(ls?.token))
-  },[dispatch])
-
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
   }, [dispatch]);
@@ -126,7 +121,7 @@ export const NavBar = (props) => {
     >
       {
         //userStatus === user
-        ls?.token ? (
+        userStatus === "user" ? (
           <>
             <Link sx={{ textDecoration: "none" }} href="/profile/asd">
               <MenuItem onClick={handleMenuProfileClose}>
@@ -144,28 +139,35 @@ export const NavBar = (props) => {
               </MenuItem>
             </Link>
           </>
-        ) : (
-          //userStatus === ''
+        ) : userStatus === "admin" ? (
           <>
-            <Link sx={{ textDecoration: "none" }} href="/login">
+            <Link sx={{ textDecoration: "none" }} href="/profile/asd">
               <MenuItem onClick={handleMenuProfileClose}>
                 <Typography variant="body1" color="ambar5.main">
-                  Login
+                  Perfil
                 </Typography>
               </MenuItem>
             </Link>
 
-            <Link sx={{ textDecoration: "none" }} href="/createaccount">
+            <Link sx={{ textDecoration: "none" }} href="/pruebaMenuAdmin">
               <MenuItem onClick={handleMenuProfileClose}>
                 <Typography variant="body1" color="ambar5.main">
-                  Crear cuenta
+                  Panel
+                </Typography>
+              </MenuItem>
+            </Link>
+
+            <Link sx={{ textDecoration: "none" }} href="/">
+              <MenuItem onClick={() => window.localStorage.clear()}>
+                <Typography variant="body1" color="ambar5.main">
+                  Desloguear
                 </Typography>
               </MenuItem>
             </Link>
           </>
+        ) : (
+          <></>
         )
-        // userStauts === 'admin'
-        // menu item que muestre link panel de control
       }
     </Menu>
   );
@@ -200,20 +202,57 @@ export const NavBar = (props) => {
         </MenuItem>
       </Link>
 
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="ambar5"
-        >
-          <AccountCircle />
-        </IconButton>
-        <Typography variant="body1" color="ambar5">
-          Profile
-        </Typography>
-      </MenuItem>
+      {userStatus !== null ? (
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="ambar5"
+          >
+            <AccountCircle />
+          </IconButton>
+          <Typography variant="body1" color="ambar5">
+            Profile
+          </Typography>
+        </MenuItem>
+      ) : (
+        <>
+          <Link sx={{ textDecoration: "none" }} href='/createaccount'>
+            <MenuItem>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="ambar5"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Typography variant="body1" color="ambar5.main">
+                Crear cuenta
+              </Typography>
+            </MenuItem>
+          </Link>
+          <Link sx={{ textDecoration: "none" }} href='login'>
+            <MenuItem>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="ambar5"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Typography variant="body1" color="ambar5.main">
+                Login
+              </Typography>
+            </MenuItem>
+          </Link>
+        </>
+      )}
 
       <MenuItem>
         <IconButton size="large" color="ambar5">
@@ -238,7 +277,6 @@ export const NavBar = (props) => {
           </Typography>
         </MenuItem>
       </Link>
-
     </Menu>
   );
 
@@ -325,23 +363,62 @@ export const NavBar = (props) => {
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="ambar1">
+          <Box sx={{ display: { xs: "none", md: "flex"}}}>
+            <IconButton size="large" color="ambar1" sx={{mr: 1}}>
               <Badge badgeContent={17} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuProfileId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="ambar1"
-            >
-              <AccountCircle />
-            </IconButton>
+            {userStatus !== null ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuProfileId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="ambar1"
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : (
+              <></>
+            )}
+
+            {userStatus === null ? (
+              <>
+                <Box sx={{ margin: "5px" }}>
+                  <Button
+                    variant="outlined"
+                    href="/login"
+                    sx={{
+                      my: 2,
+                      color: "ambar1.main",
+                      display: "block",
+                      borderColor: "ambar1.main",
+                    }}
+                  >
+                    Ingresar
+                  </Button>
+                </Box>
+                <Box sx={{ margin: "5px" }}>
+                  <Button
+                    variant="outlined"
+                    href="/createaccount"
+                    sx={{
+                      my: 2,
+                      color: "ambar1.main",
+                      display: "block",
+                      borderColor: "ambar1.main",
+                    }}
+                  >
+                    Crear cuenta
+                  </Button>
+                </Box>
+              </>
+            ) : (
+              <></>
+            )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
