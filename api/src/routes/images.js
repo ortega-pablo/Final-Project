@@ -34,15 +34,7 @@ router.post("/uploadProduct", upload.array("image"), async (req, res, next)=>{
   }
 })
 
-router.post("/removeImage", async (req, res, next) => {
-  
-  
-  try {
-    
-  } catch(error){
-    next(error)
-  }
-})
+
 
 router.get("/", async (req, res, next) => {
   
