@@ -8,9 +8,9 @@ import { About } from "./components/About/About";
 import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 import { UseFormControl} from "./components/Forms/UseFormControl";
-import { UserProfile } from "./components/UserProfile/UserProfile";
 import { ForgotPassword } from "./components/Login/ForgotPassword";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
+import AllCategories from "./components/AdminPanel/AllCategories";
 
 
 function App() {
@@ -27,9 +27,9 @@ function App() {
             <Route path="/createaccount" element={<CreateAccount/>}/>
             <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
             <Route path="/createProduct" element={<UseFormControl/>}/>
-            <Route path="/profile/:username" element={<UserProfile/>} />
             <Route path="*" element={<NotFound/>}/>
-            <Route path="/AdminPanel" element={<AdminPanel/>}/>
+            <Route path="/adminPanel" element={<AdminPanel/>}/>
+            <Route path="/allCategories" element={<AllCategories/>}/>
           </Routes>
         <Footer/>
     </BrowserRouter>

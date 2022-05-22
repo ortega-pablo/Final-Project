@@ -2,6 +2,8 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import AdminMenuLarge from "./AdminMenuLarge";
 import AdminMenuMobile from "./AdminMenuMobile";
+import Bienvenida from "./Bienvenida";
+
 
 function AdminPanel() {
   return (
@@ -25,6 +27,7 @@ function AdminPanel() {
           flexDirection: "row",
           width: "100%",
           height: "100%",
+          marginTop: 1,
           padding: 0,
         }}
       >
@@ -41,8 +44,8 @@ function AdminPanel() {
           }}
         >
 
+          <Bienvenida/>
 
-            
         </Container>
       </Container>
     </Box>

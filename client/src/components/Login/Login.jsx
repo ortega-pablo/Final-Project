@@ -41,7 +41,7 @@ export const Login = () => {
         const ls = JSON.parse(localStorage.getItem("token"))
         dispatch(verifyToken(ls?.token))
         alert('Acceso exitoso')
-        navigate(`/profile/asd`)
+        navigate(`/`)
       } else {
         alert('Datos incorrectos')
       }
