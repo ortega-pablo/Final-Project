@@ -1,4 +1,4 @@
-const { Product, Discount, Category, SubCategory, Specification, ProductSpecification, ProductInventory } = require("../db");
+const { Product, Discount, Category, SubCategory, Specification, ProductSpecification, ProductInventory, Image } = require("../db");
 const { Op } = require("sequelize");
 
 const getAllProducts = async () => {
@@ -35,6 +35,12 @@ const getAllProducts = async () => {
         through: {
           as:"value:",
           attributes: ["value"],
+        },
+      },
+      {
+        model: Image,
+        through: {
+          attributes: [],
         },
       },
       
@@ -77,7 +83,13 @@ const getProductsByName = async (name) => {
             as:"value:",
             attributes: ["value"],
         },
-      }
+      },
+      {
+        model: Image,
+        through: {
+          attributes: [],
+        },
+      },
     ],
   });
   let fixedProducts = products.filter(p => p.dataValues.name.toLowerCase().includes(name.toLowerCase()))

@@ -10,6 +10,7 @@ import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 import { UseFormControl} from "./components/Forms/UseFormControl";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { ForgotPassword } from "./components/Login/ForgotPassword";
+import  ImageUpload  from "./components/ImageUpload/ImageUpload";
 
 
 

@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const routes = require("./routes/index.js");
 require("./db.js");
 const cors = require("cors");
+const upload = require("./middleware/multer")
+const cloudinary = require("./middleware/cloudinary")
 const server = express();
 
 server.name = "API";
