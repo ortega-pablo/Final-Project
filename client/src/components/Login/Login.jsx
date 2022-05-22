@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -122,7 +121,7 @@ export const Login = () => {
         </Box>
       </Paper>
     </Container>
-      <Footer />
+
     </>
   );
 };

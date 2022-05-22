@@ -10,14 +10,14 @@ import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 import { UseFormControl} from "./components/Forms/UseFormControl";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { ForgotPassword } from "./components/Login/ForgotPassword";
-import  ImageUpload  from "./components/ImageUpload/ImageUpload";
+import AdminMenu from "./components/AdminPanel/AdminMenu";
 
 
 
 function App() {
   return (
-    <BrowserRouter>
-
+    
+    <BrowserRouter >
         <NavBar/>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -30,7 +30,10 @@ function App() {
             <Route path="/createProduct" element={<UseFormControl/>}/>
             <Route path="/profile/:username" element={<UserProfile/>} />
             <Route path="*" element={<NotFound/>}/>
+            <Route path="/pruebaMenuAdmin" element={<AdminMenu/>}/>
           </Routes>
+        <Footer/>
+
 
     </BrowserRouter>
   );

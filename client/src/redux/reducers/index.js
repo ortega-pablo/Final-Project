@@ -18,10 +18,13 @@ import {
   POST_ADD_DISCOUNT_TO_PRODUCT,
   POST_CREATE_USER,
   POST_LOGIN_USER,
-  POST_NEW_ASK,
-  POST_NEW_ANSWER
   DELETE_PRODUCT,
   PUT_PRODUCT,
+  PUT_QUANTITY,
+  VERIFY_TOKEN,
+  CLEAR_FILTERS,
+  POST_NEW_ASK,
+  POST_NEW_ANSWER,
   PUT_INVENTORY,
   GET_INVENTORY,
   PUT_CATEGORY_TO_PRODUCT,
@@ -39,7 +42,6 @@ import {
   PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
   PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
   DELETE_SPECIFICATION,
-  VERIFY_TOKEN, 
 } from "../actions";
 
 const initialState = {
@@ -138,11 +140,17 @@ const rootReducer = (state = initialState, action) => {
       const filterProducts = allProducts.filter((p) =>
         p.name.toLowerCase().includes(action.payload.toLowerCase())
       );
-      console.log(filterProducts);
       return {
         ...state,
         products: filterProducts,
       };
+    }
+
+    case CLEAR_FILTERS:{
+      return{
+        ...state,
+        products: state.productsAux
+      }
     }
 
     case POST_PRODUCT: {
@@ -248,11 +256,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: newArray,
-      };
-    case VERIFY_TOKEN:
-      return {
-        ...state,
-        userStatus: action.payload,
       };
 
     case GET_INVENTORY:
@@ -375,6 +378,12 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_SPECIFICATION:
       return {
         ...state,
+        products: newArray
+    }
+    case VERIFY_TOKEN:
+    return{
+        ...state,
+        userStatus: action.payload
       };
 
     default:

@@ -1,6 +1,6 @@
-import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, InputLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpecifications,  postAddNewSpecification } from "../../../redux/actions";
 import { useFormik } from "formik";

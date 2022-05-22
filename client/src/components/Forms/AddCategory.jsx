@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
-import { useState } from "react";
-import { validateNewCat } from "./validacionInputNewCategoria/validateNewCat";
 import { postAddCaterory, getCategories } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";

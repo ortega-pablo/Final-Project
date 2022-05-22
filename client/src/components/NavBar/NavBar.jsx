@@ -1,91 +1,87 @@
-import React, {useEffect} from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { Link, Input} from '@mui/material';
-import Button from '@mui/material/Button';
+import React, { useEffect } from "react";
+import { styled, alpha } from "@mui/material/styles";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Badge,
+  MenuItem,
+  Menu,
+  Button,
+  Link,
+  Input,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { verifyToken } from '../../redux/actions';
+import { useDispatch } from "react-redux";
+import { verifyToken } from "../../redux/actions";
 
-import axios from 'axios';
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
-    width: 'auto',
+    width: "auto",
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(Input)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
+  color: "inherit",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
   },
 }));
-
-
-
 
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
-  const [name, setName] = React.useState('');
-  const dispatch = useDispatch() 
+  const [name, setName] = React.useState("");
+  const dispatch = useDispatch();
 
-  const ls = JSON.parse(localStorage.getItem('token'))
-  //console.log('soy el token que estas despachando  => ', ls?.token)
+  const ls = JSON.parse(localStorage.getItem("token"));
+  console.log("soy el token que estas despachando  => ", ls?.token);
 
-  useEffect(()=>{
-    dispatch(verifyToken(ls?.token))
-  },[dispatch])
-
+  useEffect(() => {
+    dispatch(verifyToken(ls?.token));
+  }, [dispatch]);
 
   const handleChangeForName = (e) => {
-    setName(e.target.value)
-  }
+    setName(e.target.value);
+  };
 
-  const isMenuProfileOpen = Boolean(anchorProfileEl)
+  const isMenuProfileOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -101,141 +97,161 @@ export const NavBar = (props) => {
     handleMobileMenuClose();
   };
 
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-
-
-  const menuProfileId = 'primary-search-account-menu';
+  const menuProfileId = "primary-search-account-menu";
   const renderProfileMenu = (
     <Menu
       anchorEl={anchorProfileEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuProfileId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuProfileOpen}
       onClose={handleMenuProfileClose}
     >
-     {
-       
-       //userStatus === user 
-       ls?.token?
-       <>
-      <MenuItem onClick={handleMenuProfileClose} >
-          <Link sx={{textDecoration:'none',  color:'inherit'}} href='/profile/asd'>
-            Perfil
-          </Link>
-      </MenuItem>
-      <MenuItem onClick={() => window.localStorage.clear()}>
-        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/'>
-          Desloguear
-        </Link>
-      </MenuItem>
-       </>
-      :
-      //userStatus === '' 
-      <>
-      <MenuItem onClick={handleMenuProfileClose}>
-        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/login'>
-          Login
-        </Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuProfileClose}>
-        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/createaccount'>
-          Crear cuenta
-        </Link>
-      </MenuItem>
-      </>
-      // userStauts === 'admin'
-      // menu item que muestre link panel de control
-     }
+      {
+        //userStatus === user
+        ls?.token ? (
+          <>
+            <Link sx={{ textDecoration: "none" }} href="/profile/asd">
+              <MenuItem onClick={handleMenuProfileClose}>
+                <Typography variant="body1" color="ambar5.main">
+                  Perfil
+                </Typography>
+              </MenuItem>
+            </Link>
+
+            <Link sx={{ textDecoration: "none" }} href="/">
+              <MenuItem onClick={() => window.localStorage.clear()}>
+                <Typography variant="body1" color="ambar5.main">
+                  Desloguear
+                </Typography>
+              </MenuItem>
+            </Link>
+          </>
+        ) : (
+          //userStatus === ''
+          <>
+            <Link sx={{ textDecoration: "none" }} href="/login">
+              <MenuItem onClick={handleMenuProfileClose}>
+                <Typography variant="body1" color="ambar5.main">
+                  Login
+                </Typography>
+              </MenuItem>
+            </Link>
+
+            <Link sx={{ textDecoration: "none" }} href="/createaccount">
+              <MenuItem onClick={handleMenuProfileClose}>
+                <Typography variant="body1" color="ambar5.main">
+                  Crear cuenta
+                </Typography>
+              </MenuItem>
+            </Link>
+          </>
+        )
+        // userStauts === 'admin'
+        // menu item que muestre link panel de control
+      }
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        >
-          <Badge color="error">
-            <HomeIcon />
-          </Badge>
-        </IconButton>
-        <p>Home</p>
-      </MenuItem>
+      <Link sx={{ textDecoration: "none" }} href="/">
+        <MenuItem>
+          <IconButton size="large" color="ambar5">
+            <Badge color="error">
+              <HomeIcon />
+            </Badge>
+          </IconButton>
+          <Typography variant="body1" color="ambar5.main">
+            Home
+          </Typography>
+        </MenuItem>
+      </Link>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
-          color="inherit"
+          color="ambar5"
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Typography variant="body1" color="ambar5">
+          Profile
+        </Typography>
       </MenuItem>
+
       <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        >
+        <IconButton size="large" color="ambar5">
           <Badge color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Cart</p>
+        <Typography variant="body1" color="ambar5">
+          Cart
+        </Typography>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        >
-          <Badge color="error">
-            <InfoIcon />
-          </Badge>
-        </IconButton>
-        <p>About Us</p>
-      </MenuItem>
+
+      <Link sx={{ textDecoration: "none" }} href="/about">
+        <MenuItem>
+          <IconButton size="large" color="ambar5">
+            <Badge color="error">
+              <InfoIcon />
+            </Badge>
+          </IconButton>
+          <Typography variant="body1" color="ambar5.main">
+            About Us
+          </Typography>
+        </MenuItem>
+      </Link>
+
     </Menu>
   );
 
   return (
-    <Box  sx={{ flexGrow: 1}} >
-       
-       <AppBar sx={{backgroundColor: "#494545", color: "#E8E9F2", position: "fixed" } }  >
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        sx={{
+          backgroundColor: "ambar6.main",
+          color: "ambar1.main",
+          position: "fixed",
+        }}
+      >
         <Toolbar>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            color="ambar1.main"
+            sx={{ display: { xs: "none", sm: "block" } }}
           >
             LOGO
           </Typography>
@@ -246,59 +262,65 @@ export const NavBar = (props) => {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', sm: 'block' },
+              display: { xs: "none", sm: "block" },
               fontFamily: '"Roboto","Helvetica","Arial",sans-serif;',
-              color: 'inherit',
-              textDecoration: 'none',
-              margin: '5px'
+              color: "ambar1.main",
+              textDecoration: "none",
+              margin: "5px",
             }}
           >
-            NombreShop
+            EXMINE
           </Typography>
-          <form onSubmit={(e) => {
-            navigate(`/home/${name}`)            
+          <form
+            onSubmit={(e) => {
+              navigate(`/home/${name}`);
             }}
-            
-            >
-          <Search >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar…"
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={handleChangeForName}
-            />
-          </Search>
+          >
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon color="ambar1" />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar…"
+                inputProps={{ "aria-label": "search" }}
+                onChange={handleChangeForName}
+              />
+            </Search>
           </form>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
-            <Box sx={{margin: '5px'}}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ margin: "5px" }}>
               <Button
-              variant='outlined'
-                sx={{ my: 2, color: 'white', display: 'block', borderColor: '#E8E9F2'}}
+                variant="outlined"
+                sx={{
+                  my: 2,
+                  color: "ambar1.main",
+                  display: "block",
+                  borderColor: "ambar1.main",
+                }}
                 href="/#container"
               >
                 Productos
               </Button>
             </Box>
-            <Box sx={{margin: '5px'}}>
-            <Button
-              variant='outlined'
-              href='/about'
-              sx={{ my: 2, color: 'white', display: 'block', borderColor: '#E8E9F2', }}
-            >
-              Sobre nosotros
-            </Button>
+            <Box sx={{ margin: "5px" }}>
+              <Button
+                variant="outlined"
+                href="/about"
+                sx={{
+                  my: 2,
+                  color: "ambar1.main",
+                  display: "block",
+                  borderColor: "ambar1.main",
+                }}
+              >
+                Sobre nosotros
+              </Button>
             </Box>
-
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              color="inherit"
-            >
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton size="large" color="ambar1">
               <Badge badgeContent={17} color="error">
                 <ShoppingCartIcon />
               </Badge>
@@ -310,30 +332,29 @@ export const NavBar = (props) => {
               aria-controls={menuProfileId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              color="ambar1"
             >
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              color="ambar1"
             >
               <MoreIcon />
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
-      
-       <Toolbar></Toolbar>
+
+      <Toolbar></Toolbar>
       {renderMobileMenu}
       {renderProfileMenu}
     </Box>
   );
-}
-
+};

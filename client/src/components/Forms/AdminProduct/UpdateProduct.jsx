@@ -10,23 +10,24 @@ import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useNavigate } from "react-router-dom";
-
 import Select from "@mui/material/Select";
 
 
 
 
 import { AddSubCategoty } from "../AddSubCategoty";
-import { AddQuantity } from "../AddQuantity";
 import { AddSpecification } from "../AddSpecification/AddSpecification";
-// import { AddDiscount } from "../AddDiscount";
-import { TableSpecification } from "../TablaResumen/TableSpecification";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
+import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSubCateroryToProduct, putProduct } from "../../../redux/actions";
+import { TableSpecification } from "../TablaResumen/TableSpecification";
+
+
+
 // import { DeleteProduct } from "./AdminProduct";
-import { getAllSpecifications, getCategories, getProducts, postAddSpecificationToProduct, postAddSubCateroryToProduct, postProduct, putProduct } from "../../../redux/actions";
+import { postAddSpecificationToProduct, postProduct } from "../../../redux/actions";
 import { UpdateQuantity } from "./UpdateQuantity";
 import { AddCategory } from "../AddCategory";
 import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
@@ -43,9 +44,6 @@ export function  UpdateProduct({idUpdate, setUpdating}) {
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
   const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
-  console.log(productToUpdate)
- 
-  
   const [inputQ, setInputQ] = useState({ quantity: 0 });
 
 
@@ -62,10 +60,10 @@ export function  UpdateProduct({idUpdate, setUpdating}) {
   }, [dispatch]);
 
 
-const nameRepetido = productosExistentes.filter( p => p.id !=idUpdate )
+const nameRepetido = productosExistentes.filter( p => p.id !==idUpdate )
 const NameRepetido = nameRepetido.map((p) => p.name);
 
- const SkuRepetido = nameRepetido.map((p) => p.sku);
+  const SkuRepetido = nameRepetido.map((p) => p.sku);
 
 
   const validationSchema = yup.object({
@@ -145,25 +143,12 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   
   ///------funciones agregar especificacion al producto
   const [specifications, setSpecifications] = useState(``);
-  const [inputSpec, setInputSpec] = useState({ "value:": "" });
 
   function handleChangeSpecification(e) {
     e.preventDefault();
     setSpecifications(e.target.value);
   }
-  
-  function handleInputSpec(e) {
-    setInputSpec({
-      ...inputSpec,
-      [e.target.name]: e.target.value,
-    });
-  }
 
-  async function handleClickNewSpec(e){
-    e.preventDefault()
-    await dispatch(postAddSpecificationToProduct(newProdId , specifications, inputSpec))
-    await dispatch(getProducts())
-  }
   //-------
   // const categSelect = allCategories.filter((c) => c.id === category);
   

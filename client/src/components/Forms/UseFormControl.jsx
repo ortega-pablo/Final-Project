@@ -1,34 +1,22 @@
 import React, { useEffect, useState } from "react";
-
 import Box from "@mui/material/Box";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField } from "@mui/material";
 import {
   postProduct,
   getProducts,
-  // getAllCategories,
   getCategories,
   postAddCateroryToProduct,
-  // postAddSpecificationToProduct,
-  // postAddCaterory,
   postAddSubCateroryToProduct,
-  postAddQuantity,
   getAllSpecifications,
   postAddSpecificationToProduct,
 } from "../../redux/actions";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-
 import { useNavigate } from "react-router-dom";
-
 import Select from "@mui/material/Select";
-
 import { AddCategory } from "./AddCategory";
-
-
 import { AddSubCategoty } from "./AddSubCategoty";
 import { AddQuantity } from "./AddQuantity";
 import { AddSpecification } from "./AddSpecification/AddSpecification";

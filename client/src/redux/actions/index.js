@@ -14,37 +14,34 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
 export const FILTER_PER_SUBCATEGORY = "FILTER_PER_SUBCATEGORY";
 export const ADD_CATEGORY = "ADD_CATEGORY";
+export const CLEAR_FILTERS = "CLEAR_FILTERS"
+
 
 export const FILTER_PER_PRICE = "FILTER_PER_PRICE";
 export const FILTER_PER_NAME = "FILTER_PER_NAME";
 export const POST_CREATE_USER = "POST_CREATE_USER";
 export const POST_LOGIN_USER = "POST_LOGIN_USER";
-
 export const POST_ADD_SUB_CATEGORY_TO_PRODUCT =
   "POST_ADD_SUB_CATEGORY_TO_PRODUCT";
 export const POST_ADD_SUB_CATEGORY = "POST_ADD_SUB_CATEGORY";
 export const POST_ADD_QUANTITY = "POST_ADD_QUANTITY";
 export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
-
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const PUT_PRODUCT = "PUT_PRODUCT";
+export const PUT_QUANTITY = "PUT_QUANTITY";
+export const VERIFY_TOKEN = "VERIFY_TOKEN"
 export const GET_INVENTORY = "GET_INVENTORY";
-
 export const PUT_INVENTORY = "PUT_INVENTORY";
 export const PUT_CATEGORY_TO_PRODUCT = "PUT_CATEGORY_TO_PRODUCT";
 export const PUT_SUBCATEGORY_TO_PRODUCT = "PUT_SUBCATEGORY_TO_PRODUCT";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const PUT_CATEGORY = "PUT_CATEGORY";
 export const PUT_SUB_CATEGORY = "PUT_SUB_CATEGORY";
-
-
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
 export const DELETE_SUB_CATEGORY = "DELETE_SUB_CATEGORY";
-
 export const GET_ALL_DISCOUNT = "GET_ALL_DISCOUNT";
-
 export const DELETE_ONE_DISCOUNT_TO_A_PRODUCT = "DELETE_ONE_DISCOUNT_TO_A_PRODUCT";
 export const PUT_DISCOUNT = "PUT_DISCOUNT";
 export const POST_DISCOUNT = "POST_DISCOUNT";
@@ -58,7 +55,7 @@ export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
 
 
 
-export const VERIFY_TOKEN = "VERIFY_TOKEN";
+
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -319,6 +316,13 @@ export const filterPerPrice = (range) => {
   };
 };
 
+export const clearFilters = () => {
+  return async (dispatch) => {
+    return dispatch({
+      type: CLEAR_FILTERS
+    });
+  };
+};
 
 export function deleteProduct (id){
   return async function (dispatch){

@@ -109,7 +109,7 @@ export const Detail = () => {
           />
         )}  
           
-        <Footer/>
+
 
     </div>
   );
