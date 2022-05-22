@@ -16,7 +16,7 @@ import AllProducts from "./components/AdminPanel/AllProducts";
 import AdminProducts from "./components/AdminPanel/AdminProducts";
 import AllDiscounts from "./components/AdminPanel/AllDiscounts";
 import AdminDiscount from "./components/AdminPanel/AdminDiscounts";
-
+import {AdmininAllStock} from "./components/Forms/AdminProduct/AdmininAllStock"
 
 
 
@@ -42,6 +42,7 @@ function App() {
             <Route path="/adminProducts" element={<AdminProducts/>}/>
             <Route path="/allDiscounts" element={<AllDiscounts/>}/>
             <Route path="/adminDiscounts" element={<AdminDiscount/>}/>
+            <Route path="/admininAllStock" element={<AdmininAllStock/>}/>
           </Routes>
         <Footer/>
     </BrowserRouter>
