@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Container, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
-import { Grid } from "@mui/material";
-import { Link } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import { useFormik } from "formik";
@@ -188,7 +185,6 @@ export const CreateAccount = () => {
           </Button>
         </form>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -1,25 +1,23 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import { Box, ListItemButton, FormControl, Input, FormHelperText, TextField, ListItem, Button, Container, Collapse } from '@mui/material';
-import { ListItemIcon, ListSubheader } from '@mui/material';
-import StarBorder from '@mui/icons-material/StarBorder';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getCategories } from '../../redux/actions';
-import { withWidth } from '@material-ui/core';
-import { Hidden } from '@material-ui/core';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { Box, ListItemButton, TextField, ListItem, Button, Container, Collapse, List, ListItemIcon, ListSubheader, ListItemText, Typography, Divider, Paper } from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { HiddensmUp } from '../../personalizadTheme';
+import { clearFilters, getCategories } from '../../redux/actions';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 
-function validate (value) {
+function validate(value) {
   let errors = {};
-  if(isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número."
-  if(isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número."
-  if(value.Desde > value.Hasta) errors.Desde = "El primero valor debe ser menor."
+  if (isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número.";
+  if (isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número.";
+  if (value.Desde > value.Hasta)
+    errors.Desde = "Este valor debe ser un mínimo";
+    errors.Desde = "Este valor debe ser un máximo";
+  if(value.Desde < 0) errors.Desde = "El valor debe ser mayor o igual a 0"
+  if(value.Hasta < 0) errors.Hasta = "El valor debe ser mayor o igual a 0"
   return errors;
 }
 
@@ -40,7 +38,7 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
   const [errorHasta, setErrorHasta] = React.useState(false)
   const [leyendaErrorHasta, setLeyendaErrorHasta] = React.useState("")
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -88,177 +86,154 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
       setLeyendaErrorHasta("")
     }
   }
-
+  const handleClearFilters = (e) => {
+    dispatch(clearFilters())
+  }
   return (
-    <Hidden smUp>
-      <ListItemButton onClick={handleClick}>
+    <HiddensmUp sx={{display:"flex", flexDirection:"column", alignItems:"center"}} >
+      <Paper sx={{ display: "flex", width: "100%"}}>
+      <ListItemButton onClick={handleClick} >
             <ListItemIcon>
-              <InboxIcon />
+              <FilterListIcon />
             </ListItemIcon>
             <ListItemText primary="Filtros" />
             {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List sx={{width: '100%', bgcolor: 'background.paper', display: "block"}}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader sx={{display: "block"}} component="div" id="nested-list-subheader">
-              Categorias
-            </ListSubheader>
-          }
-        >
-        <Container sx={{width: "100%", display:"flex", justifyContent: "space-around"}}>
-        {
-   
-          
-          categories.length ?  categories.map((category) => {
-          return  <Box sx={{display: "inline-flex", flexDirection: "column"}}>
-                          <ListItemButton
-                            sx={{display:"inline"}}
-                            key={category}
-                            onClick={() => handleClickForCategories(category.name)}
-                            disableGutters
-                            >
-                            <ListItemText primary={category.name}  />
-                            </ListItemButton>
-                              {category.subCategories ? category.subCategories.map(subCategory => {
-                                return <>
-                            <List component="div" disablePadding>
-                                      <ListItemButton 
-                                        key={subCategory} 
-                                        sx={{ pl: 3 }}
-                                        onClick={() => handleClickForSubcategories(subCategory.name)}
-                                      >
-                                          <ListItemText primary={subCategory.name}/>
-                                      </ListItemButton>
-                              </List>
-                        </>
-                      }) : <></>}
-                </Box>
-        }) : 
-        <></>
-        }
-        </Container>
+      </Paper>
 
-        </List>
-        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Precio
-            </ListSubheader>
-          }>
-            <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 0, Hasta: 100000});
-              }}>
-            <ListItemText primary={"Hasta $100.000"}  />
-            </ListItemButton>
-            <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 100000, Hasta: 200000});
-            }}>
-            <ListItemText primary={"$100.000 - $200.000"}  />
-            </ListItemButton>
-            <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 200000, Hasta: 1000000});
-              }}>
-            <ListItemText primary={"Mas de $200.000"}  />
-            </ListItemButton>
-            <ListItem>
-              <Box  >
-                <TextField 
-                value={value.Desde} 
+      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Paper sx={{ height: "100%", display: "flex", maxWidth: 320}}>
+        <List sx={{ alignItems: "center"  }}>
+          <ListSubheader component="div" id="nested-list-subheader">
+            <Typography variant="h5" m={2} >
+            Categorias
+            </Typography>
+          </ListSubheader>
+          {categories.length ? (
+            categories.map((category) => {
+              return (
+                <>
+                <Divider variant="middle" />
+                  <ListItemButton
+             
+                    key={category}
+                    onClick={() => handleClickForCategories(category.name)}
+                  >
+                    <ListItemText primary={category.name} />
+                  </ListItemButton>
+                  
+                  {category.subCategories ? (
+                    category.subCategories.map((subCategory) => {
+                      return (
+                        <>
+                          <List component="div" disablePadding>
+                            <ListItemButton  key={subCategory} sx={{ pl: 6 }} onClick={() => handleClickForSubcategories(subCategory.name)}>
+                            <HorizontalRuleIcon fontSize="small" />
+                              <ListItemText primary={subCategory.name} />
+                            </ListItemButton>
+                          </List>
+                        </>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
+
+                </>
+              );
+            })
+          ) : (
+            <></>
+          )}
+  <Divider variant="middle" />
+          <ListSubheader component="div" id="nested-list-subheader">
+          <Typography variant="h5" m={2} >
+          Precio
+            </Typography>
+          </ListSubheader>
+          <Divider variant="middle" />
+          <ListItemButton
+            onClick={() => {
+              handleClickSubmitPerPrice({ Desde: 0, Hasta: 100000 });
+            }}
+          >
+            <ListItemText primary={"Hasta $100.000"} />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              handleClickSubmitPerPrice({ Desde: 100000, Hasta: 200000 });
+            }}
+          >
+            <ListItemText primary={"$100.000 - $200.000"} />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              handleClickSubmitPerPrice({ Desde: 200000, Hasta: 1000000 });
+            }}
+          >
+            
+            <ListItemText primary={"Mas de $200.000"} />
+          </ListItemButton >
+          <ListItem>
+            <Box>
+              <TextField
+                value={value.Desde}
                 name="Desde"
-                onChange={handleChange} 
-                placeholder='Desde'
+                onChange={handleChange}
+                placeholder="Desde"
                 helperText={leyendaErrorDesde}
-                error={errorDesde} 
-                /> 
-                <TextField
-                  value={value.Hasta}
-                  name="Hasta"
-                  onChange={handleChange}
-                  placeholder='Hasta'
-                  helperText={leyendaErrorHasta}
-                  error={errorHasta} 
-                />                               
-              <Button onClick={(e) => {
-                handleClickError(e);
-                if(errors.Desde || errors.Hasta){
-                  e.preventDefault();
-                  alert("Existen errores.");
-                }else{
-                  handleClickSubmitPerPrice(value);
-                }
-                }}>
-                Filtrar
-              </Button>
+                error={errorDesde}
+              />
+              <TextField
+                value={value.Hasta}
+                name="Hasta"
+                onChange={handleChange}
+                placeholder="Hasta"
+                helperText={leyendaErrorHasta}
+                error={errorHasta}
+                sx={{mt:"20px"}}
+              />
+              
+              <Box mt={3}sx={{ display:"flex", justifyContent:"space-between"}}>
+               
+                <Button
+                  variant="contained"
+                  color="ambar3"
+                  onClick={(e) => {
+                    handleClick(e);
+                    if (errors.Desde || errors.Hasta) {
+                      e.preventDefault();
+                      alert("Existen errores.");
+                    } else {
+                      handleClickSubmitPerPrice(value);
+                    }
+                  }}
+                  sx={{mr:1}}
+
+                >
+                  <Typography>
+                  Filtrar
+                  </Typography>
+                  
+                </Button>
+                <Button
+                  variant="contained"
+                  color="ambar3"
+                  onClick={(e) => {handleClearFilters()}}
+                >
+                  <Typography>
+                  Limpiar filtros
+                  </Typography>
+                </Button>
               </Box>
-            </ListItem>
+            </Box>
+          </ListItem>
         </List>
-        </Collapse>
-    </Hidden>
+      </Paper>
+      </Collapse>
+    </HiddensmUp>
     
   );
 }
 
-export default withWidth()(SwipeableFilters);
-
-// const [bottonFilters, setState] = React.useState({top: false});
-
-// const toggleDrawer = (anchor, open) => (event) => {
-//   if (
-//     event &&
-//     event.type === 'keydown' &&
-//     (event.key === 'Tab' || event.key === 'Shift')
-//   ) {
-//     return;
-//   }
-
-//   setState({ ...bottonFilters, [anchor]: open });
-// };
-// const list = () => (
-//     <Box
-//         sx={{ width: "100%" }}
-//         role="presentation"
-//     >
-//         <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
-//         component="nav"
-//         aria-labelledby="nested-list-subheader"
-//         subheader={
-//             <ListSubheader component="div" id="nested-list-subheader">
-//             Categorias
-//             </ListSubheader>
-//         }
-//         >
-//         {categories.length ?  categories.map((category) => {
-//         return <>
-//         <ListItemButton
-//             key={category}
-//             onClick={() => handleClickForCategories(category.name)}
-//             disableGutters
-//             >
-//             <ListItemText primary={category.name}  />
-//             </ListItemButton>
-//             {category.subCategories ? category.subCategories.map(subCategory => {
-//                 return <>
-//             <List component="div" disablePadding>
-//                     <ListItemButton 
-//                         key={subCategory} 
-//                         sx={{ pl: 3 }}
-//                         onClick={() => handleClickForSubcategories(subCategory.name)}
-//                     >
-//                         <ListItemText primary={subCategory.name}/>
-//                     </ListItemButton>
-//             </List>
-//                 </>
-//             }) : <></>}
-//         </>}) : 
-//         <></>
-//         }
-
-//         </List>
-//     </Box>
-
-// )
+export default (SwipeableFilters);
