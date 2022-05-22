@@ -1,187 +1,234 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import CommentIcon from '@mui/icons-material/Comment';
-import IconButton from '@mui/material/IconButton';
-import { Box, ListItemButton, FormControl, Input, FormHelperText, TextField, ListItem, Button } from '@mui/material';
-import { ListItemIcon, ListSubheader } from '@mui/material';
-import StarBorder from '@mui/icons-material/StarBorder';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getCategories } from '../../redux/actions';
-import { withWidth } from '@material-ui/core';
-import { Hidden } from '@material-ui/core';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  Box,
+  ListItemButton,
+  TextField,
+  ListItem,
+  Button,
+  List,
+  ListSubheader,
+  ListItemText,
+  Paper,
+  Typography,
+  Divider
+} from "@mui/material";
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { HiddenxsDown } from "../../personalizadTheme";
+import { clearFilters, getCategories } from "../../redux/actions";
 
-function validate (value) {
+
+
+function validate(value) {
   let errors = {};
-  if(isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número."
-  if(isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número."
-  if(value.Desde > value.Hasta) errors.Desde = "El primero valor debe ser menor."
+  if (isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número.";
+  if (isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número.";
+  if (value.Desde > value.Hasta)
+    errors.Desde = "Este valor debe ser un mínimo";
+    errors.Desde = "Este valor debe ser un máximo";
+  if(value.Desde < 0) errors.Desde = "El valor debe ser mayor o igual a 0"
+  if(value.Hasta < 0) errors.Hasta = "El valor debe ser mayor o igual a 0"
   return errors;
 }
 
-
-
-function Category({handleClickForCategories, handleClickForSubcategories, handleClickSubmitPerPrice}) {
-
-  const categories = useSelector(state => state.categories);
+function Category({
+  handleClickForCategories,
+  handleClickForSubcategories,
+  handleClickSubmitPerPrice,
+}) {
+  const categories = useSelector((state) => state.categories);
 
   let [errors, setErrors] = React.useState({});
 
-  let [reRender, setRerender] = React.useState('');
+  let [reRender, setRerender] = React.useState("");
 
-  const [errorDesde, setErrorDesde] = React.useState(false)
-  const [leyendaErrorDesde, setLeyendaErrorDesde] = React.useState("")
+  const [errorDesde, setErrorDesde] = React.useState(false);
+  const [leyendaErrorDesde, setLeyendaErrorDesde] = React.useState("");
 
-  const [errorHasta, setErrorHasta] = React.useState(false)
-  const [leyendaErrorHasta, setLeyendaErrorHasta] = React.useState("")
+  const [errorHasta, setErrorHasta] = React.useState(false);
+  const [leyendaErrorHasta, setLeyendaErrorHasta] = React.useState("");
 
   const dispatch = useDispatch();
 
-  function handleClick (e){
+  function handleClick(e) {
     e.preventDefault();
-    if(errors.Desde){
+    if (errors.Desde) {
       setErrorDesde(true);
-      setLeyendaErrorDesde(errors?.Desde)
+      setLeyendaErrorDesde(errors?.Desde);
     }
-    if(errors.Hasta){
+    if (errors.Hasta) {
       setErrorHasta(true);
-      setLeyendaErrorHasta(errors?.Hasta)
+      setLeyendaErrorHasta(errors?.Hasta);
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
 
   const [value, setValue] = React.useState({
-    Desde:null, 
-    Hasta:null
+    Desde: null,
+    Hasta: null,
   });
 
   const handleChange = (e) => {
     setValue({
       ...value,
-      [e.target.name]: e.target.value
-    })
-    setErrors(validate({
-      ...value,
-      [e.target.name]: e.target.value
-    }))
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validate({
+        ...value,
+        [e.target.name]: e.target.value,
+      })
+    );
 
-    if(!errors.Desde){
+    if (!errors.Desde) {
       setErrorDesde(false);
-      setLeyendaErrorDesde("")
+      setLeyendaErrorDesde("");
     }
-    if(!errors.Hasta){
+    if (!errors.Hasta) {
       setErrorHasta(false);
-      setLeyendaErrorHasta("")
+      setLeyendaErrorHasta("");
     }
+  };
+
+  const handleClearFilters = (e) => {
+    dispatch(clearFilters())
   }
 
   return (
-    <Hidden xsDown>
-      <Box>
+    <HiddenxsDown sx={{ borderRadius: "10px" }}>
+      <Paper sx={{ height: "100%", display: "flex"}}>
+        <List sx={{ width: 320, alignItems: "center"  }}>
+          <ListSubheader component="div" id="nested-list-subheader">
+            <Typography variant="h5" m={2} >
+            Categorias
+            </Typography>
+          </ListSubheader>
+          {categories.length ? (
+            categories.map((category) => {
+              return (
+                <>
+                <Divider variant="middle" />
+                  <ListItemButton
+             
+                    key={category}
+                    onClick={() => handleClickForCategories(category.name)}
+                  >
+                    <ListItemText primary={category.name} />
+                  </ListItemButton>
+                  
+                  {category.subCategories ? (
+                    category.subCategories.map((subCategory) => {
+                      return (
+                        <>
+                          <List component="div" disablePadding>
+                            <ListItemButton  key={subCategory} sx={{ pl: 6 }} onClick={() => handleClickForSubcategories(subCategory.name)}>
+                            <HorizontalRuleIcon fontSize="small" />
+                              <ListItemText primary={subCategory.name} />
+                            </ListItemButton>
+                          </List>
+                        </>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
 
-        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Categorias
-            </ListSubheader>
-          }
-        >
-        {categories.length ?  categories.map((category) => {
-          return <>
-          <ListItemButton
-            key={category}
-            onClick={() => handleClickForCategories(category.name)}
-            disableGutters
-            >
-            <ListItemText primary={category.name}  />
-            </ListItemButton>
-              {category.subCategories ? category.subCategories.map(subCategory => {
-                return <>
-            <List component="div" disablePadding>
-                      <ListItemButton 
-                        key={subCategory} 
-                        sx={{ pl: 3 }}
-                        onClick={() => handleClickForSubcategories(subCategory.name)}
-                      >
-                          <ListItemText primary={subCategory.name}/>
-                      </ListItemButton>
-              </List>
                 </>
-              }) : <></>}
-        </>}) : 
-        <></>
-        }
-
-        </List>
-        <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Precio
-            </ListSubheader>
-          }>
-            <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 0, Hasta: 100000});
-              }}>
-            <ListItemText primary={"Hasta $100.000"}  />
-            </ListItemButton>
-            <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 100000, Hasta: 200000});
-            }}>
-            <ListItemText primary={"$100.000 - $200.000"}  />
-            </ListItemButton>
-            <ListItemButton onClick={() => {
-              handleClickSubmitPerPrice({Desde: 200000, Hasta: 1000000});
-              }}>
-            <ListItemText primary={"Mas de $200.000"}  />
-            </ListItemButton>
-            <ListItem>
-              <Box  >
-                <TextField 
-                value={value.Desde} 
+              );
+            })
+          ) : (
+            <></>
+          )}
+  <Divider variant="middle" />
+          <ListSubheader component="div" id="nested-list-subheader">
+          <Typography variant="h5" m={2} >
+          Precio
+            </Typography>
+          </ListSubheader>
+          <Divider variant="middle" />
+          <ListItemButton
+            onClick={() => {
+              handleClickSubmitPerPrice({ Desde: 0, Hasta: 100000 });
+            }}
+          >
+            <ListItemText primary={"Hasta $100.000"} />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              handleClickSubmitPerPrice({ Desde: 100000, Hasta: 200000 });
+            }}
+          >
+            <ListItemText primary={"$100.000 - $200.000"} />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              handleClickSubmitPerPrice({ Desde: 200000, Hasta: 1000000 });
+            }}
+          >
+            
+            <ListItemText primary={"Mas de $200.000"} />
+          </ListItemButton >
+          <ListItem>
+            <Box>
+              <TextField
+                value={value.Desde}
                 name="Desde"
-                onChange={handleChange} 
-                placeholder='Desde'
+                onChange={handleChange}
+                placeholder="Desde"
                 helperText={leyendaErrorDesde}
-                error={errorDesde} 
-                /> 
-                <TextField
-                  value={value.Hasta}
-                  name="Hasta"
-                  onChange={handleChange}
-                  placeholder='Hasta'
-                  helperText={leyendaErrorHasta}
-                  error={errorHasta} 
-                />                               
-              <Button onClick={(e) => {
-                handleClick(e);
-                if(errors.Desde || errors.Hasta){
-                  e.preventDefault();
-                  alert("Existen errores.");
-                }else{
-                  handleClickSubmitPerPrice(value);
-                }
-                }}>
-                Filtrar
-              </Button>
+                error={errorDesde}
+              />
+              <TextField
+                value={value.Hasta}
+                name="Hasta"
+                onChange={handleChange}
+                placeholder="Hasta"
+                helperText={leyendaErrorHasta}
+                error={errorHasta}
+                sx={{mt:"20px"}}
+              />
+              
+              <Box mt={3}sx={{ display:"flex", justifyContent:"space-between"}}>
+               
+                <Button
+                  variant="contained"
+                  color="ambar3"
+                  onClick={(e) => {
+                    handleClick(e);
+                    if (errors.Desde || errors.Hasta) {
+                      e.preventDefault();
+                      alert("Existen errores.");
+                    } else {
+                      handleClickSubmitPerPrice(value);
+                    }
+                  }}
+                  sx={{mr:1}}
+
+                >
+                  <Typography>
+                  Filtrar
+                  </Typography>
+                  
+                </Button>
+                <Button
+                  variant="contained"
+                  color="ambar3"
+                  onClick={(e) => {handleClearFilters()}}
+                >
+                  <Typography>
+                  Limpiar filtros
+                  </Typography>
+                </Button>
               </Box>
-            </ListItem>
+            </Box>
+          </ListItem>
         </List>
-        </Box>
-    </Hidden>
-    
+      </Paper>
+    </HiddenxsDown>
   );
 }
 
-export default withWidth()(Category);
-
-        
-
-        
+export default Category;

@@ -1,64 +1,69 @@
 import React, { useEffect, useState } from "react";
+
 import Box from "@mui/material/Box";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField } from "@mui/material";
-import {
-  postProduct,
-  getProducts,
-  getCategories,
-  postAddCateroryToProduct,
-  postAddSubCateroryToProduct,
-  getAllSpecifications,
-  postAddSpecificationToProduct,
-} from "../../redux/actions";
+
 import InputAdornment from "@mui/material/InputAdornment";
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
+
 import Select from "@mui/material/Select";
-import { AddCategory } from "./AddCategory";
-import { AddSubCategoty } from "./AddSubCategoty";
-import { AddQuantity } from "./AddQuantity";
-import { AddSpecification } from "./AddSpecification/AddSpecification";
-// import { AddDiscount } from "./AddDiscount";
-import { TableSpecification } from "./TablaResumen/TableSpecification";
+
+
+
+
+import { AddSubCategoty } from "../AddSubCategoty";
+import { AddSpecification } from "../AddSpecification/AddSpecification";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { AddSpecificationToProduct } from "./AddSpecificationToProduct";
-import { DeleteProduct } from "./AdminProduct/AdminProduct";
-import { TableCatAndSubcOfProduct } from "./TableCatAndSubcOfProduct";
-import { AdminCatAndSubc } from "./AdminCatAndSubca/AdminCatAndSubc";
-import { AddDiscountToProduct } from "./AddDiscountToProduct";
-import { CreateDiscout } from "./adminDiscounts/CreateDiscout";
-import { AdminDiscount } from "./adminDiscounts/AdminDiscount";
-import { TableSpecificationNewProduct } from "./TableSpecificationNewProduct";
-import { TableSpecific } from "./AdminProduct/TableSpecific";
-import { AdminSpecif } from "./AdminSpecificacat/AdminSpecif";
+import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
+import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSubCateroryToProduct, putProduct } from "../../../redux/actions";
+import { TableSpecification } from "../TablaResumen/TableSpecification";
 
 
-export function UseFormControl() {
+
+// import { DeleteProduct } from "./AdminProduct";
+import { postAddSpecificationToProduct, postProduct } from "../../../redux/actions";
+import { UpdateQuantity } from "./UpdateQuantity";
+import { AddCategory } from "../AddCategory";
+import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
+import { AddDiscountToProduct } from "../AddDiscountToProduct";
+import { UpdateSpecification } from "./UpdateSpecification";
+import { TableSpecific } from "./TableSpecific";
+// import { UpdateSpecif } from "./UpdateSpecif";
+
+
+export function  UpdateProduct({idUpdate, setUpdating}) {
+
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
-  
- 
+  const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
   const [inputQ, setInputQ] = useState({ quantity: 0 });
 
 
-  const [category, setCategory] = React.useState("");
-  const [subCategory, setSubCategory] = React.useState("");
+  
+  // const [subCategory, setsubCategory] = React.useState("");
   const [newProdId, setNewProdId] = React.useState(0);
+  
+ 
 
-  const newProduct = productosExistentes.find((p) => p.id === newProdId);
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
     dispatch(getAllSpecifications());
   }, [dispatch]);
 
-  const NameRepetido = productosExistentes.map((p) => p.name);
-  const skuRepetido = productosExistentes.map((p) => p.sku);
+
+const nameRepetido = productosExistentes.filter( p => p.id !==idUpdate )
+const NameRepetido = nameRepetido.map((p) => p.name);
+
+  const SkuRepetido = nameRepetido.map((p) => p.sku);
 
 
   const validationSchema = yup.object({
@@ -70,37 +75,35 @@ export function UseFormControl() {
     
       sku: yup
       .string("Ingrese la descripción")
-    .notOneOf(skuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
+    .notOneOf(SkuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
       .required("La descripción es requerida"),
       brand: yup
       .string("Ingrese la descripción")
       .required("La descripción es requerida"),
       price: yup
       .number("El precio es numerico.").typeError("El precio deber ser numerico").positive("El precio debe ser positivo")
-      // .string()
+      
       .required("La descripción es requerida"),
       description: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
+     
       .required("La descripción es requerida"),
       warranty: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
+    
       .required("La descripción es requerida"),
       netWeight: yup
      .number("El peso neto debe ser numerico").typeError("El peso neto deber ser numerico").positive("El peso neto debe ser positivo")
-    //  .string()
-      // .min(8, 'Password should be of minimum 8 characters length')
+    
       .required("La descripción es requerida"),
 
       grossWeight: yup
       .number("El peso bruto es numerico").typeError("El peso bruto deber ser numerico").positive("El peso bruto debe ser positivo")
-      // .string()
-      // .min(8, 'Password should be of minimum 8 characters length')
+    
       .required("La descripción es requerida"),
       image: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
+   
       .required("La descripción es requerida"),
 
 
@@ -109,96 +112,45 @@ export function UseFormControl() {
 
   const formik = useFormik({
     initialValues: {
-    name: "",
-    sku: "",
-    brand: "",
-    keyWords: "",
-    price: "",
-    description: "",
-    warranty: "",
-    productDimensions: "",
-    packageDimensions: "",
-    netWeight: "",
-    grossWeight: "",
-    thumbnail: "",
-    image: ""
-    },
+    id: idUpdate,
+    name: productToUpdate.name,
+    sku: productToUpdate.sku,
+    brand: productToUpdate.brand,
+    keyWords: productToUpdate.keyWords,
+    price: productToUpdate.price,
+    description: productToUpdate.description,
+    warranty: productToUpdate.warranty,
+    productDimensions: productToUpdate.productDimensions,
+    packageDimensions: productToUpdate.packageDimensions,
+    netWeight:productToUpdate.netWeight,
+    grossWeight:productToUpdate.grossWeight,
+    thumbnail: productToUpdate.thumbnail,
+    image: productToUpdate.image
+      },
     validationSchema: validationSchema,
-    onSubmit: async (values, {resetForm}) => {
-          
-      const newProd = await dispatch(postProduct(values));
-       await setNewProdId(newProd.data.id);
+    onSubmit: async (values) => {
+      alert(JSON.stringify(values, null, 2));
+     
+      await dispatch(putProduct(idUpdate,values))
       await dispatch(getProducts())
-      resetForm({values:""})
+   
+
     },
   });
 
 
-  const handleChangeSubCat = (e) => {
-    e.preventDefault();
-    setSubCategory(e.target.value);
-  };
-
-
-
-  const handleClickAddCat = async (e) => {
-    e.preventDefault();
-        await dispatch(postAddCateroryToProduct(newProdId, category))
-        await dispatch(getProducts())
-        
-  };
-
-  async function handleAddCategoryToProduct(e){
-    e.preventDefault();
-    setCategory(e.target.value);
-    
-}
-
-
-
-  async function handleClickAddSubCat(e){
-    e.preventDefault()
-    if(category && subCategory){
-        await dispatch(postAddCateroryToProduct(newProdId, category))
-        await dispatch(postAddSubCateroryToProduct(newProdId,subCategory ))
-        await dispatch(getProducts())
-        setCategory(0)
-        setSubCategory(0)
-    } else if(category){
-      setSubCategory(0)
-      await dispatch(postAddCateroryToProduct(newProdId, category))
-    
-      await dispatch(getProducts())
-      setSubCategory(0)
-     
-    }
-    else{
-        alert("primero agregue la categoria")
-    }
-  }
+  //----- funciones de agregar cat y sub
+  
   ///------funciones agregar especificacion al producto
   const [specifications, setSpecifications] = useState(``);
-  const [inputSpec, setInputSpec] = useState({ value: "" });
 
   function handleChangeSpecification(e) {
     e.preventDefault();
     setSpecifications(e.target.value);
   }
-  
-  function handleInputSpec(e) {
-    setInputSpec({
-      ...inputSpec,
-      [e.target.name]: e.target.value,
-    });
-  }
 
-  async function handleClickNewSpec(e){
-    e.preventDefault()
-    await dispatch(postAddSpecificationToProduct(newProdId , specifications, inputSpec))
-    await dispatch(getProducts())
-  }
   //-------
-  const categSelect = allCategories.filter((c) => c.id === category);
+  // const categSelect = allCategories.filter((c) => c.id === category);
   
   return (
     <>
@@ -210,7 +162,7 @@ export function UseFormControl() {
       //  onSubmit={(e) => handleSubmit(e)}
       onSubmit={formik.handleSubmit}
       >
-        <h2>Creando algo</h2>
+        <h2>Editar Producto</h2>
         <hr />
         <h3>Paso 1: </h3>
         <TextField
@@ -358,95 +310,38 @@ export function UseFormControl() {
           helperText={formik.touched.image && formik.errors.image}
         />
 
-        <Button type="submit">Crear</Button>
-
+        <Button type="submit">Editar</Button>
+          <Button onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
         <h4>(*) elementos obligatorios</h4>
       </Box>
       <hr />
-      <h3>Paso 2: Agregar stock</h3>
+      <h3>Paso 2: Editar stock</h3>
           
-      <AddQuantity
-         newProdId={newProdId}
-         newProduct={newProduct}
-         /> 
+      <UpdateQuantity
+       productToUpdate={productToUpdate}
+         idUpdate={idUpdate}/> 
 
       <hr />
 
-      <h3>Paso 3: Agregar categoría y sub categorías</h3>
-      <TableCatAndSubcOfProduct
-      subCategory={subCategory}
-      category={category}
-      
-      newProdId={newProdId}/>
-      <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
-    
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={category}
-        onChange={handleAddCategoryToProduct}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {allCategories?.map((cat,i) => {
-          return (
-            <MenuItem key={i} value={cat.id}>
-              {cat.name}
-            </MenuItem>
-          );
-        })}
+      <h3>Paso 3: Editar categorías y sub categorías</h3>
 
-      </Select>
-
-      { category === 0 ?  <Button >
-        Agregar categoria
-      </Button> :
-        <Button onClick={(e) => handleClickAddCat(e)}>
-        Agregar categoria
-      </Button>
-
-      }
-<hr />
-      <InputLabel id="demo-simple-select-standard-label">
-       Agregar  Sub categoria
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={subCategory}
-        onChange={handleChangeSubCat}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {categSelect[0]?.subCategories?.map((subc, i) => {
-          return <MenuItem key={i} value={subc.id}>{subc.name}</MenuItem>;
-        })}
-      </Select>
-        { subCategory === 0 ? <Button type="button" > Agregar Sub categoría </Button> : <Button onClick={(e) => handleClickAddSubCat(e)}>
-        Agregar Sub categoría
-      </Button> }
-      
-     
-      <AddCategory
-        allCategories={allCategories}
-        
-      />
+      <UpdateCategoryAndSubca
+       productToUpdate={productToUpdate}
+       idUpdate={idUpdate}/>
 
       <AddSubCategoty allCategories={allCategories} />
 
       <hr />
       <h3>Paso 4: agregar especificaciones</h3>
-      <TableSpecific
-         idUpdate={newProdId}
-         specifications={specifications}
-         productToUpdate={newProduct}
-        />
+        <TableSpecific
+        productToUpdate={productToUpdate}
+        idUpdate={idUpdate}/>
        
-  
+
+      <UpdateSpecification
+       newProduct={productToUpdate}/>
+
+
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
       </InputLabel>
@@ -460,56 +355,35 @@ export function UseFormControl() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {allSpecifications.map((spec,i) => {
-          return <MenuItem key={i} value={spec.id}>{spec.name.toLowerCase()}</MenuItem>;
+        {allSpecifications.map((spec) => {
+          return <MenuItem value={spec.id}>{spec.name.toLowerCase()}</MenuItem>;
         })}
       </Select>
        
+       <AddSpecificationToProduct
+       newProdId={idUpdate}
+       specifications={specifications}
+       />
      
+<hr />
 
-
-      <AddSpecificationToProduct
+      {/* <UpdateSpecif
+         idUpdate={idUpdate}
+         productToUpdate={productToUpdate}  /> */}
+      {/* <AddSpecificationToProduct
           newProdId={newProdId}
-          specifications={specifications}
-          newProduct={newProduct}
-          />
+          specifications={specifications}/> */}
 
           <hr />
 
-      <AddSpecification
-           />
+      <AddSpecification/>
            
       <hr />
-      <h3>Paso 5: Agregar descuento</h3>
+      <h3>Paso 5: Modificar descuento</h3>
       <AddDiscountToProduct
-      newProdId={newProdId}
-      newProduct={newProduct}/>
-
-<hr />
-      <TableSpecification
-        newProdId={newProdId}
-        // newProd={newProd}
-       // input={input}
-        // inputQ={inputQ}
-        // allCategories={allCategories}
-        // subCategory={subCategory}
-        // category={category}
-        // productosExistentes={productosExistentes}
-        // specifications={specifications}
-        // inputSpec={inputSpec}
-        
-         />
-            <hr />
-        <DeleteProduct/>
-        <hr />
-
-        <AdminCatAndSubc
-        />
-   <hr />
-        <h2>Administracion de descuentos:</h2>
-        <AdminDiscount/>
-        <hr />
-        <AdminSpecif/>
+      newProdId={idUpdate}
+      newProduct={productToUpdate}/>
+      
     </>
   );
 }

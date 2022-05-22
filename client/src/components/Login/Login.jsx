@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -11,7 +10,7 @@ import Container from "@mui/material/Container";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import { useFormik } from "formik";
-import { postLoginUser } from "../../redux/actions";
+import { postLoginUser, verifyToken } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { Footer } from "../Footer/Footer";
 import { Paper } from "@mui/material";
@@ -39,6 +38,8 @@ export const Login = () => {
       
       if(result !== undefined){
         window.localStorage.setItem("token", JSON.stringify(result)); 
+        const ls = JSON.parse(localStorage.getItem("token"))
+        dispatch(verifyToken(ls?.token))
         alert('Acceso exitoso')
         navigate(`/profile/asd`)
       } else {
@@ -122,7 +123,7 @@ export const Login = () => {
         </Box>
       </Paper>
     </Container>
-      <Footer />
+
     </>
   );
 };

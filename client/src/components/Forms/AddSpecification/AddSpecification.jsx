@@ -1,37 +1,55 @@
-import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, InputLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllSpecifications,  postAddNewSpecification } from "../../../redux/actions";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 
 export const AddSpecification = () => {
   const dispatch = useDispatch();
-  const [input, setInput] = useState({ name: "" });
-
+  const allSpecifications = useSelector( state => state.allSpecifications)
+  
   useEffect(()=>{
     dispatch(getAllSpecifications())
   }, [dispatch])
+  
+  
+  const allSpecif = allSpecifications?.map((s) => s.name);
 
 
+  const validationSchema = yup.object({
+    name: yup
+      .string("Ingrese el nombre de la nueva categoria")
+      .required("El nombre es requerido")
+      .notOneOf(allSpecif.map((p) => p) ,"Ya existe una especificación con ese nombre"
+      ),
 
-  function handleInputNewSpec(e) {
-    e.preventDefault();
+    
+  });
 
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  }
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+       },
+    validationSchema: validationSchema,
+    onSubmit: async (values, {resetForm}) => {
+      alert(JSON.stringify(values, null, 1));
 
- async function handleClickNewSpec(e) {
-    e.preventDefault();
-   await dispatch(postAddNewSpecification(input));
-   await dispatch(getAllSpecifications())
-  }
+      await dispatch(postAddNewSpecification(values));
+      await dispatch(getAllSpecifications())
+      resetForm({values:""})
+    },
+  });
+  
 
   return (
     <>
+
+
+
+
       <div>AddSpecification</div>
       <InputLabel id="demo-simple-select-standard-label">
         Agregar especicación:
@@ -41,19 +59,24 @@ export const AddSpecification = () => {
         component="form"
         noValidate
         autoComplete="off"
-        onChange={handleInputNewSpec}
-        // onChange={handleInput}
+      
+        onSubmit={formik.handleSubmit}
+
+        
       >
         <TextField
           id="outlined-basic"
           label="Nombre"
           variant="outlined"
           name="name"
-          // helperText={leyendaErrorName}
-          // error={errorName}
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+        
         />
 
-        <Button onClick={(e) => handleClickNewSpec(e)}>
+        <Button type="submit">
           Agregar nueva Especificación
         </Button>
       </Box>
