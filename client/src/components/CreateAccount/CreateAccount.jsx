@@ -66,6 +66,8 @@ export const CreateAccount = () => {
       const result = await dispatch(postRegisterUser(values));
       if (result?.data?.error) {
         Swal.fire({
+          background: '#DFDCD3',
+          confirmButtonColor: '#B6893E',
           icon: 'error',
           title: 'Oops...',
           text: 'Esta direccion de correo ya esta registrada'
@@ -73,9 +75,11 @@ export const CreateAccount = () => {
         setErrorValidate(true);
       } else {
         Swal.fire({
+          background: '#DFDCD3',
           icon: 'success',
           title: 'Creado con exito',
           showConfirmButton: true,
+          confirmButtonColor: '#B6893E',
           timer: 1500
         })
         navigate('/login')
@@ -187,9 +191,9 @@ export const CreateAccount = () => {
           <Button
             type="submit"
             fullWidth
+            color="ambar3"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={!(formik.isValid && formik.dirty)}
           >
             Crear cuenta
           </Button>

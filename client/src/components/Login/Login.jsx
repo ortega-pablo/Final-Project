@@ -43,6 +43,7 @@ export const Login = () => {
         const ls = JSON.parse(localStorage.getItem("token"))
         dispatch(verifyToken(ls?.token))
         Swal.fire({
+          background: '#DFDCD3',
           icon: 'success',
           title: 'Logeado',
           showConfirmButton: false,
@@ -51,6 +52,7 @@ export const Login = () => {
         navigate(`/profile/asd`)
       } else {
         Swal.fire({
+          background: '#DFDCD3',
           icon: 'error',
           title: 'Oops...',
           text: 'Los datos que ingresaste son incorrectos'
@@ -117,6 +119,7 @@ export const Login = () => {
           />
           <Button
             type="submit"
+            color="ambar3.main"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
