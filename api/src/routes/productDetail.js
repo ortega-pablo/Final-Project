@@ -55,8 +55,6 @@ const productInfo = async function (id) {
         },  
         {
             model: Ask,
-
-            order: [['createdAt', 'ASC']],
             attributes: ["id", "content", "createdAt"],
             include: [
                 {

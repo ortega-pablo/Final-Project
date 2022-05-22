@@ -13,7 +13,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 
 function CarouselDetail({ productDetail }) {
-  let arrayImage = productDetail[0].image.split(",");
+  let arrayImage = productDetail[0].images.map( i=> i.urlFile);
 
   const images = [];
 

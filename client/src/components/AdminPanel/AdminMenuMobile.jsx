@@ -67,7 +67,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
       </Paper>
 
       <Collapse in={open4} timeout="auto" unmountOnExit>
-      <Paper sx={{ maxHeight: "305px", display: "flex", width: 240, position:"fixed", alignSelf:"center", left:"50%", marginLeft:"-120px", overflowY:"scroll"}}>
+      <Paper sx={{ maxHeight: "305px", display: "flex", width: 240, position:"fixed", alignSelf:"center", left:"50%", marginLeft:"-120px", overflowY:"scroll", scrollbarColor:"ambar1",}}>
       <List sx={{ width: 240, alignItems: "center"  }}>
 
         <ListItemButton component="a" href="/">
