@@ -10,6 +10,10 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 export const AddCategory = ({ allCategories }) => {
+  const dispatch = useDispatch();
+const [creating, setCreating] = useState(false)
+
+
   const validationSchema = yup.object({
     name: yup
      
@@ -20,7 +24,6 @@ export const AddCategory = ({ allCategories }) => {
      
     description: yup
       .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
   });
   
@@ -32,23 +35,27 @@ export const AddCategory = ({ allCategories }) => {
       description: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values ,{resetForm}) => {
       alert(JSON.stringify(values, null, 2));
       await dispatch(postAddCaterory(values));
       await dispatch(getCategories());
+    //  setCreating(true)
+      resetForm({values:""})
+      
     },
   });
 
-  const dispatch = useDispatch();
 
 
 
   return (
+    <>
+    
+    
     <Box
       component="form"
       noValidate
       autoComplete="off"
-      // onChange={(e) => handleInputNewCategory(e)}
       onSubmit={formik.handleSubmit}
     >
       <TextField
@@ -56,8 +63,7 @@ export const AddCategory = ({ allCategories }) => {
         label="Nombre"
         variant="outlined"
         name="name"
-        // helperText={leyendaErrorName2}
-        // error={errorName2}
+       
         value={formik.values.name}
         onChange={formik.handleChange}
         error={formik.touched.name && Boolean(formik.errors.name)}
@@ -68,8 +74,7 @@ export const AddCategory = ({ allCategories }) => {
         label="Descripcion"
         variant="outlined"
         name="description"
-        // helperText={leyendaErrorDescription2}
-        // error={errorDescription2}
+    
         value={formik.values.description}
         onChange={formik.handleChange}
         error={formik.touched.description && Boolean(formik.errors.description)}
@@ -78,5 +83,11 @@ export const AddCategory = ({ allCategories }) => {
    
       <Button type="submit">Crear nueva categoria</Button>
     </Box>
+{ formik.values  &&
+
+  <Button type="click" onClick={e=> formik.resetForm({values:""})}>Cancelar creación</Button>
+}
+
+    </>
   );
 };

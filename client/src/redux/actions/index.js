@@ -35,11 +35,21 @@ export const PUT_CATEGORY_TO_PRODUCT = "PUT_CATEGORY_TO_PRODUCT";
 export const PUT_SUBCATEGORY_TO_PRODUCT = "PUT_SUBCATEGORY_TO_PRODUCT";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const PUT_CATEGORY = "PUT_CATEGORY";
+export const PUT_SUB_CATEGORY = "PUT_SUB_CATEGORY";
 
 
+export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
+export const DELETE_SUB_CATEGORY = "DELETE_SUB_CATEGORY";
 
+export const GET_ALL_DISCOUNT = "GET_ALL_DISCOUNT";
 
-
+export const DELETE_ONE_DISCOUNT_TO_A_PRODUCT = "DELETE_ONE_DISCOUNT_TO_A_PRODUCT";
+export const PUT_DISCOUNT = "PUT_DISCOUNT";
+export const POST_DISCOUNT = "POST_DISCOUNT";
+export const DELETE_DISCOUTN = "DELETE_DISCOUTN";
+export const PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT =
+  "PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT";
+export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT = "PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT";
 
 
 
@@ -282,8 +292,7 @@ export function deleteProduct (id){
   return async function (dispatch){
       try {
            await axios.delete(`http://localhost:3001/products/${id}` )
-           console.log("redicer")
-
+          
           return dispatch({
               type: DELETE_PRODUCT,
               payload: id
@@ -299,9 +308,7 @@ export function putProduct (id, payload){
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/products?productId=${id}` , payload )
-           console.log("editando action")
-           console.log(id)
-          console.log(payload)  
+          
           return dispatch({
               type: PUT_PRODUCT,
               payload: payload,
@@ -345,12 +352,10 @@ export function putCategoryToProduct (idP, idC ){
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/products?productId=${idP}&categoryId=${idC}`  )
-          console.log(idP)
-          console.log(idC)
+       
           return dispatch({
               type: PUT_CATEGORY_TO_PRODUCT,
-            
-                            
+                                       
           })
       } catch (error) {
           console.log(error)
@@ -365,8 +370,7 @@ export function putSubCategoryToProduct (idP, idSc ){
      
           return dispatch({
               type: PUT_SUBCATEGORY_TO_PRODUCT,
-            
-                            
+                                       
           })
       } catch (error) {
           console.log(error)
@@ -396,11 +400,156 @@ export function putCategory (idC, payload ){
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/categories/${idC}`, payload  )
-          console.log(idC)
-          console.log(payload)
+      
           return dispatch({
               type: PUT_CATEGORY,
             
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+export function putSubCategory (idSc, payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/categories/subcategories/${idSc}`, payload  )
+       
+          return dispatch({
+              type: PUT_SUB_CATEGORY,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export const getSubCategories = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/categories/subcategories");
+    return dispatch({
+      type: GET_SUB_CATEGORIES,
+      payload: response.data,
+    });
+  };
+};
+
+export function deleteSubCategory (idSc){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/categories/subcategories/${idSc}` )
+           console.log("eliminando sub categoria")
+
+          return dispatch({
+              type: DELETE_SUB_CATEGORY,
+              payload: idSc
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export const getAllDiscount = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/discounts");
+    return dispatch({
+      type: GET_ALL_DISCOUNT,
+      payload: response.data,
+    });
+  };
+};
+
+export function putRemoveOneDiscuntToProduct (idP, idD ,payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&discountId=${idD}`, payload  )
+         
+           return dispatch({
+              type: DELETE_ONE_DISCOUNT_TO_A_PRODUCT,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putDiscount (idD, payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/discounts/${idD}`, payload  )
+                return dispatch({
+              type: PUT_DISCOUNT,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export const postDiscount = (payload) => {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(`http://localhost:3001/discounts`, payload);
+
+      return json;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+
+export function deleteDiscount (idD){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/discounts/${idD}` )
+          
+
+          return dispatch({
+              type: DELETE_DISCOUTN,
+              payload: idD
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+export function putValueSpecificationOneProduct (idP, idS , payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/specifications?productId=${idP}&specificationId=${idS}` , payload )
+          
+          return dispatch({
+              type: PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
+              payload: payload,
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export function putRemoveOneSpecificationOneProduct (idP, idS ,payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&specificationId=${idS}` , payload )
+          
+          return dispatch({
+              type: PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
+              payload: payload,
                             
           })
       } catch (error) {

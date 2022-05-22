@@ -34,17 +34,22 @@ export const AddSpecification = () => {
       name: "",
        },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
       alert(JSON.stringify(values, null, 1));
-    console.log(values)
+
       await dispatch(postAddNewSpecification(values));
       await dispatch(getAllSpecifications())
+      resetForm({values:""})
     },
   });
   
 
   return (
     <>
+
+
+
+
       <div>AddSpecification</div>
       <InputLabel id="demo-simple-select-standard-label">
         Agregar especicación:

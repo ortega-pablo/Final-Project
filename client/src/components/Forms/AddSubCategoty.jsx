@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { Button, InputLabel, Select, MenuItem } from "@mui/material";
-import { getCategories, postAddSubCategory } from "../../redux/actions";
+import { getCategories, getSubCategories, postAddSubCategory } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 import { validate } from "./validacionInputNewSubCat/validate";
@@ -51,12 +51,13 @@ export const AddSubCategoty = ({ allCategories }) => {
       description: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
       
     if(category){
       await dispatch(postAddSubCategory(category, values));
       await dispatch(getCategories());
-
+      await dispatch(getSubCategories())
+      resetForm({values:""})
     }else {
       alert("seleccione una categoria")
     }

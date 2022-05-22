@@ -25,7 +25,17 @@ import {
   PUT_CATEGORY_TO_PRODUCT,
   PUT_SUBCATEGORY_TO_PRODUCT,
   DELETE_CATEGORY,
-  PUT_CATEGORY
+  PUT_CATEGORY,
+  PUT_SUB_CATEGORY,
+  GET_SUB_CATEGORIES,
+  DELETE_SUB_CATEGORY,
+  GET_ALL_DISCOUNT,
+  DELETE_ONE_DISCOUNT_TO_A_PRODUCT,
+  PUT_DISCOUNT,
+  POST_DISCOUNT,
+  DELETE_DISCOUTN,
+  PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
+  PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -35,7 +45,10 @@ const initialState = {
   categories: [],
   categoriesAux: [],
   allSpecifications: [],
-  inventory: []
+  inventory: [],
+  subCategories: [],
+  discounts: [],
+  
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -241,11 +254,89 @@ const rootReducer = (state = initialState, action) => {
         }
 
 
+        case GET_SUB_CATEGORIES: {
+          return {
+            ...state,
+            subCategories: action.payload,
+          };
+        }
 
-        default:
-          return state;
-        };
-      }
+        case PUT_SUB_CATEGORY:{
+          const inedex5 = state.subCategories.findIndex(sc => sc.id === action.payload.id)
+            const newArray5 =  [...state.subCategories]
+            newArray5[inedex5] = action.payload
 
+          return {
+            ...state,
+            subCategories: newArray5
+          }
+        }
 
-export default rootReducer;
+        case DELETE_SUB_CATEGORY : {
+          return{
+            ...state,
+            
+          }
+        }
+
+        case GET_ALL_DISCOUNT: {
+          return {
+            ...state,
+            discounts: action.payload,
+          };
+        }
+
+        case DELETE_ONE_DISCOUNT_TO_A_PRODUCT:{
+                
+          return {
+            ...state,
+           
+          }
+        }
+        case PUT_DISCOUNT:{
+          const inedex4 = state.products.findIndex(d => d.id === action.payload.id)
+            const newArray4 =  [...state.discounts]
+            newArray4[inedex4] = action.payload
+
+          return {
+            ...state,
+            categories: newArray4
+          }
+        }
+
+        case POST_DISCOUNT: {
+          return {
+            ...state,
+          };
+        }
+        case DELETE_DISCOUTN :
+       
+          return{
+            ...state,
+         
+            
+          }
+          case PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT:{
+            const inedex6 = state.discounts.findIndex(d => d.id === action.payload.id)
+              const newArray6 =  [...state.discounts]
+              newArray6[inedex6] = action.payload
+  
+            return {
+              ...state,
+              categories: newArray6
+            }
+          }
+
+          case PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT:
+            return {
+              ...state,
+            };
+      
+          
+          default:
+            return state;
+          };
+        }
+        
+          export default rootReducer;
+          

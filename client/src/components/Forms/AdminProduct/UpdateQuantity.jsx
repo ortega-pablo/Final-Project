@@ -3,7 +3,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { putQuantity } from "../../../redux/actions";
+import { getInventary, getProducts, putQuantity } from "../../../redux/actions";
 
 export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
   const dispatch = useDispatch();
@@ -20,16 +20,17 @@ export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
 
   const formik = useFormik({
     initialValues: {
-      quantity: productToUpdate?.productInventory?.quantity,
+      quantity: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
       alert(JSON.stringify(values, null, 2));
       await dispatch(putQuantity(idUpdate, values));
-     
+      await dispatch(getProducts())
+      await dispatch(getInventary())
+      resetForm({values:""})
     },
   });
-
   return (
     <>
       <Box
@@ -48,7 +49,8 @@ export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
           error={formik.touched.quantity && Boolean(formik.errors.quantity)}
           helperText={formik.touched.quantity && formik.errors.quantity}
         />
-        <h3>Stock: {formik.values.quantity} </h3>
+        <h3>Stock actual: {productToUpdate?.productInventory.quantity} </h3>
+        <h3>Stock a modificar: {formik.values.quantity} </h3>
         <Button type="submit">Editar sotck</Button>
       </Box>
     </>

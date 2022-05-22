@@ -80,8 +80,7 @@ setIdUpdate(e.target.value)
                     name="delete"
                     startIcon={<EditIcon />}
                   >
-                  
-                    Editar
+                   Editar
                   </Button>
 
                   <Button
@@ -104,6 +103,7 @@ setIdUpdate(e.target.value)
                    <UpdateProduct
                    idUpdate={idUpdate}
                    handleEditProduct={handleEditProduct}
+                   setUpdating={setUpdating}
                    />
 
               </div>

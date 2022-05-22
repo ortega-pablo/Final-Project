@@ -20,7 +20,7 @@ import Select from "@mui/material/Select";
 import { AddSubCategoty } from "../AddSubCategoty";
 import { AddQuantity } from "../AddQuantity";
 import { AddSpecification } from "../AddSpecification/AddSpecification";
-import { AddDiscount } from "../AddDiscount";
+// import { AddDiscount } from "../AddDiscount";
 import { TableSpecification } from "../TablaResumen/TableSpecification";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -30,17 +30,20 @@ import { getAllSpecifications, getCategories, getProducts, postAddSpecificationT
 import { UpdateQuantity } from "./UpdateQuantity";
 import { AddCategory } from "../AddCategory";
 import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
+import { AddDiscountToProduct } from "../AddDiscountToProduct";
+import { UpdateSpecification } from "./UpdateSpecification";
+import { TableSpecific } from "./TableSpecific";
 // import { UpdateSpecif } from "./UpdateSpecif";
 
 
-export function  UpdateProduct({idUpdate}) {
+export function  UpdateProduct({idUpdate, setUpdating}) {
 
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
   const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
-  
+  console.log(productToUpdate)
  
   
   const [inputQ, setInputQ] = useState({ quantity: 0 });
@@ -58,21 +61,11 @@ export function  UpdateProduct({idUpdate}) {
     dispatch(getAllSpecifications());
   }, [dispatch]);
 
-// if(updateName){
-//   if(updateName !==productToUpdate.name){
-//     // const nameRepetido = productosExistentes.filter( p => p.id !==idUpdate )
-//     // const NameRepetido = nameRepetido.map((p) => p.name);
-//     // console.log(NameRepetido)
-//     return NameRepetido
-//   }
-  
-// }
+
 const nameRepetido = productosExistentes.filter( p => p.id !=idUpdate )
 const NameRepetido = nameRepetido.map((p) => p.name);
 
-
-  // const skuRepetido = productosExistentes.filter((p) => p.);
-  const SkuRepetido = nameRepetido.map((p) => p.sku);
+ const SkuRepetido = nameRepetido.map((p) => p.sku);
 
 
   const validationSchema = yup.object({
@@ -149,25 +142,7 @@ const NameRepetido = nameRepetido.map((p) => p.name);
 
 
   //----- funciones de agregar cat y sub
-  // const handleChangeCategoty = (e) => {
-  //   e.preventDefault();
-  //   setCategory(e.target.value);
-    
-  // };
-
-  // const handleChangeSubCat = (e) => {
-  //   e.preventDefault();
-  //   setsubCategory(e.target.value);
   
-  // };
-
-  // async function handleClickCatAndSub(e) {
-  //   e.preventDefault();
-    
-  //   await dispatch(postAddCateroryToProduct(newProdId, category));
-  //   await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
-  //   await dispatch(getProducts())
-  // }
   ///------funciones agregar especificacion al producto
   const [specifications, setSpecifications] = useState(``);
   const [inputSpec, setInputSpec] = useState({ "value:": "" });
@@ -351,7 +326,7 @@ const NameRepetido = nameRepetido.map((p) => p.name);
         />
 
         <Button type="submit">Editar</Button>
-
+          <Button onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
         <h4>(*) elementos obligatorios</h4>
       </Box>
       <hr />
@@ -373,6 +348,15 @@ const NameRepetido = nameRepetido.map((p) => p.name);
 
       <hr />
       <h3>Paso 4: agregar especificaciones</h3>
+        <TableSpecific
+        productToUpdate={productToUpdate}
+        idUpdate={idUpdate}/>
+       
+
+      <UpdateSpecification
+       newProduct={productToUpdate}/>
+
+
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
       </InputLabel>
@@ -410,8 +394,10 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       <AddSpecification/>
            
       <hr />
-      <h3>Paso 5: Agregar descuento</h3>
-      <AddDiscount/>
+      <h3>Paso 5: Modificar descuento</h3>
+      <AddDiscountToProduct
+      newProdId={idUpdate}
+      newProduct={productToUpdate}/>
       
     </>
   );

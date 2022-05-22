@@ -32,7 +32,7 @@ import { AddCategory } from "./AddCategory";
 import { AddSubCategoty } from "./AddSubCategoty";
 import { AddQuantity } from "./AddQuantity";
 import { AddSpecification } from "./AddSpecification/AddSpecification";
-import { AddDiscount } from "./AddDiscount";
+// import { AddDiscount } from "./AddDiscount";
 import { TableSpecification } from "./TablaResumen/TableSpecification";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -40,6 +40,12 @@ import { AddSpecificationToProduct } from "./AddSpecificationToProduct";
 import { DeleteProduct } from "./AdminProduct/AdminProduct";
 import { TableCatAndSubcOfProduct } from "./TableCatAndSubcOfProduct";
 import { AdminCatAndSubc } from "./AdminCatAndSubca/AdminCatAndSubc";
+import { AddDiscountToProduct } from "./AddDiscountToProduct";
+import { CreateDiscout } from "./adminDiscounts/CreateDiscout";
+import { AdminDiscount } from "./adminDiscounts/AdminDiscount";
+import { TableSpecificationNewProduct } from "./TableSpecificationNewProduct";
+import { TableSpecific } from "./AdminProduct/TableSpecific";
+import { AdminSpecif } from "./AdminSpecificacat/AdminSpecif";
 
 
 export function UseFormControl() {
@@ -47,7 +53,7 @@ export function UseFormControl() {
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
-  let navigate = useNavigate();
+  
  
   const [inputQ, setInputQ] = useState({ quantity: 0 });
 
@@ -55,8 +61,8 @@ export function UseFormControl() {
   const [category, setCategory] = React.useState("");
   const [subCategory, setSubCategory] = React.useState("");
   const [newProdId, setNewProdId] = React.useState(0);
-  
 
+  const newProduct = productosExistentes.find((p) => p.id === newProdId);
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
@@ -130,38 +136,16 @@ export function UseFormControl() {
     image: ""
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
           
       const newProd = await dispatch(postProduct(values));
        await setNewProdId(newProd.data.id);
       await dispatch(getProducts())
+      resetForm({values:""})
     },
   });
 
 
-  //---------  funciones de agregar cantidad
-
-
-  //----- funciones de agregar cat y sub
-  // const handleChangeCategoty = (e) => {
-  //   e.preventDefault();
-  //   setCategory(e.target.value);
-    
-  // };
-
-  // const handleChangeSubCat = (e) => {
-  //   e.preventDefault();
-  //   setsubCategory(e.target.value);
-  
-  // };
-
-  // async function handleClickCatAndSub(e) {
-  //   e.preventDefault();
-    
-  //   await dispatch(postAddCateroryToProduct(newProdId, category));
-  //   await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
-  //   await dispatch(getProducts())
-  // }
   const handleChangeSubCat = (e) => {
     e.preventDefault();
     setSubCategory(e.target.value);
@@ -204,10 +188,9 @@ export function UseFormControl() {
         alert("primero agregue la categoria")
     }
   }
-  console.log(subCategory)
   ///------funciones agregar especificacion al producto
   const [specifications, setSpecifications] = useState(``);
-  const [inputSpec, setInputSpec] = useState({ "value:": "" });
+  const [inputSpec, setInputSpec] = useState({ value: "" });
 
   function handleChangeSpecification(e) {
     e.preventDefault();
@@ -395,7 +378,9 @@ export function UseFormControl() {
       <h3>Paso 2: Agregar stock</h3>
           
       <AddQuantity
-         newProdId={newProdId}/> 
+         newProdId={newProdId}
+         newProduct={newProduct}
+         /> 
 
       <hr />
 
@@ -406,46 +391,8 @@ export function UseFormControl() {
       
       newProdId={newProdId}/>
       <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
-      {/* <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={category}
-        onChange={handleChangeCategoty}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {allCategories?.map((cat) => {
-          return (
-            <MenuItem value={cat.id}>
-              {cat.name}
-            </MenuItem>
-          );
-        })}
-      </Select>
-
-      <InputLabel id="demo-simple-select-standard-label">
-        Sub Categoria
-      </InputLabel>
+    
       <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={subCategory}
-        onChange={handleChangeSubCat}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {categSelect[0]?.subCategories?.map((subc) => {
-          return <MenuItem value={subc.id}>{subc.name}</MenuItem>;
-        })}
-      </Select>
-      <Button onClick={(e) => handleClickCatAndSub(e)}>
-        Agregar categoria y sub categoría
-      </Button> */}
- <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
         value={category}
@@ -455,9 +402,9 @@ export function UseFormControl() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {allCategories?.map((cat) => {
+        {allCategories?.map((cat,i) => {
           return (
-            <MenuItem value={cat.id}>
+            <MenuItem key={i} value={cat.id}>
               {cat.name}
             </MenuItem>
           );
@@ -487,8 +434,8 @@ export function UseFormControl() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {categSelect[0]?.subCategories?.map((subc) => {
-          return <MenuItem value={subc.id}>{subc.name}</MenuItem>;
+        {categSelect[0]?.subCategories?.map((subc, i) => {
+          return <MenuItem key={i} value={subc.id}>{subc.name}</MenuItem>;
         })}
       </Select>
         { subCategory === 0 ? <Button type="button" > Agregar Sub categoría </Button> : <Button onClick={(e) => handleClickAddSubCat(e)}>
@@ -505,6 +452,13 @@ export function UseFormControl() {
 
       <hr />
       <h3>Paso 4: agregar especificaciones</h3>
+      <TableSpecific
+         idUpdate={newProdId}
+         specifications={specifications}
+         productToUpdate={newProduct}
+        />
+       
+  
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
       </InputLabel>
@@ -518,17 +472,19 @@ export function UseFormControl() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {allSpecifications.map((spec) => {
-          return <MenuItem value={spec.id}>{spec.name.toLowerCase()}</MenuItem>;
+        {allSpecifications.map((spec,i) => {
+          return <MenuItem key={i} value={spec.id}>{spec.name.toLowerCase()}</MenuItem>;
         })}
       </Select>
        
      
-<hr />
+
 
       <AddSpecificationToProduct
           newProdId={newProdId}
-          specifications={specifications}/>
+          specifications={specifications}
+          newProduct={newProduct}
+          />
 
           <hr />
 
@@ -537,7 +493,9 @@ export function UseFormControl() {
            
       <hr />
       <h3>Paso 5: Agregar descuento</h3>
-      <AddDiscount/>
+      <AddDiscountToProduct
+      newProdId={newProdId}
+      newProduct={newProduct}/>
       <TableSpecification
         newProdId={newProdId}
         // newProd={newProd}
@@ -556,6 +514,10 @@ export function UseFormControl() {
 
         <AdminCatAndSubc
         />
+
+        <h2>Administracion de descuentos:</h2>
+        <AdminDiscount/>
+        <AdminSpecif/>
     </>
   );
 }

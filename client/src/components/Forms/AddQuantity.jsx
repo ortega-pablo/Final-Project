@@ -1,17 +1,24 @@
 import { Box, Button, TextField } from "@mui/material";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { getProducts, postAddQuantity } from "../../redux/actions";
 
 
-export const AddQuantity = ({handleInputQue, handleStock, inputQ, newProdId}) => {
+export const AddQuantity = ({handleInputQue, handleStock, inputQ, newProdId, newProduct}) => {
 const dispatch = useDispatch()
 
+const products = useSelector((state) => state.products);
+// useEffect(() => {
+//   dispatch(getProducts());
+// }, [dispatch]);
+
+// const newProduct = products.find((p) => p.id === newProdId);
+ 
 const validationSchema = yup.object({
     quantity: yup
-    .number("El stock es numerico")
+    .number("El stock es numerico").typeError("El stock deber ser numerico")
     .required("El stock es requerido si es que lo deseas agregar.Luego tambien lo podrás hacer desde el panel de administrador").positive("El stock debe ser positivo"),
     
     
@@ -25,14 +32,14 @@ const validationSchema = yup.object({
     
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
       alert(JSON.stringify(values, null, 2));
     
       await dispatch(postAddQuantity(newProdId, values));
       await dispatch(getProducts())
+      resetForm({values:""})
     },
   });
-
   return (
     <>
      <Box
@@ -52,7 +59,8 @@ const validationSchema = yup.object({
           helperText={formik.touched.quantity && formik.errors.quantity}
 
         />
-        <h3>Stock: {formik.values.quantity} </h3>
+        <h3>Stock actual: {newProduct?.productInventory?.quantity} </h3>
+        <h3>Stock a modificar: {formik.values.quantity} </h3>
         <Button type="submit">Agregar sotck</Button>
       </Box>
     </>
