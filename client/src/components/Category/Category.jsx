@@ -11,23 +11,21 @@ import {
   ListItemText,
   Paper,
   Typography,
-  Divider
+  Divider,
 } from "@mui/material";
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import { HiddenxsDown } from "../../personalizadTheme";
 import { clearFilters, getCategories } from "../../redux/actions";
-
-
+import Swal from "sweetalert2";
 
 function validate(value) {
   let errors = {};
   if (isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número.";
   if (isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número.";
-  if (value.Desde > value.Hasta)
-    errors.Desde = "Este valor debe ser un mínimo";
-    errors.Desde = "Este valor debe ser un máximo";
-  if(value.Desde < 0) errors.Desde = "El valor debe ser mayor o igual a 0"
-  if(value.Hasta < 0) errors.Hasta = "El valor debe ser mayor o igual a 0"
+  if (value.Desde > value.Hasta) errors.Desde = "Este valor debe ser un mínimo";
+  errors.Desde = "Este valor debe ser un máximo";
+  if (value.Desde < 0) errors.Desde = "El valor debe ser mayor o igual a 0";
+  if (value.Hasta < 0) errors.Hasta = "El valor debe ser mayor o igual a 0";
   return errors;
 }
 
@@ -94,38 +92,43 @@ function Category({
   };
 
   const handleClearFilters = (e) => {
-    dispatch(clearFilters())
-  }
+    dispatch(clearFilters());
+  };
 
   return (
     <HiddenxsDown sx={{ borderRadius: "10px" }}>
-      <Paper sx={{ height: "100%", display: "flex"}}>
-        <List sx={{ width: 320, alignItems: "center"  }}>
+      <Paper sx={{ height: "100%", display: "flex" }}>
+        <List sx={{ width: 320, alignItems: "center" }}>
           <ListSubheader component="div" id="nested-list-subheader">
-            <Typography variant="h5" m={2} >
-            Categorias
+            <Typography variant="h5" m={2}>
+              Categorias
             </Typography>
           </ListSubheader>
           {categories.length ? (
             categories.map((category) => {
               return (
                 <>
-                <Divider variant="middle" />
+                  <Divider variant="middle" />
                   <ListItemButton
-             
                     key={category}
                     onClick={() => handleClickForCategories(category.name)}
                   >
                     <ListItemText primary={category.name} />
                   </ListItemButton>
-                  
+
                   {category.subCategories ? (
                     category.subCategories.map((subCategory) => {
                       return (
                         <>
                           <List component="div" disablePadding>
-                            <ListItemButton  key={subCategory} sx={{ pl: 6 }} onClick={() => handleClickForSubcategories(subCategory.name)}>
-                            <HorizontalRuleIcon fontSize="small" />
+                            <ListItemButton
+                              key={subCategory}
+                              sx={{ pl: 6 }}
+                              onClick={() =>
+                                handleClickForSubcategories(subCategory.name)
+                              }
+                            >
+                              <HorizontalRuleIcon fontSize="small" />
                               <ListItemText primary={subCategory.name} />
                             </ListItemButton>
                           </List>
@@ -135,17 +138,16 @@ function Category({
                   ) : (
                     <></>
                   )}
-
                 </>
               );
             })
           ) : (
             <></>
           )}
-  <Divider variant="middle" />
+          <Divider variant="middle" />
           <ListSubheader component="div" id="nested-list-subheader">
-          <Typography variant="h5" m={2} >
-          Precio
+            <Typography variant="h5" m={2}>
+              Precio
             </Typography>
           </ListSubheader>
           <Divider variant="middle" />
@@ -168,9 +170,8 @@ function Category({
               handleClickSubmitPerPrice({ Desde: 200000, Hasta: 1000000 });
             }}
           >
-            
             <ListItemText primary={"Mas de $200.000"} />
-          </ListItemButton >
+          </ListItemButton>
           <ListItem>
             <Box>
               <TextField
@@ -188,11 +189,13 @@ function Category({
                 placeholder="Hasta"
                 helperText={leyendaErrorHasta}
                 error={errorHasta}
-                sx={{mt:"20px"}}
+                sx={{ mt: "20px" }}
               />
-              
-              <Box mt={3}sx={{ display:"flex", justifyContent:"space-between"}}>
-               
+
+              <Box
+                mt={3}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
                 <Button
                   variant="contained"
                   color="ambar3"
@@ -200,27 +203,27 @@ function Category({
                     handleClick(e);
                     if (errors.Desde || errors.Hasta) {
                       e.preventDefault();
-                      alert("Existen errores.");
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Existen errores.",
+                      });
                     } else {
                       handleClickSubmitPerPrice(value);
                     }
                   }}
-                  sx={{mr:1}}
-
+                  sx={{ mr: 1 }}
                 >
-                  <Typography>
-                  Filtrar
-                  </Typography>
-                  
+                  <Typography>Filtrar</Typography>
                 </Button>
                 <Button
                   variant="contained"
                   color="ambar3"
-                  onClick={(e) => {handleClearFilters()}}
+                  onClick={(e) => {
+                    handleClearFilters();
+                  }}
                 >
-                  <Typography>
-                  Limpiar filtros
-                  </Typography>
+                  <Typography>Limpiar filtros</Typography>
                 </Button>
               </Box>
             </Box>

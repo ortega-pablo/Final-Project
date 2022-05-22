@@ -12,9 +12,11 @@ import Button from "@material-ui/core/Button";
 import { useFormik } from "formik";
 import { postLoginUser, verifyToken } from "../../redux/actions";
 import { useDispatch } from "react-redux";
-import { Footer } from "../Footer/Footer";
 import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+
+
 
 const validationSchema = yup.object({
   userName: yup.string("Enter your User Name").required("Email is required"),
@@ -40,11 +42,24 @@ export const Login = () => {
         window.localStorage.setItem("token", JSON.stringify(result)); 
         const ls = JSON.parse(localStorage.getItem("token"))
         dispatch(verifyToken(ls?.token))
-        alert('Acceso exitoso')
+        Swal.fire({
+          icon: 'success',
+          title: 'Logeado',
+          showConfirmButton: false,
+          timer: 1500
+        })
         navigate(`/profile/asd`)
       } else {
-        alert('Datos incorrectos')
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Los datos que ingresaste son incorrectos'
+        })
+
       }
+        
+        
+      
     },
   });
 

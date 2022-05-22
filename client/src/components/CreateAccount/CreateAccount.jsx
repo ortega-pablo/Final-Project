@@ -8,8 +8,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { postRegisterUser } from "../../redux/actions";
 import { useDispatch } from "react-redux";
-import { Footer } from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 
 const validationSchema = yup.object({
   userName: yup
@@ -63,12 +64,21 @@ export const CreateAccount = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const result = await dispatch(postRegisterUser(values));
-      console.log("COMO LO TRAIGO", result);
       if (result?.data?.error) {
-        alert('Esta direccion de correo ya esta registrada')
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Esta direccion de correo ya esta registrada'
+        })
         setErrorValidate(true);
       } else {
-        alert('Creado con exito')
+        Swal.fire({
+          icon: 'success',
+          title: 'Creado con exito',
+          showConfirmButton: true,
+          timer: 1500
+        })
+        navigate('/login')
         setErrorValidate(null);
       }
     },
