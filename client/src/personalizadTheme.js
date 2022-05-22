@@ -151,21 +151,3 @@ const HiddenxsDown = styled(Box)`
 
 export  {theme , CustomizedContainer, BoxGeneral, CustomPaper, HiddensmUp, HiddenxsDown};
 
-
-
-
-
-/* 
-
-primary: {
-    // Purple and green play nicely together.
-    main: '#375CFF',
-  },
-  secondary: {
-    // This is green.A700 as hex.
-    main: "#11cb5f",
-  },
-  neutral: {
-    main: "#64748B",
-    contrastText: "#fff",
-  }, */
