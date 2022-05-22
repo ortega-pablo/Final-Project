@@ -3,6 +3,7 @@ import React from 'react'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
 
+
 function AdminCategories() {
   return (
     <Box
