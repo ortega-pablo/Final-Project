@@ -33,7 +33,6 @@ const getAllProducts = async () => {
         model: Specification,
         attributes: ["id", "name"],
         through: {
-          as:"value:",
           attributes: ["value"],
         },
       },
@@ -80,7 +79,6 @@ const getProductsByName = async (name) => {
         model: Specification,
         attributes: ["id", "name"],
         through: {
-            as:"value:",
             attributes: ["value"],
         },
       },

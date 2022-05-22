@@ -8,10 +8,7 @@ router.post("/", async (req, res, next) => {
   const { productId } = req.query;
 
   try {
-    const addQuantity = await ProductInventory.create({
-      quantity,
-    });
-
+  
     const product = await Product.findOne({
       where: {
         id: productId,
@@ -19,6 +16,12 @@ router.post("/", async (req, res, next) => {
     });
 
     if(product) {
+
+      const addQuantity = await ProductInventory.create({
+        quantity,
+      });
+  
+
       addQuantity.setProduct(productId);
       res.status(200).send(addQuantity);
       
@@ -26,7 +29,6 @@ router.post("/", async (req, res, next) => {
       res.send("Product not found")
     }
     
-
    
   } catch (error) {
     next(error);
@@ -53,16 +55,18 @@ router.get("/", async (req, res, next) => {
       ]
     })
 
-    const info = {
-      name: getStockOne.product.name,
-      productId: getStockOne.productId,
-      quantity: getStockOne.quantity,
-      createdAt: getStockOne.createdAt,
-      updatedAt: getStockOne.updatedAt
-    }
-
    
-    return res.status(200).send(info)
+
+      const info = {
+        name: getStockOne.product.name,
+        productId: getStockOne.productId,
+        quantity: getStockOne.quantity,
+        createdAt: getStockOne.createdAt,
+        updatedAt: getStockOne.updatedAt
+      }
+     
+      return res.status(200).send(info)
+    
 
    } else {
     const getAllInventory = await ProductInventory.findAll({
@@ -78,7 +82,7 @@ router.get("/", async (req, res, next) => {
       return {
         name: e.product.name,
         productId: e.productId,
-        quantity: e.quantity,
+        quantity: e.quantity && e.quantity,
         createdAt: e.createdAt,
         updatedAt: e.updatedAt
       }
@@ -112,7 +116,6 @@ router.put("/:productId", async (req, res, next) =>{
       ]
     })
 
-    console.log(findProduct)
 
     
     if(findProduct && findProduct.productInventory) {
