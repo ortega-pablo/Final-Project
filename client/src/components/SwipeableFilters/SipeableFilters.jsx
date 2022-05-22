@@ -13,6 +13,7 @@ import { Hidden } from '@material-ui/core';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+ 
 
 
 function validate (value) {
@@ -90,7 +91,7 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
   }
 
   return (
-    <Hidden smUp>
+  <Box sx={{ display: { xs: "block", sm: "none" } }}> 
       <ListItemButton onClick={handleClick}>
             <ListItemIcon>
               <InboxIcon />
@@ -198,12 +199,12 @@ function SwipeableFilters({handleClickForCategories, handleClickForSubcategories
             </ListItem>
         </List>
         </Collapse>
-    </Hidden>
+    </Box>
     
   );
 }
 
-export default withWidth()(SwipeableFilters);
+export default SwipeableFilters;
 
 // const [bottonFilters, setState] = React.useState({top: false});
 

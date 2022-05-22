@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { getDetail } from "../../redux/actions";
+import { useParams } from "react-router-dom";
 import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
 import QuestionsAndAnswers from "./QuestionsAndAnswers";
@@ -18,17 +18,29 @@ import { Footer } from "../Footer/Footer";
 export const Detail = () => {
   const dispatch = useDispatch();
   //deberia ser un state.detail
-  const productDetail = useSelector((state) => state.productDetail);
-  let { id } = useParams();
+  let productDetail = useSelector((state) => state.productDetail);
 
+
+  
+  let { id } = useParams();
+  
+  const [reRender, setReRender] = React.useState('');
+  
+  const handleReRender = (e) => {
+    console.log(e)
+    setReRender(`Ultimo ordenamiento ${e}`);
+    dispatch(getDetail(id))
+  }
+  
+  
   useEffect(() => {
     //tendria que ser un getDitail(id) desde las action
     dispatch(getDetail(id));
     // return (()=>{
-    //     dispatch(clearDetail())
-    // })
-  }, [dispatch]);
-
+      //     dispatch(clearDetail())
+      // })
+    }, [dispatch]);
+    
   return (
     <div>
    
@@ -86,7 +98,7 @@ export const Detail = () => {
               <Chip label="Consultas" size="string" sx={{ fontSize: "15px" }} />
             </Divider>
 
-            <QuestionsAndAnswers asks={productDetail[0].asks} />
+            <QuestionsAndAnswers handleReRender = {handleReRender} asks={productDetail[0].asks} />
           </Container>
         ) : (
           <CircularProgress

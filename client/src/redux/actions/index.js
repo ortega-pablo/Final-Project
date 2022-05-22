@@ -7,6 +7,8 @@ export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const POST_ADD_CATEROY_TO_PRODUCT = "POST_ADD_CATEROY_TO_PRODUCT";
 export const POST_ADD_SPECIFICATION_TO_PRODUCT =
   "POST_ADD_SPECIFICATION_TO_PRODUCT";
+export const POST_NEW_ASK = "POST_NEW_ASK";
+export const POST_NEW_ANSWER = "POST_NEW_ASK";
 
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
@@ -95,6 +97,31 @@ export const postProduct = (payload) => {
     }
   };
 };
+
+export const postNewAsk = (payload,productId, userId ) => {
+  return async function (dispatch) {
+    try{
+      console.log(payload);
+      let json = await axios.post(`http://localhost:3001/asks?userId=${userId}&productId=${productId}`, payload);
+      return json;
+    }catch(error){
+      console.log(error);
+    }
+  }
+}
+export const postNewAnswer = (payload, askId, userId ) => {
+  return async function (dispatch) {
+    try{
+      console.log(payload);
+       await axios.post(`http://localhost:3001/answers?userId=${userId}&askId=${askId}`, payload);
+    }catch(error){
+      console.log(error);
+    }
+    return dispatch({
+      type: POST_NEW_ANSWER
+    })
+  }
+}
 
 export const postAddCateroryToProduct = (idP, idC, payload) => {
   return async function (dispatch) {
