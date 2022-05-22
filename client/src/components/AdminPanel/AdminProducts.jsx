@@ -1,11 +1,9 @@
-import { Box, Container } from "@mui/material";
-import React from "react";
-import AdminMenuLarge from "./AdminMenuLarge";
-import AdminMenuMobile from "./AdminMenuMobile";
-import Bienvenida from "./Bienvenida";
+import { Box, Container, Typography } from '@mui/material'
+import React from 'react'
+import AdminMenuLarge from './AdminMenuLarge'
+import AdminMenuMobile from './AdminMenuMobile'
 
-
-function AdminPanel() {
+function AdminProducts() {
   return (
     <Box
       maxWidth="vp"
@@ -43,13 +41,12 @@ function AdminPanel() {
             alignItems: "center",
           }}
         >
-
-          <Bienvenida/>
+          <Typography variant="h2">Acá se administran los productos</Typography>
 
         </Container>
       </Container>
     </Box>
-  );
+  )
 }
 
-export default AdminPanel;
+export default AdminProducts

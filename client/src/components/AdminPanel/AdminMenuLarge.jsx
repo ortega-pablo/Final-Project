@@ -19,6 +19,7 @@ import SellIcon from '@mui/icons-material/Sell';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PeopleIcon from '@mui/icons-material/People';
 import { HiddenxsDown } from "../../personalizadTheme";
+import { Link, Navigate } from "react-router-dom";
 
 
 
@@ -43,16 +44,18 @@ export default function AdminMenuLarge() {
     <HiddenxsDown sx={{ borderRadius: "10px" }}>
       <Paper sx={{ height: "100%", display: "flex"}}>    
       <List sx={{ width: 240, alignItems: "center"  }}>
-        <ListItemButton>
+
+     
+        <ListItemButton component="a" href="/">
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItemButton>
-
+       
         <Divider variant="middle" />
 
-        <ListItemButton onClick={handleClick3}>
+        <ListItemButton onClick={handleClick3} >
           <ListItemIcon>
             <CategoryIcon />
           </ListItemIcon>
@@ -64,7 +67,7 @@ export default function AdminMenuLarge() {
 
           <Divider variant="middle" />  
             
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/allCategories" sx={{ pl: 4 }} >
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -73,7 +76,7 @@ export default function AdminMenuLarge() {
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminCategories" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
@@ -97,7 +100,7 @@ export default function AdminMenuLarge() {
 
           <Divider variant="middle" />  
             
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/allProducts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -106,7 +109,7 @@ export default function AdminMenuLarge() {
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminProducts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
@@ -130,7 +133,7 @@ export default function AdminMenuLarge() {
 
           <Divider variant="middle" />
 
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton component="a" href="/allDiscounts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -139,7 +142,7 @@ export default function AdminMenuLarge() {
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminDiscounts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>

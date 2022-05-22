@@ -194,6 +194,7 @@ export const CreateAccount = () => {
             color="ambar3"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={!formik.dirty}
           >
             Crear cuenta
           </Button>

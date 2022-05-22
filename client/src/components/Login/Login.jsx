@@ -47,12 +47,14 @@ export const Login = () => {
           icon: 'success',
           title: 'Logeado',
           showConfirmButton: false,
+          
           timer: 1500
         })
-        navigate(`/profile/asd`)
+        navigate(`/`)
       } else {
         Swal.fire({
           background: '#DFDCD3',
+          confirmButtonColor: '#B6893E',
           icon: 'error',
           title: 'Oops...',
           text: 'Los datos que ingresaste son incorrectos'
@@ -123,6 +125,7 @@ export const Login = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={!formik.dirty}
           >
             Ingresar
           </Button>

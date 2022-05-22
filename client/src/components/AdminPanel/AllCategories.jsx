@@ -1,11 +1,10 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 import AdminMenuLarge from "./AdminMenuLarge";
 import AdminMenuMobile from "./AdminMenuMobile";
 import Bienvenida from "./Bienvenida";
 
-
-function AdminPanel() {
+function AllCategories() {
   return (
     <Box
       maxWidth="vp"
@@ -43,8 +42,7 @@ function AdminPanel() {
             alignItems: "center",
           }}
         >
-
-          <Bienvenida/>
+          <Typography variant="h2">Acá van todas las categorías</Typography>
 
         </Container>
       </Container>
@@ -52,4 +50,4 @@ function AdminPanel() {
   );
 }
 
-export default AdminPanel;
+export default AllCategories;
