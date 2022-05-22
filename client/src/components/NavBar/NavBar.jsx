@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,7 +18,10 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link, Input} from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { verifyToken } from '../../redux/actions';
 
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,11 +63,22 @@ const StyledInputBase = styled(Input)(({ theme }) => ({
   },
 }));
 
+
+
+
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const [name, setName] = React.useState('');
+  const dispatch = useDispatch() 
+
+  const ls = JSON.parse(localStorage.getItem('token'))
+  //console.log('soy el token que estas despachando  => ', ls?.token)
+
+  useEffect(()=>{
+    dispatch(verifyToken(ls?.token))
+  },[dispatch])
 
 
   const handleChangeForName = (e) => {
@@ -92,6 +106,8 @@ export const NavBar = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+
+
   const menuProfileId = 'primary-search-account-menu';
   const renderProfileMenu = (
     <Menu
@@ -109,8 +125,39 @@ export const NavBar = (props) => {
       open={isMenuProfileOpen}
       onClose={handleMenuProfileClose}
     >
-      <MenuItem onClick={handleMenuProfileClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuProfileClose}>My account</MenuItem>
+     {
+       
+       //userStatus === user 
+       ls?.token?
+       <>
+      <MenuItem onClick={handleMenuProfileClose} >
+          <Link sx={{textDecoration:'none',  color:'inherit'}} href='/profile/asd'>
+            Perfil
+          </Link>
+      </MenuItem>
+      <MenuItem onClick={() => window.localStorage.clear()}>
+        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/'>
+          Desloguear
+        </Link>
+      </MenuItem>
+       </>
+      :
+      //userStatus === '' 
+      <>
+      <MenuItem onClick={handleMenuProfileClose}>
+        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/login'>
+          Login
+        </Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuProfileClose}>
+        <Link sx={{textDecoration:'none',  color:'inherit'}} href='/createaccount'>
+          Crear cuenta
+        </Link>
+      </MenuItem>
+      </>
+      // userStauts === 'admin'
+      // menu item que muestre link panel de control
+     }
     </Menu>
   );
 
