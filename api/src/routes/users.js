@@ -105,6 +105,16 @@ router.get("/verifyToken", [cors(), verifyToken], async (req, res) => {
   }
 });
 
+router.get("/userId", [cors(), verifyToken], async (req, res) => {
+  //console.log(req);
+  try {
+    res.json({ idUser: req.id });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Error en el servidor");
+  }
+});
+
 router.get("/", async (req, res, next) => {
   const { firstName } = req.query;
 
@@ -147,7 +157,6 @@ router.get("/", async (req, res, next) => {
         ],
       });
 
-      
       return res.status(200).send(getAll);
     }
   } catch (error) {

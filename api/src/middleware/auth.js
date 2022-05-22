@@ -15,6 +15,7 @@ const verifyToken = async (req, res, next) => {
 
       if (decoded) {
         const user = await User.findOne({ where: { id: decoded.id } });
+        req.id = user.dataValues.id;
         req.role = user.dataValues.role;
 
         next();

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { BannerImages } = require("../db");
+const { BannerImages, Image, Product } = require("../db");
 const fs = require("fs");
 const upload = require("../middleware/multer")
 const cloudinary = require("../middleware/cloudinary")
@@ -34,6 +34,25 @@ router.post("/uploadProduct", upload.array("image"), async (req, res, next)=>{
   }
 })
 
+
+
+router.get("/", async (req, res, next) => {
+  
+  const {productId, imageId} = req.params
+  try {
+    
+    const productImages = await Image.findAll()
+
+    if(productImages) {
+      return res.send(productImages)
+    } else {
+      return res.send("No images found")
+    }
+
+  } catch(error){
+    next(error)
+  }
+})
 
 router.post("/uploadBanner", upload.array("image"), async (req, res, next)=>{
 
@@ -71,6 +90,76 @@ router.get("/uploadBanner", async (req, res, next) => {
     sen.status(400)
   }
 });
+
+// router.put("/removeProduct", async (req, res, next) => {
+
+//   const {productId, imageId} = req.query;
+
+//   try {
+//     const findProduct = await Product.findOne({  
+//       where: {
+//         id: productId
+//       }
+//     })
+
+//     const findImage = await Image.findOne({
+//       where: {
+//         id: imageId
+//       }
+//     })
+
+//     if(findProduct && findImage){
+
+//       findProduct.removeImage(imageId) 
+//       res.status(200).send("Image removed successfully!") 
+
+//     } else {
+//       return res.send("No product or image found")
+//     }
+  
+//   } catch(error){
+//     next(error)
+//   }
+// })
+
+router.delete("/", async (req, res, next) => {
+
+  const {productId, imageId} = req.query;
+
+  try {
+    const findProduct = await Product.findOne({  
+      where: {
+        id: productId
+      }, include: [
+        {
+          model: Image,
+          where: {
+            id: imageId
+          }
+        }
+      ]
+    })
+
+    console.log(findProduct)
+
+    if(findProduct){
+
+      await Image.destroy({
+        where: {
+            id: imageId
+        }
+      })
+        
+      res.status(200).send("Image deleted successfully!") 
+
+    } else {
+      return res.send("No product or image found")
+    }
+  
+  } catch(error){
+    next(error)
+  }
+})
 
 
 

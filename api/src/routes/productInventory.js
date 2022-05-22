@@ -3,37 +3,37 @@ const router = Router();
 
 const { Product, ProductInventory } = require("../db");
 
-router.post("/", async (req, res, next) => {
-  const { quantity } = req.body;
-  const { productId } = req.query;
+// router.post("/", async (req, res, next) => {
+//   const { quantity } = req.body;
+//   const { productId } = req.query;
 
-  try {
+//   try {
   
-    const product = await Product.findOne({
-      where: {
-        id: productId,
-      },
-    });
+//     const product = await Product.findOne({
+//       where: {
+//         id: productId,
+//       },
+//     });
 
-    if(product) {
+//     if(product) {
 
-      const addQuantity = await ProductInventory.create({
-        quantity,
-      });
+//       const addQuantity = await ProductInventory.create({
+//         quantity,
+//       });
   
 
-      addQuantity.setProduct(productId);
-      res.status(200).send(addQuantity);
+//       addQuantity.setProduct(productId);
+//       res.status(200).send(addQuantity);
       
-    } else {
-      res.send("Product not found")
-    }
+//     } else {
+//       res.send("Product not found")
+//     }
     
    
-  } catch (error) {
-    next(error);
-  }
-});
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 
 
