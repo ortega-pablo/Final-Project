@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const { Product, Ask, Answer, Discount, Category, Specification, ProductInventory, SubCategory } = require("../db");
+const { Product, Ask, Answer, Discount, Category, Specification, ProductInventory, SubCategory, Image } = require("../db");
 
 
 
@@ -11,7 +11,6 @@ const productInfo = async function (id) {
         where: {
             id
         },
-        // include: { all: true, nested: true }
         include: [
         {
             model: ProductInventory,
@@ -28,8 +27,8 @@ const productInfo = async function (id) {
             model: Category,
             attributes: ["id", "name", "description", "thumbnail"],
             through: {
-              attributes: [],
-            }
+                attributes: [],
+            },
         },
         {
             model: SubCategory,
@@ -37,6 +36,15 @@ const productInfo = async function (id) {
             through: {
               attributes: [],
             },
+            include:[
+                {
+                    model: Category,
+                    attributes: ["id", "name", "description", "thumbnail"],
+                    through: {
+                        attributes: [],
+                    },
+                }
+            ]
           },
         {
             model: Specification,
@@ -44,17 +52,26 @@ const productInfo = async function (id) {
             through: {
                 attributes: ["value"],
             },
-        },
+        },  
         {
             model: Ask,
-            attributes: ["id", "content"],
+            order: [['createdAt', 'ASC']],
+            attributes: ["id", "content", "createdAt"],
             include: [
                 {
                     model: Answer,
-                    attributes: ["id", "content"]
+                    attributes: ["id", "content", "createdAt"]
                 }
             ]
-        }]
+        },
+        {
+            model: Image,
+            through: {
+              attributes: [],
+            },
+          },
+          
+    ]
     })
 
 

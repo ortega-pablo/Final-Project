@@ -49,7 +49,7 @@ export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
           error={formik.touched.quantity && Boolean(formik.errors.quantity)}
           helperText={formik.touched.quantity && formik.errors.quantity}
         />
-        <h3>Stock actual: {productToUpdate?.productInventory.quantity} </h3>
+        <h3>Stock actual: {productToUpdate?.productInventory?.quantity} </h3>
         <h3>Stock a modificar: {formik.values.quantity} </h3>
         <Button type="submit">Editar sotck</Button>
       </Box>

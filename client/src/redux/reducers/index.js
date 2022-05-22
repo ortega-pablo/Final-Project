@@ -35,7 +35,8 @@ import {
   POST_DISCOUNT,
   DELETE_DISCOUTN,
   PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
-  PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT
+  PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
+  DELETE_SPECIFICATION
 } from "../actions";
 
 const initialState = {
@@ -331,6 +332,12 @@ const rootReducer = (state = initialState, action) => {
             return {
               ...state,
             };
+
+            case DELETE_SPECIFICATION :
+       
+              return{
+                ...state,
+              }
       
           
           default:

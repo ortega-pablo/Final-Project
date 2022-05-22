@@ -496,6 +496,8 @@ export function UseFormControl() {
       <AddDiscountToProduct
       newProdId={newProdId}
       newProduct={newProduct}/>
+
+<hr />
       <TableSpecification
         newProdId={newProdId}
         // newProd={newProd}
@@ -509,14 +511,16 @@ export function UseFormControl() {
         // inputSpec={inputSpec}
         
          />
+            <hr />
         <DeleteProduct/>
-
+        <hr />
 
         <AdminCatAndSubc
         />
-
+   <hr />
         <h2>Administracion de descuentos:</h2>
         <AdminDiscount/>
+        <hr />
         <AdminSpecif/>
     </>
   );

@@ -50,6 +50,9 @@ export const DELETE_DISCOUTN = "DELETE_DISCOUTN";
 export const PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT =
   "PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT";
 export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT = "PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT";
+export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
+
+
 
 
 
@@ -81,10 +84,10 @@ export const getDetail = (id) => {
 };
 
 export const postProduct = (payload) => {
+  console.log(payload)
   return async function (dispatch) {
     try {
       let json = await axios.post(`http://localhost:3001/products`, payload);
-
       return json;
     } catch (error) {
       console.log(error);
@@ -551,6 +554,22 @@ export function putRemoveOneSpecificationOneProduct (idP, idS ,payload){
               type: PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
               payload: payload,
                             
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function deleteSpecification (idS){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/specifications/${idS}` )
+          
+          return dispatch({
+              type: DELETE_SPECIFICATION,
+              payload: idS
+              
           })
       } catch (error) {
           console.log(error)

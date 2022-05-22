@@ -29,6 +29,41 @@ router.get("/all", async (req, res, next) => {
     sen.status(400)
   }
 });
+router.get("/", async (req, res, next) => {
+  const { specName, productId } = req.query;
+
+  try {
+    if (specName) {
+      const getProduct = await Product.findAll({
+        include: [
+          {
+            model: Specification,
+            attributes: ["id", "name"],
+            through: {
+              attributes: ["value"],
+            },
+          },
+        ],
+      });
+
+      const mapped = getProduct.map((e) => {
+        return {
+          productId: e.id,
+          name: e.name,
+          specifications: e.specifications && e.specifications,
+        };
+      });
+
+      
+      //  console.log(mapped.map(e => e.specifications.map(v => v.name)))  // Puta mierda
+      // const found = await mapped?.map(e => e.specifications.map(v => v.name)).flat().filter(e => e.toLowerCase().includes(specName.toLowerCase()));
+      // found.length ? res.status(200).json(found) : res.json("Specification not found, please try another search");
+      res.status(200).send(mapped);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 
@@ -157,30 +192,37 @@ router.put("/", async (req, res, next) => {
 
 
 
-// router.delete("/", async (req, res, next) => {
+router.delete("/:specificationId", async (req, res, next) => {
 
-//   const {specificationId, productId} = req.query;
-//   try{
+  const {specificationId} = req.params;
+  
+  try{
+
+    const findASpec = await Specification.findOne({
+      where: {
+        id: specificationId
+      }
+    })
     
-//     if(specificationId){
+    if(findASpec){
       
-//       const deleteSpec = await Specification.destroy({
-//         where: {
-//           id: specificationId
-//       }
-//       })
+       await Specification.destroy({
+        where: {
+          id: specificationId
+      }
+      })
 
-//       return res.send("Specification deleted successfully!")
+      return res.send("Specification deleted successfully!")
 
-//     } else {
-//       return res.send("Product or specification not found")
-//     }
+    } else {
+      return res.send("Product or specification not found")
+    }
 
 
-//   }catch(error){
-//     next(error)
-//   }
-// })
+  }catch(error){
+    next(error)
+  }
+})
 
 
 module.exports = router;
