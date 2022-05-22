@@ -37,6 +37,7 @@ export default function MultiActionAreaCard({
   price,
   brand,
   thumbnail,
+  images
 }) {
   return (
     <Card sx={{ width: 200, hover: "true", maxHeight:'360px', minHeight:'360px'}}>
@@ -59,7 +60,7 @@ export default function MultiActionAreaCard({
           <CardMedia
             component="img"
             height="140"
-            image={thumbnail}
+            image={images[0]?.urlFile}
             alt="green iguana"
           />
           <h3>Precio: {"$"}{price}</h3>

@@ -38,6 +38,7 @@ import {
   PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
   DELETE_SPECIFICATION,
   VERIFY_TOKEN,
+  POST_ADD_IMAGE,
 } from "../actions";
 
 const initialState = {
@@ -347,6 +348,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+      case POST_ADD_IMAGE :
+        return {
+          ...state
+        }
 
     default:
       return state;

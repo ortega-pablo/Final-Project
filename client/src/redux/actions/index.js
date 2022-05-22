@@ -51,7 +51,7 @@ export const PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT =
   "PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT";
 export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT = "PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT";
 export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
-
+export const POST_ADD_IMAGE = "POST_ADD_IMAGE";
 
 
 
@@ -618,3 +618,30 @@ export function deleteSpecification (idS){
 // bodyParameters,
 // config
 // ).then(console.log).catch(console.log);
+
+export const getImages = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/categories/subcategories");
+    return dispatch({
+      type: GET_SUB_CATEGORIES,
+      payload: response.data,
+    });
+  };
+};
+
+
+
+export const postAddImageToProduct = (idP, payload) => {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(
+        `http://localhost:3001/images/uploadProduct?productId=${idP}`, payload
+      ); //url + body
+          console.log(idP)
+          console.log(payload)
+      return json;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
