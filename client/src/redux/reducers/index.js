@@ -42,6 +42,7 @@ import {
   PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
   PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
   DELETE_SPECIFICATION,
+  POST_ADD_IMAGE,
 } from "../actions";
 
 const initialState = {
@@ -374,6 +375,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userStatus: action.payload.msg
       };
+
+      case POST_ADD_IMAGE :
+        return {
+          ...state
+        }
 
     default:
       return state;
