@@ -61,7 +61,7 @@ export const ForgotPassword = () => {
           sx={{ mt: 3, maxWidth: '20%', alignContent:'center' }}
         > Enviar</Button>
       </Paper>
-      <Footer />
+
     </>
   );
 };

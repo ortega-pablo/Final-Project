@@ -17,6 +17,7 @@ import Category from "./Category/Category";
 import { useParams } from "react-router-dom";
 import SwipeableDrawerFilters from './SwipeableFilters/SipeableFilters'
 import { Box } from "@mui/system";
+import { SelectProductsPerPage } from "./Pagination/SelectProductsPerPage";
 const useStyles = makeStyles((theme) => ({
 
   paper: {
@@ -139,11 +140,27 @@ export const Home = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
+            height:"100%",
             width: "100%",
             padding: 0,
+            alignItems:"center"
           }}
           >
+            <Container
+            sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            marginTop: 3,
+            alignItems:"center"
+          }}>
+            <SelectProductsPerPage 
+              setCurrentPage={setCurrentPage} 
+              productsPerPage={productsPerPage} 
+              setProductsPerPage={setProductsPerPage}
+            />
+            </Container>
+
           <Grid
           id="container"
             container 
@@ -190,7 +207,15 @@ export const Home = () => {
             )}
           </Grid>
 
-        <Container maxWidth="vp" sx={{ width: "100%"}}>
+        <Container maxWidth="vp" 
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          height: "100%",
+          alignItems:"flex-end",
+          justifyContent:"center"
+        }}>
           <Paginationxd
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}

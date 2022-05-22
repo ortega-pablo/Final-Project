@@ -121,7 +121,7 @@ export const Login = () => {
         </Box>
       </Paper>
     </Container>
-      <Footer />
+
     </>
   );
 };

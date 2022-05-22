@@ -241,7 +241,7 @@ export const NavBar = (props) => {
       <AppBar
         sx={{
           backgroundColor: "ambar6.main",
-          color: "#E8E9F2",
+          color: "ambar1.main",
           position: "fixed",
         }}
       >

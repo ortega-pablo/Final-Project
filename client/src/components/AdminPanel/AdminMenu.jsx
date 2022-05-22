@@ -38,7 +38,7 @@ export default function AdminMenu() {
   return (
     <BoxGeneral>
       <List
-        sx={{ width: "100%", maxWidth: 360 }}
+        sx={{ width: "100%", maxWidth: 320 }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
