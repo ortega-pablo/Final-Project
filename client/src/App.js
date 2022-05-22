@@ -32,8 +32,6 @@ function App() {
             <Route path="/AdminPanel" element={<AdminPanel/>}/>
           </Routes>
         <Footer/>
-
-
     </BrowserRouter>
   );
 }

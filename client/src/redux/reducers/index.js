@@ -54,8 +54,7 @@ const initialState = {
   inventory: [],
   subCategories: [],
   discounts: [],
-
-  userStatus: {},
+  userStatus: null
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -68,16 +67,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_DETAIL:
-      // const asksFixed = action.payload[0].asks.map(ask => {
-      //   let date = ask.createdAt.split('T')[0];
-      //   let time = ask.createdAt.split('T')[1].substring(0, 8);
-      //   return ask.createdAt2 = [date, time];
-      // });
-
-      // const productDetail1 = action.payload[0];
-
-      // const productDetail = productDetail1.asks.forEach((ask, i) => ask.createdAt = asksFixed[i]) 
-
       let productFixed = action.payload;
 
       productFixed[0].asks.sort((aA, aB) => {
@@ -383,7 +372,7 @@ const rootReducer = (state = initialState, action) => {
     case VERIFY_TOKEN:
     return{
         ...state,
-        userStatus: action.payload
+        userStatus: action.payload.msg
       };
 
     default:
