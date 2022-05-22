@@ -26,8 +26,37 @@ export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
 
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
-export const VERIFY_TOKEN = "VERIFY_TOKEN"
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const PUT_PRODUCT = "PUT_PRODUCT";
+export const GET_INVENTORY = "GET_INVENTORY";
 
+export const PUT_INVENTORY = "PUT_INVENTORY";
+export const PUT_CATEGORY_TO_PRODUCT = "PUT_CATEGORY_TO_PRODUCT";
+export const PUT_SUBCATEGORY_TO_PRODUCT = "PUT_SUBCATEGORY_TO_PRODUCT";
+export const DELETE_CATEGORY = "DELETE_CATEGORY";
+export const PUT_CATEGORY = "PUT_CATEGORY";
+export const PUT_SUB_CATEGORY = "PUT_SUB_CATEGORY";
+
+
+export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
+export const DELETE_SUB_CATEGORY = "DELETE_SUB_CATEGORY";
+
+export const GET_ALL_DISCOUNT = "GET_ALL_DISCOUNT";
+
+export const DELETE_ONE_DISCOUNT_TO_A_PRODUCT = "DELETE_ONE_DISCOUNT_TO_A_PRODUCT";
+export const PUT_DISCOUNT = "PUT_DISCOUNT";
+export const POST_DISCOUNT = "POST_DISCOUNT";
+export const DELETE_DISCOUTN = "DELETE_DISCOUTN";
+export const PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT =
+  "PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT";
+export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT = "PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT";
+export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
+
+
+
+
+
+export const VERIFY_TOKEN = "VERIFY_TOKEN";
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -37,7 +66,7 @@ export const getProducts = (name) => {
     else {
       response = await axios(`http://localhost:3001/products?name=${name}`);
     }
-    console.log(response);
+ 
     return dispatch({
       type: GET_PRODUCTS,
       payload: response.data,
@@ -56,10 +85,10 @@ export const getDetail = (id) => {
 };
 
 export const postProduct = (payload) => {
+  console.log(payload)
   return async function (dispatch) {
     try {
       let json = await axios.post(`http://localhost:3001/products`, payload);
-
       return json;
     } catch (error) {
       console.log(error);
@@ -202,6 +231,9 @@ export const getCategories = () => {
   };
 };
 
+
+
+
 export const filterPerCategory = (category) => {
   return async (dispatch) => {
     return dispatch({
@@ -260,33 +292,319 @@ export const filterPerPrice = (range) => {
   };
 };
 
+
+export function deleteProduct (id){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/products/${id}` )
+          
+          return dispatch({
+              type: DELETE_PRODUCT,
+              payload: id
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putProduct (id, payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${id}` , payload )
+          
+          return dispatch({
+              type: PUT_PRODUCT,
+              payload: payload,
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export const getInventary = (id) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/inventory`);
+    return dispatch({
+      type: GET_INVENTORY,
+      payload: response.data,
+    });
+  };
+};
+
+
+export function putQuantity (id, payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/inventory/${id}` , payload )
+          
+          return dispatch({
+              type: PUT_INVENTORY,
+              payload: payload,
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putCategoryToProduct (idP, idC ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&categoryId=${idC}`  )
+       
+          return dispatch({
+              type: PUT_CATEGORY_TO_PRODUCT,
+                                       
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putSubCategoryToProduct (idP, idSc ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
+     
+          return dispatch({
+              type: PUT_SUBCATEGORY_TO_PRODUCT,
+                                       
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function deleteCategory (idCat){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/categories/${idCat}` )
+           console.log("eliminando categoria")
+
+          return dispatch({
+              type: DELETE_CATEGORY,
+              payload: idCat
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export function putCategory (idC, payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/categories/${idC}`, payload  )
+      
+          return dispatch({
+              type: PUT_CATEGORY,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+export function putSubCategory (idSc, payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/categories/subcategories/${idSc}`, payload  )
+       
+          return dispatch({
+              type: PUT_SUB_CATEGORY,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export const getSubCategories = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/categories/subcategories");
+    return dispatch({
+      type: GET_SUB_CATEGORIES,
+      payload: response.data,
+    });
+  };
+};
+
+export function deleteSubCategory (idSc){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/categories/subcategories/${idSc}` )
+           console.log("eliminando sub categoria")
+
+          return dispatch({
+              type: DELETE_SUB_CATEGORY,
+              payload: idSc
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export const getAllDiscount = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/discounts");
+    return dispatch({
+      type: GET_ALL_DISCOUNT,
+      payload: response.data,
+    });
+  };
+};
+
+export function putRemoveOneDiscuntToProduct (idP, idD ,payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&discountId=${idD}`, payload  )
+         
+           return dispatch({
+              type: DELETE_ONE_DISCOUNT_TO_A_PRODUCT,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function putDiscount (idD, payload ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/discounts/${idD}`, payload  )
+                return dispatch({
+              type: PUT_DISCOUNT,
+            
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export const postDiscount = (payload) => {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(`http://localhost:3001/discounts`, payload);
+
+      return json;
+    } catch (error) {
+
+
+
+      console.log(error);
+    }
+  };
+};
+
 export const verifyToken = (token) => {
-  return async(dispatch) => {
-    console.log('SOy el token EN LA ACTION   =>  ', token)
-    const config = { 
-      headers: {Authorization: `Bearer ${token}`}
-    }
-    const bodyParameters = {
-      caca: 'caconga'
-    }
-    console.log('soy el payload de la action =>  ', config)
-    try{
-      console.log(' por lo menos lo intente')
-      let response = await axios.post(
-        "http://localhost:3001/users/verifyToken",bodyParameters ,config
-      )
-      console.log('Soy la responseee =>> ' , response)
+  return async (dispatch) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let response = await axios.get(
+        "http://localhost:3001/users/verifyToken",
+        config
+      );
+      console.log("Soy la responseee =>> ", response.data);
       return dispatch({
         type: VERIFY_TOKEN,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log('SOY EL CATCH DEL VERIFY TOKEN ')
-      console.log(error)
-    }
-  }
-}
+      console.log("SOY EL CATCH DEL VERIFY TOKEN ");
 
+    }}}
+
+
+
+
+
+
+export function deleteDiscount (idD){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/discounts/${idD}` )
+          
+
+          return dispatch({
+              type: DELETE_DISCOUTN,
+              payload: idD
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+export function putValueSpecificationOneProduct (idP, idS , payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/specifications?productId=${idP}&specificationId=${idS}` , payload )
+          
+          return dispatch({
+              type: PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
+              payload: payload,
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+
+export function putRemoveOneSpecificationOneProduct (idP, idS ,payload){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&specificationId=${idS}` , payload )
+          
+          return dispatch({
+              type: PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
+              payload: payload,
+                            
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
+export function deleteSpecification (idS){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/specifications/${idS}` )
+          
+          return dispatch({
+              type: DELETE_SPECIFICATION,
+              payload: idS
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
 // const config = {
 //   headers: { Authorization: `Bearer ${token}` }
 // };
@@ -295,7 +613,7 @@ export const verifyToken = (token) => {
 //  key: "value"
 // };
 
-// Axios.post( 
+// Axios.post(
 // 'http://localhost:8000/api/v1/get_token_payloads',
 // bodyParameters,
 // config

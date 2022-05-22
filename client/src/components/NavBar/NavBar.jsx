@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { verifyToken } from '../../redux/actions';
 
-
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,6 +65,7 @@ const StyledInputBase = styled(Input)(({ theme }) => ({
 
 
 
+
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -73,7 +74,7 @@ export const NavBar = (props) => {
   const dispatch = useDispatch() 
 
   const ls = JSON.parse(localStorage.getItem('token'))
-  console.log('soy el token que estas despachando  => ', ls?.token)
+  //console.log('soy el token que estas despachando  => ', ls?.token)
 
   useEffect(()=>{
     dispatch(verifyToken(ls?.token))

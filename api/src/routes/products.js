@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, Discount, Category, Specification, ProductSpecification, SubCategory  } = require("../db");
+const { Product, Discount, Category, Specification, ProductSpecification, SubCategory , Image, ProductInventory} = require("../db");
 const { getAllProducts, getProductsByName , orderProducts } = require("../controllers/products");
 const router = Router();
 
@@ -41,6 +41,7 @@ router.post("/", async (req, res, next) => {
     packageDimensions,
     grossWeight,
     warranty,
+    quantity
   } = req.body;
 
   try {
@@ -59,6 +60,14 @@ router.post("/", async (req, res, next) => {
       grossWeight,
       warranty,
     });
+
+    const addQuantity = await ProductInventory.create({
+      quantity,
+    });
+
+
+    addQuantity.setProduct(newProduct);
+
     res.status(200).send(newProduct);
   } catch (error) {
     next(error);
@@ -162,7 +171,24 @@ router.post("/addSpecification", async (req, res, next) => {
   }
 });
 
+router.post("/addImage", async (req, res, next) => {
+  const { urlFile, productId } = req.query;
+  try {
+    const newImage = await Image.create({ urlFile });
 
+    const product = await Product.findOne({
+      where: {
+        id: productId,
+      },
+    });
+
+    product.addImage(newImage)
+
+    res.status(200).send("Image was add successfully");
+  } catch (error) {
+    next(error);
+  }
+});
 router.put("/", async (req, res, next) => {
   const {productId, discountId, categoryId, subCategoryId, specificationId} = req.query;
  
@@ -266,6 +292,7 @@ router.put("/", async (req, res, next) => {
         }
 
         else if(specificationId){
+          
           const findSpecification = await Specification.findOne({
             where: {
               id: specificationId
@@ -273,8 +300,8 @@ router.put("/", async (req, res, next) => {
           })
 
           findSpecification && findProduct.removeSpecification(specificationId) ?
-          res.status(200).send("SubCategory removed successfully!") :
-          res.send("No Subcategory associated with this product")
+          res.status(200).send("Specification removed successfully!") :
+          res.send("No specification associated with this product")
         }
 
         else {
