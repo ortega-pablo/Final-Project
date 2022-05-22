@@ -98,7 +98,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/verifyToken", [cors(), verifyToken], async (req, res) => {
   //console.log(req);
   try {
-    res.json({ msg: "user" });
+    res.json({ msg: req.role });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Error en el servidor");
