@@ -34,6 +34,33 @@ router.post("/uploadProduct", upload.array("image"), async (req, res, next)=>{
   }
 })
 
+router.post("/removeImage", async (req, res, next) => {
+  
+  
+  try {
+    
+  } catch(error){
+    next(error)
+  }
+})
+
+router.get("/", async (req, res, next) => {
+  
+  const {productId, imageId} = req.params
+  try {
+    
+    const productImages = await Image.findAll()
+
+    if(productImages) {
+      return res.send(productImages)
+    } else {
+      return res.send("No images found")
+    }
+
+  } catch(error){
+    next(error)
+  }
+})
 
 router.post("/uploadBanner", upload.array("image"), async (req, res, next)=>{
 

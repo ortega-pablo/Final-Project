@@ -55,11 +55,11 @@ const productInfo = async function (id) {
         },
         {
             model: Ask,
-            attributes: ["id", "content"],
+            attributes: ["id", "content", "createdAt"],
             include: [
                 {
                     model: Answer,
-                    attributes: ["id", "content"]
+                    attributes: ["id", "content", "creatdAt"]
                 }
             ]
         },
