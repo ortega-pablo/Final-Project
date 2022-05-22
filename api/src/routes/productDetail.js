@@ -59,7 +59,7 @@ const productInfo = async function (id) {
             include: [
                 {
                     model: Answer,
-                    attributes: ["id", "content", "creatdAt"]
+                    attributes: ["id", "content"]
                 }
             ]
         },
