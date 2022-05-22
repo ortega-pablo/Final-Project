@@ -46,6 +46,7 @@ import { TableSpecificationNewProduct } from "./TableSpecificationNewProduct";
 import { TableSpecific } from "./AdminProduct/TableSpecific";
 import { AdminSpecif } from "./AdminSpecificacat/AdminSpecif";
 import { AddImageToProduct } from "./AddImageToProduct";
+import { AdmininAllStock } from "./AdminProduct/AdmininAllStock";
 
 export function UseFormControl() {
   const dispatch = useDispatch();
@@ -126,9 +127,11 @@ export function UseFormControl() {
     .string("Ingrese la descripción."),
     
     productDimensions: yup
-    .string("Ingrese la descripcións"),
+    .string("Ingrese la descripcións")
+    .required("La dimensión es requerida"),
     packageDimensions : yup
-    .string("Ingrese la descripciónd"),
+    .string("Ingrese la descripciónd")
+    .required("La dimensión es requerida"),
     thumbnail :yup
     .string("Ingrese la descripciónf"),
 
@@ -529,17 +532,11 @@ export function UseFormControl() {
       <hr />
       <TableSpecification
         newProdId={newProdId}
-        // newProd={newProd}
-        // input={input}
-        // inputQ={inputQ}
-        // allCategories={allCategories}
-        // subCategory={subCategory}
-        // category={category}
-        // productosExistentes={productosExistentes}
-        // specifications={specifications}
-        // inputSpec={inputSpec}
+        newProduct={newProduct}
+        
       />
       <hr />
+      {/* Este DeleteProdut en realiad nos trae todos los productos creados, con un boton de borrar o editar */}
       <DeleteProduct />
       <hr />
 
@@ -549,6 +546,7 @@ export function UseFormControl() {
       <AdminDiscount />
       <hr />
       <AdminSpecif />
+      <AdmininAllStock/>
     </>
   );
 }

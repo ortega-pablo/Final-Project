@@ -33,6 +33,7 @@ import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
 import { AddDiscountToProduct } from "../AddDiscountToProduct";
 import { UpdateSpecification } from "./UpdateSpecification";
 import { TableSpecific } from "./TableSpecific";
+import { AddministrrImage } from "./AddministrrImage";
 // import { UpdateSpecif } from "./UpdateSpecif";
 
 
@@ -399,6 +400,11 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       newProdId={idUpdate}
       newProduct={productToUpdate}/>
       
+      <hr />
+
+      <AddministrrImage
+       newProdId={idUpdate}
+       newProduct={productToUpdate}/>
     </>
   );
 }

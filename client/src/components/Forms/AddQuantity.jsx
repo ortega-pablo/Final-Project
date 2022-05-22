@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { getProducts, postAddQuantity } from "../../redux/actions";
+import { getProducts, postAddQuantity, putQuantity } from "../../redux/actions";
 
 
 export const AddQuantity = ({handleInputQue, handleStock, inputQ, newProdId, newProduct}) => {
@@ -35,7 +35,9 @@ const validationSchema = yup.object({
     onSubmit: async (values, {resetForm}) => {
       alert(JSON.stringify(values, null, 2));
     
-      await dispatch(postAddQuantity(newProdId, values));
+      // await dispatch(postAddQuantity(newProdId, values));// DEBEMOS USAR LA PUT
+      await dispatch(putQuantity(newProdId, values));
+
       await dispatch(getProducts())
       resetForm({values:""})
     },
