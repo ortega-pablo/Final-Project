@@ -16,7 +16,6 @@ export const AdmininAllStock = () => {
   const dispatch = useDispatch();
   const allStock = useSelector((state) => state.inventory);
   const allProducts = useSelector((state) => state.products);
-  console.log(allProducts);
   useEffect(() => {
     dispatch(getInventary());
     dispatch(getProducts());

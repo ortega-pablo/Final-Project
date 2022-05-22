@@ -5,7 +5,7 @@ import { putRemoveOneSpecificationOneProduct } from '../../redux/actions'
 
 export const TableSpecificationNewProduct = ({newProduct}) => {
     const dispatch = useDispatch()
-    console.log(newProduct)
+    // console.log(newProduct)
 
 
     async function handleDeleteSpeciToProd(e){

@@ -116,19 +116,19 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   const formik = useFormik({
     initialValues: {
     id: idUpdate,
-    name: productToUpdate.name,
-    sku: productToUpdate.sku,
-    brand: productToUpdate.brand,
-    keyWords: productToUpdate.keyWords,
-    price: productToUpdate.price,
-    description: productToUpdate.description,
-    warranty: productToUpdate.warranty,
-    productDimensions: productToUpdate.productDimensions,
-    packageDimensions: productToUpdate.packageDimensions,
-    netWeight:productToUpdate.netWeight,
-    grossWeight:productToUpdate.grossWeight,
-    thumbnail: productToUpdate.thumbnail,
-    image: productToUpdate.image
+    name: productToUpdate?.name,
+    sku: productToUpdate?.sku,
+    brand: productToUpdate?.brand,
+    keyWords: productToUpdate?.keyWords,
+    price: productToUpdate?.price,
+    description: productToUpdate?.description,
+    warranty: productToUpdate?.warranty,
+    productDimensions: productToUpdate?.productDimensions,
+    packageDimensions: productToUpdate?.packageDimensions,
+    netWeight:productToUpdate?.netWeight,
+    grossWeight:productToUpdate?.grossWeight,
+    thumbnail: productToUpdate?.thumbnail,
+    image: productToUpdate?.image
       },
     validationSchema: validationSchema,
     onSubmit: async (values) => {

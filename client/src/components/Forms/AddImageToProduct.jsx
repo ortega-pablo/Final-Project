@@ -2,7 +2,7 @@ import { Button, Input, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getProducts, postAddImageToProduct } from "../../redux/actions";
+import { deleteImageToProduct, getProducts, postAddImageToProduct } from "../../redux/actions";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -38,6 +38,14 @@ export const AddImageToProduct = ({ newProduct, newProdId }) => {
     await dispatch(getProducts())
   }
 
+
+
+  async function deleteClickImageToProduct(e){
+    e.preventDefault()
+    await dispatch(deleteImageToProduct(newProdId, e.target.value ))
+    await dispatch(getProducts())
+    console.log(e.target.value)
+  }
   return (
     <>
       <div>AddImageToProduct</div>
@@ -69,18 +77,21 @@ export const AddImageToProduct = ({ newProduct, newProdId }) => {
             alt={i.urlFile}
             loading="lazy"
           /> 
-          <ImageListItemBar
+          <Button value={i.id} onClick={e=>deleteClickImageToProduct(e) }>Eliminar</Button>
+          {/* <ImageListItemBar
             title={i.urlFile}
             //subtitle={i.author}
             actionIcon={
               <IconButton
+              value={i.id}
+              onClick={deleteClickImageToProduct}
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 // aria-label={`info about ${i.urlFile}`}
               >
-                <DeleteIcon />
+                <DeleteIcon  />
               </IconButton>
             }
-          />
+          /> */}
         </ImageListItem>
       ))}
     </ImageList>}

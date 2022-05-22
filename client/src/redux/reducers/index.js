@@ -39,6 +39,7 @@ import {
   DELETE_SPECIFICATION,
   VERIFY_TOKEN,
   POST_ADD_IMAGE,
+  DELETE_IMAGE_TO_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -353,6 +354,13 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state
         }
+
+        case DELETE_IMAGE_TO_PRODUCT: {
+          return {
+            ...state,
+          };
+        }
+    
 
     default:
       return state;
