@@ -22,7 +22,26 @@ import {
   PUT_PRODUCT,
   PUT_QUANTITY,
   VERIFY_TOKEN,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  POST_NEW_ASK,
+  POST_NEW_ANSWER,
+  PUT_INVENTORY,
+  GET_INVENTORY,
+  PUT_CATEGORY_TO_PRODUCT,
+  PUT_SUBCATEGORY_TO_PRODUCT,
+  DELETE_CATEGORY,
+  PUT_CATEGORY,
+  PUT_SUB_CATEGORY,
+  GET_SUB_CATEGORIES,
+  DELETE_SUB_CATEGORY,
+  GET_ALL_DISCOUNT,
+  DELETE_ONE_DISCOUNT_TO_A_PRODUCT,
+  PUT_DISCOUNT,
+  POST_DISCOUNT,
+  DELETE_DISCOUTN,
+  PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
+  PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
+  DELETE_SPECIFICATION,
 } from "../actions";
 
 const initialState = {
@@ -32,7 +51,11 @@ const initialState = {
   categories: [],
   categoriesAux: [],
   allSpecifications: [],
-  userStatus:{}
+  inventory: [],
+  subCategories: [],
+  discounts: [],
+
+  userStatus: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -45,11 +68,28 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_DETAIL:
+      // const asksFixed = action.payload[0].asks.map(ask => {
+      //   let date = ask.createdAt.split('T')[0];
+      //   let time = ask.createdAt.split('T')[1].substring(0, 8);
+      //   return ask.createdAt2 = [date, time];
+      // });
+
+      // const productDetail1 = action.payload[0];
+
+      // const productDetail = productDetail1.asks.forEach((ask, i) => ask.createdAt = asksFixed[i]) 
+
+      let productFixed = action.payload;
+
+      productFixed[0].asks.sort((aA, aB) => {
+        return aA.id - aB.id;
+      }
+      )
+
       return {
         ...state,
-        productDetail: action.payload,
+        productDetail: productFixed,
       };
-      
+
     case GET_CATEGORIES: {
       return {
         ...state,
@@ -68,7 +108,7 @@ const rootReducer = (state = initialState, action) => {
         products: filterProducts,
       };
     }
-      
+
     case FILTER_PER_SUBCATEGORY: {
       const allProducts = state.productsAux;
       let filterProducts = [];
@@ -176,29 +216,166 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-
-    case DELETE_PRODUCT :
-      let allProductsForDelete = state.products
-      const newListProduct = allProductsForDelete.filter ( product => product.id !== action.payload)
-      return{
-        ...state,
-        products : newListProduct
-       
-      }
-
-    case PUT_PRODUCT : 
-     const index = state.products.findIndex( p => p.id === action.payload.id )
-     const newArray = [...state.products]
-     newArray[index] =  action.payload
+    case POST_NEW_ASK: {
       return {
-        ...state,
-        products: newArray
+        ...state
+      };
+    }
+    case POST_NEW_ANSWER:{
+      return {
+        ...state
+      }
     }
 
-    case PUT_QUANTITY:
-      const index2 = state.products.findIndex( p => p.id === action.payload.id )
-      const newArray2 = [...state.products]
-      newArray2[index2] =  action.payload
+    case DELETE_PRODUCT:
+      let allProductsForDelete = state.products;
+      const newListProduct = allProductsForDelete.filter(
+        (product) => product.id !== action.payload
+      );
+      return {
+        ...state,
+        products: newListProduct,
+      };
+
+    case PUT_PRODUCT:
+      const index = state.products.findIndex((p) => p.id === action.payload.id);
+      const newArray = [...state.products];
+      newArray[index] = action.payload;
+      return {
+        ...state,
+        products: newArray,
+      };
+
+    case PUT_INVENTORY:
+      const index2 = state.products.findIndex(
+        (p) => p.id === action.payload.id
+      );
+      const newArray2 = [...state.products];
+      newArray2[index2] = action.payload;
+
+      return {
+        ...state,
+        products: newArray,
+      };
+
+    case GET_INVENTORY:
+      return {
+        ...state,
+        inventory: action.payload,
+      };
+
+    case PUT_CATEGORY_TO_PRODUCT:
+      return {
+        ...state,
+      };
+
+    case PUT_SUBCATEGORY_TO_PRODUCT:
+      return {
+        ...state,
+      };
+    case DELETE_CATEGORY:
+      let allCategoryForDetelete = state.categories;
+      const newListCategories = allCategoryForDetelete.filter(
+        (category) => category.id !== action.payload
+      );
+
+      return {
+        ...state,
+        categories: newListCategories,
+      };
+
+    case PUT_CATEGORY: {
+      const inedex3 = state.categories.findIndex(
+        (c) => c.id === action.payload.id
+      );
+      const newArray3 = [...state.categories];
+      newArray3[inedex3] = action.payload;
+
+      return {
+        ...state,
+        categories: newArray3,
+      };
+    }
+
+    case GET_SUB_CATEGORIES: {
+      return {
+        ...state,
+        subCategories: action.payload,
+      };
+    }
+
+    case PUT_SUB_CATEGORY: {
+      const inedex5 = state.subCategories.findIndex(
+        (sc) => sc.id === action.payload.id
+      );
+      const newArray5 = [...state.subCategories];
+      newArray5[inedex5] = action.payload;
+
+      return {
+        ...state,
+        subCategories: newArray5,
+      };
+    }
+
+    case DELETE_SUB_CATEGORY: {
+      return {
+        ...state,
+      };
+    }
+
+    case GET_ALL_DISCOUNT: {
+      return {
+        ...state,
+        discounts: action.payload,
+      };
+    }
+
+    case DELETE_ONE_DISCOUNT_TO_A_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+    case PUT_DISCOUNT: {
+      const inedex4 = state.products.findIndex(
+        (d) => d.id === action.payload.id
+      );
+      const newArray4 = [...state.discounts];
+      newArray4[inedex4] = action.payload;
+
+      return {
+        ...state,
+        categories: newArray4,
+      };
+    }
+
+    case POST_DISCOUNT: {
+      return {
+        ...state,
+      };
+    }
+    case DELETE_DISCOUTN:
+      return {
+        ...state,
+      };
+    case PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT: {
+      const inedex6 = state.discounts.findIndex(
+        (d) => d.id === action.payload.id
+      );
+      const newArray6 = [...state.discounts];
+      newArray6[inedex6] = action.payload;
+
+      return {
+        ...state,
+        categories: newArray6,
+      };
+    }
+
+    case PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT:
+      return {
+        ...state,
+      };
+
+    case DELETE_SPECIFICATION:
       return {
         ...state,
         products: newArray

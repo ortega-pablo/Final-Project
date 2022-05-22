@@ -2,99 +2,86 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { Button, InputLabel, Select, MenuItem } from "@mui/material";
-import { getCategories, postAddSubCategory } from "../../redux/actions";
+import { getCategories, getSubCategories, postAddSubCategory } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-
 export const AddSubCategoty = ({ allCategories }) => {
   const allCategory = useSelector((state) => state.categories);
   const [category, setCategory] = useState("");
-  const [newCategoryName, setNewCategoryName ] = useState("")
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const dispatch = useDispatch();
 
-  
- // validacion de nombre existente en la categoria en cuestion
-    // const allCategoriesMod = allCategory.filter((c) => c.id === category);
+  let comprobacionName = [];
+  const allCategoriesMod = allCategory?.filter((c) => c.id === category);
+  const comprobarNombre = allCategoriesMod[0]?.subCategories?.filter(
+    (subC) => subC?.name === newCategoryName
+  );
+  comprobacionName = comprobarNombre?.map((s) => s.name) || ["", ""];
 
-    // const comprobarNombre = allCategoriesMod[0]?.subCategories.filter(
-    //   (subC) => subC.name === input.name
-    // );
+// console.log(category)
+// if(!category) {
+//   allCategories.map( p=> p.name)
+// }
 
-//     if (comprobarNombre.length > 0) {
-//       setErrorName(true);
-//       setLeyendaErrorName("Esa subCategoría ya existe para ésta categoría");
-//     }
-// let comprobacionName = ["", ""]
-let comprobacionName = []
-const allCategoriesMod = allCategory?.filter((c) => c.id === category);
-const comprobarNombre = allCategoriesMod[0]?.subCategories?.filter( (subC) => subC?.name === newCategoryName )
- comprobacionName = comprobarNombre?.map( s => s.name) || ["", ""]
-
-
-
- 
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
       .required("El nombre es requerido")
-      .notOneOf(comprobacionName.map( p => p) ,  "Ya existe esa subcategoría en la categoria seleccionada" ),
-     
+      .notOneOf(
+       comprobacionName.map((p) => p)  ,
+        "Ya existe esa sub categoria en la categoría seleccionada "
+      ),
+      
+
     description: yup
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
+     
+   
   });
- 
+
   const formik = useFormik({
     initialValues: {
       name: "",
       description: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, {resetForm}) => {
+      
+    if(category){
       await dispatch(postAddSubCategory(category, values));
       await dispatch(getCategories());
+      await dispatch(getSubCategories())
+      resetForm({values:""})
+    }else {
+      alert("seleccione una categoria")
+    }
+
+
     },
   });
 
-  
-
-
-
-
-function handleInputNewSubCat(e){
-  e.preventDefault()
-  setNewCategoryName(e.target.value)
- 
-}
-  
-  const dispatch = useDispatch();
-  
-  
+  function handleInputNewSubCat(e) {
+    e.preventDefault();
+    setNewCategoryName(e.target.value);
+  }
 
  
 
-  
-  
-// }
-//   }
-
-   function handleChangeSelect(e) {
+  function handleChangeSelect(e) {
     e.preventDefault();
     setCategory(e.target.value);
 
-   
-    // setSelecCat(true)
-    
   }
 
   return (
     <>
       <div>AddSubCategoty</div>
       <InputLabel id="demo-simple-select-standard-label">
-        Agregar categoria a:
+        Agregar Sub categoria a:
       </InputLabel>
 
       <Select
@@ -104,6 +91,9 @@ function handleInputNewSubCat(e){
         onChange={handleChangeSelect}
         label="Age"
         type="click"
+        name="select"
+        
+
       >
         <MenuItem value="">
           <em>None</em>
@@ -111,7 +101,7 @@ function handleInputNewSubCat(e){
         {allCategories?.map((cat) => {
           return (
             <MenuItem value={cat.id}>
-              {cat.name} {cat.id}
+              {cat.name}
             </MenuItem>
           );
         })}
@@ -120,13 +110,13 @@ function handleInputNewSubCat(e){
         component="form"
         noValidate
         autoComplete="off"
-         onChange={handleInputNewSubCat}
+        onChange={handleInputNewSubCat}
         // onChange={handleInput}
         onSubmit={formik.handleSubmit}
       >
         <TextField
           id="outlined-basic"
-          label="Nombre"
+          label="Nombre de la nueva sub categoría"
           variant="outlined"
           name="name"
           value={formik.values.name}
@@ -143,18 +133,14 @@ function handleInputNewSubCat(e){
           // error={errorDescription}
           value={formik.values.description}
           onChange={formik.handleChange}
-          error={formik.touched.description && Boolean(formik.errors.description)}
+          error={
+            formik.touched.description && Boolean(formik.errors.description)
+          }
           helperText={formik.touched.description && formik.errors.description}
         />
-        {/* <TextField
-          id="outlined-basic"
-          label="Imagen miniatura"
-          variant="outlined"
-          name="thumbnail"
-          helperText={leyendaErrorThumbnail}
-          error={errorThumbnail}
-        /> */}
+     
         <Button type="submit">Crear nueva Sub Categoria</Button>
+       
       </Box>
     </>
   );

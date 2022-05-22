@@ -17,25 +17,38 @@ import Select from "@mui/material/Select";
 
 import { AddSubCategoty } from "../AddSubCategoty";
 import { AddSpecification } from "../AddSpecification/AddSpecification";
-import { AddDiscount } from "../AddDiscount";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
 import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSubCateroryToProduct, putProduct } from "../../../redux/actions";
+import { TableSpecification } from "../TablaResumen/TableSpecification";
+
+
+
+// import { DeleteProduct } from "./AdminProduct";
+import { postAddSpecificationToProduct, postProduct } from "../../../redux/actions";
 import { UpdateQuantity } from "./UpdateQuantity";
+import { AddCategory } from "../AddCategory";
+import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
+import { AddDiscountToProduct } from "../AddDiscountToProduct";
+import { UpdateSpecification } from "./UpdateSpecification";
+import { TableSpecific } from "./TableSpecific";
+// import { UpdateSpecif } from "./UpdateSpecif";
 
 
-export function  UpdateProduct({idUpdate}) {
+export function  UpdateProduct({idUpdate, setUpdating}) {
 
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
   const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
+  const [inputQ, setInputQ] = useState({ quantity: 0 });
 
 
-  const [category, setCategory] = React.useState("");
-  const [subCategory, setsubCategory] = React.useState("");
+  
+  // const [subCategory, setsubCategory] = React.useState("");
   const [newProdId, setNewProdId] = React.useState(0);
   
  
@@ -120,37 +133,14 @@ const NameRepetido = nameRepetido.map((p) => p.name);
      
       await dispatch(putProduct(idUpdate,values))
       await dispatch(getProducts())
-     
+   
+
     },
   });
 
 
-  
-
-
-
-
-
   //----- funciones de agregar cat y sub
-  const handleChangeCategoty = (e) => {
-    e.preventDefault();
-    setCategory(e.target.value);
-    
-  };
-
-  const handleChangeSubCat = (e) => {
-    e.preventDefault();
-    setsubCategory(e.target.value);
   
-  };
-
-  async function handleClickCatAndSub(e) {
-    e.preventDefault();
-    
-    await dispatch(postAddCateroryToProduct(newProdId, category));
-    await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
-    await dispatch(getProducts())
-  }
   ///------funciones agregar especificacion al producto
   const [specifications, setSpecifications] = useState(``);
 
@@ -158,8 +148,9 @@ const NameRepetido = nameRepetido.map((p) => p.name);
     e.preventDefault();
     setSpecifications(e.target.value);
   }
-  
-  const categSelect = allCategories.filter((c) => c.id === category);
+
+  //-------
+  // const categSelect = allCategories.filter((c) => c.id === category);
   
   return (
     <>
@@ -320,11 +311,11 @@ const NameRepetido = nameRepetido.map((p) => p.name);
         />
 
         <Button type="submit">Editar</Button>
-
+          <Button onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
         <h4>(*) elementos obligatorios</h4>
       </Box>
       <hr />
-      <h3>Paso 2: Agregar stock</h3>
+      <h3>Paso 2: Editar stock</h3>
           
       <UpdateQuantity
        productToUpdate={productToUpdate}
@@ -332,57 +323,25 @@ const NameRepetido = nameRepetido.map((p) => p.name);
 
       <hr />
 
-      <h3>Paso 3: Agregar categoría y sub categorías</h3>
-      <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={category}
-        onChange={handleChangeCategoty}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {allCategories?.map((cat) => {
-          return (
-            <MenuItem value={cat.id}>
-              {cat.name} {cat.id}
-            </MenuItem>
-          );
-        })}
-      </Select>
+      <h3>Paso 3: Editar categorías y sub categorías</h3>
 
-      <InputLabel id="demo-simple-select-standard-label">
-        Sub Categoria
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={subCategory}
-        onChange={handleChangeSubCat}
-        label="Age"
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {categSelect[0]?.subCategories?.map((subc) => {
-          return <MenuItem value={subc.id}>{subc.name}</MenuItem>;
-        })}
-      </Select>
-      <Button onClick={(e) => handleClickCatAndSub(e)}>
-        Agregar categoria y sub categoría
-      </Button>
-
-      {/* <AddCategory
-        allCategories={allCategories}
-        
-      /> */}
+      <UpdateCategoryAndSubca
+       productToUpdate={productToUpdate}
+       idUpdate={idUpdate}/>
 
       <AddSubCategoty allCategories={allCategories} />
 
       <hr />
       <h3>Paso 4: agregar especificaciones</h3>
+        <TableSpecific
+        productToUpdate={productToUpdate}
+        idUpdate={idUpdate}/>
+       
+
+      <UpdateSpecification
+       newProduct={productToUpdate}/>
+
+
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
       </InputLabel>
@@ -401,23 +360,30 @@ const NameRepetido = nameRepetido.map((p) => p.name);
         })}
       </Select>
        
+       <AddSpecificationToProduct
+       newProdId={idUpdate}
+       specifications={specifications}
+       />
      
 <hr />
 
-      <AddSpecificationToProduct
+      {/* <UpdateSpecif
+         idUpdate={idUpdate}
+         productToUpdate={productToUpdate}  /> */}
+      {/* <AddSpecificationToProduct
           newProdId={newProdId}
-          specifications={specifications}/>
+          specifications={specifications}/> */}
 
           <hr />
 
-      <AddSpecification
-           />
+      <AddSpecification/>
            
       <hr />
-      <h3>Paso 5: Agregar descuento</h3>
-      <AddDiscount/>
+      <h3>Paso 5: Modificar descuento</h3>
+      <AddDiscountToProduct
+      newProdId={idUpdate}
+      newProduct={productToUpdate}/>
       
-    
     </>
   );
 }

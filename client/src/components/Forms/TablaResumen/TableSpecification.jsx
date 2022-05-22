@@ -14,14 +14,7 @@ import { deleteProduct, getProducts } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 export const TableSpecification = ({
   newProdId,
-  input,
-  inputQ,
-  productosExistentes,
-  subCategory,
-  category,
-  allCategories,
-  specifications,
-  inputSpec,
+
 }) => {
   //console.log(specifications);
   // console.log(inputSpec)
@@ -37,7 +30,6 @@ export const TableSpecification = ({
 
   const newProducts = products.find((p) => p.id === newProdId);
  
-
 
 //-----FUNCIONES PARA ELIMINAR PRODUCTO RECIEN CREADO
 async function handleDeleteProduct(e){
@@ -238,14 +230,14 @@ async function handleDeleteProduct(e){
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.specifications &&
-              newProducts.specifications.map((spec) => {
+            {/* {newProducts?.specifications &&
+              newProducts.specifications.map((spec => spec.ProductSpecification).map( sp => {
                 return (
                   <TableRow>
                     <TableCell>
-                      <b>{spec.name}</b>
+                      <b>{sp.name}</b>
                     </TableCell>
-                    <TableCell>{spec["value:"].value}</TableCell>
+                    <TableCell>{sp.value}</TableCell>
                     <IconButton>
                       <EditIcon />
                     </IconButton>
@@ -254,7 +246,10 @@ async function handleDeleteProduct(e){
                     </IconButton>
                   </TableRow>
                 );
-              })}
+
+              })
+              
+              )} */}
           </TableBody>
         </Table>
       </TableContainer>

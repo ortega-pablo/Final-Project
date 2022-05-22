@@ -10,7 +10,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteProduct, getProducts } from "../../../redux/actions";
+import { deleteProduct, getProducts, putProduct } from "../../../redux/actions";
+import { ClassNames } from "@emotion/react";
 import { UpdateProduct } from "./UpdateProduct";
 
 export const DeleteProduct = () => {
@@ -24,9 +25,7 @@ export const DeleteProduct = () => {
   }, [dispatch]);
 
   const [idUpdate, setIdUpdate] = useState("");
-  console.log(idUpdate);
  
-
   async function handleDeleteProduct(e) {
     e.preventDefault();
 console.log("eliminandooo")
@@ -79,8 +78,7 @@ setIdUpdate(e.target.value)
                     name="delete"
                     startIcon={<EditIcon />}
                   >
-                  
-                    Editar
+                   Editar
                   </Button>
 
                   <Button
@@ -103,6 +101,7 @@ setIdUpdate(e.target.value)
                    <UpdateProduct
                    idUpdate={idUpdate}
                    handleEditProduct={handleEditProduct}
+                   setUpdating={setUpdating}
                    />
 
               </div>
@@ -111,6 +110,7 @@ setIdUpdate(e.target.value)
           </TableBody>
         </Table>
       </TableContainer >
+      
     </>
   );
 };

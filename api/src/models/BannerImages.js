@@ -1,11 +1,12 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("productInventory", {
-    quantity: {
-      type: DataTypes.REAL,
+  sequelize.define("bannerImages", {
+
+    urlImage: {
+      type: DataTypes.TEXT,
       allowNull: false,
-      defaultValue: 0
     },
+    
   });
 };
