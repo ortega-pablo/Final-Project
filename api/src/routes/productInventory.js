@@ -69,7 +69,6 @@ router.get("/", async (req, res, next) => {
     
 
    } else {
-
     const getAllInventory = await ProductInventory.findAll({
       include: [
         {
@@ -78,7 +77,6 @@ router.get("/", async (req, res, next) => {
         }
       ]
     });
-    console.log(getAllInventory)
 
     const mapped = getAllInventory.map(e => {
       return {
@@ -90,10 +88,7 @@ router.get("/", async (req, res, next) => {
       }
     })
 
-
-      
-     getAllInventory && res.status(200).send(mapped) 
-    
+    return res.status(200).send(mapped)
    }
 
   } catch(error){
