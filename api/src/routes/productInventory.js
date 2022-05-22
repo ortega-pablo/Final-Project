@@ -3,37 +3,37 @@ const router = Router();
 
 const { Product, ProductInventory } = require("../db");
 
-router.post("/", async (req, res, next) => {
-  const { quantity } = req.body;
-  const { productId } = req.query;
+// router.post("/", async (req, res, next) => {
+//   const { quantity } = req.body;
+//   const { productId } = req.query;
 
-  try {
+//   try {
   
-    const product = await Product.findOne({
-      where: {
-        id: productId,
-      },
-    });
+//     const product = await Product.findOne({
+//       where: {
+//         id: productId,
+//       },
+//     });
 
-    if(product) {
+//     if(product) {
 
-      const addQuantity = await ProductInventory.create({
-        quantity,
-      });
+//       const addQuantity = await ProductInventory.create({
+//         quantity,
+//       });
   
 
-      addQuantity.setProduct(productId);
-      res.status(200).send(addQuantity);
+//       addQuantity.setProduct(productId);
+//       res.status(200).send(addQuantity);
       
-    } else {
-      res.send("Product not found")
-    }
+//     } else {
+//       res.send("Product not found")
+//     }
     
    
-  } catch (error) {
-    next(error);
-  }
-});
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 
 
@@ -69,6 +69,7 @@ router.get("/", async (req, res, next) => {
     
 
    } else {
+
     const getAllInventory = await ProductInventory.findAll({
       include: [
         {
@@ -77,6 +78,7 @@ router.get("/", async (req, res, next) => {
         }
       ]
     });
+    console.log(getAllInventory)
 
     const mapped = getAllInventory.map(e => {
       return {
@@ -88,7 +90,10 @@ router.get("/", async (req, res, next) => {
       }
     })
 
-    return res.status(200).send(mapped)
+
+      
+     getAllInventory && res.status(200).send(mapped) 
+    
    }
 
   } catch(error){
