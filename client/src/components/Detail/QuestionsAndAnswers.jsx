@@ -14,11 +14,12 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
-import {postNewAsk} from '../../redux/actions/index'
+import {getUserIdByToken, postNewAsk} from '../../redux/actions/index'
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
 import { AnswerComponent } from "./AnswerComponent";
+import { useSelector } from "react-redux";
 
 const validationSchema = yup.object({
   content: yup
@@ -27,9 +28,22 @@ const validationSchema = yup.object({
 });
 
 
+
+
 export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
   const dispatch = useDispatch();
-  const {id} = useParams();
+  const {idProduct} = useParams();
+
+  const user = useSelector(state => state.userStatus);
+
+  const userName = JSON.parse(window.localStorage.getItem("token")).firstName;
+
+  const idToken = JSON.parse(window.localStorage.getItem("token")).token;
+
+  const userId = dispatch(getUserIdByToken(idToken));
+
+  console.log(`este es el nombre ${ userId}`);
+
 
  
   const formik = useFormik({
@@ -38,7 +52,7 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await dispatch(postNewAsk(values, id, 1 ));
+      await dispatch(postNewAsk(values, idProduct, 3 ));
       handleReRender(values.content);
       values.content = '';
     },
@@ -53,7 +67,8 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
         alignItems: "center",
       }}
     >
-    <Box component="form" onSubmit={formik.handleSubmit}  noValidate sx={{ mt: 1 }}>
+      {
+      user === 'user' ? <Box component="form" onSubmit={formik.handleSubmit}  noValidate sx={{ mt: 1 }}>
       <TextField
               margin="normal"
               required
@@ -74,7 +89,9 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
             >
               Ingresar
             </Button>
-      </Box>
+      </Box> : <></>
+      }
+    
       <List sx={{}}>
         {asks.map((a) => {
           return ( <>
@@ -90,8 +107,8 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
             <ListItem>
                 <ListItemText primary={a.content} secondary={"Usuario"} />                
             </ListItem>
-            <Divider component="li" variant="inset" /> 
-            {a.answer === null ? <AnswerComponent askId = {a.id} handleReRender = {handleReRender} /> : <></>}
+            <Divider component="li" variant="inset" />
+              {user ==="admin" && a.answer === null ? <AnswerComponent askId = {a.id} handleReRender = {handleReRender} /> : <></>}
               <li>
                 <Typography
                   sx={{ mt: "0,5%", ml: "9%" }}

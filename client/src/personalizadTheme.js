@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { createTheme, Paper } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { createTheme, Paper, Container } from "@mui/material";
+import { Box } from "@mui/system";
 
 const theme = createTheme({
   palette: {

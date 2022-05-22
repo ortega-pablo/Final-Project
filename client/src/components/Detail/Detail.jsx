@@ -25,6 +25,8 @@ export const Detail = () => {
   let { id } = useParams();
   
   const [reRender, setReRender] = React.useState('');
+
+  const user = useSelector(state => state.userStatus);
   
   const handleReRender = (e) => {
     console.log(e)
@@ -97,7 +99,6 @@ export const Detail = () => {
             <Divider textAlign="left" sx={{ mt: "2%", mb: "2%" }}>
               <Chip label="Consultas" size="string" sx={{ fontSize: "15px" }} />
             </Divider>
-
             <QuestionsAndAnswers handleReRender = {handleReRender} asks={productDetail[0].asks} />
           </Container>
         ) : (

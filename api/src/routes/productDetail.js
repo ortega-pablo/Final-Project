@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const { Product, Ask, Answer, Discount, Category, Specification, ProductInventory, SubCategory, Image } = require("../db");
+const { Product, Ask, Answer, Discount, Category, Specification, ProductInventory, SubCategory, Image, User } = require("../db");
 
 
 
@@ -62,7 +62,7 @@ const productInfo = async function (id) {
                 {
                     model: Answer,
                     attributes: ["id", "content", "createdAt"]
-                }
+                },
             ]
         },
         {

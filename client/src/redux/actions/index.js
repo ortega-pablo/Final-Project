@@ -49,6 +49,8 @@ export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT =
   "PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT";
 export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
 
+export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
+
 export const getProducts = (name) => {
   return async (dispatch) => {
     let response;
@@ -557,6 +559,23 @@ export const verifyToken = (token) => {
       console.log("Usuario no logeado");
     }
   };
+};
+
+export const getUserIdByToken = (token) => {
+  return async dispatch => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let response = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      console.log(response)
+    } catch (error) {
+      console.log("id no encontrado");
+    }
+  }
 };
 
 export function deleteDiscount(idD) {
