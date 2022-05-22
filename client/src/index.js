@@ -5,26 +5,11 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { CssBaseline } from "@material-ui/core";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { purple } from "@mui/material/colors";
+import { ThemeProvider } from "@mui/material/styles";
+import {theme} from "./personalizadTheme"
 
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      // Purple and green play nicely together.
-      main: '#375CFF',
-    },
-    secondary: {
-      // This is green.A700 as hex.
-      main: "#11cb5f",
-    },
-    neutral: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-  },
-});
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

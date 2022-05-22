@@ -52,14 +52,16 @@ const productInfo = async function (id) {
             through: {
                 attributes: ["value"],
             },
-        },
+        },  
         {
             model: Ask,
-            attributes: ["id", "content"],
+
+            order: [['createdAt', 'ASC']],
+            attributes: ["id", "content", "createdAt"],
             include: [
                 {
                     model: Answer,
-                    attributes: ["id", "content"]
+                    attributes: ["id", "content", "createdAt"]
                 }
             ]
         },
@@ -69,6 +71,7 @@ const productInfo = async function (id) {
               attributes: [],
             },
           },
+          
     ]
     })
 
