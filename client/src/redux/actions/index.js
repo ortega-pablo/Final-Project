@@ -26,6 +26,7 @@ export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
 export const POST_ADD_DISCOUNT_TO_PRODUCT = "POST_ADD_DISCOUNT_TO_PRODUCT";
 
 export const GET_ALL_SPECIFICATIONS = "GET_ALL_SPECIFICATIONS";
+export const VERIFY_TOKEN = "VERIFY_TOKEN";
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -257,3 +258,39 @@ export const filterPerPrice = (range) => {
     });
   };
 };
+
+export const verifyToken = (token) => {
+  return async (dispatch) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let response = await axios.get(
+        "http://localhost:3001/users/verifyToken",
+        config
+      );
+      console.log("Soy la responseee =>> ", response.data);
+      return dispatch({
+        type: VERIFY_TOKEN,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("SOY EL CATCH DEL VERIFY TOKEN ");
+      console.log(error);
+    }
+  };
+};
+
+// const config = {
+//   headers: { Authorization: `Bearer ${token}` }
+// };
+
+// const bodyParameters = {
+//  key: "value"
+// };
+
+// Axios.post(
+// 'http://localhost:8000/api/v1/get_token_payloads',
+// bodyParameters,
+// config
+// ).then(console.log).catch(console.log);
