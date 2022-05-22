@@ -1,10 +1,9 @@
-import { Box, Container, Typography } from "@mui/material";
-import React from "react";
-import AdminMenuLarge from "./AdminMenuLarge";
-import AdminMenuMobile from "./AdminMenuMobile";
-import Bienvenida from "./Bienvenida";
+import { Box, Container, Typography } from '@mui/material'
+import React from 'react'
+import AdminMenuLarge from './AdminMenuLarge'
+import AdminMenuMobile from './AdminMenuMobile'
 
-function AllCategories() {
+function AdminDiscounts() {
   return (
     <Box
       maxWidth="vp"
@@ -42,12 +41,12 @@ function AllCategories() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá van todas las categorías</Typography>
+          <Typography variant="h2">Acá se administran los descuentos</Typography>
 
         </Container>
       </Container>
     </Box>
-  );
+  )
 }
 
-export default AllCategories;
+export default AdminDiscounts

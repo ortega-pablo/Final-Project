@@ -33,9 +33,9 @@ function validate(value) {
 
 function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories, handleClickSubmitPerPrice}) {
 
-  const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
 
   const handleClick = () => {
@@ -67,9 +67,10 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
       </Paper>
 
       <Collapse in={open4} timeout="auto" unmountOnExit>
-      <Paper sx={{ height: "100%", display: "flex", maxWidth: 320}}>
+      <Paper sx={{ maxHeight: "305px", display: "flex", width: 240, position:"fixed", alignSelf:"center", left:"50%", marginLeft:"-120px", overflowY:"scroll"}}>
       <List sx={{ width: 240, alignItems: "center"  }}>
-        <ListItemButton>
+
+        <ListItemButton component="a" href="/">
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
@@ -90,7 +91,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
           <Divider variant="middle" />  
             
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/allCategories" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -99,7 +100,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminCategories" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
@@ -123,7 +124,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
           <Divider variant="middle" />  
             
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/allProducts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -132,7 +133,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminProducts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
@@ -156,7 +157,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
           <Divider variant="middle" />
 
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton component="a" href="/allDiscounts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -165,7 +166,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminDiscounts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
