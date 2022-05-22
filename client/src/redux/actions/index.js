@@ -56,6 +56,7 @@ export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
 
 
 
+export const VERIFY_TOKEN = "VERIFY_TOKEN";
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -291,6 +292,7 @@ export const filterPerPrice = (range) => {
   };
 };
 
+
 export function deleteProduct (id){
   return async function (dispatch){
       try {
@@ -506,10 +508,37 @@ export const postDiscount = (payload) => {
 
       return json;
     } catch (error) {
+
+
+
       console.log(error);
     }
   };
 };
+
+export const verifyToken = (token) => {
+  return async (dispatch) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let response = await axios.get(
+        "http://localhost:3001/users/verifyToken",
+        config
+      );
+      console.log("Soy la responseee =>> ", response.data);
+      return dispatch({
+        type: VERIFY_TOKEN,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("SOY EL CATCH DEL VERIFY TOKEN ");
+
+    }}}
+
+
+
+
 
 
 export function deleteDiscount (idD){
@@ -576,3 +605,16 @@ export function deleteSpecification (idS){
       }
   }
 };
+// const config = {
+//   headers: { Authorization: `Bearer ${token}` }
+// };
+
+// const bodyParameters = {
+//  key: "value"
+// };
+
+// Axios.post(
+// 'http://localhost:8000/api/v1/get_token_payloads',
+// bodyParameters,
+// config
+// ).then(console.log).catch(console.log);

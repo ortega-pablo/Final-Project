@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,7 +19,9 @@ import { Link, Input} from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import { verifyToken } from '../../redux/actions';
 
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,11 +65,20 @@ const StyledInputBase = styled(Input)(({ theme }) => ({
 
 
 
+
 export const NavBar = (props) => {
   const [anchorProfileEl, setAnchorProfileEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const [name, setName] = React.useState('');
+  const dispatch = useDispatch() 
+
+  const ls = JSON.parse(localStorage.getItem('token'))
+  //console.log('soy el token que estas despachando  => ', ls?.token)
+
+  useEffect(()=>{
+    dispatch(verifyToken(ls?.token))
+  },[dispatch])
 
 
   const handleChangeForName = (e) => {
@@ -95,8 +106,7 @@ export const NavBar = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const ls = JSON.parse(localStorage.getItem('token'))
-  console.log('soy local storage => ', ls)
+
 
   const menuProfileId = 'primary-search-account-menu';
   const renderProfileMenu = (
@@ -116,6 +126,8 @@ export const NavBar = (props) => {
       onClose={handleMenuProfileClose}
     >
      {
+       
+       //userStatus === user 
        ls?.token?
        <>
       <MenuItem onClick={handleMenuProfileClose} >
@@ -129,7 +141,8 @@ export const NavBar = (props) => {
         </Link>
       </MenuItem>
        </>
-      : 
+      :
+      //userStatus === '' 
       <>
       <MenuItem onClick={handleMenuProfileClose}>
         <Link sx={{textDecoration:'none',  color:'inherit'}} href='/login'>
@@ -142,6 +155,8 @@ export const NavBar = (props) => {
         </Link>
       </MenuItem>
       </>
+      // userStauts === 'admin'
+      // menu item que muestre link panel de control
      }
     </Menu>
   );
