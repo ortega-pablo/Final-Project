@@ -2,6 +2,7 @@ import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import GetAllSpecificationsToAdmin from './Get/GetAllSpecificationsToAdmin'
 
 function AllSpecifications() {
     return (
@@ -41,7 +42,8 @@ function AllSpecifications() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Todas las especificaciones</Typography>
+              <Typography variant="h2" sx={{mt:5}} >Especificaciones</Typography>
+              <GetAllSpecificationsToAdmin/>
     
             </Container>
           </Container>
