@@ -8,7 +8,6 @@ import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 export const AddDiscountToProduct = ({newProdId, newProduct}) => {
   const dispatch = useDispatch();
   const allDiscounts = useSelector((state) => state.discounts);
-console.log(newProdId)
 // idP = newProduct
 
   useEffect(() => {

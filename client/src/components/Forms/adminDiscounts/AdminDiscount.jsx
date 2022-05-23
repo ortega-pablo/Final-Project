@@ -1,11 +1,14 @@
 import {
+  Box,
   Button,
   FormControlLabel,
+  Paper,
   Switch,
   TableCell,
+  TableContainer,
   TableRow,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDiscount, getAllDiscount, putDiscount } from "../../../redux/actions";
 import { CreateDiscout } from "./CreateDiscout"
@@ -17,6 +20,9 @@ export const AdminDiscount = () => {
   const [state, setState] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [idUpdate, setIdUdate] = useState("");
+  useEffect(()=>{
+    dispatch(getAllDiscount())
+  },[dispatch])
 
   async function changeState(e) {
     // e.preventDefault()
@@ -45,10 +51,11 @@ export const AdminDiscount = () => {
    }
 
   return (
-    <>
-      <div>Listado de todos los descuentos:</div>
+    <Box>
       {allDiscounts.map((d) => {
         return (
+          <TableContainer component={Paper} >
+
           <TableRow>
             <TableCell>{d.name}</TableCell>
             <TableCell>{d.description}</TableCell>
@@ -87,6 +94,7 @@ export const AdminDiscount = () => {
               Eliminar
             </Button>
           </TableRow>
+          </TableContainer>
         );
       })}
 {   updating && 
@@ -98,10 +106,7 @@ export const AdminDiscount = () => {
 
 }
 
-      <h3>Agregar nuevo descuento:</h3>
-   <CreateDiscout
-   allDiscounts={allDiscounts}/>
-    </>
+    </Box>
 
 
   );

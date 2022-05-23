@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import SwipeableDrawerFilters from './SwipeableFilters/SipeableFilters'
 import { Box } from "@mui/system";
 import { SelectProductsPerPage } from "./Pagination/SelectProductsPerPage";
+
 const useStyles = makeStyles((theme) => ({
 
   paper: {
@@ -202,6 +203,7 @@ export const Home = () => {
                           price={prod.price}
                           id={prod.id}
                           description={prod.description}
+                          images={prod.images}
                         />
                     </Link>
                       </Paper>

@@ -6,6 +6,7 @@ import { getCategories, getSubCategories, postAddSubCategory } from "../../redux
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Swal from 'sweetalert2';
 
 export const AddSubCategoty = ({ allCategories }) => {
   const allCategory = useSelector((state) => state.categories);
@@ -55,9 +56,23 @@ export const AddSubCategoty = ({ allCategories }) => {
       await dispatch(postAddSubCategory(category, values));
       await dispatch(getCategories());
       await dispatch(getSubCategories())
+      Swal.fire({
+        background: '#DFDCD3',
+        icon: 'success',
+        title: 'Creada',
+        showConfirmButton: false,
+        timer: 1500
+      })
       resetForm({values:""})
     }else {
-      alert("seleccione una categoria")
+      Swal.fire({
+        background: '#DFDCD3',
+        confirmButtonColor: '#B6893E',
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Seleccione una categoria'
+      })
+
     }
 
 
@@ -78,34 +93,8 @@ export const AddSubCategoty = ({ allCategories }) => {
   }
 
   return (
-    <>
-      <div>AddSubCategoty</div>
-      <InputLabel id="demo-simple-select-standard-label">
-        Agregar Sub categoria a:
-      </InputLabel>
+    <Box sx={{display:'flex', }}>
 
-      <Select
-        labelId="demo-simple-select-standard-label"
-        id="demo-simple-select-standard"
-        value={category}
-        onChange={handleChangeSelect}
-        label="Age"
-        type="click"
-        name="select"
-        
-
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {allCategories?.map((cat) => {
-          return (
-            <MenuItem value={cat.id}>
-              {cat.name}
-            </MenuItem>
-          );
-        })}
-      </Select>
       <Box
         component="form"
         noValidate
@@ -113,6 +102,7 @@ export const AddSubCategoty = ({ allCategories }) => {
         onChange={handleInputNewSubCat}
         // onChange={handleInput}
         onSubmit={formik.handleSubmit}
+        sx={{display:'flex', alignItems:'center'}}
       >
         <TextField
           id="outlined-basic"
@@ -123,6 +113,7 @@ export const AddSubCategoty = ({ allCategories }) => {
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
+          sx={{m:3}}
         />
         <TextField
           id="outlined-basic"
@@ -138,10 +129,33 @@ export const AddSubCategoty = ({ allCategories }) => {
           }
           helperText={formik.touched.description && formik.errors.description}
         />
-     
-        <Button type="submit">Crear nueva Sub Categoria</Button>
+              <InputLabel id="demo-simple-select-standard-label" sx={{m:3}}>
+        Agregar Sub categoria a:
+      <Select
+        labelId="demo-simple-select-standard-label"
+        id="demo-simple-select-standard"
+        value={category}
+        onChange={handleChangeSelect}
+        label="Age"
+        type="click"
+        name="select"
+        sx={{m:3}}
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {allCategories?.map((cat) => {
+          return (
+            <MenuItem value={cat.id}>
+              {cat.name}
+            </MenuItem>
+          );
+        })}
+      </Select>
+      </InputLabel>
+        <Button type="submit" variant='contained' color="ambar3">Crear</Button>
        
       </Box>
-    </>
+    </Box>
   );
 };
