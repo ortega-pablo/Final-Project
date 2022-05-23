@@ -9,8 +9,6 @@ import { NotFound } from "../NotFound/NotFound";
 function AdminPanel() {
   const userStatus = useSelector((state) => state.userStatus);
 
-  console.log('userstatus en admin panel => ', userStatus)
-  
   return (
     
       userStatus === "admin" ?

@@ -1,11 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
 import GetAllProductsToAdmin from './Get/GetAllProductsToAdmin'
 
 function AllProducts() {
+  const userStatus = useSelector((state) => state.userStatus);
   return (
+    userStatus ==='admin' ?
     <Box
       maxWidth="vp"
       sx={{
@@ -47,6 +51,8 @@ function AllProducts() {
         </Container>
       </Container>
     </Box>
+    :
+    <NotFound/>
   )
 }
 
