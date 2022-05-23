@@ -2,6 +2,7 @@ import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import {NewProduct} from './Get/Create-Modify/NewProduct'
 
 function CreateProduct() {
     return (
@@ -42,7 +43,7 @@ function CreateProduct() {
               }}
             >
               <Typography variant="h2">Crear Producto</Typography>
-    
+              <NewProduct/>
             </Container>
           </Container>
         </Box>
