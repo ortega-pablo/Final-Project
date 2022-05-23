@@ -87,8 +87,8 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
             </Button>
       </Box> : <></>
       }
-    
-      <List sx={{}}>
+
+      <List  sx={{ maxHeight:"300px", mb: "10px", overflowY: "scroll"}}>
         {asks.map((a) => {
           return ( <>
             <Divider component="li" />
