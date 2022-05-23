@@ -2,6 +2,7 @@ import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import { GetAllDiscountsToAdmin } from './Get/GetAllDiscountsToAdmin'
 
 function AllDiscounts() {
   return (
@@ -41,7 +42,8 @@ function AllDiscounts() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá se pueden ver todos los decuentos</Typography>
+          <Typography variant="h2">Descuentos</Typography>
+          <GetAllDiscountsToAdmin/>
 
         </Container>
       </Container>

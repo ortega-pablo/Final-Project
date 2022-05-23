@@ -24,8 +24,7 @@ function AllProducts() {
         sx={{
           display: "flex",
           flexDirection: "row",
-          width: "100%",
-          height: "100%",
+
           marginTop: 1,
           padding: 0,
         }}
@@ -42,6 +41,7 @@ function AllProducts() {
             alignItems: "center",
           }}
         >
+        <Typography variant="h2" mt={4} color='ambar5.main' >Productos</Typography>
           <GetAllProductsToAdmin />
           
         </Container>
