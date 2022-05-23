@@ -34,17 +34,16 @@ import { AdminDiscount } from "./adminDiscounts/AdminDiscount";
 import { TableSpecificationNewProduct } from "./TableSpecificationNewProduct";
 import { TableSpecific } from "./AdminProduct/TableSpecific";
 import { AdminSpecif } from "./AdminSpecificacat/AdminSpecif";
-
+import { AddImageToProduct } from "./AddImageToProduct";
+import { AdmininAllStock } from "./AdminProduct/AdmininAllStock";
 
 export function UseFormControl() {
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
-  
- 
-  const [inputQ, setInputQ] = useState({ quantity: 0 });
 
+  const [inputQ, setInputQ] = useState({ quantity: 0 });
 
   const [category, setCategory] = React.useState("");
   const [subCategory, setSubCategory] = React.useState("");
@@ -60,120 +59,132 @@ export function UseFormControl() {
   const NameRepetido = productosExistentes.map((p) => p.name);
   const skuRepetido = productosExistentes.map((p) => p.sku);
 
-
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
-     
-      .notOneOf(NameRepetido.map(name=>name), "Ya existe un producto con éste nombre" )
+
+      .notOneOf(
+        NameRepetido.map((name) => name),
+        "Ya existe un producto con éste nombre"
+      )
       .required("El nombre es requerido"),
-    
-      sku: yup
+
+    sku: yup
       .string("Ingrese la descripción")
-    .notOneOf(skuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
+      .notOneOf(
+        skuRepetido.map((sku) => sku),
+        "Ya existe un producto con éste codigo sku"
+      )
       .required("La descripción es requerida"),
-      brand: yup
+    brand: yup
       .string("Ingrese la descripción")
       .required("La descripción es requerida"),
-      price: yup
-      .number("El precio es numerico.").typeError("El precio deber ser numerico").positive("El precio debe ser positivo")
+    price: yup
+      .number("El precio es numerico.")
+      .typeError("El precio deber ser numerico")
+      .positive("El precio debe ser positivo")
       // .string()
       .required("La descripción es requerida"),
-      description: yup
+    description: yup
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
-      warranty: yup
+    warranty: yup
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
-      netWeight: yup
-     .number("El peso neto debe ser numerico").typeError("El peso neto deber ser numerico").positive("El peso neto debe ser positivo")
-    //  .string()
+    netWeight: yup
+      .number("El peso neto debe ser numerico")
+      .typeError("El peso neto deber ser numerico")
+      .positive("El peso neto debe ser positivo")
+      //  .string()
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
 
-      grossWeight: yup
-      .number("El peso bruto es numerico").typeError("El peso bruto deber ser numerico").positive("El peso bruto debe ser positivo")
+    grossWeight: yup
+      .number("El peso bruto es numerico")
+      .typeError("El peso bruto deber ser numerico")
+      .positive("El peso bruto debe ser positivo")
       // .string()
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
-      image: yup
-      .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
-      .required("La descripción es requerida"),
+    // image: yup
+    //   .string("Ingrese la descripción")
+    //   // .min(8, 'Password should be of minimum 8 characters length')
+    //   .required("La descripción es requerida"),
+    keyWords: yup
+    .string("Ingrese la descripción."),
+    
+    productDimensions: yup
+    .string("Ingrese la descripcións")
+    .required("La dimensión es requerida"),
+    packageDimensions : yup
+    .string("Ingrese la descripciónd")
+    .required("La dimensión es requerida"),
+    thumbnail :yup
+    .string("Ingrese la descripciónf"),
+
 
 
   });
-  
 
   const formik = useFormik({
     initialValues: {
-    name: "",
-    sku: "",
-    brand: "",
-    keyWords: "",
-    price: "",
-    description: "",
-    warranty: "",
-    productDimensions: "",
-    packageDimensions: "",
-    netWeight: "",
-    grossWeight: "",
-    thumbnail: "",
-    image: ""
+      name: "",
+      sku: "",
+      brand: "",
+      keyWords: "",
+      price: "",
+      description: "",
+      warranty: "",
+      productDimensions: "",
+      packageDimensions: "",
+      netWeight: "",
+      grossWeight: "",
+      thumbnail: "",
+      // image: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values, {resetForm}) => {
-          
+    onSubmit: async (values, { resetForm }) => {
       const newProd = await dispatch(postProduct(values));
-       await setNewProdId(newProd.data.id);
-      await dispatch(getProducts())
-      resetForm({values:""})
+      await setNewProdId(newProd.data.id);
+      await dispatch(getProducts());
+    resetForm({ values: "" });
     },
   });
-
 
   const handleChangeSubCat = (e) => {
     e.preventDefault();
     setSubCategory(e.target.value);
   };
 
-
-
   const handleClickAddCat = async (e) => {
     e.preventDefault();
-        await dispatch(postAddCateroryToProduct(newProdId, category))
-        await dispatch(getProducts())
-        
+    await dispatch(postAddCateroryToProduct(newProdId, category));
+    await dispatch(getProducts());
   };
 
-  async function handleAddCategoryToProduct(e){
+  async function handleAddCategoryToProduct(e) {
     e.preventDefault();
     setCategory(e.target.value);
-    
-}
+  }
 
+  async function handleClickAddSubCat(e) {
+    e.preventDefault();
+    if (category && subCategory) {
+      await dispatch(postAddCateroryToProduct(newProdId, category));
+      await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
+      await dispatch(getProducts());
+      setCategory(0);
+      setSubCategory(0);
+    } else if (category) {
+      setSubCategory(0);
+      await dispatch(postAddCateroryToProduct(newProdId, category));
 
-
-  async function handleClickAddSubCat(e){
-    e.preventDefault()
-    if(category && subCategory){
-        await dispatch(postAddCateroryToProduct(newProdId, category))
-        await dispatch(postAddSubCateroryToProduct(newProdId,subCategory ))
-        await dispatch(getProducts())
-        setCategory(0)
-        setSubCategory(0)
-    } else if(category){
-      setSubCategory(0)
-      await dispatch(postAddCateroryToProduct(newProdId, category))
-    
-      await dispatch(getProducts())
-      setSubCategory(0)
-     
-    }
-    else{
-        alert("primero agregue la categoria")
+      await dispatch(getProducts());
+      setSubCategory(0);
+    } else {
+      alert("primero agregue la categoria");
     }
   }
   ///------funciones agregar especificacion al producto
@@ -184,7 +195,7 @@ export function UseFormControl() {
     e.preventDefault();
     setSpecifications(e.target.value);
   }
-  
+
   function handleInputSpec(e) {
     setInputSpec({
       ...inputSpec,
@@ -192,14 +203,16 @@ export function UseFormControl() {
     });
   }
 
-  async function handleClickNewSpec(e){
-    e.preventDefault()
-    await dispatch(postAddSpecificationToProduct(newProdId , specifications, inputSpec))
-    await dispatch(getProducts())
+  async function handleClickNewSpec(e) {
+    e.preventDefault();
+    await dispatch(
+      postAddSpecificationToProduct(newProdId, specifications, inputSpec)
+    );
+    await dispatch(getProducts());
   }
   //-------
   const categSelect = allCategories.filter((c) => c.id === category);
-  
+
   return (
     <>
       <Box
@@ -207,8 +220,8 @@ export function UseFormControl() {
         noValidate
         autoComplete="off"
         // onChange={(e) => handleInput(e)}
-      //  onSubmit={(e) => handleSubmit(e)}
-      onSubmit={formik.handleSubmit}
+        //  onSubmit={(e) => handleSubmit(e)}
+        onSubmit={formik.handleSubmit}
       >
         <h2>Creando algo</h2>
         <hr />
@@ -221,9 +234,9 @@ export function UseFormControl() {
           // helperText={leyendaErrorName}
           // error={errorName}
           value={formik.values.name}
-        onChange={formik.handleChange}
-        error={formik.touched.name && Boolean(formik.errors.name)}
-        helperText={formik.touched.name && formik.errors.name}
+          onChange={formik.handleChange}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
         />
         <TextField
           id="outlined-basic"
@@ -233,9 +246,9 @@ export function UseFormControl() {
           // helperText={leyendaErrorBrand}
           // error={errorBrand}
           value={formik.values.brand}
-        onChange={formik.handleChange}
-        error={formik.touched.brand && Boolean(formik.errors.brand)}
-        helperText={formik.touched.brand && formik.errors.brand}
+          onChange={formik.handleChange}
+          error={formik.touched.brand && Boolean(formik.errors.brand)}
+          helperText={formik.touched.brand && formik.errors.brand}
         />
         <TextField
           id="outlined-basic"
@@ -274,7 +287,9 @@ export function UseFormControl() {
           // error={errorDesc}
           value={formik.values.description}
           onChange={formik.handleChange}
-          error={formik.touched.description && Boolean(formik.errors.description)}
+          error={
+            formik.touched.description && Boolean(formik.errors.description)
+          }
           helperText={formik.touched.description && formik.errors.description}
         />
         <TextField
@@ -304,7 +319,9 @@ export function UseFormControl() {
           // error={errorGrossWei}
           value={formik.values.grossWeight}
           onChange={formik.handleChange}
-          error={formik.touched.grossWeight && Boolean(formik.errors.grossWeight)}
+          error={
+            formik.touched.grossWeight && Boolean(formik.errors.grossWeight)
+          }
           helperText={formik.touched.grossWeight && formik.errors.grossWeight}
         />
         <TextField
@@ -325,18 +342,30 @@ export function UseFormControl() {
           label="keyWords"
           variant="outlined"
           name="keyWords"
+          value={formik.values.keyWords}
+          onChange={formik.handleChange}
+          error={formik.touched.keyWords && Boolean(formik.errors.keyWords)}
+          helperText={formik.touched.keyWords && formik.errors.keyWords}
         />
         <TextField
           id="outlined-basic"
           label="Dimensiones del producto *"
           variant="outlined"
           name="productDimensions"
+          value={formik.values.productDimensions}
+          onChange={formik.handleChange}
+          error={formik.touched.productDimensions && Boolean(formik.errors.productDimensions)}
+          helperText={formik.touched.productDimensions && formik.errors.productDimensions}
         />
         <TextField
           id="outlined-basic"
           label="Dimensiones del package *"
           variant="outlined"
           name="packageDimensions"
+          value={formik.values.packageDimensions}
+          onChange={formik.handleChange}
+          error={formik.touched.packageDimensions && Boolean(formik.errors.packageDimensions)}
+          helperText={formik.touched.packageDimensions && formik.errors.packageDimensions}
         />
 
         <TextField
@@ -344,11 +373,16 @@ export function UseFormControl() {
           label="Imagen de miniatura"
           variant="outlined"
           name="thumbnail"
+          value={formik.values.thumbnail}
+          onChange={formik.handleChange}
+          error={formik.touched.thumbnail && Boolean(formik.errors.thumbnail)}
+          helperText={formik.touched.thumbnail && formik.errors.thumbnail}
         />
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="Imagenes"
           variant="outlined"
+        
           name="image"
           // helperText={leyendaerrorImage}
           // error={errorImage}
@@ -356,30 +390,32 @@ export function UseFormControl() {
           onChange={formik.handleChange}
           error={formik.touched.image && Boolean(formik.errors.image)}
           helperText={formik.touched.image && formik.errors.image}
-        />
+        /> */}
 
         <Button type="submit">Crear</Button>
 
         <h4>(*) elementos obligatorios</h4>
       </Box>
+
+      <hr />
+      <h3>Agregar imagen</h3>
+
+      <AddImageToProduct newProduct={newProduct} newProdId={newProdId} />
       <hr />
       <h3>Paso 2: Agregar stock</h3>
-          
-      <AddQuantity
-         newProdId={newProdId}
-         newProduct={newProduct}
-         /> 
+
+      <AddQuantity newProdId={newProdId} newProduct={newProduct} />
 
       <hr />
 
       <h3>Paso 3: Agregar categoría y sub categorías</h3>
       <TableCatAndSubcOfProduct
-      subCategory={subCategory}
-      category={category}
-      
-      newProdId={newProdId}/>
+        subCategory={subCategory}
+        category={category}
+        newProdId={newProdId}
+      />
       <InputLabel id="demo-simple-select-standard-label">Categoria</InputLabel>
-    
+
       <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
@@ -390,27 +426,23 @@ export function UseFormControl() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {allCategories?.map((cat,i) => {
+        {allCategories?.map((cat, i) => {
           return (
             <MenuItem key={i} value={cat.id}>
               {cat.name}
             </MenuItem>
           );
         })}
-
       </Select>
 
-      { category === 0 ?  <Button >
-        Agregar categoria
-      </Button> :
-        <Button onClick={(e) => handleClickAddCat(e)}>
-        Agregar categoria
-      </Button>
-
-      }
-<hr />
+      {category === 0 ? (
+        <Button>Agregar categoria</Button>
+      ) : (
+        <Button onClick={(e) => handleClickAddCat(e)}>Agregar categoria</Button>
+      )}
+      <hr />
       <InputLabel id="demo-simple-select-standard-label">
-       Agregar  Sub categoria
+        Agregar Sub categoria
       </InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
@@ -423,30 +455,33 @@ export function UseFormControl() {
           <em>None</em>
         </MenuItem>
         {categSelect[0]?.subCategories?.map((subc, i) => {
-          return <MenuItem key={i} value={subc.id}>{subc.name}</MenuItem>;
+          return (
+            <MenuItem key={i} value={subc.id}>
+              {subc.name}
+            </MenuItem>
+          );
         })}
       </Select>
-        { subCategory === 0 ? <Button type="button" > Agregar Sub categoría </Button> : <Button onClick={(e) => handleClickAddSubCat(e)}>
-        Agregar Sub categoría
-      </Button> }
-      
-     
-      <AddCategory
-        allCategories={allCategories}
-        
-      />
+      {subCategory === 0 ? (
+        <Button type="button"> Agregar Sub categoría </Button>
+      ) : (
+        <Button onClick={(e) => handleClickAddSubCat(e)}>
+          Agregar Sub categoría
+        </Button>
+      )}
+
+      <AddCategory allCategories={allCategories} />
 
       <AddSubCategoty allCategories={allCategories} />
 
       <hr />
       <h3>Paso 4: agregar especificaciones</h3>
       <TableSpecific
-         idUpdate={newProdId}
-         specifications={specifications}
-         productToUpdate={newProduct}
-        />
-       
-  
+        idUpdate={newProdId}
+        specifications={specifications}
+        productToUpdate={newProduct}
+      />
+
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
       </InputLabel>
@@ -460,56 +495,47 @@ export function UseFormControl() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {allSpecifications.map((spec,i) => {
-          return <MenuItem key={i} value={spec.id}>{spec.name.toLowerCase()}</MenuItem>;
+        {allSpecifications.map((spec, i) => {
+          return (
+            <MenuItem key={i} value={spec.id}>
+              {spec.name.toLowerCase()}
+            </MenuItem>
+          );
         })}
       </Select>
-       
-     
-
 
       <AddSpecificationToProduct
-          newProdId={newProdId}
-          specifications={specifications}
-          newProduct={newProduct}
-          />
+        newProdId={newProdId}
+        specifications={specifications}
+        newProduct={newProduct}
+      />
 
-          <hr />
+      <hr />
 
-      <AddSpecification
-           />
-           
+      <AddSpecification />
+
       <hr />
       <h3>Paso 5: Agregar descuento</h3>
-      <AddDiscountToProduct
-      newProdId={newProdId}
-      newProduct={newProduct}/>
+      <AddDiscountToProduct newProdId={newProdId} newProduct={newProduct} />
 
-<hr />
+      <hr />
       <TableSpecification
         newProdId={newProdId}
-        // newProd={newProd}
-       // input={input}
-        // inputQ={inputQ}
-        // allCategories={allCategories}
-        // subCategory={subCategory}
-        // category={category}
-        // productosExistentes={productosExistentes}
-        // specifications={specifications}
-        // inputSpec={inputSpec}
+        newProduct={newProduct}
         
-         />
-            <hr />
-        <DeleteProduct/>
-        <hr />
+      />
+      <hr />
+      {/* Este DeleteProdut en realiad nos trae todos los productos creados, con un boton de borrar o editar */}
+      <DeleteProduct />
+      <hr />
 
-        <AdminCatAndSubc
-        />
-   <hr />
-        <h2>Administracion de descuentos:</h2>
-        <AdminDiscount/>
-        <hr />
-        <AdminSpecif/>
+      <AdminCatAndSubc />
+      <hr />
+      <h2>Administracion de descuentos:</h2>
+      <AdminDiscount />
+      <hr />
+      <AdminSpecif />
+      <AdmininAllStock/>
     </>
   );
 }

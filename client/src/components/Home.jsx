@@ -202,6 +202,7 @@ export const Home = () => {
                           price={prod.price}
                           id={prod.id}
                           description={prod.description}
+                          images={prod.images}
                         />
                     </Link>
                       </Paper>

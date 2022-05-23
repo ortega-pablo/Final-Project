@@ -42,6 +42,8 @@ import {
   PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
   PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
   DELETE_SPECIFICATION,
+  POST_ADD_IMAGE,
+  DELETE_IMAGE_TO_PRODUCT,
   GET_USER_ID_BY_TOKEN
 } from "../actions";
 
@@ -380,6 +382,18 @@ const rootReducer = (state = initialState, action) => {
         ...state
       }
     }
+
+      case POST_ADD_IMAGE :
+        return {
+          ...state
+        }
+
+        case DELETE_IMAGE_TO_PRODUCT: {
+          return {
+            ...state,
+          };
+        }
+    
 
     default:
       return state;
