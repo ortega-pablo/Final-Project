@@ -14,7 +14,7 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
-import { postNewAnswer} from '../../redux/actions/index'
+import { postNewAnswer, getUserIdByToken } from '../../redux/actions/index'
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Box } from "@mui/system";
 
@@ -29,13 +29,15 @@ const validationSchemaForAnswer = yup.object({
 export const AnswerComponent = ({userId, askId, handleReRender}) =>{
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
+    const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
     const formikForAnswer = useFormik({
         initialValues: {
           content: '',
         },
         validationSchema: validationSchemaForAnswer,
         onSubmit: async (values) => {
-           await dispatch(postNewAnswer(values, askId, 2));
+          const userId = await dispatch(getUserIdByToken(idToken));
+           await dispatch(postNewAnswer(values, askId, userId));
            handleReRender(values.content);
            values.content = '';
         }

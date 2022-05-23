@@ -1,4 +1,4 @@
-import { Box, Button, TableCell, TableRow, TextField } from "@mui/material";
+import { Box, Button, Paper, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AddCategory } from "../AddCategory";
 import { UpadateSubCat } from "./UpadateSubCat";
 import { AddSubCategoty } from "../AddSubCategoty";
+import Swal from 'sweetalert2';
 
 export const AdminCatAndSubc = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,13 @@ export const AdminCatAndSubc = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, {resetForm} ) => {
-      alert(JSON.stringify(values, null, 2));
+      Swal.fire({
+        background: '#DFDCD3',
+        icon: 'success',
+        title: 'Exito',
+        showConfirmButton: false,
+        timer: 1500
+      })
 
       await dispatch(putCategory(idCat, values));
       await dispatch(getCategories());
@@ -76,17 +83,16 @@ export const AdminCatAndSubc = () => {
     setIdCat(e.target.value);
   }
   return (
-    <>
-      <h2>Administracion de categorias y subcategorias</h2>
-
-      <h3>Categorias existentes: {allCategories.length} </h3>
-      {allCategories.map((c) => {
+    <Box>
+      <Typography variant="h5" sx={{mb:5}}>Administracion de categorias y subcategorias</Typography>
+      <Typography sx={{mb:5}}>Categorias existentes: {allCategories.length} </Typography>
+      {allCategories?.map((c) => {
         return (
-          <>
+          <TableContainer component={Paper} align="center">
             <TableRow>
               <TableCell>{c.name}</TableCell>
               <TableCell>{c.description}</TableCell>
-
+              <TableCell>
               <Button
                 value={c.id}
                 onClick={(e) => handleUpdateCat(e)}
@@ -103,8 +109,10 @@ export const AdminCatAndSubc = () => {
               >
                 Eliminar
               </Button>
+              </TableCell>
+              
             </TableRow>
-          </>
+          </TableContainer>
         );
       })}
 
@@ -170,11 +178,11 @@ export const AdminCatAndSubc = () => {
 
 
         <h3>Sub categorías existentes</h3>
-        <UpadateSubCat
-        allSubCategories={allSubCategories}/>
+        {/* <UpadateSubCat
+        allSubCategories={allSubCategories}/> */}
         <AddSubCategoty
           allCategories={allCategories}
         />
-    </>
+    </Box>
   );
 };

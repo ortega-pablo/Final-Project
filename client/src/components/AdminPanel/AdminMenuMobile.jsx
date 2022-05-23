@@ -16,6 +16,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import SellIcon from '@mui/icons-material/Sell';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PeopleIcon from '@mui/icons-material/People';
+import AddIcon from '@mui/icons-material/Add';
 
 function validate(value) {
   let errors = {};
@@ -33,10 +34,12 @@ function validate(value) {
 
 function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories, handleClickSubmitPerPrice}) {
 
-  const [open, setOpen] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
+  const [open5, setOpen5] = React.useState(false);
+  const [open6, setOpen6] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -53,32 +56,41 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
   const handleClick4 = () => {
     setOpen4(!open4);
   };
-  
+
+  const handleClick5 = () => {
+    setOpen5(!open5);
+  };
+
+  const handleClick6 = () => {
+    setOpen6(!open6);
+  };
   return (
     <HiddensmUp sx={{display:"flex", flexDirection:"column", alignItems:"center"}} >
       <Paper sx={{ display: "flex", width: "100%"}}>
-      <ListItemButton onClick={handleClick4} >
+      <ListItemButton onClick={handleClick6} >
             <ListItemIcon>
               <FilterListIcon />
             </ListItemIcon>
             <ListItemText primary="Filtros" />
-            {open4 ? <ExpandLess /> : <ExpandMore />}
+            {open6 ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       </Paper>
 
-      <Collapse in={open4} timeout="auto" unmountOnExit>
-      <Paper sx={{ height: "100%", display: "flex", maxWidth: 320}}>
+      <Collapse in={open6} timeout="auto" unmountOnExit>
+      <Paper sx={{ maxHeight: "400px", display: "flex", width: 260, position:"fixed", alignSelf:"center", left:"50%", marginLeft:"-130px", overflowY:"scroll", scrollbarColor:"ambar1",}}>
       <List sx={{ width: 240, alignItems: "center"  }}>
-        <ListItemButton>
+
+     
+        <ListItemButton component="a" href="/">
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItemButton>
-
+       
         <Divider variant="middle" />
 
-        <ListItemButton onClick={handleClick3}>
+        <ListItemButton onClick={handleClick3} >
           <ListItemIcon>
             <CategoryIcon />
           </ListItemIcon>
@@ -90,7 +102,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
           <Divider variant="middle" />  
             
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/allCategories" sx={{ pl: 4 }} >
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -99,11 +111,20 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminCategories" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
               <ListItemText primary="Administrar" />
+            </ListItemButton>
+
+            <Divider variant="middle" />
+
+            <ListItemButton component="a" href="/createCategory" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Crear" />
             </ListItemButton>
           
           </List>
@@ -123,7 +144,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
           <Divider variant="middle" />  
             
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/allProducts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -132,11 +153,96 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminProducts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
               <ListItemText primary="Administrar" />
+            </ListItemButton>
+
+            <Divider variant="middle" />
+
+            <ListItemButton component="a" href="/createProduct" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Crear" />
+            </ListItemButton>
+          
+          </List>
+        </Collapse>
+
+        <Divider variant="middle" />
+
+        <ListItemButton onClick={handleClick5}>
+          <ListItemIcon>
+            <ShoppingBasketIcon />
+          </ListItemIcon>
+          <ListItemText primary="Stock" />
+          {open5 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open5} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+
+          <Divider variant="middle" />  
+            
+            <ListItemButton component="a" href="/allStock" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ClearAllIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Todos" />
+            </ListItemButton>
+
+            <Divider variant="middle" />
+
+            <ListItemButton component="a" href="/adminStock" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ModeEditIcon />
+              </ListItemIcon>
+              <ListItemText primary="Administrar" />
+            </ListItemButton>
+          
+          </List>
+        </Collapse>
+
+
+        <Divider variant="middle" />
+
+        <ListItemButton onClick={handleClick4}>
+          <ListItemIcon>
+            <ShoppingBasketIcon />
+          </ListItemIcon>
+          <ListItemText primary="Especificaciones" />
+          {open4 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open4} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+
+          <Divider variant="middle" />  
+            
+            <ListItemButton component="a" href="/allSpecifications" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ClearAllIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Todos" />
+            </ListItemButton>
+
+            <Divider variant="middle" />
+
+            <ListItemButton component="a" href="/adminSpecifications" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ModeEditIcon />
+              </ListItemIcon>
+              <ListItemText primary="Administrar" />
+            </ListItemButton>
+
+            <Divider variant="middle" />
+
+            <ListItemButton component="a" href="/createSpecification" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Crear" />
             </ListItemButton>
           
           </List>
@@ -156,7 +262,7 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
           <Divider variant="middle" />
 
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton component="a" href="/allDiscounts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ClearAllIcon/>
               </ListItemIcon>
@@ -165,11 +271,20 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
             <Divider variant="middle" />
 
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component="a" href="/adminDiscounts" sx={{ pl: 4 }}>
               <ListItemIcon>
                 <ModeEditIcon />
               </ListItemIcon>
               <ListItemText primary="Administrar" />
+            </ListItemButton>
+
+            <Divider variant="middle" />
+
+            <ListItemButton component="a" href="/createDiscount" sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Crear" />
             </ListItemButton>
 
           </List>

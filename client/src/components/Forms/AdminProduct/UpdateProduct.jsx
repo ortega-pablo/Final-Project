@@ -34,6 +34,7 @@ import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
 import { AddDiscountToProduct } from "../AddDiscountToProduct";
 import { UpdateSpecification } from "./UpdateSpecification";
 import { TableSpecific } from "./TableSpecific";
+import { AddministrrImage } from "./AddministrrImage";
 // import { UpdateSpecif } from "./UpdateSpecif";
 
 
@@ -113,19 +114,19 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   const formik = useFormik({
     initialValues: {
     id: idUpdate,
-    name: productToUpdate.name,
-    sku: productToUpdate.sku,
-    brand: productToUpdate.brand,
-    keyWords: productToUpdate.keyWords,
-    price: productToUpdate.price,
-    description: productToUpdate.description,
-    warranty: productToUpdate.warranty,
-    productDimensions: productToUpdate.productDimensions,
-    packageDimensions: productToUpdate.packageDimensions,
-    netWeight:productToUpdate.netWeight,
-    grossWeight:productToUpdate.grossWeight,
-    thumbnail: productToUpdate.thumbnail,
-    image: productToUpdate.image
+    name: productToUpdate?.name,
+    sku: productToUpdate?.sku,
+    brand: productToUpdate?.brand,
+    keyWords: productToUpdate?.keyWords,
+    price: productToUpdate?.price,
+    description: productToUpdate?.description,
+    warranty: productToUpdate?.warranty,
+    productDimensions: productToUpdate?.productDimensions,
+    packageDimensions: productToUpdate?.packageDimensions,
+    netWeight:productToUpdate?.netWeight,
+    grossWeight:productToUpdate?.grossWeight,
+    thumbnail: productToUpdate?.thumbnail,
+    image: productToUpdate?.image
       },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -384,6 +385,11 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       newProdId={idUpdate}
       newProduct={productToUpdate}/>
       
+      <hr />
+
+      <AddministrrImage
+       newProdId={idUpdate}
+       newProduct={productToUpdate}/>
     </>
   );
 }

@@ -134,7 +134,7 @@ export const NavBar = (props) => {
             <Link sx={{ textDecoration: "none" }} href="/">
               <MenuItem onClick={() => window.localStorage.clear()}>
                 <Typography variant="body1" color="ambar5.main">
-                  Desloguear
+                  LogOut
                 </Typography>
               </MenuItem>
             </Link>
@@ -149,7 +149,7 @@ export const NavBar = (props) => {
               </MenuItem>
             </Link>
 
-            <Link sx={{ textDecoration: "none" }} href="/pruebaMenuAdmin">
+            <Link sx={{ textDecoration: "none" }} href="/AdminPanel">
               <MenuItem onClick={handleMenuProfileClose}>
                 <Typography variant="body1" color="ambar5.main">
                   Panel
@@ -160,7 +160,7 @@ export const NavBar = (props) => {
             <Link sx={{ textDecoration: "none" }} href="/">
               <MenuItem onClick={() => window.localStorage.clear()}>
                 <Typography variant="body1" color="ambar5.main">
-                  Desloguear
+                  LogOut
                 </Typography>
               </MenuItem>
             </Link>
@@ -398,7 +398,7 @@ export const NavBar = (props) => {
                       borderColor: "ambar1.main",
                     }}
                   >
-                    Ingresar
+                    LogIn
                   </Button>
                 </Box>
                 <Box sx={{ margin: "5px" }}>
