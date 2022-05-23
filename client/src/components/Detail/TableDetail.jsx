@@ -30,7 +30,7 @@ export default function TableDetail({ productDetail }) {
             return (
               <TableRow>
                 <TableCell>{s.name}</TableCell>
-                <TableCell>{s["value:"].value}</TableCell>
+                <TableCell>{s.ProductSpecification.value}</TableCell>
               </TableRow>
             );
           })}

@@ -1,30 +1,3 @@
-// import React from 'react'
-// import { useNavigate } from 'react-router-dom'
-
-// export const Card = ({name, price,brand, thumbnail}) => {
-//   let navigate = useNavigate()
-
-// function handleDetail (e){
-//   e.preventDefault()
-//   navigate("/detail")
-// }
-
-//   return (
-//     <>
-//     <h2>{name}</h2>
-//     <h3>$ {price}</h3>
-//     <h3>{brand}</h3>
-
-//     <img
-//       src={thumbnail}
-//       alt="soy la foto"/>
-
-//       <button onClick={(e)=>handleDetail(e)}>Detalle</button>
-//       <button>Agregar al carrito</button>
-//       <button>Comprar ahora</button>
-//     </>
-//   )
-// }
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -37,18 +10,31 @@ export default function MultiActionAreaCard({
   price,
   brand,
   thumbnail,
+  images
 }) {
   return (
-    <Card sx={{ width: 200, hover: "true", maxHeight:'360px', minHeight:'360px'}}>
+    <Card elevation={3} sx={{ alignItems:"center", width: 200, hover: "true"}}>
       <CardActionArea sx={[
+    {maxHeight:'360px',
+    minHeight:'360px',
+    backgroundColor: "#D1C6B7",
+      },
+    /*
+    #D1C2B0
+    #D1C6B7
+    main: "#DFDCD3",
+    main: "#DEA03C",
+    main: "#B6893E",
+    main: "#8F7241",
+    main: "#685C44",
+    main: "#473F2E",
+  */
     {
       '&:hover': {
         transform: "scale(1.05)",
         boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.6)",
         transitionDuration: "1s",
-        background: "rgba(138, 151, 165, 0.21)",
-        maxHeight:'360px', 
-        minHeight:'360px'
+        
       },
     }
   ]}>        
@@ -59,19 +45,14 @@ export default function MultiActionAreaCard({
           <CardMedia
             component="img"
             height="140"
-            image={thumbnail}
+            image={images[0]?.urlFile}
             alt="green iguana"
           />
-          <h3>Precio: {"$"}{price}</h3>
-          <h3>Marca: {brand}</h3>
+          <Typography gutterBottom variant="h6" component="div" sx={{mb:'auto'}}>Precio: {"$"}{price}</Typography>
+          <Typography gutterBottom variant="h6" component="div" sx={{mb:'auto'}}>Marca: {brand}</Typography>
         </CardContent>
         
       </CardActionArea>
- {/*      <CardActions>
-        <Button size="small" color="primary">
-          Comparar
-        </Button>
-      </CardActions> */}
     </Card>
   );
 }

@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,18 +10,15 @@ import React, { useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getProducts } from "../../../redux/actions";
+import { deleteProduct, getProducts } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+
+
+
 export const TableSpecification = ({
   newProdId,
-  input,
-  inputQ,
-  productosExistentes,
-  subCategory,
-  category,
-  allCategories,
-  specifications,
-  inputSpec,
+  newProduct
+
 }) => {
   //console.log(specifications);
   // console.log(inputSpec)
@@ -29,14 +27,25 @@ export const TableSpecification = ({
   // console.log(allCategories)
   // const subCategoria = categoria?.find( subC=> subC.id === subCategory)
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  // const products = useSelector((state) => state.products);
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, [dispatch]);
 
-  const newProducts = products.find((p) => p.id === newProdId);
-  console.log(products);
-  console.log(newProducts);
+
+  //---Lo estoy trayendo por props en lugar de redux
+  // const newProduct = products.find((p) => p.id === newProdId);
+ 
+
+//-----FUNCIONES PARA ELIMINAR PRODUCTO RECIEN CREADO
+async function handleDeleteProduct(e){
+  e.preventDefault();
+
+  await dispatch(deleteProduct(e.target.value));
+  await dispatch(getProducts());
+ }
+
+
   return (
     <>
       <h3>Aca va la tabla</h3>
@@ -52,7 +61,7 @@ export const TableSpecification = ({
       >
         <Table sx={{ minWidth: 650, width: "80%" }} aria-label="simple table">
           <TableBody>
-            {newProducts?.name && (
+            {newProduct?.name && (
               <TableRow>
                 <TableCell>
                   <b>
@@ -60,87 +69,85 @@ export const TableSpecification = ({
                   </b>
                 </TableCell>
                 <TableCell>
-                  <h3>{newProducts.name}</h3>
+                  <h3>{newProduct.name}</h3>
                 </TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
-                <IconButton>
-                  <DeleteIcon />
-                </IconButton>
+                <Button  value={newProduct.id} onClick={ e => handleDeleteProduct(e)}   name="delete" startIcon={<DeleteIcon />}> Eliminar producto creado</Button >
               </TableRow>
             )}
-            {newProducts?.id && (
+            {newProduct?.id && (
               <TableRow>
                 <TableCell>
                   <b>Id</b>
                 </TableCell>
-                <TableCell>{newProducts.id}</TableCell>
+                <TableCell>{newProduct.id}</TableCell>
               </TableRow>
             )}
-            {newProducts?.brand && (
+            {newProduct?.brand && (
               <TableRow>
                 <TableCell>
                   <b>Marca</b>
                 </TableCell>
-                <TableCell>{newProducts.brand}</TableCell>
+                <TableCell>{newProduct.brand}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.price && (
+            {newProduct?.price && (
               <TableRow>
                 <TableCell>
                   <b>Precio</b>
                 </TableCell>
                 <TableCell>
-                  <b>$</b> {newProducts.price}
+                  <b>$</b> {newProduct.price}
                 </TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.sku && (
+            {newProduct?.sku && (
               <TableRow>
                 <TableCell>
                   <b>Código</b>
                 </TableCell>
-                <TableCell>{newProducts.sku}</TableCell>
+                <TableCell>{newProduct.sku}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.description && (
+            {newProduct?.description && (
               <TableRow>
                 <TableCell>
                   <b>Descripción</b>
                 </TableCell>
-                <TableCell>{newProducts.description}</TableCell>
+                <TableCell>{newProduct.description}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.netWeight && (
+            {newProduct?.netWeight && (
               <TableRow>
                 <TableCell>
                   <b>Peso neto</b>
                 </TableCell>
-                <TableCell>{newProducts.netWeight} gr</TableCell>
+                <TableCell>{newProduct.netWeight} gr</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.grossWeight && (
+            {newProduct?.grossWeight && (
               <TableRow>
                 <TableCell>
                   <b>Peso bruto</b>
                 </TableCell>
-                <TableCell>{newProducts.grossWeight} gr</TableCell>
+                <TableCell>{newProduct.grossWeight} gr</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
@@ -154,45 +161,45 @@ export const TableSpecification = ({
             </TableRow>
           );
         })} */}
-            {newProducts?.warranty && (
+            {newProduct?.warranty && (
               <TableRow>
                 <TableCell>
                   <b>Garantía</b>
                 </TableCell>
-                <TableCell>{newProducts.warranty}</TableCell>
+                <TableCell>{newProduct.warranty}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.productDimensions && (
+            {newProduct?.productDimensions && (
               <TableRow>
                 <TableCell>
                   <b>Dimensiones del producto</b>
                 </TableCell>
-                <TableCell>{newProducts.productDimensions}</TableCell>
+                <TableCell>{newProduct.productDimensions}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.packageDimensions && (
+            {newProduct?.packageDimensions && (
               <TableRow>
                 <TableCell>
                   <b>Dimensiones del package</b>
                 </TableCell>
-                <TableCell>{newProducts.packageDimensions}</TableCell>
+                <TableCell>{newProduct.packageDimensions}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.productInventory?.quantity && (
+            {newProduct?.productInventory?.quantity && (
               <TableRow>
                 <TableCell>
                   <b>Stock</b>
                 </TableCell>
-                <TableCell>{newProducts.productInventory.quantity}</TableCell>
+                <TableCell>{newProduct.productInventory.quantity}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
@@ -201,12 +208,12 @@ export const TableSpecification = ({
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.categories[0]?.name && (
+            {newProduct?.categories[0]?.name && (
               <TableRow>
                 <TableCell>
                   <b>Categoría</b>
                 </TableCell>
-                <TableCell>{newProducts.categories[0]?.name}</TableCell>
+                <TableCell>{newProduct.categories[0]?.name}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
@@ -215,12 +222,12 @@ export const TableSpecification = ({
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.subCategories[0]?.name && (
+            {newProduct?.subCategories[0]?.name && (
               <TableRow>
                 <TableCell>
                   <b>Sub categoría</b>
                 </TableCell>
-                <TableCell>{newProducts.subCategories[0].name}</TableCell>
+                <TableCell>{newProduct.subCategories[0].name}</TableCell>
                 <IconButton>
                   <EditIcon />
                 </IconButton>
@@ -229,14 +236,14 @@ export const TableSpecification = ({
                 </IconButton>
               </TableRow>
             )}
-            {newProducts?.specifications &&
-              newProducts.specifications.map((spec) => {
+            {/* {newProduct?.specifications &&
+              newProduct.specifications.map((spec => spec.ProductSpecification).map( sp => {
                 return (
                   <TableRow>
                     <TableCell>
-                      <b>{spec.name}</b>
+                      <b>{sp.name}</b>
                     </TableCell>
-                    <TableCell>{spec["value:"].value}</TableCell>
+                    <TableCell>{sp.value}</TableCell>
                     <IconButton>
                       <EditIcon />
                     </IconButton>
@@ -245,7 +252,10 @@ export const TableSpecification = ({
                     </IconButton>
                   </TableRow>
                 );
-              })}
+
+              })
+              
+              )} */}
           </TableBody>
         </Table>
       </TableContainer>

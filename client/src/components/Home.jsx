@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Grid, Link } from "@mui/material";
+import { CircularProgress, Grid, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,17 +14,24 @@ import { Container } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Category from "./Category/Category";
-import { Footer } from "./Footer/Footer";
 import { useParams } from "react-router-dom";
 import SwipeableDrawerFilters from './SwipeableFilters/SipeableFilters'
+import { Box } from "@mui/system";
+import { SelectProductsPerPage } from "./Pagination/SelectProductsPerPage";
 const useStyles = makeStyles((theme) => ({
 
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: 'primary',
+    backgroundColor: "#D1C2B0"
   },
+  
 }));
+
+
+ 
+
+
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -32,6 +39,17 @@ export const Home = () => {
   const products = useSelector((state) => state.products);
 
   const categories = useSelector((state) => state.categories);
+
+  const userStatus = useSelector((state) => state.userStatus);
+
+  if(userStatus === 'user'){
+    console.log('usruario logueado y esto funciona')
+  }
+   else if(userStatus === 'admin'){
+    console.log('llego el admin')
+  } else {
+    console.log('visitor')
+  }
 
   const {name} = useParams();
   
@@ -75,10 +93,10 @@ export const Home = () => {
 
 
   return (
-    <div>
-      <Container
+    <Box
         maxWidth="vp"
         sx={{
+          gap:0,
           display: "flex",
           flexDirection: "column",
           margin: 0,
@@ -108,6 +126,7 @@ export const Home = () => {
               handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
             >
         </SwipeableDrawerFilters>
+
         <Container
           maxWidth="vp"
           sx={{
@@ -117,17 +136,47 @@ export const Home = () => {
             padding: 0,
           }}
         >
+
           <Category
             handleClickForCategories = {handleClickForCategories} 
             handleClickForSubcategories= {handleClickForSubcategories}
             handleClickSubmitPerPrice= {handleClickSubmitPerPrice} 
+          
           >
 
           </Category>
+
+          
+          <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            height:"100%",
+            width: "100%",
+            padding: 0,
+            alignItems:"center"
+          }}
+          >
+            <Container
+            sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            marginTop: 3,
+            alignItems:"center"
+          }}>
+            <SelectProductsPerPage 
+              setCurrentPage={setCurrentPage} 
+              productsPerPage={productsPerPage} 
+              setProductsPerPage={setProductsPerPage}
+            />
+            </Container>
+
           <Grid
           id="container"
             container 
             sx={{
+              
               display: "flex",
               ml: "auto",
               mr: "auto",
@@ -143,7 +192,7 @@ export const Home = () => {
                       m: "20px", width:"235px", justifyContent:"stretch"
                     }}
                   >
-                      <Paper className={classes.paper} sx={{display: 'flex', heigth: "360px", padding: 2}} >
+                      <Paper className={classes.paper} sx={{display: 'flex', heigth: "360px"}} >
                     <Link href={"/detail/" + prod.id} underline="none">
                         <MultiActionAreaCard
                           key={index}
@@ -153,6 +202,7 @@ export const Home = () => {
                           price={prod.price}
                           id={prod.id}
                           description={prod.description}
+                          images={prod.images}
                         />
                     </Link>
                       </Paper>
@@ -168,9 +218,16 @@ export const Home = () => {
               />
             )}
           </Grid>
-        </Container>
 
-        <Container maxWidth="vp" sx={{ width: "100%" }}>
+        <Container maxWidth="vp" 
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          height: "100%",
+          alignItems:"flex-end",
+          justifyContent:"center"
+        }}>
           <Paginationxd
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
@@ -179,8 +236,8 @@ export const Home = () => {
             setProductsPerPage={setProductsPerPage}
           />
         </Container>
-      </Container>
-      <Footer/>
-    </div>
+        </Container>
+          </Container>
+      </Box>
   );
 };
