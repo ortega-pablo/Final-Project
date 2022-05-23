@@ -54,6 +54,8 @@ export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 
 
 
+export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
+
 export const getProducts = (name) => {
   return async (dispatch) => {
     let response;
@@ -563,6 +565,23 @@ export const verifyToken = (token) => {
       console.log("Usuario no logeado");
     }
   };
+};
+
+export const getUserIdByToken = (token) => {
+  return async dispatch => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let response = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      return response.data.idUser;
+    } catch (error) {
+      console.log("id no encontrado");
+    }
+  }
 };
 
 export function deleteDiscount(idD) {
