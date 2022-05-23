@@ -76,7 +76,7 @@ export const AddSpecification = () => {
           sx={{ml:3, mr:3}}
         />
 
-        <Button type="submit" variant="contained" color="ambar3" >
+        <Button type="submit"variant="contained" color="ambar4" >
           Agregar nueva Especificación
         </Button>
       </Box>

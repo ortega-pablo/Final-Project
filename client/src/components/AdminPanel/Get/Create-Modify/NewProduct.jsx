@@ -494,7 +494,7 @@ export function NewProduct() {
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-        <h3>Paso 5: Agregar descuento</h3>
+     
           <AddDiscountToProduct newProdId={newProdId} newProduct={newProduct} />
             
         </TabPanel>
@@ -577,7 +577,6 @@ export function NewProduct() {
         </TabPanel>
 
         <TabPanel value={value} index={4}>
-          <h3>Paso 4: agregar especificaciones</h3>
           <TableSpecific
             idUpdate={newProdId}
             specifications={specifications}
@@ -605,7 +604,7 @@ export function NewProduct() {
               );
             })}
           </Select>
-
+<hr />
           <AddSpecificationToProduct
             newProdId={newProdId}
             specifications={specifications}
@@ -621,7 +620,7 @@ export function NewProduct() {
 
         <TabPanel value={value} index={5}>
          
-        <Box  >
+        <Box sx={{display:"flex", alignItems:"center"}}>
           <AddImageToProduct newProduct={newProduct} newProdId={newProdId} />
             </Box>
           <hr />
@@ -629,10 +628,10 @@ export function NewProduct() {
         
       </Paper>
 
-      <TableSpecification newProdId={newProdId} newProduct={newProduct} />
+     {/*  <TableSpecification newProdId={newProdId} newProduct={newProduct} />
 
       <hr />
-      {/* Este DeleteProdut en realiad nos trae todos los productos creados, con un boton de borrar o editar */}
+       Este DeleteProdut en realiad nos trae todos los productos creados, con un boton de borrar o editar 
       <DeleteProduct />
       <hr />
 
@@ -642,7 +641,7 @@ export function NewProduct() {
       <AdminDiscount />
       <hr />
       <AdminSpecif />
-      <AdmininAllStock />
+      <AdmininAllStock /> */}
     </>
   );
 }
