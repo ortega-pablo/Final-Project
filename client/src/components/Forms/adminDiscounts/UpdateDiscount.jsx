@@ -11,6 +11,7 @@ import {
 import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { getAllDiscount, postDiscount, putDiscount } from "../../../redux/actions";
+import Swal from "sweetalert2";
 
 
 
@@ -48,8 +49,14 @@ console.log(NameRepetido)
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
       
+      Swal.fire({
+        background: '#DFDCD3',
+        icon: 'success',
+        title: 'Exito',
+        showConfirmButton: false,
+        timer: 1500
+      })
       await dispatch(putDiscount(idUpdate, values))
       await dispatch(getAllDiscount())
       resetForm({ values: "" });
@@ -59,8 +66,7 @@ console.log(NameRepetido)
 
 
   return (
-    <>
-      <div>Modificar el descuento</div>
+
       <Box
         component="form"
         noValidate
@@ -142,10 +148,13 @@ console.log(NameRepetido)
           }
           label="Activo"
         /> */}
-        <Button  type="submit">Confirmar edición</Button>
-        <Button  type="click" onClick={()=>setUpdating(false)} >Cancelar edición</Button>
+        <Box sx={{textAlign:'center'}}>
+        <Button  type="submit" variant='contained' color="ambar3">Confirmar</Button>
+        <Button  type="click" onClick={()=>setUpdating(false)} variant='contained' color="ambar3">Cancelar</Button>
+
+        </Box>
 
       </Box>
-    </>
+
   );
 };

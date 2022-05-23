@@ -1,10 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { AdminSpecif } from '../Forms/AdminSpecificacat/AdminSpecif'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
 
 function AdminSpecifications() {
+  const userStatus = useSelector((state) => state.userStatus);
     return (
+      userStatus === 'admin' ?
         <Box
           maxWidth="vp"
           sx={{
@@ -42,10 +47,12 @@ function AdminSpecifications() {
               }}
             >
               <Typography variant="h2">Acá se administran las especificaciones</Typography>
-    
+              <AdminSpecif/>
             </Container>
           </Container>
         </Box>
+        :
+        <NotFound/>
       )
 }
 

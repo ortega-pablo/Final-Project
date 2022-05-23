@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -9,18 +9,22 @@ import {
   TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllDiscount, postDiscount } from "../../../redux/actions";
-export const CreateDiscout = ({allDiscounts}) => {
+import Swal from 'sweetalert2';
+export const CreateDiscout = () => {
   const dispatch = useDispatch();
-
+  const allDiscounts = useSelector((state) => state.discounts)
+  useEffect(()=>{
+    dispatch(getAllDiscount())
+  },[dispatch])
 
 
 
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
-      .notOneOf( allDiscounts.map( d=> d.name)  ,"Ya existe un descuento con este nombre")
+      .notOneOf( allDiscounts?.map( d=> d.name)  ,"Ya existe un descuento con este nombre")
       .required("El nombre es requerido"),
 
     description: yup
@@ -41,7 +45,13 @@ export const CreateDiscout = ({allDiscounts}) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      Swal.fire({
+        background: '#DFDCD3',
+        icon: 'success',
+        title: 'Creado',
+        showConfirmButton: false,
+        timer: 1500
+      })
       await dispatch(postDiscount(values));
       resetForm({ values: "" });
      await dispatch(getAllDiscount())
@@ -53,8 +63,7 @@ export const CreateDiscout = ({allDiscounts}) => {
 
 
   return (
-    <>
-      <div>CreateDiscout</div>
+
       <Box
         component="form"
         noValidate
@@ -62,8 +71,8 @@ export const CreateDiscout = ({allDiscounts}) => {
         // onChange={(e) => handleInput(e)}
         //  onSubmit={(e) => handleSubmit(e)}
         onSubmit={formik.handleSubmit}
+        sx={{mt:3}}
       >
-        <h3> Creando</h3>
         <TextField
           id="outlined-basic"
           label="Nombre"
@@ -73,6 +82,7 @@ export const CreateDiscout = ({allDiscounts}) => {
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
+          sx={{mr:3}}
         />
 
         <TextField
@@ -86,6 +96,8 @@ export const CreateDiscout = ({allDiscounts}) => {
             formik.touched.description && Boolean(formik.errors.description)
           }
           helperText={formik.touched.description && formik.errors.description}
+          sx={{mr:3}}
+
         />
         <TextField
           id="outlined-basic"
@@ -104,6 +116,7 @@ export const CreateDiscout = ({allDiscounts}) => {
           helperText={
             formik.touched.discountPercent && formik.errors.discountPercent
           }
+          sx={{mr:3}}
         />
         {/* <TextField
           id="outlined-basic"
@@ -134,8 +147,8 @@ export const CreateDiscout = ({allDiscounts}) => {
           }
           label="Activo"
         /> */}
-        <Button  type="submit">Confirmar creación</Button>
+        <Button  type="submit" variant="contained" color="ambar3">Confirmar creación</Button>
       </Box>
-    </>
+
   );
 };
