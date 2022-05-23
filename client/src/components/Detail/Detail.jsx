@@ -10,10 +10,12 @@ import {
   CircularProgress,
   Container,
   Divider,
+  Paper,
   Typography,
 } from "@mui/material";
 import { Box, maxWidth } from "@mui/system";
 import { Footer } from "../Footer/Footer";
+import { BoxGeneral } from "../../personalizadTheme";
 
 export const Detail = () => {
   const dispatch = useDispatch();
@@ -43,8 +45,9 @@ export const Detail = () => {
     }, [dispatch]);
     
   return (
-    <div>
-   
+    <Box  sx={{ display: "flex", justifyContent:"center", backgroundColor: "ambar1.main"}}>
+      <Paper component="div" sx={{maxWidth: "1100px", mt:"2%", mb:"2%"}}>
+
         {productDetail.length > 0 ? (
           <Container
           maxWidth="vp"
@@ -59,7 +62,7 @@ export const Detail = () => {
               <Chip
                 label={productDetail[0].name}
                 size="string"
-                sx={{ fontSize: "20px" }}
+                sx={{ fontSize: "24px", color:"ambar5.main"}}
               />
             </Divider>
 
@@ -75,28 +78,29 @@ export const Detail = () => {
               <Chip
                 label="Descripción"
                 size="string"
-                sx={{ fontSize: "15px" }}
+                sx={{ fontSize: "18px", color:"ambar5.main"  }}
               />
             </Divider>
-              <Box sx={{ m: "2%", maxWidth:"90%", display: "flex", justifyContent: "center"}}>
-
+            <Box component="div" sx={{ display: "flex", justifyContent: "center"}}>
+              <Box sx={{ minWidth: "650px", width: "80%", mt: "7px", mb: "7px"}}>
             <Typography  >
               {productDetail[0].description}
             </Typography>
               </Box>
+            </Box>
 
             <Divider textAlign="left">
               <Chip
                 label="Especificaciones"
                 size="string"
-                sx={{ fontSize: "15px" }}
+                sx={{ fontSize: "18px", color:"ambar5.main"  }}
               />
             </Divider>
 
             <TableDetail productDetail={productDetail} />
 
             <Divider textAlign="left" sx={{ mt: "2%", mb: "2%" }}>
-              <Chip label="Consultas" size="string" sx={{ fontSize: "15px" }} />
+              <Chip label="Consultas" size="string" sx={{ fontSize: "18px", color:"ambar5.main" }} />
             </Divider>
             <QuestionsAndAnswers handleReRender = {handleReRender} asks={productDetail[0].asks} />
           </Container>
@@ -109,8 +113,9 @@ export const Detail = () => {
           />
         )}  
           
+      </Paper>
 
 
-    </div>
+    </Box>
   );
 };

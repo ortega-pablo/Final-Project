@@ -45,7 +45,7 @@ export const AnswerComponent = ({userId, askId, handleReRender}) =>{
 
     return (
             <Box>
-                <Button onClick={() => setOpen(!open) } >Responder</Button>
+                <Button onClick={() => setOpen(!open)} variant="contained" color="ambar3">Responder</Button>
                 <Collapse in={open}>
                     <Box component="form" onSubmit={ formikForAnswer.handleSubmit}  noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -63,8 +63,9 @@ export const AnswerComponent = ({userId, askId, handleReRender}) =>{
                         <Button
                         type="submit"
                         fullWidth
-                        variant="contained"
                         sx={{ mt: 3, mb: 2, maxWidth: "100px" }}
+                        variant="contained"
+                        color="ambar3"
                         >
                         Enviar respuesta
                         </Button>
