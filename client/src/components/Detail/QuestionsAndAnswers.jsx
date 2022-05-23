@@ -79,11 +79,12 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
             />
             <Button
               type="submit"
-              fullWidth
               variant="contained"
+              color="ambar3"
+              fullWidth
               sx={{ mt: 3, mb: 2 }}
             >
-              Ingresar
+              Publicar pregunta
             </Button>
       </Box> : <></>
       }
