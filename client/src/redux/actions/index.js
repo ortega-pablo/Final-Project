@@ -49,7 +49,7 @@ export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT =
   "PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT";
 export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
 export const POST_ADD_IMAGE = "POST_ADD_IMAGE";
-
+export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 
 
 
@@ -390,7 +390,6 @@ export function putCategoryToProduct(idP, idC) {
       await axios.put(
         `http://localhost:3001/products?productId=${idP}&categoryId=${idC}`
       );
-
       return dispatch({
         type: PUT_CATEGORY_TO_PRODUCT,
       });
@@ -400,21 +399,23 @@ export function putCategoryToProduct(idP, idC) {
   };
 }
 
-export function putSubCategoryToProduct(idP, idSc) {
-  return async function (dispatch) {
-    try {
-      await axios.put(
-        `http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`
-      );
+export function putSubCategoryToProduct (idP, idSc ){
+  return async function (dispatch){
+      try {
+           await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
+        console.log("quiero eliminar las sub desde redux")
+        console.log(idP)
+        console.log(idSc)
+          return dispatch({
+              type: PUT_SUBCATEGORY_TO_PRODUCT,
+                                       
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
 
-      return dispatch({
-        type: PUT_SUBCATEGORY_TO_PRODUCT,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
 
 export function deleteCategory(idCat) {
   return async function (dispatch) {
@@ -658,3 +659,23 @@ export function deleteSpecification(idS) {
     }
   };
 }
+
+
+
+
+export function deleteImageToProduct (idP, idI){
+  return async function (dispatch){
+      try {
+           await axios.delete(`http://localhost:3001/images?productId=${idP}&imageId=${idI}` )
+          
+          return dispatch({
+              type: DELETE_IMAGE_TO_PRODUCT,
+             
+              
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+};
+
