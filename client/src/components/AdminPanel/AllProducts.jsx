@@ -2,6 +2,7 @@ import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import GetAllProductsToAdmin from './Get/GetAllProductsToAdmin'
 
 function AllProducts() {
   return (
@@ -41,8 +42,8 @@ function AllProducts() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá van todos los productos</Typography>
-
+          <GetAllProductsToAdmin />
+          
         </Container>
       </Container>
     </Box>
