@@ -31,8 +31,6 @@ import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 
 
 
-
-
 function App() {
   return (
     
@@ -65,9 +63,6 @@ function App() {
             <Route path="/createProduct" element={<CreateProduct/>}/>
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
-
-
-            
 
           </Routes>
         <Footer/>

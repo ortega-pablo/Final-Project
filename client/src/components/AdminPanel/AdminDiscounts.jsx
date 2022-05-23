@@ -1,10 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { AdminDiscount } from '../Forms/adminDiscounts/AdminDiscount'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
 
 function AdminDiscounts() {
+  const userStatus = useSelector((state) => state.userStatus);
   return (
+    userStatus === 'admin' ?
     <Box
       maxWidth="vp"
       sx={{
@@ -42,10 +47,13 @@ function AdminDiscounts() {
           }}
         >
           <Typography variant="h2">Acá se administran los descuentos</Typography>
+          <AdminDiscount/>
 
         </Container>
       </Container>
     </Box>
+    :
+    <NotFound/>
   )
 }
 
