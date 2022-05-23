@@ -43,8 +43,9 @@ export const UpdateCategoryAndSubca = ({ productToUpdate, idUpdate }) => {
 
   async function handleDeleteCat(e) {
   // setIdCatForDelete(e.target.value)
-  const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value
+  const subCatInCadena = allSubcategories?.filter((sc) => sc.categories[0]?.id == e.target.value
   );
+  console.log(subCatInCadena)
 
   await dispatch(putCategoryToProduct(idUpdate, e.target.value));
 

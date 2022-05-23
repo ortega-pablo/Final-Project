@@ -42,6 +42,47 @@ export const TableCatAndSubcOfProduct = ({
   //  const [reRender, setReRender] = useState(0);
   // const [idCatForDelete, setIdCatForDelete] = useState(0)
 
+//--------PRUEBAS CON LA FUNCION DE BETO Y JOSE
+
+// var categories = products[0]?.categories
+// var subCategories = products[0]?.subCategories
+
+// function sortDkary(arr1, arr2){
+  
+//   for(var i = 0; i < arr1.length; i++){
+//     for(var j = 0; j < arr2.length; j++){
+//       // if(JSON.stringify(arr2[j]?.categories[0]) === JSON.stringify(arr1[i])){
+        
+//       	arr1[i].subCategories = []
+        
+//      		arr1[i].subCategories.push({
+//      		id: arr2[j].id,
+//      		name: arr2[j].name,
+//      		description: arr2[j].description,
+//      		thumbnail: arr2[j].thumbnail  
+//      		}) 
+        
+//       // }
+//     }
+    
+//   }
+//   return arr1
+// }
+
+// console.log(sortDkary(categories, subCategories))
+
+
+
+
+
+
+
+
+
+///------------------------------------------
+
+
+
   const newProducts = products.find((p) => p.id === newProdId);
 
   async function handleDeleteCat(e) {

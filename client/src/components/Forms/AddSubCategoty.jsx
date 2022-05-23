@@ -56,13 +56,15 @@ console.log(comprobarNombre)
     validationSchema: validationSchema,
     onSubmit: async (values, {resetForm}) => {
       
+      console.log(category) 
     if(category){
       await dispatch(postAddSubCategory(category, values));
       await dispatch(getCategories());
       await dispatch(getSubCategories())
       resetForm({values:""})
-    }else {
+    }else { 
       alert("seleccione una categoria")
+      return
     }
 
 
@@ -72,7 +74,6 @@ console.log(comprobarNombre)
   function handleInputNewSubCat(e) {
     e.preventDefault();
     setNewCategoryName(e.target.value);
-    console.log(e.target.value)
   }
 
  
@@ -80,6 +81,7 @@ console.log(comprobarNombre)
   function handleChangeSelect(e) {
     e.preventDefault();
     setCategory(e.target.value);
+
 
   }
 
@@ -97,10 +99,7 @@ console.log(comprobarNombre)
 
 
 
-   async function handleUpdateSubCat(e){
-    e.preventDefault()
-
-   }
+   
 
   return (
     <>
