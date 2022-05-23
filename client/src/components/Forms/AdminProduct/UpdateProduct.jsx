@@ -1,32 +1,18 @@
 import React, { useEffect, useState } from "react";
-
 import Box from "@mui/material/Box";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Button, TextField } from "@mui/material";
-
+import { Button, Paper, Tab, Tabs, TextField, Typography } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-
 import Select from "@mui/material/Select";
-
-
-
-
 import { AddSubCategoty } from "../AddSubCategoty";
 import { AddSpecification } from "../AddSpecification/AddSpecification";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
 import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSubCateroryToProduct, putProduct } from "../../../redux/actions";
 import { TableSpecification } from "../TablaResumen/TableSpecification";
-
-
-
-// import { DeleteProduct } from "./AdminProduct";
 import { postAddSpecificationToProduct, postProduct } from "../../../redux/actions";
 import { UpdateQuantity } from "./UpdateQuantity";
 import { AddCategory } from "../AddCategory";
@@ -35,8 +21,43 @@ import { AddDiscountToProduct } from "../AddDiscountToProduct";
 import { UpdateSpecification } from "./UpdateSpecification";
 import { TableSpecific } from "./TableSpecific";
 import { AddministrrImage } from "./AddministrrImage";
-// import { UpdateSpecif } from "./UpdateSpecif";
+import PropTypes from "prop-types";
 
+
+////////////////////////////////////
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+/////////////////////////////////////////////
 
 export function  UpdateProduct({idUpdate, setUpdating}) {
 
@@ -153,8 +174,37 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   //-------
   // const categSelect = allCategories.filter((c) => c.id === category);
   
+    ////////////////////
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+    ////////////////////
+
   return (
     <>
+        <Paper sx={{ width: "100%" }}>
+
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            variant="fullWidth"
+            
+          >
+            <Tab label="Producto" {...a11yProps(0)} />
+            <Tab label="Descuentos" {...a11yProps(1)} />
+            <Tab label="Stock" {...a11yProps(2)} />
+            <Tab label="Categorías" {...a11yProps(3)} />
+            <Tab label="Especificaciones" {...a11yProps(4)} />
+            <Tab label="Imagen" {...a11yProps(5)} />
+          </Tabs>
+        </Box>
+
+        <TabPanel value={value} index={0}>
       <Box
         component="form"
         noValidate
@@ -312,10 +362,20 @@ const NameRepetido = nameRepetido.map((p) => p.name);
         />
 
         <Button type="submit">Editar</Button>
-          <Button onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
         <h4>(*) elementos obligatorios</h4>
       </Box>
-      <hr />
+        </TabPanel>
+
+        <TabPanel value={value} index={1}>
+     <h3>Paso 5: Modificar descuento</h3>
+     <AddDiscountToProduct
+     newProdId={idUpdate}
+     newProduct={productToUpdate}/>
+     
+     <hr />
+        </TabPanel>
+
+        <TabPanel value={value} index={2}>
       <h3>Paso 2: Editar stock</h3>
           
       <UpdateQuantity
@@ -323,7 +383,9 @@ const NameRepetido = nameRepetido.map((p) => p.name);
          idUpdate={idUpdate}/> 
 
       <hr />
+        </TabPanel>
 
+        <TabPanel value={value} index={3}>
       <h3>Paso 3: Editar categorías y sub categorías</h3>
 
       <UpdateCategoryAndSubca
@@ -333,6 +395,9 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       <AddSubCategoty allCategories={allCategories} />
 
       <hr />
+        </TabPanel>
+
+        <TabPanel value={value} index={4}>
       <h3>Paso 4: agregar especificaciones</h3>
         <TableSpecific
         productToUpdate={productToUpdate}
@@ -380,16 +445,20 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       <AddSpecification/>
            
       <hr />
-      <h3>Paso 5: Modificar descuento</h3>
-      <AddDiscountToProduct
-      newProdId={idUpdate}
-      newProduct={productToUpdate}/>
-      
-      <hr />
+        </TabPanel>
 
+        <TabPanel value={value} index={5}>
       <AddministrrImage
        newProdId={idUpdate}
        newProduct={productToUpdate}/>
+        </TabPanel>
+        
+<Button onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
+      </Paper>
+    
+
+      <hr />
+
     </>
   );
 }
