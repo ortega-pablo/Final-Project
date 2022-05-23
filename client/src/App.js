@@ -26,8 +26,14 @@ import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
+<<<<<<< HEAD
 import {UseFormControl} from "./components/Forms/UseFormControl";
 import GetAllCategoriesToAdmin from "./components/AdminPanel/Get/GetAllCategoriesToAdmin";
+=======
+// test
+import GetAllCategoriesToAdmin from "./components/AdminPanel/Get/GetAllCategoriesToAdmin";
+
+>>>>>>> f1ef3124e8d458cfedf857f4c85b15f23d4f72f8
 
 
 function App() {
@@ -63,7 +69,15 @@ function App() {
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
             
+<<<<<<< HEAD
             <Route path="/pruebafede" element={<GetAllCategoriesToAdmin/>}/>
+=======
+            {/* test */}
+            <Route path='/probandocomponentes' element={<GetAllCategoriesToAdmin/>}/>
+
+
+
+>>>>>>> f1ef3124e8d458cfedf857f4c85b15f23d4f72f8
           </Routes>
         <Footer/>
     </BrowserRouter>
