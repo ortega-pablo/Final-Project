@@ -3,6 +3,7 @@ import React from "react";
 import AdminMenuLarge from "./AdminMenuLarge";
 import AdminMenuMobile from "./AdminMenuMobile";
 import Bienvenida from "./Bienvenida";
+import GetAllCategoriesToAdmin from "./Get/GetAllCategoriesToAdmin";
 
 function AllCategories() {
   return (
@@ -42,7 +43,8 @@ function AllCategories() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá van todas las categorías</Typography>
+          <Typography variant="h2" mt={4} color='ambar5.main' >Categorías</Typography>
+          <GetAllCategoriesToAdmin/>
 
         </Container>
       </Container>

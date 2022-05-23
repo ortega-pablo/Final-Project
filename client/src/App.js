@@ -26,6 +26,8 @@ import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
+// test
+import GetAllCategoriesToAdmin from "./components/AdminPanel/Get/GetAllCategoriesToAdmin";
 
 
 
@@ -62,6 +64,10 @@ function App() {
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
             
+            {/* test */}
+            <Route path='/probandocomponentes' element={<GetAllCategoriesToAdmin/>}/>
+
+
 
           </Routes>
         <Footer/>
