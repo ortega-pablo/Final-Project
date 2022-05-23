@@ -571,7 +571,7 @@ export const getUserIdByToken = (token) => {
         "http://localhost:3001/users/userId",
         config
       );
-      console.log(response)
+      return response.data.idUser;
     } catch (error) {
       console.log("id no encontrado");
     }

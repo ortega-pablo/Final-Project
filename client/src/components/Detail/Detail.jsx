@@ -26,7 +26,6 @@ export const Detail = () => {
   
   const [reRender, setReRender] = React.useState('');
 
-  const user = useSelector(state => state.userStatus);
   
   const handleReRender = (e) => {
     console.log(e)

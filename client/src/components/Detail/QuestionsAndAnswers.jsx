@@ -32,18 +32,13 @@ const validationSchema = yup.object({
 
 export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
   const dispatch = useDispatch();
-  const {idProduct} = useParams();
+  const {id} = useParams();
 
   const user = useSelector(state => state.userStatus);
 
-  const userName = JSON.parse(window.localStorage.getItem("token")).firstName;
+  // const userName = JSON.parse(window.localStorage.getItem("token")).firstName;
 
-  const idToken = JSON.parse(window.localStorage.getItem("token")).token;
-
-  const userId = dispatch(getUserIdByToken(idToken));
-
-  console.log(`este es el nombre ${ userId}`);
-
+  const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
 
  
   const formik = useFormik({
@@ -52,7 +47,8 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      await dispatch(postNewAsk(values, idProduct, 3 ));
+      const userId = await dispatch(getUserIdByToken(idToken));
+      await dispatch(postNewAsk(values, id, userId ));
       handleReRender(values.content);
       values.content = '';
     },
@@ -105,7 +101,7 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
               ></Typography>
             </li>
             <ListItem>
-                <ListItemText primary={a.content} secondary={"Usuario"} />                
+                <ListItemText primary={a.content} secondary={a.user.userName} />                
             </ListItem>
             <Divider component="li" variant="inset" />
               {user ==="admin" && a.answer === null ? <AnswerComponent askId = {a.id} handleReRender = {handleReRender} /> : <></>}
@@ -123,7 +119,7 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
                 </ListItemAvatar>
                 {
                   a.answer !== null ? 
-                  (<ListItemText primary={a.answer.content} secondary="Admin" />)
+                  (<ListItemText primary={a.answer.content} secondary={a.answer.user.userName} />)
                   : (<ListItemText secondary="Sin respuestas" />)
                 }
               </ListItem>
