@@ -50,6 +50,10 @@ export const PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT =
 export const DELETE_SPECIFICATION = "DELETE_SPECIFICATION";
 export const POST_ADD_IMAGE = "POST_ADD_IMAGE";
 export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
+export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
+export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
+
+
 
 
 
@@ -678,4 +682,41 @@ export function deleteImageToProduct (idP, idI){
       }
   }
 };
+
+export function putNameSpecification(idS, payload) {
+  return async function (dispatch) {
+    try {
+      await axios.put(
+        `http://localhost:3001/specifications/${idS}`,
+        payload
+      );
+
+      return dispatch({
+        type: PUT_NAME_SPECIFICATION,
+        payload: payload,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
+export function putNameSubcategoria(idS, payload) {
+  return async function (dispatch) {
+    try {
+      await axios.put(
+        `http://localhost:3001/categories/subcategories/${idS}`,
+        payload
+      );
+
+      return dispatch({
+        type: PUT_NAME_SUBCATEGORY,
+        payload: payload,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 

@@ -17,7 +17,7 @@ export const TableSpecificationNewProduct = ({newProduct}) => {
   return (
 
     <>
-    <div>TableSpecificationNewProduct</div>
+    <h3>Table  Specification  NewProduct</h3>
 
     {
         newProduct?.specifications.map( s =>{

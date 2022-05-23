@@ -1,8 +1,9 @@
-import { Box, Button, TableCell, TableRow, TextField } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCategory,
+  deleteSubCategory,
   getCategories,
   getSubCategories,
   putCategory,
@@ -25,8 +26,14 @@ export const AdminCatAndSubc = () => {
     dispatch(getSubCategories())
   }, [dispatch]);
 
+    //updatin para categorias
   const [updating, setUpdating] = useState(false);
+  //--------
+  ///updatin para subcategorias
+  const [updatingSubCat, setUpdatingSubCat] = useState(false);
+
   const [idCat, setIdCat] = useState(0);
+  const [idSubCat, setIdSubCat] = useState(0)
 
   const categoryToUpdate = allCategories?.find((c) => c.id == idCat);
 
@@ -68,13 +75,31 @@ export const AdminCatAndSubc = () => {
     await dispatch(getCategories());
   }
 
-  //------ funciones para editar
+  //------ funciones para editar categorias
 
   async function handleUpdateCat(e) {
     e.preventDefault();
     setUpdating(true);
     setIdCat(e.target.value);
+    console.log(idSubCat)
   }
+
+
+  //funciones para eliminar sub categorias
+    async function handleDeleteSubcateg(e){
+    e.preventDefault()
+  await dispatch(deleteSubCategory(e.target.value))
+  await dispatch(getSubCategories())
+   
+  }
+
+  function handleUpdateSubCat(e){
+    e.preventDefault()
+//id de la sub categoria a editar
+setIdSubCat(e.target.value)
+setUpdatingSubCat(!updatingSubCat)
+  }
+
   return (
     <>
       <h2>Administracion de categorias y subcategorias</h2>
@@ -170,10 +195,65 @@ export const AdminCatAndSubc = () => {
 
 
         <h3>Sub categorías existentes</h3>
-        <UpadateSubCat
-        allSubCategories={allSubCategories}/>
+       
+        <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><b>Nombre de la subcategoria: </b></TableCell>
+              <TableCell><b>Descripción: </b></TableCell>
+              <TableCell><b>Categoria a la que pertenece: </b></TableCell>
+              
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {allSubCategories?.map((p) => {
+              return (
+                <TableRow>
+                 
+
+                  <TableCell>{p?.name}</TableCell>
+                  <TableCell>{p?.description}</TableCell>
+                  <TableCell>{p?.categories[0]?.name}</TableCell>
+                  
+
+                  <Button
+                    value={p.id}
+                    onClick={(e) => handleUpdateSubCat(e)}
+                    // name="delete"
+                    // startIcon={<EditIcon />}
+                  >
+                    Editar subcategoría
+                  </Button>
+                  <Button
+                    value={p.id}
+                    onClick={(e) => handleDeleteSubcateg(e)}
+                    // name="delete"
+                    // startIcon={<EditIcon />}
+                  >
+                    Eliminar 
+                  </Button>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+
+
+
+
+
+
+
         <AddSubCategoty
           allCategories={allCategories}
+          // handleUpdateSubCat={handleUpdateSubCat}//
+          idSubCat={idSubCat}
+          updatingSubCat={updatingSubCat}
+          setUpdatingSubCat={setUpdatingSubCat}
         />
     </>
   );

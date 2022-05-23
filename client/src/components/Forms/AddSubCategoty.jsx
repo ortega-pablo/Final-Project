@@ -1,25 +1,30 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { Button, InputLabel, Select, MenuItem } from "@mui/material";
-import { getCategories, getSubCategories, postAddSubCategory } from "../../redux/actions";
+import { Button, InputLabel, Select, MenuItem, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import { deleteSubCategory, getCategories, getSubCategories, postAddSubCategory } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { UpadateSubCat } from "./AdminCatAndSubca/UpadateSubCat";
 
-export const AddSubCategoty = ({ allCategories }) => {
+
+
+//TAMBIEN EDITAMOS SUBCATEGORIAS EXISTENTES//
+export const AddSubCategoty = ({ allCategories, handleUpdateSubCat, idSubCat, updatingSubCat, setUpdatingSubCat }) => {
   const allCategory = useSelector((state) => state.categories);
   const [category, setCategory] = useState("");
   const [newCategoryName, setNewCategoryName] = useState("");
   const dispatch = useDispatch();
+  const allSubCategories = useSelector(state=> state.subCategories)
 
   let comprobacionName = [];
   const allCategoriesMod = allCategory?.filter((c) => c.id === category);
-  const comprobarNombre = allCategoriesMod[0]?.subCategories?.filter(
-    (subC) => subC?.name === newCategoryName
-  );
+  const comprobarNombre = allCategoriesMod[0]?.subCategories?.map((subC) => subC.name );
   comprobacionName = comprobarNombre?.map((s) => s.name) || ["", ""];
-
+console.log(allCategoriesMod)
+console.log(newCategoryName)
+console.log(comprobarNombre)
 // console.log(category)
 // if(!category) {
 //   allCategories.map( p=> p.name)
@@ -27,10 +32,10 @@ export const AddSubCategoty = ({ allCategories }) => {
 
   const validationSchema = yup.object({
     name: yup
-      .string("Ingrese el nombre de la nueva categoria")
+      .string("Ingrese el nombre de la nueva  categoria")
       .required("El nombre es requerido")
       .notOneOf(
-       comprobacionName.map((p) => p)  ,
+        allCategoriesMod[0]?.subCategories?.map((subC) => subC?.name )|| ["", ""]   ,
         "Ya existe esa sub categoria en la categoría seleccionada "
       ),
       
@@ -67,6 +72,7 @@ export const AddSubCategoty = ({ allCategories }) => {
   function handleInputNewSubCat(e) {
     e.preventDefault();
     setNewCategoryName(e.target.value);
+    console.log(e.target.value)
   }
 
  
@@ -77,9 +83,35 @@ export const AddSubCategoty = ({ allCategories }) => {
 
   }
 
+  // async function handleDeleteSubcateg(e){
+  //   e.preventDefault()
+  // await dispatch(deleteSubCategory(e.target.value))
+  // await dispatch(getSubCategories())
+   
+  // }
+
+  // function handleUpdateSubCat(e){
+  //   e.preventDefault()
+
+  // }
+
+
+
+   async function handleUpdateSubCat(e){
+    e.preventDefault()
+
+   }
+
   return (
     <>
-      <div>AddSubCategoty</div>
+      <div>AddSubCategoty to product</div>
+
+    
+
+
+
+
+
       <InputLabel id="demo-simple-select-standard-label">
         Agregar Sub categoria a:
       </InputLabel>
@@ -142,6 +174,16 @@ export const AddSubCategoty = ({ allCategories }) => {
         <Button type="submit">Crear nueva Sub Categoria</Button>
        
       </Box>
+
+      <UpadateSubCat
+      idSubCat={idSubCat} // ID DE LA SUBCAT Q VAMOS A EDITAR
+      updatingSubCat={updatingSubCat}
+      setUpdatingSubCat={setUpdatingSubCat}
+      allCategory={allCategory}
+      category={category}
+      newCategoryName={newCategoryName}
+        // allSubCategories={allSubCategories}
+        />
     </>
   );
 };

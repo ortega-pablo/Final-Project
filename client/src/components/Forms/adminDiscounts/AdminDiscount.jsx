@@ -19,7 +19,7 @@ export const AdminDiscount = () => {
   const [idUpdate, setIdUdate] = useState("");
 
   async function changeState(e) {
-    // e.preventDefault()
+    e.preventDefault()
     if(e.target.checked) {
       await dispatch(putDiscount(e.target.value, { active: true }));
     } else {
@@ -62,7 +62,7 @@ export const AdminDiscount = () => {
                   name="loading"
                   color="primary"
                   value={d.id}
-                  defaultChecked={d.active}
+                 defaultChecked={d.active}
                 />
               }
               label="Activo"

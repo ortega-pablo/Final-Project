@@ -43,7 +43,9 @@ import {
   PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
   DELETE_SPECIFICATION,
   POST_ADD_IMAGE,
-  DELETE_IMAGE_TO_PRODUCT
+  DELETE_IMAGE_TO_PRODUCT,
+  PUT_NAME_SPECIFICATION,
+  PUT_NAME_SUBCATEGORY
 } from "../actions";
 
 const initialState = {
@@ -387,7 +389,30 @@ const rootReducer = (state = initialState, action) => {
             ...state,
           };
         }
+
+        case PUT_NAME_SPECIFICATION: {
+          const inedex7 = state.allSpecifications.findIndex((d) => d.id == action.payload.id );
+          const newArray7 = [...state.allSpecifications];
+          newArray7[inedex7] = action.payload;
     
+          return {
+            ...state,
+            categories: newArray7,
+          };
+        }
+    
+        case PUT_NAME_SUBCATEGORY: {
+          const inedex8 = state.subCategories.findIndex((s) => s.id == action.payload.id );
+          const newArray8 = [...state.subCategories];
+          newArray8[inedex8] = action.payload;
+    
+          return {
+            ...state,
+            categories: newArray8,
+          };
+        }
+    
+
 
     default:
       return state;
