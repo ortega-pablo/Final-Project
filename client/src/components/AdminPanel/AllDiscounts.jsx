@@ -1,10 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import { GetAllDiscountsToAdmin } from './Get/GetAllDiscountsToAdmin'
 
 function AllDiscounts() {
+  const userStatus = useSelector((state) => state.userStatus);
   return (
+    userStatus ==='admin' ? 
     <Box
       maxWidth="vp"
       sx={{
@@ -41,11 +46,14 @@ function AllDiscounts() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá se pueden ver todos los decuentos</Typography>
+          <Typography variant="h2">Descuentos</Typography>
+          <GetAllDiscountsToAdmin/>
 
         </Container>
       </Container>
     </Box>
+    :
+    <NotFound/>
   )
 }
 

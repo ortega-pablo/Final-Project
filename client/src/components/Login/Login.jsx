@@ -47,7 +47,6 @@ export const Login = () => {
           icon: 'success',
           title: 'Logeado',
           showConfirmButton: false,
-          
           timer: 1500
         })
         navigate(`/`)

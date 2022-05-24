@@ -1,10 +1,17 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { AddCategory } from '../Forms/AddCategory'
+import { AdminCatAndSubc } from '../Forms/AdminCatAndSubca/AdminCatAndSubc'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import CreateCategoryToAdmin from './Get/Create-Modify/CreateCategoryToAdmin'
 
 function CreateCategory() {
+  const userStatus = useSelector((state) => state.userStatus);
     return (
+      userStatus === 'admin'?
         <Box
           maxWidth="vp"
           sx={{
@@ -39,13 +46,16 @@ function CreateCategory() {
                 width: "100%",
                 padding: 0,
                 alignItems: "center",
+                m:3
               }}
             >
-              <Typography variant="h2">crear nueva categoría</Typography>
-    
+              <Typography variant="h2"  color='ambar5.main' sx={{mb:3}}>Crear nueva categoría</Typography>
+              <CreateCategoryToAdmin/>
             </Container>
           </Container>
         </Box>
+        :
+        <NotFound/>
       )
 }
 

@@ -191,6 +191,7 @@ router.put("/", async (req, res, next) => {
 })
 
 router.put("/:specificationId", async (req, res, next) => {
+<<<<<<< HEAD
 
   const {specificationId} = req.params
   const {name, value} = req.body
@@ -247,7 +248,64 @@ router.put("/:specificationId", async (req, res, next) => {
     next(error)
   }
 })
+=======
+>>>>>>> c0bad320ed505d0ae62abeeca9938a9cd9ac16d5
 
+  const {specificationId} = req.params
+  const {name, value} = req.body
+
+  try {
+    if(specificationId){
+
+      if(specificationId && name) {
+
+        
+      const findASpec = await Specification.findOne({
+        where: {
+          id: specificationId
+        }
+      })
+
+        const updateName = await Specification.update({
+          name,
+          },
+          {
+          where: {
+              id: specificationId
+          }
+        })
+
+        findASpec && updateName ?
+        res.status(200).send("Specification name updated successfully!") :
+         res.send("No specification found")
+  
+      } else if(specificationId && value){
+
+        const getSpecificationValue = await ProductSpecification.findOne({
+          where: {
+            specificationId,
+          }
+        })
+  
+        const updateValue = await ProductSpecification.update({
+          value,
+        },
+        { where: {specificationId,}})
+
+        getSpecificationValue && updateValue ?
+        res.status(200).send("Specification value updated successfully!") :
+        res.send("No value associated with this specification")
+
+      }
+
+    } else {
+      return res.send("No specification found!")
+    }
+
+  } catch(error){
+    next(error)
+  }
+})
 
 router.delete("/:specificationId", async (req, res, next) => {
 

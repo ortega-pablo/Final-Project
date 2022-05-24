@@ -25,12 +25,7 @@ import AdminSpecifications from "./components/AdminPanel/AdminSpecifications";
 import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
-import CreateSpecification from "./components/AdminPanel/CreateSpecification"
-import {UseFormControl} from "./components/Forms/UseFormControl";
-
-
-
-
+import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 
 function App() {
   return (
@@ -64,7 +59,6 @@ function App() {
             <Route path="/createProduct" element={<CreateProduct/>}/>
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
-            
           </Routes>
         <Footer/>
     </BrowserRouter>
