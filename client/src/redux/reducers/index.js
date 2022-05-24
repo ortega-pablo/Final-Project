@@ -46,7 +46,9 @@ import {
   DELETE_IMAGE_TO_PRODUCT,
   GET_USER_ID_BY_TOKEN,
   PUT_NAME_SPECIFICATION,
-  PUT_NAME_SUBCATEGORY
+  PUT_NAME_SUBCATEGORY,
+  GET_IMAGES,
+  GET_DETAIL_ONE_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -59,7 +61,10 @@ const initialState = {
   inventory: [],
   subCategories: [],
   discounts: [],
-  userStatus: null
+  userStatus: null,
+  allImages: [],
+  getDetailOneProduct : []
+  
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -417,6 +422,19 @@ const rootReducer = (state = initialState, action) => {
           };
         }
     
+        case GET_IMAGES: {
+          return {
+            ...state,
+            allImages: action.payload,
+          };
+        }
+
+        case GET_DETAIL_ONE_PRODUCT:
+          return {
+            ...state,
+            getDetailOneProduct: action.payload,
+           
+          };
 
     default:
       return state;
