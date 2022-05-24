@@ -27,7 +27,7 @@ export const AdministrateProduct = () => {
   }, [dispatch]);
 
   const [idUpdate, setIdUpdate] = useState("");
-
+  const productToUpdate = allProducts.find( p => p.id === Number(idUpdate) )
   async function handleDeleteProduct(e) {
     e.preventDefault();
     console.log("Producto eliminado");
@@ -38,8 +38,12 @@ export const AdministrateProduct = () => {
   //------------esditando producto
   async function handleEditProduct(e) {
     e.preventDefault();
-    setUpdating(true);
-    setIdUpdate(e.target.value);
+   await setIdUpdate(e.target.value);
+   await  setUpdating(true);
+    // await dispatch(getProducts())
+    console.log(idUpdate)
+    console.log("editando a....")
+    console.log(e.target.value)
   }
 
   return (
@@ -48,7 +52,7 @@ export const AdministrateProduct = () => {
         <div>
           <UpdateProduct
             idUpdate={idUpdate}
-            handleEditProduct={handleEditProduct}
+            productToUpdate={productToUpdate}
             setUpdating={setUpdating}
           />
         </div>
@@ -86,43 +90,44 @@ export const AdministrateProduct = () => {
               return (
                 <TableRow>
                   <TableCell>
-                    <Typography variant="body1" color="ambar5">
+                    {/* <Typography variant="body1" color="ambar5"> */}
                       {product.sku}
-                    </Typography>
+                    {/* </Typography> */}
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body1" color="ambar5">
+                    {/* <Typography variant="body1" color="ambar5"> */}
                       {product.name}
-                    </Typography>
+                    {/* </Typography> */}
                   </TableCell>
                   <TableCell>
                     <Button
-                      variant="contained"
-                      color="ambar4"
+                    
+                      // variant="contained"
+                      // color="ambar4"
                       size="small"
                       value={product.id}
                       onClick={(e) => handleEditProduct(e)}
-                      name="delete"
-                      startIcon={<EditIcon />}
+                      name="edit"
+                      // startIcon={<EditIcon />}
                     >
-                      <Typography variant="h6" color="ambar5" >
+                      {/* <Typography variant="h6" color="ambar5" > */}
                         Editar
-                      </Typography>
+                      {/* </Typography> */}
                     </Button>
                   </TableCell>
                   <TableCell>
                     <Button
-                      variant="contained"
-                      color="ambar4"
+                      // variant="contained"
+                      // color="ambar4"
                       size="small"
                       value={product.id}
                       onClick={(e) => handleDeleteProduct(e)}
                       name="delete"
-                      startIcon={<DeleteIcon />}
+                      // startIcon={<DeleteIcon />}
                     >
-                      <Typography variant="h6" color="ambar5">
+                      {/* <Typography variant="h6" color="ambar5"> */}
                         Eliminar
-                      </Typography>
+                      {/* </Typography> */}
                     </Button>
                   </TableCell>
                 </TableRow>

@@ -52,10 +52,15 @@ export const POST_ADD_IMAGE = "POST_ADD_IMAGE";
 export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
 export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
+export const GET_IMAGES = "GET_IMAGES";
 
 
 
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
+
+export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
+
+
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -738,3 +743,24 @@ export function putNameSubcategoria(idS, payload) {
     }
   };
 }
+
+
+
+export const getImage = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/images");
+    return dispatch({
+      type: GET_IMAGES,
+      payload: response.data,
+    });
+  };
+};
+export const getDetailOneProduct = (id) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/productDetail/${id}`);
+    return dispatch({
+      type: GET_DETAIL_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};

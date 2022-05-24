@@ -14,6 +14,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategories,
+  getDetail,
+  getDetailOneProduct,
   getProducts,
   getSubCategories,
   putCategoryToProduct,
@@ -30,13 +32,17 @@ export const TableCatAndSubcOfProduct = ({
 
   const products = useSelector((state) => state.products);
   const allSubcategories = useSelector((state) => state.subCategories);
+
+ 
+  const newProducDetail = useSelector(state => state.getDetailOneProduct)
   // const allCategories = useSelector( state => state.categories)
   // const [idCat, setIdCat] = useState("")
-
+console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
     dispatch(getSubCategories());
+    dispatch(getDetailOneProduct(newProdId))
   }, [dispatch]);
 
   //  const [idSubCat, setIdSubCat] = useState(0)
@@ -51,10 +57,13 @@ export const TableCatAndSubcOfProduct = ({
     const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value
     );
 
+
+
     await dispatch(putCategoryToProduct(newProdId, e.target.value));
 
     if (subCatInCadena.length > 0) {
       subCatInCadena.map(
+
         async (sc) => await dispatch(putSubCategoryToProduct(newProdId, sc.id))
       );
       await dispatch(getProducts());
@@ -138,25 +147,31 @@ export const TableCatAndSubcOfProduct = ({
           </TableHead>
 
           <TableBody>
-            {newProducts?.subCategories?.map((sc) => {
-              return (
-                <TableRow>
-                  <TableCell>{sc.name} </TableCell>
-                  <TableCell>ACA VA LA CATEGORIA </TableCell>
+          
+          {                 newProducDetail[0]?.subCategories.map(sc => {
+                      return (
+                        <TableRow>
+                          <TableCell>{sc.name} </TableCell>
+                          <TableCell>{sc.categories[0].name} </TableCell>
 
-                  {/* {c?.subCategories?.map(sc => <TableCell>{sc.name}</TableCell> ) } */}
+                        <Button
+                      value={newProducDetail[0]?.subCategories[0]?.id}
+                      onClick={(e) => handleDeleteSubc(e)}
+                      // name="delete"
+                      // startIcon={<EditIcon />}
+                      >
+                      Eliminar
+                        </Button>
+                          </TableRow>
+                      )
+          } )
+          
+          }
 
-                  <Button
-                    value={sc.id}
-                    onClick={(e) => handleDeleteSubc(e)}
-                    // name="delete"
-                    // startIcon={<EditIcon />}
-                  >
-                    Eliminar
-                  </Button>
-                </TableRow>
-              );
-            })}
+                
+           
+
+           
           </TableBody>
         </Table>
       </TableContainer>
