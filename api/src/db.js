@@ -56,11 +56,15 @@ const {
   User,
   SubCategory,
   Image,
+  Review,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
 Product.belongsToMany(Discount, { through: "discount_products"});
 Discount.belongsToMany(Product, { through: "discount_products"});
+
+Product.hasMany(Review);
+Review.belongsTo(Product)
 
 Product.belongsToMany(Specification, { through: ProductSpecification});
 Specification.belongsToMany(Product, { through: ProductSpecification});
