@@ -89,6 +89,12 @@ router.put("/removeProduct", async (req, res, next) => {
                 where: {
                     userId
                 },
+                include: {
+                    model: Product,
+                    through: {
+                        attributes: []
+                    }
+                }
             })
 
             const findProduct = await Product.findOne({
@@ -99,9 +105,10 @@ router.put("/removeProduct", async (req, res, next) => {
 
             if(findCart && findProduct){
 
-                await findProduct.removeShoppingCart(findCart)
-                await findCart.decrement('amount', { by: 1 });
+                console.log(findCart.products.length)
+                findCart.products.length === 0 ? res.send("No products in cart") :
 
+                await findProduct.removeShoppingCart(findCart) && await findCart.decrement('amount', { by: 1 });
 
                 res.send("Product removed from cart successfully!")
             } else {
@@ -118,6 +125,12 @@ router.put("/removeProduct", async (req, res, next) => {
                 where: {
                     id: shoppingCartId
                 },
+                include: {
+                    model: Product,
+                    through: {
+                        attributes: []
+                    }
+                }
             })
 
             const findProduct = await Product.findOne({
@@ -128,9 +141,11 @@ router.put("/removeProduct", async (req, res, next) => {
 
             if(findCart && findProduct){
 
-                await findProduct.removeShoppingCart(shoppingCartId)
-                await findCart.decrement('amount', { by: 1 });
+                console.log(findCart.products.length)
 
+                findCart.products.length === 0  ? res.send("No products in cart") :
+
+                await findProduct.removeShoppingCart(findCart) && await findCart.decrement('amount', { by: 1 });
 
                 res.send("Product removed from cart successfully!")
             } else {
