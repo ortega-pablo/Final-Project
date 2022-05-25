@@ -1,11 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 
-<<<<<<< HEAD
-const { Product, Ask, Answer, Discount, Category, Specification, ProductInventory, SubCategory, Image, User, ShoppingCart } = require("../db");
-
-
-=======
 const {
   Product,
   Ask,
@@ -19,7 +14,6 @@ const {
   User,
   Review,
 } = require("../db");
->>>>>>> 38a80488d16ea67dea699b1580af9b6ac44193ab
 
 const productInfo = async function (id) {
   const getProduct = await Product.findOne({
