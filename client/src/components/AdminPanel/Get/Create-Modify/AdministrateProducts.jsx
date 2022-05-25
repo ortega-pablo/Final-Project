@@ -38,12 +38,9 @@ export const AdministrateProduct = () => {
   //------------esditando producto
   async function handleEditProduct(e) {
     e.preventDefault();
-   await setIdUpdate(e.target.value);
-   await  setUpdating(true);
-    // await dispatch(getProducts())
-    console.log(idUpdate)
-    console.log("editando a....")
-    console.log(e.target.value)
+
+    await setIdUpdate(e.target.value);
+    await setUpdating(true);
   }
 
   return (
@@ -113,9 +110,9 @@ export const AdministrateProduct = () => {
                       name="edit"
                       // startIcon={<EditIcon />}
                     >
-                      {/* <Typography variant="h6" color="ambar5" > */}
+                    
                         Editar
-                      {/* </Typography> */}
+                      
                     </Button>
                   ) :
 
@@ -154,9 +151,9 @@ export const AdministrateProduct = () => {
                       name="delete"
                       // startIcon={<DeleteIcon />}
                     >
-                      {/* <Typography variant="h6" color="ambar5"> */}
+
                         Eliminar
-                      {/* </Typography> */}
+
                     </Button>
                         ) :
 
