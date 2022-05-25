@@ -22,8 +22,20 @@ router.put("/addProduct", async (req, res, next) => {
                 }
             })
 
-            findCart && findProduct && await findProduct.addShoppingCart(findCart) ? res.send("Product added to cart successfully!") : 
-            res.send("User or product not found")
+            if(findCart && findProduct){
+                findProduct.addShoppingCart(findCart)
+
+                await ShoppingCart.update({
+                    amount: amount + 1
+                })
+
+                res.send("Product added to cart successfully!")
+            } else {
+                res.send("User or product not found")
+            }
+
+            // findCart && findProduct && await findProduct.addShoppingCart(findCart) ? res.send("Product added to cart successfully!") : 
+            // res.send("User or product not found")
             
 
         } else if(shoppingCartId && productId){
@@ -40,8 +52,20 @@ router.put("/addProduct", async (req, res, next) => {
                 }
             })
 
-            findCart && findProduct && await findProduct.addShoppingCart(shoppingCartId) ? res.send("Product added to cart successfully!") : 
-            res.send("User or product not found")
+            if(findCart && findProduct){
+                findProduct.addShoppingCart(shoppingCartId)
+
+                await ShoppingCart.update({
+                    amount: amount + 1
+                })
+
+                res.send("Product added to cart successfully!")
+            } else {
+                res.send("User or product not found")
+            }
+
+            // findCart && findProduct && await findProduct.addShoppingCart(shoppingCartId) ? res.send("Product added to cart successfully!") : 
+            // res.send("User or product not found")
             
         } else {
             return res.send("Please provide both a user and a product")

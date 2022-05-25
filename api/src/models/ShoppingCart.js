@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("shoppingCart", {
-    ammount: {
-      type: DataTypes.FLOAT,
+    amount: {
+      type: DataTypes.NUMBER,
       allowNull: false,
       defaultValue: 0
     },
