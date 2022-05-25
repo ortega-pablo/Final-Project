@@ -29,7 +29,7 @@ router.post("/review", async (req, res, next) => {
         newReview.setUser(user);
         newReview.setProduct(product);
 
-      return res.status(200).send(newAsk);
+      return res.status(200).send(newReview);
     
   } catch (error) {
     next(error);
