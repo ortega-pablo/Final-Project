@@ -36,7 +36,7 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone, role, ammount, shippingAddress } =
+  const { userName, email, password, firstName, lastName, phone, role, amount, shippingAddress } =
     req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
@@ -55,12 +55,12 @@ router.post("/create", async (req, res, next) => {
       lastName,
       phone,
       role,
-      ammount,
+      amount,
       shippingAddress
     });
 
     const addShoppingCart = await ShoppingCart.create({
-      ammount,
+      amount,
       shippingAddress
     });
 

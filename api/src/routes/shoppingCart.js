@@ -5,6 +5,7 @@ const router = Router();
 
 router.put("/addProduct", async (req, res, next) => {
 
+    let {amount} = req.body
     const {shoppingCartId, userId, productId} = req.query
 
     try{
@@ -22,8 +23,18 @@ router.put("/addProduct", async (req, res, next) => {
                 }
             })
 
-            findCart && findProduct && await findProduct.addShoppingCart(findCart) ? res.send("Product added to cart successfully!") : 
-            res.send("User or product not found")
+            if(findCart && findProduct){
+               
+                await  findProduct.addShoppingCart(findCart)
+                await findCart.increment('amount', { by: 1 });
+
+                res.send("Product added to cart successfully!")
+            } else {
+                res.send("User or product not found")
+            }
+
+            // findCart && findProduct && await findProduct.addShoppingCart(findCart) ? res.send("Product added to cart successfully!") : 
+            // res.send("User or product not found")
             
 
         } else if(shoppingCartId && productId){
@@ -40,8 +51,19 @@ router.put("/addProduct", async (req, res, next) => {
                 }
             })
 
-            findCart && findProduct && await findProduct.addShoppingCart(shoppingCartId) ? res.send("Product added to cart successfully!") : 
-            res.send("User or product not found")
+            if(findCart && findProduct){
+
+                await findProduct.addShoppingCart(shoppingCartId)
+                await findCart.increment('amount', { by: 1 });
+
+
+                res.send("Product added to cart successfully!")
+            } else {
+                res.send("User or product not found")
+            }
+
+            // findCart && findProduct && await findProduct.addShoppingCart(shoppingCartId) ? res.send("Product added to cart successfully!") : 
+            // res.send("User or product not found")
             
         } else {
             return res.send("Please provide both a user and a product")
@@ -67,6 +89,12 @@ router.put("/removeProduct", async (req, res, next) => {
                 where: {
                     userId
                 },
+                include: {
+                    model: Product,
+                    through: {
+                        attributes: []
+                    }
+                }
             })
 
             const findProduct = await Product.findOne({
@@ -75,8 +103,20 @@ router.put("/removeProduct", async (req, res, next) => {
                 }
             })
 
-            findCart && findProduct && await findProduct.removeShoppingCart(findCart) ? res.send("Product removed from cart successfully!") : 
-            res.send("User or product not found")
+            if(findCart && findProduct){
+
+                console.log(findCart.products.length)
+                findCart.products.length === 0 ? res.send("No products in cart") :
+
+                await findProduct.removeShoppingCart(findCart) && await findCart.decrement('amount', { by: 1 });
+
+                res.send("Product removed from cart successfully!")
+            } else {
+                res.send("User or product not found")
+            }
+
+            // findCart && findProduct && await findProduct.removeShoppingCart(findCart) ? res.send("Product removed from cart successfully!") : 
+            // res.send("User or product not found")
             
 
         } else if(shoppingCartId && productId){
@@ -85,6 +125,12 @@ router.put("/removeProduct", async (req, res, next) => {
                 where: {
                     id: shoppingCartId
                 },
+                include: {
+                    model: Product,
+                    through: {
+                        attributes: []
+                    }
+                }
             })
 
             const findProduct = await Product.findOne({
@@ -93,8 +139,18 @@ router.put("/removeProduct", async (req, res, next) => {
                 }
             })
 
-            findCart && findProduct && await findProduct.removeShoppingCart(findCart) ? res.send("Product removed from cart successfully!") :
-            res.send("User or product not found")
+            if(findCart && findProduct){
+
+                console.log(findCart.products.length)
+
+                findCart.products.length === 0  ? res.send("No products in cart") :
+
+                await findProduct.removeShoppingCart(findCart) && await findCart.decrement('amount', { by: 1 });
+
+                res.send("Product removed from cart successfully!")
+            } else {
+                res.send("User or product not found")
+            }
             
         } else {
             return res.send("Please provide both a user and a product")

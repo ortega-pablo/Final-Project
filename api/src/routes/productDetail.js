@@ -2,10 +2,13 @@ const { Router } = require("express");
 const router = Router();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const { Product, Ask, Answer, Discount, Category, Specification, ProductInventory, SubCategory, Image, User, ShoppingCart } = require("../db");
 
 
 =======
+=======
+>>>>>>> abfc1dd7cdf887ee6e54b8a1c51136473bdc0689
 const {
   Product,
   Ask,
@@ -19,7 +22,10 @@ const {
   User,
   Review,
 } = require("../db");
+<<<<<<< HEAD
 >>>>>>> 38a80488d16ea67dea699b1580af9b6ac44193ab
+=======
+>>>>>>> abfc1dd7cdf887ee6e54b8a1c51136473bdc0689
 
 const productInfo = async function (id) {
   const getProduct = await Product.findOne({
@@ -84,6 +90,7 @@ const productInfo = async function (id) {
           },
           {
 <<<<<<< HEAD
+<<<<<<< HEAD
               model: ShoppingCart,
               through: {
                   attributes: []
@@ -98,6 +105,8 @@ const productInfo = async function (id) {
     temp.push(getProduct)
     
 =======
+=======
+>>>>>>> abfc1dd7cdf887ee6e54b8a1c51136473bdc0689
             model: User,
             attributes: ["id", "userName"],
           },
@@ -117,7 +126,10 @@ const productInfo = async function (id) {
       }, */
     ],
   });
+<<<<<<< HEAD
 >>>>>>> 38a80488d16ea67dea699b1580af9b6ac44193ab
+=======
+>>>>>>> abfc1dd7cdf887ee6e54b8a1c51136473bdc0689
 
   let temp = [];
   temp.push(getProduct);
