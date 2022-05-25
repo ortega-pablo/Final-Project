@@ -49,6 +49,8 @@ import {
   PUT_NAME_SUBCATEGORY,
   GET_IMAGES,
   GET_DETAIL_ONE_PRODUCT,
+  GET_ONE_USER,
+  GET_ALL_ASK
 } from "../actions";
 
 const initialState = {
@@ -64,6 +66,8 @@ const initialState = {
   userStatus: null,
   allImages: [],
   getDetailOneProduct : [],
+  getDetailOneUser : [],
+  allAsk: []
   
 };
 
@@ -435,7 +439,21 @@ const rootReducer = (state = initialState, action) => {
             getDetailOneProduct: action.payload,
            
           };
-         
+
+          case GET_ONE_USER:
+            console.log("reducer",state.getDetailOneUser)
+      return {
+        ...state,
+        getDetailOneUser: action.payload,
+        
+      };
+
+      case GET_ALL_ASK:
+  return {
+    ...state,
+    allAsk: action.payload,
+    
+  };
     default:
       return state;
   }

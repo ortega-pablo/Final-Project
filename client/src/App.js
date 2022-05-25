@@ -61,7 +61,7 @@ function App() {
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
-            <Route path="/prueba/:id" element={<Perfil/>}/>
+            <Route path="/prueba" element={<Perfil/>}/>
 
           </Routes>
         <Footer/>

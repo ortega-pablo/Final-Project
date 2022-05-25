@@ -7,7 +7,7 @@ export const POST_ADD_CATEROY_TO_PRODUCT = "POST_ADD_CATEROY_TO_PRODUCT";
 export const POST_ADD_SPECIFICATION_TO_PRODUCT =
   "POST_ADD_SPECIFICATION_TO_PRODUCT";
 export const POST_NEW_ASK = "POST_NEW_ASK";
-export const POST_NEW_ANSWER = "POST_NEW_ASK";
+export const POST_NEW_ANSWER = "POST_NEW_ANSWER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
 export const FILTER_PER_SUBCATEGORY = "FILTER_PER_SUBCATEGORY";
@@ -60,6 +60,8 @@ export const GET_USERS = "GET_USERS"
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
 
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
+export const GET_ONE_USER = "GET_ONE_USER";
+export const GET_ALL_ASK = "GET_ALL_ASK";
 
 
 
@@ -767,3 +769,46 @@ export const getDetailOneProduct = (id) => {
   };
 };
 
+// export function getDetailOneUser( token) {
+//   return async function(dispatch) {
+//     const config = {
+//       headers: { Authorization: `Bearer ${token}` },
+//     };
+//     try {
+//       const response = await axios(`http://localhost:3001/users/${token}`, config)
+//       console.log("idUser en action",token )
+//       return dispatch({
+//         type: GET_ONE_USER,
+//         payload: response.data
+//       })
+//     } catch(error){
+//       console.log(error)
+//     }
+//   }
+// }
+export function getDetailOneUsers( id) {
+  return async function(dispatch) {
+   
+    try {
+      const response = await axios(`http://localhost:3001/users/${id}`)
+      console.log("idUser en action",id )
+      return dispatch({
+        type: GET_ONE_USER,
+        payload: response.data
+      })
+    } catch(error){
+      console.log(error)
+    }
+  }
+}
+
+
+export const getAllAsk = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks`);
+    return dispatch({
+      type: GET_ALL_ASK,
+      payload: response.data,
+    });
+  };
+};
