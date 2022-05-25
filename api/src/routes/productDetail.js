@@ -83,21 +83,6 @@ const productInfo = async function (id) {
             ],
           },
           {
-<<<<<<< HEAD
-              model: ShoppingCart,
-              through: {
-                  attributes: []
-              }
-          }
-          
-    ]
-    })
-
-
-    let temp = [];
-    temp.push(getProduct)
-    
-=======
             model: User,
             attributes: ["id", "userName"],
           },
@@ -117,7 +102,6 @@ const productInfo = async function (id) {
       }, */
     ],
   });
->>>>>>> 38a80488d16ea67dea699b1580af9b6ac44193ab
 
   let temp = [];
   temp.push(getProduct);
