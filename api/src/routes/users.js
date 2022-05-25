@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer } = require("../db");
+const { User, Ask, Answer, ShoppingCart } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -36,7 +36,7 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone, role } =
+  const { userName, email, password, firstName, lastName, phone, role, ammount, shippingAddress } =
     req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
@@ -55,7 +55,17 @@ router.post("/create", async (req, res, next) => {
       lastName,
       phone,
       role,
+      ammount,
+      shippingAddress
     });
+
+    const addShoppingCart = await ShoppingCart.create({
+      ammount,
+      shippingAddress
+    });
+
+    addShoppingCart.setUser(newUser);
+
 
     res.status(200).send("done");
   } catch (error) {
@@ -187,7 +197,7 @@ router.get("/:userId", async (req, res) => {
         ],
       });
 
-      console.log(findById);
+      
       return res.send(findById);
     } else {
       return res.status(404).send("User not found");

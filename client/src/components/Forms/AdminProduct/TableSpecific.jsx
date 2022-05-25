@@ -65,8 +65,6 @@ export const TableSpecific = ({ productToUpdate, idUpdate }) => {
   }
   return (
     <>
-      <h1>tabla para editar especificacione de un producto</h1>
-
       {productToUpdate?.specifications.map((s) => {
         return (
           <>

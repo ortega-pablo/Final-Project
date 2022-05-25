@@ -5,10 +5,12 @@ module.exports = (sequelize) => {
     ammount: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      defaultValue: 0
     },
     shippingAddress: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: ""
       },
   });
 };

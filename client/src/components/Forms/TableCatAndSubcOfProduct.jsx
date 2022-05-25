@@ -8,6 +8,7 @@ import {
   TableHead,
   Paper,
   Table,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -82,16 +83,21 @@ export const TableCatAndSubcOfProduct = ({
 
   return (
     <>
-      <div>TableCatAndSubcOfProduct</div>
-      
+
+    <Typography color="warning.dark">
       Atencion: Si elimina su categoría, se eliminaran del producto las
       subcategorías asociadas
+    </Typography>
+
       <TableContainer component={Paper}>
         <Table>
+
           <TableHead>
             <TableRow>
               <TableCell>
-                <b>Nombre de la categoria: </b>
+                <Typography variant="h6" color="ambar5">
+                Nombre de la categoria:
+                </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -117,6 +123,7 @@ export const TableCatAndSubcOfProduct = ({
           </TableBody>
         </Table>
       </TableContainer>
+      <hr />
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
