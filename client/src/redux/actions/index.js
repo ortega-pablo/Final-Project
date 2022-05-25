@@ -53,6 +53,7 @@ export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
 export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
 export const GET_IMAGES = "GET_IMAGES";
+export const GET_USERS = "GET_USERS"
 
 
 
@@ -408,6 +409,7 @@ export function putCategoryToProduct(idP, idC) {
 }
 
 export function putSubCategoryToProduct (idP, idSc ){
+  console.log("desero borrar", idP, idSc)
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
@@ -764,3 +766,4 @@ export const getDetailOneProduct = (id) => {
     });
   };
 };
+

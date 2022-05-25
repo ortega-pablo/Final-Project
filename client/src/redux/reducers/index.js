@@ -48,7 +48,7 @@ import {
   PUT_NAME_SPECIFICATION,
   PUT_NAME_SUBCATEGORY,
   GET_IMAGES,
-  GET_DETAIL_ONE_PRODUCT
+  GET_DETAIL_ONE_PRODUCT,
 } from "../actions";
 
 const initialState = {
@@ -63,7 +63,7 @@ const initialState = {
   discounts: [],
   userStatus: null,
   allImages: [],
-  getDetailOneProduct : []
+  getDetailOneProduct : [],
   
 };
 
@@ -435,7 +435,7 @@ const rootReducer = (state = initialState, action) => {
             getDetailOneProduct: action.payload,
            
           };
-
+         
     default:
       return state;
   }
