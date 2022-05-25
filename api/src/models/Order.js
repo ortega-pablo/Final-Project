@@ -7,8 +7,13 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     state: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: ["created", "processing", "cancelled", "completed"],
+      defaultValue: "created",
       allowNull: false,
     },
+    address: {
+      type: DataTypes.STRING,
+    }
   });
 };

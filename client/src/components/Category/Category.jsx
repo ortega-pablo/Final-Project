@@ -23,7 +23,7 @@ function validate(value) {
   if (isNaN(value.Desde)) errors.Desde = "Por favor ingrese un número.";
   if (isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número.";
   if (value.Desde > value.Hasta) errors.Desde = "Este valor debe ser un mínimo";
-  errors.Desde = "Este valor debe ser un máximo";
+  if (value.Hasta < value.Desde) errors.Hasta = "Este valor debe ser un maximo";
   if (value.Desde < 0) errors.Desde = "El valor debe ser mayor o igual a 0";
   if (value.Hasta < 0) errors.Hasta = "El valor debe ser mayor o igual a 0";
   return errors;
@@ -197,6 +197,7 @@ function Category({
                 sx={{ display: "flex", justifyContent: "space-between" }}
               >
                 <Button
+                  type="submit"
                   variant="contained"
                   color="ambar3"
                   onClick={(e) => {
@@ -210,6 +211,7 @@ function Category({
                       });
                     } else {
                       handleClickSubmitPerPrice(value);
+
                     }
                   }}
                   sx={{ mr: 1 }}
