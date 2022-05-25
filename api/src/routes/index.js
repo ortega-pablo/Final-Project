@@ -9,11 +9,8 @@ const productDetailRoute = require("./productDetail")
 const productInventoryRoute = require("./productInventory")
 const specificationsRoute = require("./specification")
 const imagesRoute = require("./images")
-<<<<<<< HEAD
 const shoppingCartRoute = require("./shoppingCart")
-=======
 const orderRoute = require("./orders")
->>>>>>> 38a80488d16ea67dea699b1580af9b6ac44193ab
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -33,11 +30,8 @@ router.use("/productDetail", productDetailRoute)
 router.use("/inventory", productInventoryRoute)
 router.use("/specifications", specificationsRoute)
 router.use("/images", imagesRoute)
-<<<<<<< HEAD
 router.use("/shoppingCart", shoppingCartRoute)
-=======
 router.use("/orders", orderRoute)
->>>>>>> 38a80488d16ea67dea699b1580af9b6ac44193ab
 
 
 module.exports = router;
