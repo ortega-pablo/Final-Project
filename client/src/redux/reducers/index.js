@@ -48,7 +48,8 @@ import {
   PUT_NAME_SPECIFICATION,
   PUT_NAME_SUBCATEGORY,
   GET_IMAGES,
-  GET_DETAIL_ONE_PRODUCT
+  GET_DETAIL_ONE_PRODUCT,
+  ADD_TO_CART
 } from "../actions";
 
 const initialState = {
@@ -63,9 +64,17 @@ const initialState = {
   discounts: [],
   userStatus: null,
   allImages: [],
-  getDetailOneProduct : []
+  getDetailOneProduct : [],
+  cart: [],
   
 };
+
+// funcion para que el carrito se guarde siempre 
+localStorage.getItem("cart") ? 
+initialState.cart = JSON.parse(localStorage.getItem("cart"))
+: initialState.cart = []
+
+
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -435,6 +444,13 @@ const rootReducer = (state = initialState, action) => {
             getDetailOneProduct: action.payload,
            
           };
+
+        case ADD_TO_CART:
+          return {
+            ...state,
+            cart: [...action.payload]
+          }
+          
 
     default:
       return state;

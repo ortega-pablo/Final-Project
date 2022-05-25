@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../../redux/actions";
+import { addToCart, getDetail } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
 import QuestionsAndAnswers from "./QuestionsAndAnswers";
 import {
+  Button,
   Chip,
   CircularProgress,
   Container,
@@ -16,6 +17,8 @@ import {
 import { Box, maxWidth } from "@mui/system";
 import { Footer } from "../Footer/Footer";
 import { BoxGeneral } from "../../personalizadTheme";
+import Swal from "sweetalert2";
+
 
 export const Detail = () => {
   const dispatch = useDispatch();
@@ -43,6 +46,26 @@ export const Detail = () => {
       //     dispatch(clearDetail())
       // })
     }, [dispatch]);
+
+  //agregar al carrito
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    const prodToCart = {
+      id: productDetail[0].id,
+      name: productDetail[0].name,
+      precio: productDetail[0].price,
+      cantidad: 1,
+      totalProducto: productDetail[0].price
+    }
+    dispatch(addToCart(prodToCart))
+    Swal.fire({
+      background: '#DFDCD3',
+      icon: 'success',
+      title: 'Agregado al carrito',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
     
   return (
     <Box  sx={{ display: "flex", justifyContent:"center", backgroundColor: "ambar1.main"}}>
@@ -73,6 +96,8 @@ export const Detail = () => {
                 width: "100%",
               }}
             />
+
+            <Button onClick={(e)=>handleAddToCart(e)} > Agregar al carrito </Button>
 
             <Divider textAlign="left">
               <Chip
