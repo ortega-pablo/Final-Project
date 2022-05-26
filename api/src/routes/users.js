@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer } = require("../db");
+const { User, Ask, Answer, ShoppingCart, Address, Product } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -36,8 +36,17 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone, role } =
-    req.body;
+  const {
+    userName,
+    email,
+    password,
+    firstName,
+    lastName,
+    phone,
+    role,
+    amount,
+    shippingAddress,
+  } = req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
@@ -55,7 +64,16 @@ router.post("/create", async (req, res, next) => {
       lastName,
       phone,
       role,
+      amount,
+      shippingAddress,
     });
+
+    const addShoppingCart = await ShoppingCart.create({
+      amount,
+      shippingAddress,
+    });
+
+    addShoppingCart.setUser(newUser);
 
     res.status(200).send("done");
   } catch (error) {
@@ -132,6 +150,9 @@ router.get("/", async (req, res, next) => {
               },
             ],
           },
+          {
+            model: Address,
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -153,6 +174,9 @@ router.get("/", async (req, res, next) => {
                 attributes: ["content"],
               },
             ],
+          },
+          {
+            model: Address,
           },
         ],
       });
@@ -182,12 +206,28 @@ router.get("/:userId", async (req, res) => {
                 model: Answer,
                 attributes: ["content"],
               },
+              {
+                model: Product,
+                attributes: ["id", "name"],
+              },
             ],
+          },
+          {
+            model: Address,
+          },
+          {
+            model: ShoppingCart,
+            attributes: ["id", "amount", "shippingAddress", "updatedAt"],
+            include: {
+              model: Product,
+              through: {
+                attributes: [],
+              },
+            },
           },
         ],
       });
 
-      console.log(findById);
       return res.send(findById);
     } else {
       return res.status(404).send("User not found");
@@ -200,12 +240,13 @@ router.get("/:userId", async (req, res) => {
 router.delete("/delete/:userId", async (req, res, next) => {
   // Esto para el admin de la pagina
 
-  const { userId } = req.params;
+  const { adminId, userId } = req.query;
 
   try {
-    const findUser = await User.findOne({
+    const findAdmin = await User.findOne({
       where: {
-        id: userId,
+        id: adminId,
+        role: "admin",
       },
     });
     //console.log(findUser.dataValues);
@@ -216,9 +257,12 @@ router.delete("/delete/:userId", async (req, res, next) => {
           id: userId,
         },
       });
-      res.status(200).send("User deleted successfully!");
+
+      findUser
+        ? res.status(200).send("User deleted successfully!")
+        : res.send("User not found");
     } else {
-      res.send("User not found");
+      res.send("User not authorized");
     }
   } catch (error) {
     next(error);
