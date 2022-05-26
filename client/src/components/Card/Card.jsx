@@ -4,21 +4,24 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, } from "@mui/material";
+import CartModal from "../Cart/CartModal";
 
 export default function MultiActionAreaCard({
   name,
   price,
   brand,
   thumbnail,
-  images
+  images,
+  id
 }) {
   return (
     <Card elevation={3} sx={{ alignItems:"center", width: 200, hover: "true"}}>
-      <CardActionArea sx={[
+      <CardActionArea href={"/detail/" + id} sx={[
     {maxHeight:'360px',
     minHeight:'360px',
     backgroundColor: "#D1C6B7",
       },
+      
     /*
     #D1C2B0
     #D1C6B7
@@ -51,8 +54,8 @@ export default function MultiActionAreaCard({
           <Typography gutterBottom variant="h6" component="div" sx={{mb:'auto'}}>Precio: {"$"}{price}</Typography>
           <Typography gutterBottom variant="h6" component="div" sx={{mb:'auto'}}>Marca: {brand}</Typography>
         </CardContent>
-        
       </CardActionArea>
+      <CartModal id={id}/>
     </Card>
   );
 }

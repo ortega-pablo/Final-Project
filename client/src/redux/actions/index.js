@@ -866,7 +866,7 @@ export const addItemToCart = (productId, token) =>{
           "http://localhost:3001/users/userId",
           config
         );
-        await axios.put(`http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`)
+        await axios.put(`http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,{ quantity: 165 })
         return dispatch({
           type: ADD_TO_CART,
         })

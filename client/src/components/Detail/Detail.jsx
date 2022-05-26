@@ -24,6 +24,8 @@ import { Footer } from "../Footer/Footer";
 import { BoxGeneral } from "../../personalizadTheme";
 import AllReviews from "./AllReviews";
 import Swal from "sweetalert2";
+import CartModal from "../Cart/CartModal"
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -56,27 +58,11 @@ export const Detail = () => {
 
   const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(() => {
-    //tendria que ser un getDitail(id) desde las action
     dispatch(getDetail(id));
     dispatch(getCartById(token))
-    // return (()=>{
-
-      //     dispatch(clearDetail())
-      // })
     }, [dispatch]);
+    
 
-    const handleAddToCart = (e) => {
-    e.preventDefault();
-    dispatch(addItemToCart(id, token));
-    dispatch(getCartById(token))
-    Swal.fire({
-      background: '#DFDCD3',
-      icon: 'success',
-      title: 'Agregado al carrito',
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
     
     const [openModal, setOpenModal] = React.useState(false);
     const handleOpenModal = () => setOpenModal(true);
@@ -126,8 +112,8 @@ export const Detail = () => {
               }}
             />
 
-            <Button onClick={handleAddToCart} > Agregar al carrito </Button>
-
+            <CartModal id={productDetail[0].id} />
+            
             <Divider textAlign="left">
               <Chip
                 label="Descripción"
