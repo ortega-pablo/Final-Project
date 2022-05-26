@@ -26,6 +26,8 @@ import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
+import Clients from "./components/AdminPanel/Clients";
+import Orders from "./components/AdminPanel/Orders";
 
 function App() {
   return (
@@ -59,6 +61,10 @@ function App() {
             <Route path="/createProduct" element={<CreateProduct/>}/>
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
+
+            <Route path="/clients" element={<Clients/>}/>
+
+            <Route path="/orders" element={<Orders/>}/>
           </Routes>
         <Footer/>
     </BrowserRouter>

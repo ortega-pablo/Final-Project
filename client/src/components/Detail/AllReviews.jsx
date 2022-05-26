@@ -5,8 +5,8 @@ import React from 'react'
 function AllReviews({reviews}) {
   return (
     <Box>
-    <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+    <List 
+      sx={{ width: '100%', maxWidth: "360px",maxHeight:"360px", bgcolor: 'background.paper', overflowY: "scroll" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
@@ -25,7 +25,7 @@ function AllReviews({reviews}) {
       <Rating name="half-rating-read" defaultValue={r.rating} precision={0.5} readOnly />
       </ListItem>
       <ListItem>
-      <ListItemText primary={r.review} />
+      <ListItemText color="ambar5.main" primary={r.review} />
       </ListItem>
       </>)
       })}

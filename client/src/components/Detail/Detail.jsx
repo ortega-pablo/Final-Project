@@ -138,7 +138,7 @@ export const Detail = () => {
 
             <Divider textAlign="left" sx={{ mt: "2%", mb: "2%" }}>
               <Chip
-                label="Reseñas"
+                label="Calificación del producto"
                 size="string"
                 sx={{ fontSize: "18px", color: "ambar5.main" }}
               />
