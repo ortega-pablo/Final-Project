@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
@@ -12,10 +12,18 @@ import {
   Typography,
 } from "@mui/material";
 import DetailRow from "./Rows/DetailRow";
+import { getCartById } from "../../redux/actions";
 
 const CartView = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
+  
+  
+
+  const token = JSON.parse(window.localStorage.getItem("token"))?.token;
+  useEffect(()=>{
+    // dispatch(getCartById(token))
+  },[dispatch])
   
   
   
@@ -40,7 +48,7 @@ const CartView = () => {
               <Typography variant="h5">Total</Typography>
             </TableCell>
           </TableHead>
-          <TableBody sx={{ width: "100%" }}>
+          {/* <TableBody sx={{ width: "100%" }}>
             {cartState?.map((c) => {
               return <DetailRow row={c} />;
             })}
@@ -56,7 +64,7 @@ const CartView = () => {
                     </Typography>
                 </TableCell>
             </TableRow>
-          </TableBody>
+          </TableBody> */}
         </Table>
       </TableContainer>
     </Box>

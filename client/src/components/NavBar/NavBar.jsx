@@ -74,10 +74,12 @@ export const NavBar = (props) => {
   console.log("user status  => ", userStatus);
 
   const cartStatus = useSelector((state) => state.cart)
+  
 
   const ls = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
+
   }, [dispatch]);
 
   const handleChangeForName = (e) => {

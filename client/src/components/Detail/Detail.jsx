@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, getDetail } from "../../redux/actions";
+import { getDetail } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
@@ -47,17 +47,9 @@ export const Detail = () => {
       // })
     }, [dispatch]);
 
-  //agregar al carrito
-  const handleAddToCart = (e) => {
+    const handleAddToCart = (e) => {
     e.preventDefault();
-    const prodToCart = {
-      id: productDetail[0].id,
-      name: productDetail[0].name,
-      precio: productDetail[0].price,
-      cantidad: 1,
-      totalProducto: productDetail[0].price
-    }
-    dispatch(addToCart(prodToCart))
+    
     Swal.fire({
       background: '#DFDCD3',
       icon: 'success',

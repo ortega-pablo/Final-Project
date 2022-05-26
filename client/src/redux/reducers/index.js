@@ -49,7 +49,9 @@ import {
   PUT_NAME_SUBCATEGORY,
   GET_IMAGES,
   GET_DETAIL_ONE_PRODUCT,
-  ADD_TO_CART
+  ADD_TO_CART,
+  GET_CART_BY_ID,
+  SET_REDUCER_USER_ID,
 } from "../actions";
 
 const initialState = {
@@ -65,14 +67,14 @@ const initialState = {
   userStatus: null,
   allImages: [],
   getDetailOneProduct : [],
-  cart: [],
+  cart: {},
   
 };
 
 // funcion para que el carrito se guarde siempre 
-localStorage.getItem("cart") ? 
-initialState.cart = JSON.parse(localStorage.getItem("cart"))
-: initialState.cart = []
+// localStorage.getItem("cart") ? 
+// initialState.cart = JSON.parse(localStorage.getItem("cart"))
+// : initialState.cart = []
 
 
 
@@ -445,12 +447,12 @@ const rootReducer = (state = initialState, action) => {
            
           };
 
-        case ADD_TO_CART:
+        case GET_CART_BY_ID:
           return {
             ...state,
-            cart: [...action.payload]
+            cart: action.payload
           }
-          
+
 
     default:
       return state;
