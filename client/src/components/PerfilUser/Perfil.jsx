@@ -5,7 +5,9 @@ import { useParams } from 'react-router-dom';
 import {  getDetailOneUsers, getUserIdByToken, getUsers } from '../../redux/actions';
 import { AnswerComponent } from '../Detail/AnswerComponent';
 import QuestionsAndAnswers from '../Detail/QuestionsAndAnswers';
+import { EditarPerfil } from './EditarPerfil';
 import { MisPreguntas } from './MisPreguntas';
+import { UltimasCompras } from './UltimasCompras';
 
 export const Perfil =  () => {
     const dispatch = useDispatch();
@@ -30,13 +32,16 @@ export const Perfil =  () => {
     return (
       <>
     <h1>MI CUENTA</h1>
+        <h3>Editar perfil:</h3>
+        <EditarPerfil/>
         <h3>{user?.userName}</h3>
-        <Button>Cambiar contraseña</Button>
+        
         <h4>Mis preguntas</h4>
         <MisPreguntas
           asks={user?.asks}
           userid={user?.id}/>
         <h4>Mis ultimas compras</h4>    
+        <UltimasCompras/>
 
 
       </>

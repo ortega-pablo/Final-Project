@@ -62,6 +62,9 @@ export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_ALL_ASK = "GET_ALL_ASK";
+export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
+
+
 
 
 
@@ -808,6 +811,17 @@ export const getAllAsk = () => {
     let response = await axios(`http://localhost:3001/asks`);
     return dispatch({
       type: GET_ALL_ASK,
+      payload: response.data,
+    });
+  };
+};
+
+
+export const getAsksForOneProducts = (idUser, idProduct) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`);
+    return dispatch({
+      type: GET_USER_ASK_FOR_ONE_PRODUCT,
       payload: response.data,
     });
   };

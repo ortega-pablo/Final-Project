@@ -50,7 +50,8 @@ import {
   GET_IMAGES,
   GET_DETAIL_ONE_PRODUCT,
   GET_ONE_USER,
-  GET_ALL_ASK
+  GET_ALL_ASK,
+  GET_USER_ASK_FOR_ONE_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -67,7 +68,8 @@ const initialState = {
   allImages: [],
   getDetailOneProduct : [],
   getDetailOneUser : [],
-  allAsk: []
+  allAsk: [],
+  userAskOneProduc: []
   
 };
 
@@ -454,6 +456,12 @@ const rootReducer = (state = initialState, action) => {
     allAsk: action.payload,
     
   };
+  case GET_USER_ASK_FOR_ONE_PRODUCT:
+    return {
+      ...state,
+      userAskOneProduc: action.payload,
+      
+    };
     default:
       return state;
   }
