@@ -45,6 +45,8 @@ const validationSchema = yup.object({
     .string()
     .required("Password is required")
     .min(6, "Password is too short - should be 6 chars minimum"),
+  passwordConfirmation: yup.string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
 });
 
 export const CreateAccount = () => {
@@ -60,6 +62,7 @@ export const CreateAccount = () => {
       phone: "",
       email: "",
       password: "",
+      passwordConfirmation: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -138,20 +141,6 @@ export const CreateAccount = () => {
             margin="normal"
             required
             fullWidth
-            id="password"
-            label="Contraseña"
-            name="password"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-          />
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
             id="firstName"
             label="Nombre"
             name="firstName"
@@ -186,6 +175,35 @@ export const CreateAccount = () => {
             onChange={formik.handleChange}
             error={formik.touched.phone && Boolean(formik.errors.phone)}
             helperText={formik.touched.phone && formik.errors.phone}
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Contraseña"
+            name="password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Confirmar Contraseña"
+            name="passwordConfirmation"
+            type="password"
+            onBlur={formik.handleBlur}
+            value={formik.values.passwordConfirmation}
+            onChange={formik.handleChange}
+            error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
+            helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
           />
 
           <Button
