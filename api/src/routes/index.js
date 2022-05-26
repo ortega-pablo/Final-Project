@@ -22,6 +22,7 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+
 router.use("/products", producstRoute)
 router.use("/categories" , categoriesRoute)
 router.use("/answers", answersRoute)

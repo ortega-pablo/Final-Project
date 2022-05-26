@@ -53,11 +53,14 @@ export const POST_ADD_IMAGE = "POST_ADD_IMAGE";
 export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
 export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
+export const NEW_PAY = "NEW_PAY";
+export const SET_SHIPPING_DATA = "SET_SHIPPING_DATA";
 export const GET_IMAGES = "GET_IMAGES";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const SET_TOTAL_CART = "SET_TOTAL_CART";
 export const GET_CART_BY_ID = "GET_CART_BY_ID";
 export const GET_USERS = "GET_USERS"
+
 
 
 
@@ -749,6 +752,27 @@ export function putNameSpecification(idS, payload) {
       console.log(error);
     }
   };
+}
+
+export const postNewPaymentMethod =  (payload) => {
+  console.log(payload)
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`http://localhost:3001/checkOut`, payload);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const setShippingData = (payload) => {
+  return async dispatch => {
+    return dispatch({
+      type: SET_SHIPPING_DATA,
+      payload: payload
+    })
+  }
 }
 
 
