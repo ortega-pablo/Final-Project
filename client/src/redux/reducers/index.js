@@ -42,6 +42,21 @@ import {
   PUT_VALUE_SPECIFICATION_OF_ONE_PRODUCT,
   PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
   DELETE_SPECIFICATION,
+  POST_ADD_IMAGE,
+  DELETE_IMAGE_TO_PRODUCT,
+  GET_USER_ID_BY_TOKEN,
+  PUT_NAME_SPECIFICATION,
+  PUT_NAME_SUBCATEGORY,
+  NEW_PAY,
+  SET_SHIPPING_DATA
+  GET_IMAGES,
+  GET_DETAIL_ONE_PRODUCT,
+  ADD_TO_CART,
+  GET_CART_BY_ID,
+  SET_REDUCER_USER_ID,
+  GET_ONE_USER,
+  GET_ALL_ASK,
+  GET_USER_ASK_FOR_ONE_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -54,8 +69,22 @@ const initialState = {
   inventory: [],
   subCategories: [],
   discounts: [],
-  userStatus: null
+  userStatus: null,
+  shippingData:{},
+  allImages: [],
+  getDetailOneProduct : [],
+  cart: {},
+  getDetailOneUser : [],
+  allAsk: [],
+  userAskOneProduc: []
 };
+
+// funcion para que el carrito se guarde siempre 
+// localStorage.getItem("cart") ? 
+// initialState.cart = JSON.parse(localStorage.getItem("cart"))
+// : initialState.cart = []
+
+
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -374,7 +403,97 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userStatus: action.payload.msg
       };
+    case GET_USER_ID_BY_TOKEN: {
+      return {
+        ...state
+      }
+    }
 
+      case POST_ADD_IMAGE :
+        return {
+          ...state
+        }
+
+        case DELETE_IMAGE_TO_PRODUCT: {
+          return {
+            ...state,
+          };
+        }
+        case PUT_NAME_SPECIFICATION: {
+          const inedex7 = state.allSpecifications.findIndex((d) => d.id == action.payload.id );
+          const newArray7 = [...state.allSpecifications];
+          newArray7[inedex7] = action.payload;
+    
+          return {
+            ...state,
+            categories: newArray7,
+          };
+        }
+    
+        case PUT_NAME_SUBCATEGORY: {
+          const inedex8 = state.subCategories.findIndex((s) => s.id == action.payload.id );
+          const newArray8 = [...state.subCategories];
+          newArray8[inedex8] = action.payload;
+    
+          return {
+            ...state,
+            categories: newArray8,
+          };
+        }
+
+        case NEW_PAY:{
+          return{
+            ...state
+          }
+        }
+
+        case SET_SHIPPING_DATA: {
+          return{
+            ...state,
+            shippingData: action.payload
+          }
+        }
+    
+        case GET_IMAGES: {
+          return {
+            ...state,
+            allImages: action.payload,
+          };
+        }
+
+        case GET_DETAIL_ONE_PRODUCT:
+          return {
+            ...state,
+            getDetailOneProduct: action.payload,
+           
+          };
+
+        case GET_CART_BY_ID:
+          return {
+            ...state,
+            cart: action.payload
+          }
+
+          case GET_ONE_USER:
+            console.log("reducer",state.getDetailOneUser)
+      return {
+        ...state,
+        getDetailOneUser: action.payload,
+        
+      };
+
+      case GET_ALL_ASK:
+  return {
+    ...state,
+    allAsk: action.payload,
+    
+  };
+  case GET_USER_ASK_FOR_ONE_PRODUCT:
+    return {
+      ...state,
+      userAskOneProduc: action.payload,
+      
+    };
     default:
       return state;
   }

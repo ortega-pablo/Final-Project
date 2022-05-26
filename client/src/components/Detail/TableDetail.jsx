@@ -26,11 +26,12 @@ export default function TableDetail({ productDetail }) {
             <TableCell>Peso</TableCell>
             <TableCell>{productDetail[0].netWeight + " gr"}</TableCell>
           </TableRow>
+          
           {productDetail[0].specifications.map((s) => {
             return (
               <TableRow>
                 <TableCell>{s.name}</TableCell>
-                <TableCell>{s.value}</TableCell>
+                <TableCell>{s.ProductSpecification.value}</TableCell>
               </TableRow>
             );
           })}

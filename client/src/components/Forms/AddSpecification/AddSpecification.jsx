@@ -2,55 +2,57 @@ import { Button, InputLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSpecifications,  postAddNewSpecification } from "../../../redux/actions";
+import {
+  getAllSpecifications,
+  postAddNewSpecification,
+} from "../../../redux/actions";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Swal from 'sweetalert2';
 
 
 export const AddSpecification = () => {
   const dispatch = useDispatch();
-  const allSpecifications = useSelector( state => state.allSpecifications)
-  
-  useEffect(()=>{
-    dispatch(getAllSpecifications())
-  }, [dispatch])
-  
-  
-  const allSpecif = allSpecifications?.map((s) => s.name);
+  const allSpecifications = useSelector((state) => state.allSpecifications);
 
+  useEffect(() => {
+    dispatch(getAllSpecifications());
+  }, [dispatch]);
+
+  const allSpecif = allSpecifications?.map((s) => s.name);
 
   const validationSchema = yup.object({
     name: yup
-      .string("Ingrese el nombre de la nueva categoria")
+      .string("Ingrese el nombre de la nueva especificacion")
       .required("El nombre es requerido")
-      .notOneOf(allSpecif.map((p) => p) ,"Ya existe una especificación con ese nombre"
+      .notOneOf(
+        allSpecif.map((p) => p),
+        "Ya existe una especificación con ese nombre"
       ),
-
-    
   });
 
   const formik = useFormik({
     initialValues: {
       name: "",
-       },
+    },
     validationSchema: validationSchema,
-    onSubmit: async (values, {resetForm}) => {
-      alert(JSON.stringify(values, null, 1));
+    onSubmit: async (values, { resetForm }) => {
+      Swal.fire({
+        background: '#DFDCD3',
+        icon: 'success',
+        title: 'Creada',
+        showConfirmButton: false,
+        timer: 1500
+      })
 
       await dispatch(postAddNewSpecification(values));
-      await dispatch(getAllSpecifications())
-      resetForm({values:""})
+      await dispatch(getAllSpecifications());
+      resetForm({ values: "" });
     },
   });
-  
 
   return (
-    <>
-
-
-
-
-      <div>AddSpecification</div>
+    <Box sx={{ display: "flex", alignItems: "center", m:3 }}>
       <InputLabel id="demo-simple-select-standard-label">
         Agregar especicación:
       </InputLabel>
@@ -59,9 +61,7 @@ export const AddSpecification = () => {
         component="form"
         noValidate
         autoComplete="off"
-      
         onSubmit={formik.handleSubmit}
-
         
       >
         <TextField
@@ -73,15 +73,13 @@ export const AddSpecification = () => {
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
-        
+          sx={{ml:3, mr:3}}
         />
 
-        <Button type="submit">
+        <Button type="submit"variant="contained" color="ambar4" >
           Agregar nueva Especificación
         </Button>
       </Box>
-
-      
-    </>
+    </Box>
   );
 };

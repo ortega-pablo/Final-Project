@@ -1,32 +1,18 @@
 import React, { useEffect, useState } from "react";
-
 import Box from "@mui/material/Box";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Button, TextField } from "@mui/material";
-
+import { Button, Paper, Tab, Tabs, TextField, Typography } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-
 import Select from "@mui/material/Select";
-
-
-
-
 import { AddSubCategoty } from "../AddSubCategoty";
 import { AddSpecification } from "../AddSpecification/AddSpecification";
-
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { AddSpecificationToProduct } from "../AddSpecificationToProduct";
 import { getAllSpecifications, getCategories, getProducts, postAddCateroryToProduct, postAddSubCateroryToProduct, putProduct } from "../../../redux/actions";
 import { TableSpecification } from "../TablaResumen/TableSpecification";
-
-
-
-// import { DeleteProduct } from "./AdminProduct";
 import { postAddSpecificationToProduct, postProduct } from "../../../redux/actions";
 import { UpdateQuantity } from "./UpdateQuantity";
 import { AddCategory } from "../AddCategory";
@@ -34,77 +20,135 @@ import { UpdateCategoryAndSubca } from "./UpdateCategoryAndSubca";
 import { AddDiscountToProduct } from "../AddDiscountToProduct";
 import { UpdateSpecification } from "./UpdateSpecification";
 import { TableSpecific } from "./TableSpecific";
-// import { UpdateSpecif } from "./UpdateSpecif";
+import { AddministrrImage } from "./AddministrrImage";
+import PropTypes from "prop-types";
 
 
-export function  UpdateProduct({idUpdate, setUpdating}) {
+////////////////////////////////////
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+/////////////////////////////////////////////
+
+export function  UpdateProduct({idUpdate, setUpdating, productToUpdate}) {
 
   const dispatch = useDispatch();
   const productosExistentes = useSelector((state) => state.products);
   const allCategories = useSelector((state) => state.categories);
   const allSpecifications = useSelector((state) => state.allSpecifications);
-  const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
+  // const productToUpdate = productosExistentes.find( p => p.id === Number(idUpdate) )
   const [inputQ, setInputQ] = useState({ quantity: 0 });
 
-
+console.log(productToUpdate)
   
   // const [subCategory, setsubCategory] = React.useState("");
   const [newProdId, setNewProdId] = React.useState(0);
   
  
-
-  useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getCategories());
-    dispatch(getAllSpecifications());
+ 
+ useEffect(() => {
+   dispatch(getProducts());
+   dispatch(getCategories());
+   dispatch(getAllSpecifications());
   }, [dispatch]);
-
-
-const nameRepetido = productosExistentes.filter( p => p.id !==idUpdate )
-const NameRepetido = nameRepetido.map((p) => p.name);
-
+  
+  
+  const nameRepetido = productosExistentes.filter( p => p.id !=idUpdate )
+  const NameRepetido = nameRepetido.map((p) => p.name);
+  
   const SkuRepetido = nameRepetido.map((p) => p.sku);
-
+  console.log(SkuRepetido)
+  console.log(idUpdate)
 
   const validationSchema = yup.object({
+    
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
      
-      .notOneOf(NameRepetido.map(name=>name), "Ya existe un producto con éste nombre" )
+      .notOneOf(productosExistentes.filter( p => p.id !=idUpdate ), "Ya existe un producto con éste nombre" )
       .required("El nombre es requerido"),
     
       sku: yup
       .string("Ingrese la descripción")
-    .notOneOf(SkuRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
+    .notOneOf(nameRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
       .required("La descripción es requerida"),
       brand: yup
       .string("Ingrese la descripción")
       .required("La descripción es requerida"),
-      price: yup
-      .number("El precio es numerico.").typeError("El precio deber ser numerico").positive("El precio debe ser positivo")
-      
+    price: yup
+      .number("El precio es numerico.")
+      .typeError("El precio deber ser numerico")
+      .positive("El precio debe ser positivo")
+      // .string()
       .required("La descripción es requerida"),
-      description: yup
+    description: yup
       .string("Ingrese la descripción")
-     
+      // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
-      warranty: yup
+    warranty: yup
       .string("Ingrese la descripción")
-    
+      // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
-      netWeight: yup
-     .number("El peso neto debe ser numerico").typeError("El peso neto deber ser numerico").positive("El peso neto debe ser positivo")
-    
+    netWeight: yup
+      .number("El peso neto debe ser numerico")
+      .typeError("El peso neto deber ser numerico")
+      .positive("El peso neto debe ser positivo")
+      //  .string()
+      // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
 
-      grossWeight: yup
-      .number("El peso bruto es numerico").typeError("El peso bruto deber ser numerico").positive("El peso bruto debe ser positivo")
+    grossWeight: yup
+      .number("El peso bruto es numerico")
+      .typeError("El peso bruto deber ser numerico")
+      .positive("El peso bruto debe ser positivo")
+      // .string()
+      // .min(8, 'Password should be of minimum 8 characters length')
+      .required("La descripción es requerida"),
+    // image: yup
+    //   .string("Ingrese la descripción")
+    //   // .min(8, 'Password should be of minimum 8 characters length')
+    //   .required("La descripción es requerida"),
+    keyWords: yup
+    .string("Ingrese la descripción."),
     
-      .required("La descripción es requerida"),
-      image: yup
-      .string("Ingrese la descripción")
-   
-      .required("La descripción es requerida"),
+    productDimensions: yup
+    .string("Ingrese la descripcións")
+    .required("La dimensión es requerida"),
+    packageDimensions : yup
+    .string("Ingrese la descripciónd")
+    .required("La dimensión es requerida"),
+    thumbnail :yup
+    .string("Ingrese la descripciónf"),
+
 
 
   });
@@ -113,27 +157,27 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   const formik = useFormik({
     initialValues: {
     id: idUpdate,
-    name: productToUpdate.name,
-    sku: productToUpdate.sku,
-    brand: productToUpdate.brand,
-    keyWords: productToUpdate.keyWords,
-    price: productToUpdate.price,
-    description: productToUpdate.description,
-    warranty: productToUpdate.warranty,
-    productDimensions: productToUpdate.productDimensions,
-    packageDimensions: productToUpdate.packageDimensions,
-    netWeight:productToUpdate.netWeight,
-    grossWeight:productToUpdate.grossWeight,
-    thumbnail: productToUpdate.thumbnail,
-    image: productToUpdate.image
+    name: productToUpdate?.name,
+    sku: productToUpdate?.sku,
+    brand: productToUpdate?.brand,
+    keyWords: productToUpdate?.keyWords,
+    price: productToUpdate?.price,
+    description: productToUpdate?.description,
+    warranty: productToUpdate?.warranty,
+    productDimensions: productToUpdate?.productDimensions,
+    packageDimensions: productToUpdate?.packageDimensions,
+    netWeight:productToUpdate?.netWeight,
+    grossWeight:productToUpdate?.grossWeight,
+    thumbnail: productToUpdate?.thumbnail,
       },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       alert(JSON.stringify(values, null, 2));
-     
+     console.log("no se envia el formulario?")
       await dispatch(putProduct(idUpdate,values))
       await dispatch(getProducts())
    
+      console.log(values)
 
     },
   });
@@ -152,8 +196,40 @@ const NameRepetido = nameRepetido.map((p) => p.name);
   //-------
   // const categSelect = allCategories.filter((c) => c.id === category);
   
+    ////////////////////
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+    ////////////////////
+
   return (
     <>
+        <Paper sx={{ width: "100%" }}>
+
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            variant="fullWidth"
+            
+          >
+            <Tab label="Producto" {...a11yProps(0)} />
+            <Tab label="Descuentos" {...a11yProps(1)} />
+            <Tab label="Stock" {...a11yProps(2)} />
+            <Tab label="Categorías" {...a11yProps(3)} />
+            <Tab label="Especificaciones" {...a11yProps(4)} />
+            <Tab label="Imagen" {...a11yProps(5)} />
+          </Tabs>
+        </Box>
+
+        <TabPanel value={value} index={0}>
+        <h2>Editar Producto</h2>
+        <hr />
+        <h3>Paso 1: </h3>
       <Box
         component="form"
         noValidate
@@ -162,9 +238,6 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       //  onSubmit={(e) => handleSubmit(e)}
       onSubmit={formik.handleSubmit}
       >
-        <h2>Editar Producto</h2>
-        <hr />
-        <h3>Paso 1: </h3>
         <TextField
           id="outlined-basic"
           label="Nombre *"
@@ -277,18 +350,31 @@ const NameRepetido = nameRepetido.map((p) => p.name);
           label="keyWords"
           variant="outlined"
           name="keyWords"
+          value={formik.values.keyWords}
+          onChange={formik.handleChange}
+          error={formik.touched.keyWords && Boolean(formik.errors.keyWords)}
+          helperText={formik.touched.keyWords && formik.errors.keyWords}
+       
         />
         <TextField
           id="outlined-basic"
           label="Dimensiones del producto *"
           variant="outlined"
           name="productDimensions"
+          value={formik.values.productDimensions}
+          onChange={formik.handleChange}
+          error={formik.touched.productDimensions && Boolean(formik.errors.productDimensions)}
+          helperText={formik.touched.productDimensions && formik.errors.productDimensions}
         />
         <TextField
           id="outlined-basic"
           label="Dimensiones del package *"
           variant="outlined"
           name="packageDimensions"
+          value={formik.values.packageDimensions}
+          onChange={formik.handleChange}
+          error={formik.touched.packageDimensions && Boolean(formik.errors.packageDimensions)}
+          helperText={formik.touched.packageDimensions && formik.errors.packageDimensions}
         />
 
         <TextField
@@ -296,8 +382,12 @@ const NameRepetido = nameRepetido.map((p) => p.name);
           label="Imagen de miniatura"
           variant="outlined"
           name="thumbnail"
+          value={formik.values.thumbnail}
+          onChange={formik.handleChange}
+          error={formik.touched.thumbnail && Boolean(formik.errors.thumbnail)}
+          helperText={formik.touched.thumbnail && formik.errors.thumbnail}
         />
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="Imagenes"
           variant="outlined"
@@ -308,13 +398,23 @@ const NameRepetido = nameRepetido.map((p) => p.name);
           onChange={formik.handleChange}
           error={formik.touched.image && Boolean(formik.errors.image)}
           helperText={formik.touched.image && formik.errors.image}
-        />
+        /> */}
 
         <Button type="submit">Editar</Button>
-          <Button onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
-        <h4>(*) elementos obligatorios</h4>
       </Box>
-      <hr />
+        </TabPanel>
+        <h4>(*) elementos obligatorios</h4>
+
+        <TabPanel value={value} index={1}>
+     <h3>Paso 5: Modificar descuento</h3>
+     <AddDiscountToProduct
+     newProdId={idUpdate}
+     newProduct={productToUpdate}/>
+     
+     <hr />
+        </TabPanel>
+
+        <TabPanel value={value} index={2}>
       <h3>Paso 2: Editar stock</h3>
           
       <UpdateQuantity
@@ -322,7 +422,9 @@ const NameRepetido = nameRepetido.map((p) => p.name);
          idUpdate={idUpdate}/> 
 
       <hr />
+        </TabPanel>
 
+        <TabPanel value={value} index={3}>
       <h3>Paso 3: Editar categorías y sub categorías</h3>
 
       <UpdateCategoryAndSubca
@@ -332,6 +434,9 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       <AddSubCategoty allCategories={allCategories} />
 
       <hr />
+        </TabPanel>
+
+        <TabPanel value={value} index={4}>
       <h3>Paso 4: agregar especificaciones</h3>
         <TableSpecific
         productToUpdate={productToUpdate}
@@ -379,11 +484,20 @@ const NameRepetido = nameRepetido.map((p) => p.name);
       <AddSpecification/>
            
       <hr />
-      <h3>Paso 5: Modificar descuento</h3>
-      <AddDiscountToProduct
-      newProdId={idUpdate}
-      newProduct={productToUpdate}/>
-      
+        </TabPanel>
+
+        <TabPanel value={value} index={5}>
+      <AddministrrImage
+       newProdId={idUpdate}
+       newProduct={productToUpdate}/>
+        </TabPanel>
+        
+      </Paper>
+<Button type="button" onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
+    
+
+      <hr />
+
     </>
   );
 }

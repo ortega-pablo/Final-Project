@@ -26,6 +26,7 @@ const getUser = async function(userId){
 }
 
 
+
   const getProduct = async function(productId){
     return await Product.findOne({
         where: {
