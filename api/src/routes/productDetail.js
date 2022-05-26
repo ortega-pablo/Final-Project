@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const router = Router();
-
 const {
   Product,
   Ask,
@@ -13,7 +12,9 @@ const {
   Image,
   User,
   Review,
+  ShoppingCart
 } = require("../db");
+
 
 const productInfo = async function (id) {
   const getProduct = await Product.findOne({
@@ -76,26 +77,27 @@ const productInfo = async function (id) {
               },
             ],
           },
-          {
-            model: User,
-            attributes: ["id", "userName"],
-          },
-        ],
+        ]
       },
+      {
+        model: ShoppingCart,
+        through: {
+            attributes: []
+        }
+      },
+
       {
         model: Image,
         through: {
           attributes: [],
         },
       },
-     /*  {
+      {
         model: Review,
-        through: {
-          attributes: [],
-        },
-      }, */
+      },
     ],
   });
+
 
   let temp = [];
   temp.push(getProduct);

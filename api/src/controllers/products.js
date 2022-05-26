@@ -91,12 +91,9 @@ const getProductsByName = async (name) => {
           attributes: [],
         },
       },
-   /*    {
+      {
         model: Review,
-        through: {
-          attributes: [],
-        },
-      }, */
+      },
     ],
   });
   let fixedProducts = products.filter(p => p.dataValues.name.toLowerCase().includes(name.toLowerCase()))

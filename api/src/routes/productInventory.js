@@ -8,7 +8,7 @@ const { Product, ProductInventory } = require("../db");
 //   const { productId } = req.query;
 
 //   try {
-  
+
 //     const product = await Product.findOne({
 //       where: {
 //         id: productId,
@@ -20,16 +20,16 @@ const { Product, ProductInventory } = require("../db");
 //       const addQuantity = await ProductInventory.create({
 //         quantity,
 //       });
-  
+
 
 //       addQuantity.setProduct(productId);
 //       res.status(200).send(addQuantity);
-      
+
 //     } else {
 //       res.send("Product not found")
 //     }
-    
-   
+
+
 //   } catch (error) {
 //     next(error);
 //   }
@@ -107,9 +107,9 @@ router.get("/", async (req, res, next) => {
 
 })
 
-router.put("/:productId", async (req, res, next) =>{
+router.put("/:productId", async (req, res, next) => {
 
-  const {productId} = req.params;
+  const { productId } = req.params;
   const { quantity } = req.body;
 
   try {
@@ -117,7 +117,7 @@ router.put("/:productId", async (req, res, next) =>{
     const findProduct = await Product.findOne({
       where: {
         id: productId
-      }, 
+      },
       include: [
         {
           model: ProductInventory,
@@ -127,24 +127,24 @@ router.put("/:productId", async (req, res, next) =>{
     })
 
 
-    
-    if(findProduct && findProduct.productInventory) {
+
+    if (findProduct && findProduct.productInventory) {
 
       await ProductInventory.update({
         quantity,
-        },
+      },
         {
-        where: {
+          where: {
             productId
-        }
-      })
+          }
+        })
       res.status(200).send("Stock updated successfully!")
 
     } else {
       res.send("Product or stock not found")
     }
-        
-  } catch(error){
+
+  } catch (error) {
     next(error)
   }
 })

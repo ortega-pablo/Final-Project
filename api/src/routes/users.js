@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer, ShoppingCart } = require("../db");
+const { User, Ask, Answer, ShoppingCart, Address, Product } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -142,6 +142,9 @@ router.get("/", async (req, res, next) => {
               },
             ],
           },
+          {
+            model: Address
+          }
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -164,6 +167,9 @@ router.get("/", async (req, res, next) => {
               },
             ],
           },
+          {
+            model: Address
+          }
         ],
       });
 
@@ -192,8 +198,25 @@ router.get("/:userId", async (req, res) => {
                 model: Answer,
                 attributes: ["content"],
               },
+              {
+                model: Product,
+                attributes: ["id", "name"]
+              }
             ],
           },
+          {
+            model: Address
+          },
+          {
+            model: ShoppingCart,
+            attributes: ["id", "amount", "shippingAddress", "updatedAt"],
+            include: {
+              model: Product,
+              through: {
+                attributes: []
+              }
+            }
+          }
         ],
       });
 
@@ -207,27 +230,29 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/:userId", async (req, res, next) => {
-  // Esto para el admin de la pagina
+router.delete("/deleteUser", async (req, res, next) => {
 
-  const { userId } = req.params;
+  const {adminId, userId } = req.query;
 
   try {
-    const findUser = await User.findOne({
+    const findAdmin = await User.findOne({
       where: {
-        id: userId,
+        id: adminId,
+        role: "admin"
       },
     });
 
-    if (findUser) {
-      await Category.destroy({
+    if (findAdmin) {
+     const findUser = await User.destroy({
         where: {
-          id: categoryId,
+          id: userId,
         },
       });
-      res.status(200).send("User deleted successfully!");
+
+      findUser ? res.status(200).send("User deleted successfully!") : res.send("User not found")
+
     } else {
-      res.send("User not found");
+      res.send("User not authorized");
     }
   } catch (error) {
     next(error);

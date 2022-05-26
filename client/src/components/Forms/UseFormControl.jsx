@@ -10,6 +10,7 @@ import {
   postAddSubCateroryToProduct,
   getAllSpecifications,
   postAddSpecificationToProduct,
+  getDetailOneProduct,
 } from "../../redux/actions";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
@@ -160,6 +161,8 @@ export function UseFormControl() {
     e.preventDefault();
     await dispatch(postAddCateroryToProduct(newProdId, category));
     await dispatch(getProducts());
+    await  dispatch(getDetailOneProduct(newProdId))
+    await  dispatch(getDetailOneProduct(newProdId))
   };
 
   async function handleAddCategoryToProduct(e) {
@@ -173,11 +176,17 @@ export function UseFormControl() {
       await dispatch(postAddCateroryToProduct(newProdId, category));
       await dispatch(postAddSubCateroryToProduct(newProdId, subCategory));
       await dispatch(getProducts());
+    await  dispatch(getDetailOneProduct(newProdId))
+    await  dispatch(getDetailOneProduct(newProdId))
+      
       setCategory(0);
       setSubCategory(0);
     } else if (category) {
       setSubCategory(0);
       await dispatch(postAddCateroryToProduct(newProdId, category));
+      await  dispatch(getDetailOneProduct(newProdId))
+      await  dispatch(getDetailOneProduct(newProdId))
+
 
       await dispatch(getProducts());
       setSubCategory(0);

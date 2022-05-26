@@ -14,6 +14,10 @@ module.exports = (sequelize) => {
     },
     address: {
       type: DataTypes.STRING,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   });
 };
