@@ -50,15 +50,6 @@ router.post('/', async (req, res, next) => {
   const {userId, productId } = req.query;
   const {id, amount, total, state, address,} = req.body;
 
-  const paymentMethod = await stripe.paymentMethods.create({
-    type: 'card',
-    card: {
-      number: '4242424242424242',
-      exp_month: 5,
-      exp_year: 2023,
-      cvc: '314',
-    },
-  });
 
     try {
         
@@ -69,7 +60,7 @@ router.post('/', async (req, res, next) => {
         //     payment_method: paymentMethod,
         //     confirm: true,
         // })
-
+        // console.log()
         // Aqui se agrega todo de la orden is payment fue exitoso
 
         if(true){
