@@ -97,7 +97,7 @@ router.put("/removeProduct", async (req, res, next) => {
                 }
             })
 
-            if(findCart && findProduct){
+            if(findCart.amount !==0 && findProduct){
 
                 await findProduct.removeShoppingCart(findCart)
                 await findCart.decrement('amount', { by: 1 });
@@ -126,7 +126,7 @@ router.put("/removeProduct", async (req, res, next) => {
                 }
             })
 
-            if(findCart && findProduct){
+            if(findCart.amount !==0 && findProduct){
 
                 await findProduct.removeShoppingCart(shoppingCartId)
                 await findCart.decrement('amount', { by: 1 });
