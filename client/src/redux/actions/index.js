@@ -72,6 +72,10 @@ export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_ALL_ASK = "GET_ALL_ASK";
 export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
+export const GET_ALL_ORDER = "GET_ALL_ORDER";
+export const GET_ALL_ORDER_ONE_USER = "GET_ALL_ORDER_ONE_USER";
+export const GET_USER_ASK_FOR_ALL_PRODUCT = "GET_USER_ASK_FOR_ALL_PRODUCT";
+
 
 
 
@@ -917,6 +921,39 @@ export const getAsksForOneProducts = (idUser, idProduct) => {
     let response = await axios(`http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`);
     return dispatch({
       type: GET_USER_ASK_FOR_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAsksForAllProductsOneUser = (idUser) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks/user?userId=${idUser}`);
+    return dispatch({
+      type: GET_USER_ASK_FOR_ALL_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+
+
+
+
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/orders`);
+    return dispatch({
+      type: GET_ALL_ORDER,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllOrdersOneUser = (idUser) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/orders?userId=${idUser}`);
+    return dispatch({
+      type: GET_ALL_ORDER_ONE_USER,
       payload: response.data,
     });
   };
