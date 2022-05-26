@@ -32,6 +32,8 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
         postAddSpecificationToProduct(newProdId, specifications, values)
       );
       await dispatch(getProducts());
+      await dispatch(getProducts());
+
       resetForm({ values: "" });
     },
   });
@@ -65,12 +67,12 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
         
         <Button type="submit" variant="contained"color="ambar4">Agregar</Button>
       </Box>
-<Box>
+{/* <Box>
       <TableSpecificationNewProduct
       newProduct={newProduct}
       newProdId={newProdId}
       />
-</Box>
+</Box> */}
     </Box>
   );
 };

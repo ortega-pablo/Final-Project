@@ -52,6 +52,9 @@ import {
   ADD_TO_CART,
   GET_CART_BY_ID,
   SET_REDUCER_USER_ID,
+  GET_ONE_USER,
+  GET_ALL_ASK,
+  GET_USER_ASK_FOR_ONE_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -68,7 +71,9 @@ const initialState = {
   allImages: [],
   getDetailOneProduct : [],
   cart: {},
-  
+  getDetailOneUser : [],
+  allAsk: [],
+  userAskOneProduc: []
 };
 
 // funcion para que el carrito se guarde siempre 
@@ -453,7 +458,26 @@ const rootReducer = (state = initialState, action) => {
             cart: action.payload
           }
 
+          case GET_ONE_USER:
+            console.log("reducer",state.getDetailOneUser)
+      return {
+        ...state,
+        getDetailOneUser: action.payload,
+        
+      };
 
+      case GET_ALL_ASK:
+  return {
+    ...state,
+    allAsk: action.payload,
+    
+  };
+  case GET_USER_ASK_FOR_ONE_PRODUCT:
+    return {
+      ...state,
+      userAskOneProduc: action.payload,
+      
+    };
     default:
       return state;
   }

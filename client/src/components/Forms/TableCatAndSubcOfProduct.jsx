@@ -32,12 +32,9 @@ export const TableCatAndSubcOfProduct = ({
 
   const products = useSelector((state) => state.products);
   const allSubcategories = useSelector((state) => state.subCategories);
-
- 
+  const [render, setRender] = useState("")
   const newProducDetail = useSelector(state => state.getDetailOneProduct)
-  // const allCategories = useSelector( state => state.categories)
-  // const [idCat, setIdCat] = useState("")
-console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
@@ -51,13 +48,12 @@ console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
 
   const newProducts = products.find((p) => p.id === newProdId);
 
+
+  //funcion para eliminar la categoria del producto
   async function handleDeleteCat(e) {
     e.preventDefault();
-    // setIdCatForDelete(e.target.value)
-    const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value
-    );
 
-
+    const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value );
 
     await dispatch(putCategoryToProduct(newProdId, e.target.value));
 
@@ -67,6 +63,8 @@ console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
         async (sc) => await dispatch(putSubCategoryToProduct(newProdId, sc.id))
       );
       await dispatch(getProducts());
+      await dispatch(getDetailOneProduct(newProdId))
+      setRender(newProdId)
     }
 
     await dispatch(getProducts());
@@ -76,19 +74,11 @@ console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
     e.preventDefault();
     await dispatch(putSubCategoryToProduct(newProdId, e.target.value));
     await dispatch(getProducts());
+    await dispatch(getDetailOneProduct(newProdId))
+      setRender(newProdId)
   }
 
-  // function handleSubCat(e) {
-  //   e.preventDefault()
-  //   setIdSubCat(e.target.value)
 
-  // }
-
-  // const categoriaFromSubc = allCategories.find((c,i) => c.subCategories.some(c.id.subCategory) )
-  //     // const categ = categoriaFromSubc.filter()
-  //     console.log(categoriaFromSubc)
-  //     console.log(subCategory)
-  //     // console.log(categ)
 
   return (
     <>
@@ -146,6 +136,8 @@ console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
             </TableRow>
           </TableHead>
 
+
+
           <TableBody>
           
           {                 newProducDetail[0]?.subCategories.map(sc => {
@@ -155,7 +147,7 @@ console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
                           <TableCell>{sc.categories[0].name} </TableCell>
 
                         <Button
-                      value={newProducDetail[0]?.subCategories[0]?.id}
+                      value={sc.id}
                       onClick={(e) => handleDeleteSubc(e)}
                       // name="delete"
                       // startIcon={<EditIcon />}
@@ -168,16 +160,16 @@ console.log(newProducDetail[0]?.subCategories[0]?.categories[0]?.name)
           
           }
 
-                
-           
-
-           
+              
           </TableBody>
         </Table>
       </TableContainer>
     </>
   );
 };
+
+
+
 
 // {     newProducts?.subCategories?.map( sc => {
 //   return (

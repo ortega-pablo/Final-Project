@@ -26,6 +26,7 @@ import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
+import { Perfil } from "./components/PerfilUser/Perfil";
 
 import CartView from "./components/Cart/CartView";
 
@@ -63,6 +64,9 @@ function App() {
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
             <Route path="/cart" element={<CartView/>}/>
+
+            <Route path="/prueba" element={<Perfil/>}/>
+
 
           </Routes>
         <Footer/>

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteProduct, getProducts, putProduct } from "../../../redux/actions";
+import { deleteProduct, getDetailOneProduct, getProducts, putProduct } from "../../../redux/actions";
 import { ClassNames } from "@emotion/react";
 import { UpdateProduct } from "./UpdateProduct";
 
@@ -18,13 +18,17 @@ export const DeleteProduct = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.products);
   const [updating , setUpdating] = useState(false)
+  const [idUpdate, setIdUpdate] = useState("");
 
+  const productToUpdate = dispatch(getDetailOneProduct(idUpdate))
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getDetailOneProduct(idUpdate))
   }, [dispatch]);
 
-  const [idUpdate, setIdUpdate] = useState("");
+console.log("desde admin", productToUpdate)
+  
  
   async function handleDeleteProduct(e) {
     e.preventDefault();
@@ -37,8 +41,11 @@ console.log("eliminandooo")
   //------------esditando producto
  async function handleEditProduct(e){
 e.preventDefault()
+
 setUpdating(true)
 setIdUpdate(e.target.value)
+console.log("editando?",updating)
+await dispatch(getProducts());
 
   }
 
@@ -72,14 +79,26 @@ setIdUpdate(e.target.value)
                       <h4>{product.name}</h4>
                     </b>
                   </TableCell>
-                  <Button
+                  { updating === false ? 
+                  (<Button
                     value={product.id}
                     onClick={(e) => handleEditProduct(e)}
                     name="delete"
-                    startIcon={<EditIcon />}
+                    // startIcon={<EditIcon />}
                   >
                    Editar
-                  </Button>
+                  </Button>)  : 
+                  (<Button
+                  disabled
+                    value={product.id}
+                    // onClick={(e) => handleEditProduct(e)}
+                    name="delete"
+                    // startIcon={<EditIcon />}
+                  >
+                   Cancelar actual edicion
+                  </Button>)
+
+                  }
 
                   <Button
                     value={product.id}
@@ -102,6 +121,7 @@ setIdUpdate(e.target.value)
                    idUpdate={idUpdate}
                    handleEditProduct={handleEditProduct}
                    setUpdating={setUpdating}
+                   productToUpdate={productToUpdate}
                    />
 
               </div>
