@@ -97,6 +97,9 @@ export const AdministrateProduct = () => {
                     {/* </Typography> */}
                   </TableCell>
                   <TableCell>
+
+                  { !updating ? 
+                  (
                     <Button
                     
                       // variant="contained"
@@ -111,8 +114,34 @@ export const AdministrateProduct = () => {
                         Editar
                       
                     </Button>
+                  ) :
+
+                  <Button
+                    
+                  // variant="contained"
+                  // color="ambar4"
+                  disabled
+                  size="small"
+                  value={product.id}
+                  onClick={(e) => handleEditProduct(e)}
+                  name="edit"
+                  // startIcon={<EditIcon />}
+                >
+                  {/* <Typography variant="h6" color="ambar5" > */}
+                    Editar
+                  {/* </Typography> */}
+                </Button>
+
+
+                  }
+
+
                   </TableCell>
                   <TableCell>
+
+
+                        { !updating ? 
+                        (
                     <Button
                       // variant="contained"
                       // color="ambar4"
@@ -126,6 +155,30 @@ export const AdministrateProduct = () => {
                         Eliminar
 
                     </Button>
+                        ) :
+
+                        (
+                          <Button
+                          disabled
+                          // variant="contained"
+                          // color="ambar4"
+                          size="small"
+                          value={product.id}
+                          onClick={(e) => handleDeleteProduct(e)}
+                          name="delete"
+                          // startIcon={<DeleteIcon />}
+                        >
+                          {/* <Typography variant="h6" color="ambar5"> */}
+                            Eliminar
+                          {/* </Typography> */}
+                        </Button>
+                        )
+
+                        
+                        
+                        }
+
+
                   </TableCell>
                 </TableRow>
               );

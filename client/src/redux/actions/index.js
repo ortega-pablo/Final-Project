@@ -7,7 +7,7 @@ export const POST_ADD_CATEROY_TO_PRODUCT = "POST_ADD_CATEROY_TO_PRODUCT";
 export const POST_ADD_SPECIFICATION_TO_PRODUCT =
   "POST_ADD_SPECIFICATION_TO_PRODUCT";
 export const POST_NEW_ASK = "POST_NEW_ASK";
-export const POST_NEW_ANSWER = "POST_NEW_ASK";
+export const POST_NEW_ANSWER = "POST_NEW_ANSWER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
 export const FILTER_PER_SUBCATEGORY = "FILTER_PER_SUBCATEGORY";
@@ -53,12 +53,18 @@ export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
 export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
 export const GET_IMAGES = "GET_IMAGES";
+export const GET_USERS = "GET_USERS"
+
 
 
 
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
 
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
+export const GET_ONE_USER = "GET_ONE_USER";
+export const GET_ALL_ASK = "GET_ALL_ASK";
+export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
+
 
 
 
@@ -408,6 +414,7 @@ export function putCategoryToProduct(idP, idC) {
 }
 
 export function putSubCategoryToProduct (idP, idSc ){
+  console.log("desero borrar", idP, idSc)
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
@@ -764,3 +771,42 @@ export const getDetailOneProduct = (id) => {
     });
   };
 };
+
+export function getDetailOneUsers( id) {
+  return async function(dispatch) {
+   
+    try {
+      const response = await axios(`http://localhost:3001/users/${id}`)
+      console.log("idUser en action",id )
+      return dispatch({
+        type: GET_ONE_USER,
+        payload: response.data
+      })
+    } catch(error){
+      console.log(error)
+    }
+  }
+}
+
+
+export const getAllAsk = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks`);
+    return dispatch({
+      type: GET_ALL_ASK,
+      payload: response.data,
+    });
+  };
+};
+
+
+export const getAsksForOneProducts = (idUser, idProduct) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`);
+    return dispatch({
+      type: GET_USER_ASK_FOR_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+
