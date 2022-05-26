@@ -19,16 +19,16 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.use("/products", producstRoute)
-router.use("/categories" , categoriesRoute)
-router.use("/answers", answersRoute)
-router.use("/asks", asksRoute)
-router.use("/users", usersRoute)
-router.use("/discounts", discountsRoute)
-router.use("/productDetail", productDetailRoute)
-router.use("/inventory", productInventoryRoute)
-router.use("/specifications", specificationsRoute)
-router.use("/images", imagesRoute)
+router.use("/products", producstRoute);
+router.use("/categories" , categoriesRoute);
+router.use("/answers", answersRoute);
+router.use("/asks", asksRoute);
+router.use("/users", usersRoute);
+router.use("/discounts", discountsRoute);
+router.use("/productDetail", productDetailRoute);
+router.use("/inventory", productInventoryRoute);
+router.use("/specifications", specificationsRoute);
+router.use("/images", imagesRoute);
 router.use("/checkOut", checkOut);
 
 

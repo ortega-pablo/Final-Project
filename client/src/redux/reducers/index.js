@@ -46,7 +46,9 @@ import {
   DELETE_IMAGE_TO_PRODUCT,
   GET_USER_ID_BY_TOKEN,
   PUT_NAME_SPECIFICATION,
-  PUT_NAME_SUBCATEGORY
+  PUT_NAME_SUBCATEGORY,
+  NEW_PAY,
+  SET_SHIPPING_DATA
 } from "../actions";
 
 const initialState = {
@@ -59,7 +61,8 @@ const initialState = {
   inventory: [],
   subCategories: [],
   discounts: [],
-  userStatus: null
+  userStatus: null,
+  shippingData:{},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -415,6 +418,19 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             categories: newArray8,
           };
+        }
+
+        case NEW_PAY:{
+          return{
+            ...state
+          }
+        }
+
+        case SET_SHIPPING_DATA: {
+          return{
+            ...state,
+            shippingData: action.payload
+          }
         }
     
 
