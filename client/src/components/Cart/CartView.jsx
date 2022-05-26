@@ -22,7 +22,7 @@ const CartView = () => {
 
   const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(()=>{
-    // dispatch(getCartById(token))
+    dispatch(getCartById(token))
   },[dispatch])
   
   
