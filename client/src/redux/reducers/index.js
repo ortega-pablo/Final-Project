@@ -47,8 +47,13 @@ import {
   GET_USER_ID_BY_TOKEN,
   PUT_NAME_SPECIFICATION,
   PUT_NAME_SUBCATEGORY,
+  NEW_PAY,
+  SET_SHIPPING_DATA,
   GET_IMAGES,
   GET_DETAIL_ONE_PRODUCT,
+  ADD_TO_CART,
+  GET_CART_BY_ID,
+  SET_REDUCER_USER_ID,
   GET_ONE_USER,
   GET_ALL_ASK,
   GET_USER_ASK_FOR_ONE_PRODUCT
@@ -65,13 +70,21 @@ const initialState = {
   subCategories: [],
   discounts: [],
   userStatus: null,
+  shippingData:{},
   allImages: [],
   getDetailOneProduct : [],
+  cart: {},
   getDetailOneUser : [],
   allAsk: [],
   userAskOneProduc: []
-  
 };
+
+// funcion para que el carrito se guarde siempre 
+// localStorage.getItem("cart") ? 
+// initialState.cart = JSON.parse(localStorage.getItem("cart"))
+// : initialState.cart = []
+
+
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -427,6 +440,19 @@ const rootReducer = (state = initialState, action) => {
             categories: newArray8,
           };
         }
+
+        case NEW_PAY:{
+          return{
+            ...state
+          }
+        }
+
+        case SET_SHIPPING_DATA: {
+          return{
+            ...state,
+            shippingData: action.payload
+          }
+        }
     
         case GET_IMAGES: {
           return {
@@ -441,6 +467,12 @@ const rootReducer = (state = initialState, action) => {
             getDetailOneProduct: action.payload,
            
           };
+
+        case GET_CART_BY_ID:
+          return {
+            ...state,
+            cart: action.payload
+          }
 
           case GET_ONE_USER:
             console.log("reducer",state.getDetailOneUser)

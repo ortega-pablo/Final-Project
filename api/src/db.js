@@ -66,6 +66,9 @@ Discount.belongsToMany(Product, { through: "discount_products"});
 Product.hasMany(Review);
 Review.belongsTo(Product)
 
+User.hasMany(Review)
+Review.belongsTo(User)
+
 Product.belongsToMany(Specification, { through: ProductSpecification});
 Specification.belongsToMany(Product, { through: ProductSpecification});
 
