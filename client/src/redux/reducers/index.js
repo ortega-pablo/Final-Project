@@ -56,7 +56,9 @@ import {
   SET_REDUCER_USER_ID,
   GET_ONE_USER,
   GET_ALL_ASK,
-  GET_USER_ASK_FOR_ONE_PRODUCT
+  GET_USER_ASK_FOR_ONE_PRODUCT,
+  DELETE_FROM_CART,
+  GET_CART_FOR_CHILD,
 } from "../actions";
 
 const initialState = {
@@ -499,6 +501,16 @@ const rootReducer = (state = initialState, action) => {
       userAskOneProduc: action.payload,
       
     };
+  case DELETE_FROM_CART:
+    return{
+      ...state,
+    }
+  case GET_CART_FOR_CHILD:
+    return{
+      ...state,
+      cart: action.payload,
+    }
+  
     default:
       return state;
   }

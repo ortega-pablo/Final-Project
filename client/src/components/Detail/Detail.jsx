@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../../redux/actions";
+import { addItemToCart, getCartById, getDetail } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
@@ -42,6 +42,7 @@ export const Detail = () => {
   const dispatch = useDispatch();
   //deberia ser un state.detail
   let productDetail = useSelector((state) => state.productDetail);
+  const cart = useSelector((state)=> state.cart)
 
   let { id } = useParams();
 
@@ -53,9 +54,11 @@ export const Detail = () => {
     dispatch(getDetail(id));
   };
 
+  const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(() => {
     //tendria que ser un getDitail(id) desde las action
     dispatch(getDetail(id));
+    dispatch(getCartById(token))
     // return (()=>{
 
       //     dispatch(clearDetail())
@@ -64,7 +67,8 @@ export const Detail = () => {
 
     const handleAddToCart = (e) => {
     e.preventDefault();
-    
+    dispatch(addItemToCart(id, token));
+    dispatch(getCartById(token))
     Swal.fire({
       background: '#DFDCD3',
       icon: 'success',
@@ -122,7 +126,7 @@ export const Detail = () => {
               }}
             />
 
-            <Button onClick={(e)=>handleAddToCart(e)} > Agregar al carrito </Button>
+            <Button onClick={handleAddToCart} > Agregar al carrito </Button>
 
             <Divider textAlign="left">
               <Chip
