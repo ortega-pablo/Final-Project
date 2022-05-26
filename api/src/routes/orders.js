@@ -106,12 +106,13 @@ router.post('/', async (req, res, next) => {
           const newOrder = await Order.create({
             total,
             state,
-            address
+            address,
+            quantity: findCart.amount
           });
 
-        quantity = findCart.amount;
+        
         newOrder.setUser(userId);
-        newOrder.addProducts(findProduct, {through: {quantity:quantity}}); // O un findAll.length porque la neta esta cabron
+        newOrder.addProducts(findProduct); // O un findAll.length porque la neta esta cabron
         
 
         await findCart.setProducts([]);
