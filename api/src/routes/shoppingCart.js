@@ -5,7 +5,8 @@ const router = Router();
 
 router.put("/addProduct", async (req, res, next) => {
 
-    let {amount} = req.body
+    let {quantity} = req.body
+
     const {shoppingCartId, userId, productId} = req.query
 
     try{
@@ -24,10 +25,7 @@ router.put("/addProduct", async (req, res, next) => {
             })
 
             if(findCart && findProduct){
-               
-                await  findProduct.addShoppingCart(findCart)
-                await findCart.increment('amount', { by: 1 });
-
+               await findCart.addProduct(findProduct, {through:{total: quantity}})
                 res.send("Product added to cart successfully!")
             } else {
                 res.send("User or product not found")
@@ -108,7 +106,7 @@ router.put("/removeProduct", async (req, res, next) => {
                 console.log(findCart.products.length)
                 findCart.products.length === 0 ? res.send("No products in cart") :
 
-                await findProduct.removeShoppingCart(findCart) && await findCart.decrement('amount', { by: 1 });
+                await findProduct.removeShoppingCart(findCart) 
 
                 res.send("Product removed from cart successfully!")
             } else {
@@ -186,8 +184,15 @@ router.get("/", async (req, res, next) => {
                 include: {
                     model: Product,
                     through: {
-                        attributes: []
+                        attributes: ["total"]
                     }
+                    // {
+                    //     model: Specification,
+                    //     attributes: ["id", "name"],
+                    //     through: {
+                    //         attributes: ["value"],
+                    //     },
+                    //   }
                 }
             })
 
