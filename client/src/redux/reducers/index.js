@@ -57,8 +57,10 @@ import {
   GET_ONE_USER,
   GET_ALL_ASK,
   GET_USER_ASK_FOR_ONE_PRODUCT,
+  DELETE_FROM_CART,
+  GET_CART_FOR_CHILD,
   GET_ALL_ORDER_ONE_USER,
-  GET_USER_ASK_FOR_ALL_PRODUCT
+  GET_USER_ASK_FOR_ALL_PRODUCT,
 } from "../actions";
 
 const initialState = {
@@ -478,6 +480,11 @@ const rootReducer = (state = initialState, action) => {
             cart: action.payload
           }
 
+        case ADD_TO_CART:
+          return {
+            ...state,
+          }
+
           case GET_ONE_USER:
             console.log("reducer",state.getDetailOneUser)
       return {
@@ -498,6 +505,16 @@ const rootReducer = (state = initialState, action) => {
       userAskOneProduc: action.payload,
       
     };
+  case DELETE_FROM_CART:
+    return{
+      ...state,
+    }
+  case GET_CART_FOR_CHILD:
+    return{
+      ...state,
+      cart: action.payload,
+    }
+  
 
 case GET_USER_ASK_FOR_ALL_PRODUCT:
   return {

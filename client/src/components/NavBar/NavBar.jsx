@@ -21,7 +21,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyToken } from "../../redux/actions";
+import { getCartById, verifyToken } from "../../redux/actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -79,7 +79,7 @@ export const NavBar = (props) => {
   const ls = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
-
+    dispatch(getCartById(ls?.token));
   }, [dispatch]);
 
   const handleChangeForName = (e) => {
@@ -369,7 +369,7 @@ export const NavBar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex"}}}>
             <IconButton size="large" color="ambar1" sx={{mr: 1}} href="/cart">
-              <Badge badgeContent={cartStatus.length} color="error">
+              <Badge badgeContent={cartStatus?.products?.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, ShoppingCart, User } = require("../db");
+const { Product, ShoppingCart, User, ProductInventory } = require("../db");
 const router = Router();
 
 
@@ -173,6 +173,7 @@ router.get("/", async (req, res, next) => {
                 where: {
                     id: userId
                 },
+                
             })
 
             console.log(findUser)
@@ -184,8 +185,14 @@ router.get("/", async (req, res, next) => {
                 include: {
                     model: Product,
                     through: {
-                        attributes: ["total"]
-                    }
+                        attributes: ["total"],
+                    },
+                    include: [
+                        {
+                            model: ProductInventory,
+                            attributes: ["quantity"]
+                        }
+                    ]
                     // {
                     //     model: Specification,
                     //     attributes: ["id", "name"],
