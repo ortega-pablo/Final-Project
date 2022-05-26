@@ -47,6 +47,8 @@ import {
   GET_USER_ID_BY_TOKEN,
   PUT_NAME_SPECIFICATION,
   PUT_NAME_SUBCATEGORY,
+  NEW_PAY,
+  SET_SHIPPING_DATA
   GET_IMAGES,
   GET_DETAIL_ONE_PRODUCT,
   ADD_TO_CART,
@@ -68,6 +70,7 @@ const initialState = {
   subCategories: [],
   discounts: [],
   userStatus: null,
+  shippingData:{},
   allImages: [],
   getDetailOneProduct : [],
   cart: {},
@@ -436,6 +439,19 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             categories: newArray8,
           };
+        }
+
+        case NEW_PAY:{
+          return{
+            ...state
+          }
+        }
+
+        case SET_SHIPPING_DATA: {
+          return{
+            ...state,
+            shippingData: action.payload
+          }
         }
     
         case GET_IMAGES: {

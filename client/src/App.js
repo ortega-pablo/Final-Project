@@ -26,9 +26,12 @@ import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
+import { CheckOutForm } from "./components/StripeComponent/CheckOutForm";
+import Clients from "./components/AdminPanel/Clients";
+import Orders from "./components/AdminPanel/Orders";
 import { Perfil } from "./components/PerfilUser/Perfil";
-
 import CartView from "./components/Cart/CartView";
+
 
 function App() {
   return (
@@ -38,6 +41,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route exact path="/home/:name" element={<Home />} />
+            <Route exact path ="/checkout" element={<CheckOutForm/>} />
             <Route path="/detail/:id" element={<Detail/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/login" element={<Login/>}/>
@@ -63,10 +67,13 @@ function App() {
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
+
+            <Route path="/clients" element={<Clients/>}/>
+            <Route path="/orders" element={<Orders/>}/>
+
             <Route path="/cart" element={<CartView/>}/>
-
+              
             <Route path="/prueba" element={<Perfil/>}/>
-
 
           </Routes>
         <Footer/>

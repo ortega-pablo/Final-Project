@@ -92,12 +92,9 @@ const productInfo = async function (id) {
           attributes: [],
         },
       },
-     /*  {
+      {
         model: Review,
-        through: {
-          attributes: [],
-        },
-      }, */
+      },
     ],
   });
 
