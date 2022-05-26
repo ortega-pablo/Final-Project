@@ -85,7 +85,6 @@ const productInfo = async function (id) {
             attributes: []
         }
       },
-     
       {
         model: Image,
         through: {
