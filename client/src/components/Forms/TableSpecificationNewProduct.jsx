@@ -17,7 +17,6 @@ export const TableSpecificationNewProduct = ({newProduct}) => {
   return (
 
     <>
-    <div>TableSpecificationNewProduct</div>
 
     {
         newProduct?.specifications.map( s =>{
@@ -27,12 +26,14 @@ export const TableSpecificationNewProduct = ({newProduct}) => {
                 {/* <ListItemAvatar>
               <SubdirectoryArrowRightIcon />
             </ListItemAvatar>   */}
-            <b>Especificación: </b>
+            <b>Especificación:... </b>
                 </TableCell>
                 <TableCell>{s?.name}</TableCell>
                 <TableCell>{s?.ProductSpecification.value}</TableCell>
 
                 <Button
+                variant="contained"
+                color="ambar4"
                 value={s.id}
                 onClick={(e) => handleDeleteSpeciToProd(e)}
                 // name="delete"

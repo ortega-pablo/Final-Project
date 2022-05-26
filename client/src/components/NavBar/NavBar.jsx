@@ -73,9 +73,13 @@ export const NavBar = (props) => {
   const userStatus = useSelector((state) => state.userStatus);
   console.log("user status  => ", userStatus);
 
+  const cartStatus = useSelector((state) => state.cart)
+  
+
   const ls = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
+
   }, [dispatch]);
 
   const handleChangeForName = (e) => {
@@ -132,7 +136,7 @@ export const NavBar = (props) => {
             </Link>
 
             <Link sx={{ textDecoration: "none" }} href="/">
-              <MenuItem onClick={() => window.localStorage.clear()}>
+              <MenuItem onClick={() => window.localStorage.removeItem("token")}>
                 <Typography variant="body1" color="ambar5.main">
                   LogOut
                 </Typography>
@@ -158,7 +162,7 @@ export const NavBar = (props) => {
             </Link>
 
             <Link sx={{ textDecoration: "none" }} href="/">
-              <MenuItem onClick={() => window.localStorage.clear()}>
+              <MenuItem onClick={() => window.localStorage.removeItem("token")}>
                 <Typography variant="body1" color="ambar5.main">
                   LogOut
                 </Typography>
@@ -364,8 +368,8 @@ export const NavBar = (props) => {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex"}}}>
-            <IconButton size="large" color="ambar1" sx={{mr: 1}}>
-              <Badge badgeContent={17} color="error">
+            <IconButton size="large" color="ambar1" sx={{mr: 1}} href="/cart">
+              <Badge badgeContent={cartStatus.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

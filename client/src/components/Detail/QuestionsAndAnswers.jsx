@@ -79,16 +79,17 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
             />
             <Button
               type="submit"
-              fullWidth
               variant="contained"
+              color="ambar3"
+              fullWidth
               sx={{ mt: 3, mb: 2 }}
             >
-              Ingresar
+              Publicar pregunta
             </Button>
       </Box> : <></>
       }
-    
-      <List sx={{}}>
+
+      <List  sx={{ maxHeight:"300px", mb: "10px", overflowY: "scroll"}}>
         {asks.map((a) => {
           return ( <>
             <Divider component="li" />
@@ -101,7 +102,7 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
               ></Typography>
             </li>
             <ListItem>
-                <ListItemText primary={a.content} secondary={a.user.userName} />                
+                <ListItemText primary={a.content} secondary={a.user?.userName} />                
             </ListItem>
             <Divider component="li" variant="inset" />
               {user ==="admin" && a.answer === null ? <AnswerComponent askId = {a.id} handleReRender = {handleReRender} /> : <></>}

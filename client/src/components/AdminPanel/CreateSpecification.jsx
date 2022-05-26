@@ -1,10 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { AddSpecification } from '../Forms/AddSpecification/AddSpecification'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
 
 function CreateSpecification() {
+  const userStatus = useSelector((state) => state.userStatus);
     return (
+      userStatus === 'admin' ?
         <Box
           maxWidth="vp"
           sx={{
@@ -42,10 +47,12 @@ function CreateSpecification() {
               }}
             >
               <Typography variant="h2">Crear especificación</Typography>
-    
+              <AddSpecification/>
             </Container>
           </Container>
         </Box>
+        :
+        <NotFound/>
       )
 }
 

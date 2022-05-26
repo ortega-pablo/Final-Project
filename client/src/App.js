@@ -26,9 +26,11 @@ import CreateCategory from "./components/AdminPanel/CreateCategory";
 import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
-// test
-import GetAllCategoriesToAdmin from "./components/AdminPanel/Get/GetAllCategoriesToAdmin";
-
+import { CheckOutForm } from "./components/StripeComponent/CheckOutForm";
+import Clients from "./components/AdminPanel/Clients";
+import Orders from "./components/AdminPanel/Orders";
+import { Perfil } from "./components/PerfilUser/Perfil";
+import CartView from "./components/Cart/CartView";
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route exact path="/home/:name" element={<Home />} />
+            <Route exact path ="/checkout" element={<CheckOutForm/>} />
             <Route path="/detail/:id" element={<Detail/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/login" element={<Login/>}/>
@@ -63,11 +66,14 @@ function App() {
             <Route path="/createProduct" element={<CreateProduct/>}/>
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
-            
-            {/* test */}
-            <Route path='/probandocomponentes' element={<GetAllCategoriesToAdmin/>}/>
 
 
+            <Route path="/clients" element={<Clients/>}/>
+            <Route path="/orders" element={<Orders/>}/>
+
+            <Route path="/cart" element={<CartView/>}/>
+              
+            <Route path="/prueba" element={<Perfil/>}/>
 
           </Routes>
         <Footer/>

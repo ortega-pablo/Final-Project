@@ -1,10 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import GetAllStockToAdmin from './Get/GetAllStockToAdmin'
 
 function AllStock() {
+  const userStatus = useSelector((state) => state.userStatus);
     return (
+      userStatus === 'admin' ?
         <Box
           maxWidth="vp"
           sx={{
@@ -41,11 +46,13 @@ function AllStock() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Acá se puede ver todo el Stock</Typography>
-    
+              <Typography variant="h2">Stock</Typography>
+              <GetAllStockToAdmin/>
             </Container>
           </Container>
         </Box>
+        :
+        <NotFound/>
       )
 }
 

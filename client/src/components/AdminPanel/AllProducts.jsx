@@ -1,10 +1,15 @@
 import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { NotFound } from '../NotFound/NotFound'
 import AdminMenuLarge from './AdminMenuLarge'
 import AdminMenuMobile from './AdminMenuMobile'
+import GetAllProductsToAdmin from './Get/GetAllProductsToAdmin'
 
 function AllProducts() {
+  const userStatus = useSelector((state) => state.userStatus);
   return (
+    userStatus ==='admin' ?
     <Box
       maxWidth="vp"
       sx={{
@@ -23,8 +28,7 @@ function AllProducts() {
         sx={{
           display: "flex",
           flexDirection: "row",
-          width: "100%",
-          height: "100%",
+
           marginTop: 1,
           padding: 0,
         }}
@@ -41,11 +45,14 @@ function AllProducts() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá van todos los productos</Typography>
-
+        <Typography variant="h2" mt={4} color='ambar5.main' >Productos</Typography>
+          <GetAllProductsToAdmin />
+          
         </Container>
       </Container>
     </Box>
+    :
+    <NotFound/>
   )
 }
 

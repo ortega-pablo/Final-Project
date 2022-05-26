@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import SwipeableDrawerFilters from './SwipeableFilters/SipeableFilters'
 import { Box } from "@mui/system";
 import { SelectProductsPerPage } from "./Pagination/SelectProductsPerPage";
+
 const useStyles = makeStyles((theme) => ({
 
   paper: {

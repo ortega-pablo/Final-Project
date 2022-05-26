@@ -32,16 +32,19 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
         postAddSpecificationToProduct(newProdId, specifications, values)
       );
       await dispatch(getProducts());
+      await dispatch(getProducts());
+
       resetForm({ values: "" });
     },
   });
 
   return (
-    <>
-
-    
-
+    <Box >
       <Box
+      display="flex"
+      alignItems="center"
+     
+      
         component="form"
         noValidate
         autoComplete="off"
@@ -53,6 +56,7 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
           label="Valor de la especificación"
           variant="outlined"
           name="value"
+          sx={{ml:3, mr:3}}
           // helperText={leyendaErrorName2}
           // error={errorName2}
           value={formik.values.value}
@@ -60,14 +64,15 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
           error={formik.touched.value && Boolean(formik.errors.value)}
           helperText={formik.touched.value && formik.errors.value}
         />
-
-        <Button type="submit">Agregar especificación</Button>
+        
+        <Button type="submit" variant="contained"color="ambar4">Agregar</Button>
       </Box>
-
+{/* <Box>
       <TableSpecificationNewProduct
       newProduct={newProduct}
       newProdId={newProdId}
       />
-    </>
+</Box> */}
+    </Box>
   );
 };
