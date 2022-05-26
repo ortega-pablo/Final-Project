@@ -36,8 +36,17 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone, role, amount, shippingAddress } =
-    req.body;
+  const {
+    userName,
+    email,
+    password,
+    firstName,
+    lastName,
+    phone,
+    role,
+    amount,
+    shippingAddress,
+  } = req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
@@ -56,16 +65,15 @@ router.post("/create", async (req, res, next) => {
       phone,
       role,
       amount,
-      shippingAddress
+      shippingAddress,
     });
 
     const addShoppingCart = await ShoppingCart.create({
       amount,
-      shippingAddress
+      shippingAddress,
     });
 
     addShoppingCart.setUser(newUser);
-
 
     res.status(200).send("done");
   } catch (error) {
@@ -76,10 +84,10 @@ router.post("/create", async (req, res, next) => {
 // Login User
 
 router.post("/login", async (req, res, next) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { userName } });
+    const user = await User.findOne({ where: { email } });
     //console.log(user);
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
@@ -143,8 +151,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
-          }
+            model: Address,
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -168,8 +176,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
-          }
+            model: Address,
+          },
         ],
       });
 
@@ -200,12 +208,12 @@ router.get("/:userId", async (req, res) => {
               },
               {
                 model: Product,
-                attributes: ["id", "name"]
-              }
+                attributes: ["id", "name"],
+              },
             ],
           },
           {
-            model: Address
+            model: Address,
           },
           {
             model: ShoppingCart,
@@ -213,14 +221,13 @@ router.get("/:userId", async (req, res) => {
             include: {
               model: Product,
               through: {
-                attributes: []
-              }
-            }
-          }
+                attributes: [],
+              },
+            },
+          },
         ],
       });
 
-      
       return res.send(findById);
     } else {
       return res.status(404).send("User not found");
@@ -230,27 +237,30 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/deleteUser", async (req, res, next) => {
+router.delete("/delete/:userId", async (req, res, next) => {
+  // Esto para el admin de la pagina
 
-  const {adminId, userId } = req.query;
+  const { adminId, userId } = req.query;
 
   try {
     const findAdmin = await User.findOne({
       where: {
         id: adminId,
-        role: "admin"
+        role: "admin",
       },
     });
-
-    if (findAdmin) {
-     const findUser = await User.destroy({
+    //console.log(findUser.dataValues);
+    //res.send(findUser);
+    if (findUser) {
+      await findUser.destroy({
         where: {
           id: userId,
         },
       });
 
-      findUser ? res.status(200).send("User deleted successfully!") : res.send("User not found")
-
+      findUser
+        ? res.status(200).send("User deleted successfully!")
+        : res.send("User not found");
     } else {
       res.send("User not authorized");
     }
@@ -258,5 +268,41 @@ router.delete("/deleteUser", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put(
+  "/changeUserToAdmin/:userId",
+  [cors(), verifyToken],
+  async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+      if (req.role === "superAdmin") {
+        const findUser = await User.findOne({
+          where: {
+            id: userId,
+          },
+        });
+        if (findUser && findUser.dataValues.role === "user") {
+          await User.update(
+            {
+              role: "admin",
+            },
+            {
+              where: {
+                id: userId,
+              },
+            }
+          );
+          res.status(200).send("User updated successfully!");
+        } else {
+          res.send("User not found or isnot a User");
+        }
+      } else {
+        res.status(401).send("User not authorized");
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;
