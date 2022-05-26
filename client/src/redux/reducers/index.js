@@ -52,6 +52,7 @@ import {
   GET_ONE_USER,
   GET_ALL_ASK,
   GET_USER_ASK_FOR_ONE_PRODUCT
+
 } from "../actions";
 
 const initialState = {
@@ -70,6 +71,7 @@ const initialState = {
   getDetailOneUser : [],
   allAsk: [],
   userAskOneProduc: []
+
   
 };
 

@@ -57,13 +57,13 @@ export const GET_USERS = "GET_USERS"
 
 
 
+
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
 
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_ALL_ASK = "GET_ALL_ASK";
 export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
-
 
 
 
@@ -772,23 +772,6 @@ export const getDetailOneProduct = (id) => {
   };
 };
 
-// export function getDetailOneUser( token) {
-//   return async function(dispatch) {
-//     const config = {
-//       headers: { Authorization: `Bearer ${token}` },
-//     };
-//     try {
-//       const response = await axios(`http://localhost:3001/users/${token}`, config)
-//       console.log("idUser en action",token )
-//       return dispatch({
-//         type: GET_ONE_USER,
-//         payload: response.data
-//       })
-//     } catch(error){
-//       console.log(error)
-//     }
-//   }
-// }
 export function getDetailOneUsers( id) {
   return async function(dispatch) {
    
@@ -826,3 +809,4 @@ export const getAsksForOneProducts = (idUser, idProduct) => {
     });
   };
 };
+

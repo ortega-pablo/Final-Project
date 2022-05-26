@@ -32,11 +32,10 @@ export const TableCatAndSubcOfProduct = ({
 
   const products = useSelector((state) => state.products);
   const allSubcategories = useSelector((state) => state.subCategories);
-  const [render, setRender] = useState("")
 
- 
+  const [render, setRender] = useState("")
   const newProducDetail = useSelector(state => state.getDetailOneProduct)
-  
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
@@ -55,7 +54,6 @@ export const TableCatAndSubcOfProduct = ({
   async function handleDeleteCat(e) {
     e.preventDefault();
     const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value );
-    console.log(subCatInCadena)
     await dispatch(putCategoryToProduct(newProdId, e.target.value));
 
     if (subCatInCadena.length > 0) {
@@ -159,7 +157,6 @@ export const TableCatAndSubcOfProduct = ({
           
           }
 
-                       
           </TableBody>
         </Table>
       </TableContainer>
