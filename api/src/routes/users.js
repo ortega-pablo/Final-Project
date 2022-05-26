@@ -36,8 +36,17 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone, role } =
-    req.body;
+  const {
+    userName,
+    email,
+    password,
+    firstName,
+    lastName,
+    phone,
+    role,
+    amount,
+    shippingAddress,
+  } = req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
@@ -55,9 +64,14 @@ router.post("/create", async (req, res, next) => {
       lastName,
       phone,
       role,
+      amount,
+      shippingAddress,
     });
 
-    const addShoppingCart = await ShoppingCart.create({});
+    const addShoppingCart = await ShoppingCart.create({
+      amount,
+      shippingAddress,
+    });
 
     addShoppingCart.setUser(newUser);
 
@@ -70,10 +84,10 @@ router.post("/create", async (req, res, next) => {
 // Login User
 
 router.post("/login", async (req, res, next) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { userName } });
+    const user = await User.findOne({ where: { email } });
     //console.log(user);
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
@@ -260,23 +274,33 @@ router.put(
   [cors(), verifyToken],
   async (req, res, next) => {
     const { userId } = req.params;
-    if (req.role === "superUser") {
-      const findUser = await User.findOne({
-        where: {
-          id: userId,
-        },
-      });
-      if (findUser) {
-        console.log(findUser);
-        /* await User.update({
-          role: "admin"
-        })
-        res.status(200).send("User updated successfully!") */
+    try {
+      if (req.role === "superAdmin") {
+        const findUser = await User.findOne({
+          where: {
+            id: userId,
+          },
+        });
+        if (findUser && findUser.dataValues.role === "user") {
+          await User.update(
+            {
+              role: "admin",
+            },
+            {
+              where: {
+                id: userId,
+              },
+            }
+          );
+          res.status(200).send("User updated successfully!");
+        } else {
+          res.send("User not found or isnot a User");
+        }
       } else {
-        res.send("User not found");
+        res.status(401).send("User not authorized");
       }
-    } else {
-      res.status(401).send("User not authorized");
+    } catch (error) {
+      next(error);
     }
   }
 );
