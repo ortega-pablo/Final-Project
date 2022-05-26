@@ -50,6 +50,10 @@ router.get("/", async (req, res, next) => {
         where: {
           productId,
           userId
+        },
+        include: {
+          model: Answer,
+          attributes: ["id", "content"]
         }
       })
       
@@ -68,7 +72,7 @@ router.get("/", async (req, res, next) => {
       
       let userArray = [];
       userArray.push(getOneUser)
-
+      
       const userSimplified = userArray?.map(e => {
         return {
           id: e.id,
@@ -84,7 +88,7 @@ router.get("/", async (req, res, next) => {
         }
       })
 
-    
+      
       if(getOneUser.asks.length === 0){
         return res.send("No questions found for this user")
 
