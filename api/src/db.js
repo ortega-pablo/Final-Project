@@ -108,8 +108,8 @@ SubCategory.belongsToMany(Product, { through: "product-subCategory"});
 Product.hasOne(ProductInventory)
 ProductInventory.belongsTo(Product)
 
-ShoppingCart.hasMany(Product)
-Product.belongsTo(ShoppingCart)
+ShoppingCart.belongsToMany(Product, { through: "shoppingCart_products"});
+Product.belongsToMany(ShoppingCart, { through: "shoppingCart_products"});
 
 User.hasMany(Order)
 Order.belongsTo(User)

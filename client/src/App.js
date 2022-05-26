@@ -28,6 +28,9 @@ import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 import Clients from "./components/AdminPanel/Clients";
 import Orders from "./components/AdminPanel/Orders";
+import { Perfil } from "./components/PerfilUser/Perfil";
+import CartView from "./components/Cart/CartView";
+
 
 function App() {
   return (
@@ -62,9 +65,14 @@ function App() {
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
-            <Route path="/clients" element={<Clients/>}/>
 
+            <Route path="/clients" element={<Clients/>}/>
             <Route path="/orders" element={<Orders/>}/>
+
+            <Route path="/cart" element={<CartView/>}/>
+              
+            <Route path="/prueba" element={<Perfil/>}/>
+
           </Routes>
         <Footer/>
     </BrowserRouter>

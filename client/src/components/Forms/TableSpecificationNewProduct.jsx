@@ -26,7 +26,7 @@ export const TableSpecificationNewProduct = ({newProduct}) => {
                 {/* <ListItemAvatar>
               <SubdirectoryArrowRightIcon />
             </ListItemAvatar>   */}
-            <b>Especificación: </b>
+            <b>Especificación:... </b>
                 </TableCell>
                 <TableCell>{s?.name}</TableCell>
                 <TableCell>{s?.ProductSpecification.value}</TableCell>

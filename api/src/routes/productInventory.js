@@ -8,7 +8,7 @@ const { Product, ProductInventory } = require("../db");
 //   const { productId } = req.query;
 
 //   try {
-  
+
 //     const product = await Product.findOne({
 //       where: {
 //         id: productId,
@@ -20,16 +20,16 @@ const { Product, ProductInventory } = require("../db");
 //       const addQuantity = await ProductInventory.create({
 //         quantity,
 //       });
-  
+
 
 //       addQuantity.setProduct(productId);
 //       res.status(200).send(addQuantity);
-      
+
 //     } else {
 //       res.send("Product not found")
 //     }
-    
-   
+
+
 //   } catch (error) {
 //     next(error);
 //   }
@@ -39,67 +39,77 @@ const { Product, ProductInventory } = require("../db");
 
 router.get("/", async (req, res, next) => {
 
-  const {productId} = req.query
+  const { productId } = req.query
 
-  try{
-   if(productId){
-    const getStockOne = await ProductInventory.findOne({
-      where: {
-        productId
-      },
-      include: [
-        {
-          model: Product,
-          attributes: ["name"]
+  try {
+    if (productId) {
+
+      const getStockOne = await ProductInventory.findOne({
+        where: {
+          productId
+        },
+        include: [
+          {
+            model: Product,
+            attributes: ["name"]
+          }
+        ]
+      })
+
+      if(getStockOne){
+
+        const info = {
+          name: getStockOne.product.name,
+          productId: getStockOne.productId,
+          quantity: getStockOne.quantity,
+          createdAt: getStockOne.createdAt,
+          updatedAt: getStockOne.updatedAt
         }
-      ]
-    })
+        return res.status(200).send(info)
 
-   
-
-      const info = {
-        name: getStockOne.product.name,
-        productId: getStockOne.productId,
-        quantity: getStockOne.quantity,
-        createdAt: getStockOne.createdAt,
-        updatedAt: getStockOne.updatedAt
+      } else {
+        return res.send("Product not found")
       }
-     
-      return res.status(200).send(info)
-    
+      
 
-   } else {
-    const getAllInventory = await ProductInventory.findAll({
-      include: [
-        {
-          model: Product,
-          attributes: ["name"]
-        }
-      ]
-    });
+    } else {
+      const getAllInventory = await ProductInventory.findAll({
+        include: [
+          {
+            model: Product,
+            attributes: ["name"]
+          }
+        ]
+      });
 
-    const mapped = getAllInventory.map(e => {
-      return {
-        name: e.product.name,
-        productId: e.productId,
-        quantity: e.quantity && e.quantity,
-        createdAt: e.createdAt,
-        updatedAt: e.updatedAt
+      if(getAllInventory){
+
+        const mapped = getAllInventory.map(e => {
+          return {
+            name: e.product.name,
+            productId: e.productId,
+            quantity: e.quantity && e.quantity,
+            createdAt: e.createdAt,
+            updatedAt: e.updatedAt
+          }
+        })
+  
+        return res.status(200).send(mapped)
       }
-    })
+      else {
+        return res.send("Products not found")
+      }
+    }
 
-    return res.status(200).send(mapped)
-   }
-
-  } catch(error){
+  } catch (error) {
     res.send(error)
   }
-  
+
 })
 
-router.put("/:productId", async (req, res, next) =>{
+router.put("/:productId", async (req, res, next) => {
 
-  const {productId} = req.params;
+  const { productId } = req.params;
   const { quantity } = req.body;
 
   try {
@@ -107,7 +117,7 @@ router.put("/:productId", async (req, res, next) =>{
     const findProduct = await Product.findOne({
       where: {
         id: productId
-      }, 
+      },
       include: [
         {
           model: ProductInventory,
@@ -117,24 +127,24 @@ router.put("/:productId", async (req, res, next) =>{
     })
 
 
-    
-    if(findProduct && findProduct.productInventory) {
+
+    if (findProduct && findProduct.productInventory) {
 
       await ProductInventory.update({
         quantity,
-        },
+      },
         {
-        where: {
+          where: {
             productId
-        }
-      })
+          }
+        })
       res.status(200).send("Stock updated successfully!")
 
     } else {
       res.send("Product or stock not found")
     }
-        
-  } catch(error){
+
+  } catch (error) {
     next(error)
   }
 })
