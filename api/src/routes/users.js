@@ -197,7 +197,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/:userId", async (req, res, next) => {
+router.delete("/delete/:userId", async (req, res, next) => {
   // Esto para el admin de la pagina
 
   const { userId } = req.params;
@@ -208,11 +208,12 @@ router.delete("/:userId", async (req, res, next) => {
         id: userId,
       },
     });
-
+    //console.log(findUser.dataValues);
+    //res.send(findUser);
     if (findUser) {
-      await Category.destroy({
+      await findUser.destroy({
         where: {
-          id: categoryId,
+          id: userId,
         },
       });
       res.status(200).send("User deleted successfully!");

@@ -15,8 +15,10 @@ import { useDispatch } from "react-redux";
 import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import GoogleLogin from 'react-google-login';
 
 
+const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
 
 const validationSchema = yup.object({
   userName: yup.string("Enter your User Name").required("Email is required"),
@@ -65,6 +67,13 @@ export const Login = () => {
       
     },
   });
+
+  function handleLoginGoogle (res){
+    console.log( "LOGEO WITH GOOGLE",res)
+  }
+  function handleFailureGoogle (fail){
+    console.log("ERROR LOGEO GOOGLE",JSON.stringify (fail)) 
+  }
 
   return (
     <>
@@ -139,6 +148,13 @@ export const Login = () => {
               </Link>
             </Grid>
           </Grid>
+          <GoogleLogin
+                    clientId={idClientGoogleLogin}
+                    buttonText="Logeate con Google"
+                    onSuccess={handleLoginGoogle}
+                    onFailure={handleFailureGoogle}
+                    cookiePolicy={'single_host_origin'}
+          />
         </Box>
       </Paper>
     </Container>
