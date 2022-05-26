@@ -1,25 +1,33 @@
-import { Table, TableCell, TableRow, TextField, Typography } from "@mui/material";
+import { IconButton, Table, TableCell, TableRow, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteFromCart, getCartForChild } from "../../../redux/actions";
 
 const DetailRow = (props) => {
-  const { row } = props;
-  const cartState = useSelector((state) => state.cart);
+  const dispatch = useDispatch()
+  const { row, cartId } = props;
+  const cart = useSelector((state) => state.cart);
 
   const [precio, setPrecio] = useState(0);
   const [cantidad, setCantidad] = useState(1);
 
 
   useEffect(() => {
-    setPrecio(row.precio);
+    setPrecio(row.price);
   }, []);
 
   const total = precio * cantidad;
   const handleSetCantidad = (e) => {
     setCantidad(e.target.value)
   }
+  const handleDelete = (e) => {
+    e.preventDefault()
+    dispatch(deleteFromCart(row.id, cartId))
+    dispatch(getCartForChild(cartId))
+  }
 
-  console.log("total --> ", total);
+
   return (
     <TableRow>
       <TableCell>
@@ -40,10 +48,15 @@ const DetailRow = (props) => {
         />
       </TableCell>
       <TableCell>
-        <Typography>{precio}</Typography>
+        <Typography>{row.price}</Typography>
       </TableCell>
       <TableCell>
         <Typography>{total}</Typography>
+      </TableCell>
+      <TableCell>
+        <IconButton aria-label="delete" size="small" onClick={(e)=>{ handleDelete(e)}} >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
       </TableCell>
     </TableRow>
   );
