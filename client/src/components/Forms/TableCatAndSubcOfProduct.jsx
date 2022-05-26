@@ -14,6 +14,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategories,
+  getDetail,
+  getDetailOneProduct,
   getProducts,
   getSubCategories,
   putCategoryToProduct,
@@ -30,13 +32,14 @@ export const TableCatAndSubcOfProduct = ({
 
   const products = useSelector((state) => state.products);
   const allSubcategories = useSelector((state) => state.subCategories);
-  // const allCategories = useSelector( state => state.categories)
-  // const [idCat, setIdCat] = useState("")
+  const [render, setRender] = useState("")
+  const newProducDetail = useSelector(state => state.getDetailOneProduct)
 
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategories());
     dispatch(getSubCategories());
+    dispatch(getDetailOneProduct(newProdId))
   }, [dispatch]);
 
   //  const [idSubCat, setIdSubCat] = useState(0)
@@ -45,19 +48,23 @@ export const TableCatAndSubcOfProduct = ({
 
   const newProducts = products.find((p) => p.id === newProdId);
 
+
+  //funcion para eliminar la categoria del producto
   async function handleDeleteCat(e) {
     e.preventDefault();
-    // setIdCatForDelete(e.target.value)
-    const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value
-    );
+
+    const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value );
 
     await dispatch(putCategoryToProduct(newProdId, e.target.value));
 
     if (subCatInCadena.length > 0) {
       subCatInCadena.map(
+
         async (sc) => await dispatch(putSubCategoryToProduct(newProdId, sc.id))
       );
       await dispatch(getProducts());
+      await dispatch(getDetailOneProduct(newProdId))
+      setRender(newProdId)
     }
 
     await dispatch(getProducts());
@@ -67,19 +74,11 @@ export const TableCatAndSubcOfProduct = ({
     e.preventDefault();
     await dispatch(putSubCategoryToProduct(newProdId, e.target.value));
     await dispatch(getProducts());
+    await dispatch(getDetailOneProduct(newProdId))
+      setRender(newProdId)
   }
 
-  // function handleSubCat(e) {
-  //   e.preventDefault()
-  //   setIdSubCat(e.target.value)
 
-  // }
-
-  // const categoriaFromSubc = allCategories.find((c,i) => c.subCategories.some(c.id.subCategory) )
-  //     // const categ = categoriaFromSubc.filter()
-  //     console.log(categoriaFromSubc)
-  //     console.log(subCategory)
-  //     // console.log(categ)
 
   return (
     <>
@@ -137,32 +136,40 @@ export const TableCatAndSubcOfProduct = ({
             </TableRow>
           </TableHead>
 
+
+
           <TableBody>
-            {newProducts?.subCategories?.map((sc) => {
-              return (
-                <TableRow>
-                  <TableCell>{sc.name} </TableCell>
-                  <TableCell>ACA VA LA CATEGORIA </TableCell>
+          
+          {                 newProducDetail[0]?.subCategories.map(sc => {
+                      return (
+                        <TableRow>
+                          <TableCell>{sc.name} </TableCell>
+                          <TableCell>{sc.categories[0].name} </TableCell>
 
-                  {/* {c?.subCategories?.map(sc => <TableCell>{sc.name}</TableCell> ) } */}
+                        <Button
+                      value={sc.id}
+                      onClick={(e) => handleDeleteSubc(e)}
+                      // name="delete"
+                      // startIcon={<EditIcon />}
+                      >
+                      Eliminar
+                        </Button>
+                          </TableRow>
+                      )
+          } )
+          
+          }
 
-                  <Button
-                    value={sc.id}
-                    onClick={(e) => handleDeleteSubc(e)}
-                    // name="delete"
-                    // startIcon={<EditIcon />}
-                  >
-                    Eliminar
-                  </Button>
-                </TableRow>
-              );
-            })}
+              
           </TableBody>
         </Table>
       </TableContainer>
     </>
   );
 };
+
+
+
 
 // {     newProducts?.subCategories?.map( sc => {
 //   return (

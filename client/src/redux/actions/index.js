@@ -8,6 +8,7 @@ export const POST_ADD_SPECIFICATION_TO_PRODUCT =
   "POST_ADD_SPECIFICATION_TO_PRODUCT";
 export const POST_NEW_ASK = "POST_NEW_ASK";
 export const POST_NEW_ANSWER = "POST_NEW_ASK";
+export const POST_NEW_REVIEW = "POST_NEW_REVIEW";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
 export const FILTER_PER_SUBCATEGORY = "FILTER_PER_SUBCATEGORY";
@@ -54,10 +55,24 @@ export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
 export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
 export const NEW_PAY = "NEW_PAY";
 export const SET_SHIPPING_DATA = "SET_SHIPPING_DATA";
+export const GET_IMAGES = "GET_IMAGES";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const SET_TOTAL_CART = "SET_TOTAL_CART";
+export const GET_CART_BY_ID = "GET_CART_BY_ID";
+export const GET_USERS = "GET_USERS"
+
 
 
 
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
+
+export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
+export const GET_ONE_USER = "GET_ONE_USER";
+export const GET_ALL_ASK = "GET_ALL_ASK";
+export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
+
+
+
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -124,6 +139,23 @@ export const postNewAnswer = (payload, askId, userId) => {
     }
     return dispatch({
       type: POST_NEW_ANSWER,
+    });
+  };
+};
+
+export const postNewReview = (payload, productId, userId) => {
+  return async function (dispatch) {
+    try {
+      console.log(payload);
+      await axios.post(
+        `http://localhost:3001/orders/review?userId=${userId}&productId=${productId}`,
+        payload
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    return dispatch({
+      type: POST_NEW_REVIEW,
     });
   };
 };
@@ -405,6 +437,7 @@ export function putCategoryToProduct(idP, idC) {
 }
 
 export function putSubCategoryToProduct (idP, idSc ){
+  console.log("desero borrar", idP, idSc)
   return async function (dispatch){
       try {
            await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
@@ -761,3 +794,94 @@ export function putNameSubcategoria(idS, payload) {
     }
   };
 }
+
+
+
+export const getImage = () => {
+  return async (dispatch) => {
+    let response = await axios("http://localhost:3001/images");
+    return dispatch({
+      type: GET_IMAGES,
+      payload: response.data,
+    });
+  };
+};
+export const getDetailOneProduct = (id) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/productDetail/${id}`);
+    return dispatch({
+      type: GET_DETAIL_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+
+export const getCartById = (token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return async (dispatch) => {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      let response = await axios(`http://localhost:3001/shoppingCart?userId=${responseId.data.idUser}`)
+      return dispatch({
+        type: GET_CART_BY_ID,
+        payload: response.data 
+      })
+  } catch(error) {
+  console.log("rompi en getCartById -> ",error)
+  }
+}
+}
+//http://localhost:3001/shoppingCart/addProduct?shoppingCartId=5&userId=5&productId=2
+export const addItemToCart = () =>{
+  return async(dispatch) => {
+    let response = await axios(`http://localhost:3001/shoppingCart/addProduct?shoppingCartId`)
+    return dispatch({
+      type: ADD_TO_CART,
+      payload: response.data
+    })
+    }
+}
+
+export function getDetailOneUsers( id) {
+  return async function(dispatch) {
+   
+    try {
+      const response = await axios(`http://localhost:3001/users/${id}`)
+      console.log("idUser en action",id )
+      return dispatch({
+        type: GET_ONE_USER,
+        payload: response.data
+      })
+    } catch(error){
+      console.log(error)
+    }
+  }
+}
+
+export const getAllAsk = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks`);
+    return dispatch({
+      type: GET_ALL_ASK,
+      payload: response.data,
+    });
+  };
+};
+
+
+export const getAsksForOneProducts = (idUser, idProduct) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`);
+    return dispatch({
+      type: GET_USER_ASK_FOR_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+
+

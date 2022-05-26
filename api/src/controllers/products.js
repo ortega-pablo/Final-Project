@@ -1,4 +1,4 @@
-const { Product, Discount, Category, SubCategory, Specification, ProductSpecification, ProductInventory, Image } = require("../db");
+const { Product, Discount, Category, SubCategory, Specification, ProductSpecification, ProductInventory, Image, Review } = require("../db");
 const { Op } = require("sequelize");
 
 const getAllProducts = async () => {
@@ -41,6 +41,9 @@ const getAllProducts = async () => {
         through: {
           attributes: [],
         },
+      },
+      {
+        model: Review,
       },
       
     ], 
@@ -87,6 +90,9 @@ const getProductsByName = async (name) => {
         through: {
           attributes: [],
         },
+      },
+      {
+        model: Review,
       },
     ],
   });
