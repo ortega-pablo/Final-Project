@@ -836,13 +836,12 @@ export const getCartById = (token) => {
   }
 }
 }
-//http://localhost:3001/shoppingCart/addProduct?shoppingCartId=5&userId=5&productId=2
-export const addItemToCart = () =>{
+
+export const addItemToCart = (id, productId) =>{
   return async(dispatch) => {
-    let response = await axios(`http://localhost:3001/shoppingCart/addProduct?shoppingCartId`)
+    let response = await axios.put(`http://localhost:3001/shoppingCart/addProduct=${productId}?shoppingCartId${id}`)
     return dispatch({
       type: ADD_TO_CART,
-      payload: response.data
     })
     }
 }

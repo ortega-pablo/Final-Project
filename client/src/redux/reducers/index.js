@@ -48,7 +48,7 @@ import {
   PUT_NAME_SPECIFICATION,
   PUT_NAME_SUBCATEGORY,
   NEW_PAY,
-  SET_SHIPPING_DATA
+  SET_SHIPPING_DATA,
   GET_IMAGES,
   GET_DETAIL_ONE_PRODUCT,
   ADD_TO_CART,
@@ -472,6 +472,11 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             cart: action.payload
+          }
+
+        case ADD_TO_CART:
+          return {
+            ...state,
           }
 
           case GET_ONE_USER:

@@ -23,7 +23,7 @@ import { Box, maxWidth } from "@mui/system";
 import { Footer } from "../Footer/Footer";
 import { BoxGeneral } from "../../personalizadTheme";
 import AllReviews from "./AllReviews";
-
+import Swal from "sweetalert2";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -35,7 +35,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-import Swal from "sweetalert2";
+
 
 
 export const Detail = () => {
@@ -74,11 +74,6 @@ export const Detail = () => {
     })
   }
     
-  return (
-    <Box  sx={{ display: "flex", justifyContent:"center", backgroundColor: "ambar1.main"}}>
-      <Paper component="div" sx={{maxWidth: "1100px", mt:"2%", mb:"2%"}}>
-
-
     const [openModal, setOpenModal] = React.useState(false);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
