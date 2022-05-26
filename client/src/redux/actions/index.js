@@ -53,8 +53,10 @@ export const DELETE_IMAGE_TO_PRODUCT = "DELETE_IMAGE_TO_PRODUCT";
 export const PUT_NAME_SPECIFICATION = "PUT_NAME_SPECIFICATION";
 export const PUT_NAME_SUBCATEGORY = "PUT_NAME_SUBCATEGORY";
 export const GET_IMAGES = "GET_IMAGES";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const SET_TOTAL_CART = "SET_TOTAL_CART";
+export const GET_CART_BY_ID = "GET_CART_BY_ID";
 export const GET_USERS = "GET_USERS"
-
 
 
 
@@ -772,6 +774,37 @@ export const getDetailOneProduct = (id) => {
   };
 };
 
+export const getCartById = (token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return async (dispatch) => {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      let response = await axios(`http://localhost:3001/shoppingCart?userId=${responseId.data.idUser}`)
+      return dispatch({
+        type: GET_CART_BY_ID,
+        payload: response.data 
+      })
+  } catch(error) {
+  console.log("rompi en getCartById -> ",error)
+  }
+}
+}
+//http://localhost:3001/shoppingCart/addProduct?shoppingCartId=5&userId=5&productId=2
+export const addItemToCart = () =>{
+  return async(dispatch) => {
+    let response = await axios(`http://localhost:3001/shoppingCart/addProduct?shoppingCartId`)
+    return dispatch({
+      type: ADD_TO_CART,
+      payload: response.data
+    })
+    }
+}
+
 export function getDetailOneUsers( id) {
   return async function(dispatch) {
    
@@ -787,7 +820,6 @@ export function getDetailOneUsers( id) {
     }
   }
 }
-
 
 export const getAllAsk = () => {
   return async (dispatch) => {
@@ -809,4 +841,5 @@ export const getAsksForOneProducts = (idUser, idProduct) => {
     });
   };
 };
+
 

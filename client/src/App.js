@@ -28,6 +28,8 @@ import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 import { Perfil } from "./components/PerfilUser/Perfil";
 
+import CartView from "./components/Cart/CartView";
+
 function App() {
   return (
     
@@ -61,7 +63,10 @@ function App() {
             <Route path="/createSpecification" element={<CreateSpecification/>}/>
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
+            <Route path="/cart" element={<CartView/>}/>
+
             <Route path="/prueba" element={<Perfil/>}/>
+
 
           </Routes>
         <Footer/>

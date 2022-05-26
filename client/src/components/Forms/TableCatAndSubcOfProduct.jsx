@@ -32,7 +32,6 @@ export const TableCatAndSubcOfProduct = ({
 
   const products = useSelector((state) => state.products);
   const allSubcategories = useSelector((state) => state.subCategories);
-
   const [render, setRender] = useState("")
   const newProducDetail = useSelector(state => state.getDetailOneProduct)
 
@@ -53,7 +52,9 @@ export const TableCatAndSubcOfProduct = ({
   //funcion para eliminar la categoria del producto
   async function handleDeleteCat(e) {
     e.preventDefault();
+
     const subCatInCadena = allSubcategories.filter((sc) => sc.categories[0]?.id == e.target.value );
+
     await dispatch(putCategoryToProduct(newProdId, e.target.value));
 
     if (subCatInCadena.length > 0) {
@@ -135,6 +136,8 @@ export const TableCatAndSubcOfProduct = ({
             </TableRow>
           </TableHead>
 
+
+
           <TableBody>
           
           {                 newProducDetail[0]?.subCategories.map(sc => {
@@ -157,12 +160,16 @@ export const TableCatAndSubcOfProduct = ({
           
           }
 
+              
           </TableBody>
         </Table>
       </TableContainer>
     </>
   );
 };
+
+
+
 
 // {     newProducts?.subCategories?.map( sc => {
 //   return (

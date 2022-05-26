@@ -178,7 +178,7 @@ export function UseFormControl() {
       await dispatch(getProducts());
     await  dispatch(getDetailOneProduct(newProdId))
     await  dispatch(getDetailOneProduct(newProdId))
-
+      
       setCategory(0);
       setSubCategory(0);
     } else if (category) {

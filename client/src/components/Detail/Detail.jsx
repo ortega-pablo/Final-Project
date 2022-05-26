@@ -6,6 +6,7 @@ import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
 import QuestionsAndAnswers from "./QuestionsAndAnswers";
 import {
+  Button,
   Chip,
   CircularProgress,
   Container,
@@ -16,6 +17,8 @@ import {
 import { Box, maxWidth } from "@mui/system";
 import { Footer } from "../Footer/Footer";
 import { BoxGeneral } from "../../personalizadTheme";
+import Swal from "sweetalert2";
+
 
 export const Detail = () => {
   const dispatch = useDispatch();
@@ -43,6 +46,18 @@ export const Detail = () => {
       //     dispatch(clearDetail())
       // })
     }, [dispatch]);
+
+    const handleAddToCart = (e) => {
+    e.preventDefault();
+    
+    Swal.fire({
+      background: '#DFDCD3',
+      icon: 'success',
+      title: 'Agregado al carrito',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
     
   return (
     <Box  sx={{ display: "flex", justifyContent:"center", backgroundColor: "ambar1.main"}}>
@@ -73,6 +88,8 @@ export const Detail = () => {
                 width: "100%",
               }}
             />
+
+            <Button onClick={(e)=>handleAddToCart(e)} > Agregar al carrito </Button>
 
             <Divider textAlign="left">
               <Chip
