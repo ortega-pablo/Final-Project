@@ -43,7 +43,7 @@ console.log(asks)
 
                 <img src={prodQue?.images[0]?.urlFile} width="75" alt="" />
                 <img src={prodQue?.images[1]?.urlFile} width="75" alt="" />
-                <h2>$ {prodQue.price} </h2>
+                <h2>$ {prodQue?.price} </h2>
 
                 { prodQue?.productInventory?.quantity === 0 ? 
                 <h3>¡Sin stock! </h3>  :
