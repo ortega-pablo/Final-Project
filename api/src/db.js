@@ -57,6 +57,7 @@ const {
   SubCategory,
   Image,
   Review,
+  Quantity,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -108,8 +109,11 @@ SubCategory.belongsToMany(Product, { through: "product-subCategory"});
 Product.hasOne(ProductInventory)
 ProductInventory.belongsTo(Product)
 
-ShoppingCart.belongsToMany(Product, { through: "shoppingCart_products"});
-Product.belongsToMany(ShoppingCart, { through: "shoppingCart_products"});
+ShoppingCart.belongsToMany(Product, { through: Quantity});
+Product.belongsToMany(ShoppingCart, { through: Quantity});
+
+// ShoppingCart.belongsToMany(Quantity, {through: ShoppingCart});
+// Quantity.belongsToMany(ShoppingCart, {through: ShoppingCart});
 
 User.hasMany(Order)
 Order.belongsTo(User)
@@ -122,6 +126,8 @@ Address.belongsTo(User)
 
 User.belongsToMany(Payment, { through: "user-payment"})
 Payment.belongsToMany(User, { through: "user-payment"})
+
+
 
 
 
