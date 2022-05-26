@@ -7,7 +7,8 @@ export const POST_ADD_CATEROY_TO_PRODUCT = "POST_ADD_CATEROY_TO_PRODUCT";
 export const POST_ADD_SPECIFICATION_TO_PRODUCT =
   "POST_ADD_SPECIFICATION_TO_PRODUCT";
 export const POST_NEW_ASK = "POST_NEW_ASK";
-export const POST_NEW_ANSWER = "POST_NEW_ANSWER";
+export const POST_NEW_ANSWER = "POST_NEW_ASK";
+export const POST_NEW_REVIEW = "POST_NEW_REVIEW";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const FILTER_PER_CATEGORY = "FILTER_PER_CATEGORY";
 export const FILTER_PER_SUBCATEGORY = "FILTER_PER_SUBCATEGORY";
@@ -135,6 +136,23 @@ export const postNewAnswer = (payload, askId, userId) => {
     }
     return dispatch({
       type: POST_NEW_ANSWER,
+    });
+  };
+};
+
+export const postNewReview = (payload, productId, userId) => {
+  return async function (dispatch) {
+    try {
+      console.log(payload);
+      await axios.post(
+        `http://localhost:3001/orders/review?userId=${userId}&productId=${productId}`,
+        payload
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    return dispatch({
+      type: POST_NEW_REVIEW,
     });
   };
 };
