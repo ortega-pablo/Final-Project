@@ -269,4 +269,30 @@ router.delete("/delete/:userId", async (req, res, next) => {
   }
 });
 
+router.put(
+  "/changeUserToAdmin/:userId",
+  [cors(), verifyToken],
+  async (req, res, next) => {
+    const { userId } = req.params;
+    if (req.role === "superUser") {
+      const findUser = await User.findOne({
+        where: {
+          id: userId,
+        },
+      });
+      if (findUser) {
+        console.log(findUser);
+        /* await User.update({
+          role: "admin"
+        })
+        res.status(200).send("User updated successfully!") */
+      } else {
+        res.send("User not found");
+      }
+    } else {
+      res.status(401).send("User not authorized");
+    }
+  }
+);
+
 module.exports = router;
