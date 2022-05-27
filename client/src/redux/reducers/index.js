@@ -61,6 +61,7 @@ import {
   GET_CART_FOR_CHILD,
   GET_ALL_ORDER_ONE_USER,
   GET_USER_ASK_FOR_ALL_PRODUCT,
+  SET_AMOUNT,
 } from "../actions";
 
 const initialState = {
@@ -513,6 +514,10 @@ const rootReducer = (state = initialState, action) => {
     return{
       ...state,
       cart: action.payload,
+    }
+  case SET_AMOUNT:
+    return{
+      ...state,
     }
   
 
