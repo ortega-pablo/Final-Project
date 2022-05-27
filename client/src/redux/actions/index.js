@@ -62,7 +62,7 @@ export const GET_CART_BY_ID = "GET_CART_BY_ID";
 export const GET_USERS = "GET_USERS";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const GET_CART_FOR_CHILD ="GET_CART_FOR_CHILD";
-
+export const SET_AMOUNT = "SET_AMOUNT";
 
 
 
@@ -326,7 +326,10 @@ export const postRegisterUser = (payload) => {
         "http://localhost:3001/users/create",
         payload
       );
-      console.log(response);
+      await axios.post(
+        "http://localhost:3001/sendEmail/welcome",
+        payload
+      )
       return response;
     } catch (error) {
       console.log("hubo un error");
@@ -885,6 +888,19 @@ export const deleteFromCart = (productId, userId) => {
       })
     } catch(error) {
       console.log('rompi en el deleteFromCart -> ', error)
+    }
+  }
+}
+
+export const setCartAmount = (id, amount) => {
+  return async(dispatch) => {
+    try{
+      await axios.put(`http://localhost:3001/shoppingCart/addAmount?userId=${id}`,{amount})
+      return dispatch({
+        type: SET_AMOUNT,
+      })
+    } catch(error){
+      console.log('rompi en setCartAmount => ', error)
     }
   }
 }

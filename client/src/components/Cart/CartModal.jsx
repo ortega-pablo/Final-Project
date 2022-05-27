@@ -6,36 +6,77 @@ import Modal from "@mui/material/Modal";
 import { FormControl, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, getCartById } from "../../redux/actions";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-export default function CartModal({id, description, token}) {
-  const dispatch = useDispatch()
+export default function CartModal({
+  id,
+  description,
+  token,
+  cartProducts,
+  userStatus,
+}) {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [precio, setPrecio] = useState(0);
   const [cantidad, setCantidad] = useState(1);
+  const navigate = useNavigate();
 
-  const cart = useSelector((state) => state.cart);
-  
-  
   useEffect(() => {
     // setPrecio();
   }, []);
   const handleSetCantidad = (e) => {
-    setCantidad(e.target.value)
-  }
-  
+    setCantidad(e.target.value);
+  };
+
   const handleSubmitCart = (e) => {
+    e.preventDefault();
+    let busqueda = cartProducts?.find((p) => p.id === id);
+    if (!busqueda) {
+      dispatch(addItemToCart(id, token, cantidad));
+      dispatch(getCartById(token));
+      Swal.fire({
+        background: "#DFDCD3",
+        icon: "success",
+        title: "Agregado",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setOpen(false);
+    } else {
+      Swal.fire({
+        background: "#DFDCD3",
+        confirmButtonColor: "#B6893E",
+        icon: "error",
+        title: "Oops...",
+        text: "Ya tenes este producto en tu carrito",
+      });
+      setOpen(false);
+    }
+  };
+  const handleAlert = (e) => {
     e.preventDefault()
-    dispatch(addItemToCart(id,token,cantidad))
-    dispatch(getCartById(token))
+    Swal.fire({
+      title: 'Logeate',
+      text: "Debes estar logeado para ver tu carrito",
+      icon: 'warning',
+      background: '#DFDCD3',
+      showCancelButton: true,
+      confirmButtonColor: '#B6893E',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ok, ir al login',
+      cancelButtonText: 'cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login')
+      }
+    })
   }
 
   return (
     <div>
-      <Button onClick={handleOpen}>
-        Agregar al Carrito
-      </Button>
+      <Button onClick={ userStatus !== null ? handleOpen : handleAlert}>Agregar al Carrito</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -58,27 +99,30 @@ export default function CartModal({id, description, token}) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {description}
           </Typography>
-          <form onSubmit={(e)=>{handleSubmitCart(e)}}>
-          <TextField
-            margin="normal"
-            type="number"
-            required
-            id="cantidad"
-            label={cantidad}
-            value={cantidad}
-            name="cantidad"
-            sx={{
-              width: 100
+          <form
+            onSubmit={(e) => {
+              handleSubmitCart(e);
             }}
-            onChange={(e)=>{ handleSetCantidad(e)}}
           >
-          </TextField>
-          
-          <Button type="submit"> Agregar </Button>
-          </form>
+            <TextField
+              margin="normal"
+              type="number"
+              required
+              id="cantidad"
+              label={cantidad}
+              value={cantidad}
+              name="cantidad"
+              sx={{
+                width: 100,
+              }}
+              onChange={(e) => {
+                handleSetCantidad(e);
+              }}
+            ></TextField>
 
-          <Button href={ "/detail/" + id}> Ver detalle </Button>
-          <Button onClick={() => setOpen(false)}> Volver </Button>
+            <Button type="submit"> Agregar </Button>
+            <Button onClick={() => setOpen(false)}> Cancelar </Button>
+          </form>
         </Box>
       </Modal>
     </div>
