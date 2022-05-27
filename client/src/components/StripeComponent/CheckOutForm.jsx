@@ -44,6 +44,11 @@ const FormCheck = () => {
             <Typography component='h1' variant='h4'>
                 Checkout
             </Typography>
+            <form onSubmit={handleSubmit}>
+               
+            <CardElement />
+            <button type="submit" >Submit</button>
+            </form>
             <Stepper activeStep={activeStep}>
                 {steps.map(s => (
                     <Step sx={{color:"black"}} key={s}>
@@ -63,6 +68,7 @@ export const CheckOutForm = () => {
     return(
         <Elements stripe = {stripePromise}>
             <FormCheck></FormCheck>
+            
         </Elements>
     )
 }

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, ShoppingCart, User, ProductInventory } = require("../db");
+const { Product, ShoppingCart, User, ProductInventory, Image } = require("../db");
 const router = Router();
 
 router.put("/addAmount", async(req,res,next) =>{
@@ -109,7 +109,14 @@ router.put("/removeProduct", async (req, res, next) => {
                     model: Product,
                     through: {
                         attributes: []
-                    }
+                    },
+                    include: {
+                        model: Image,
+                        attributes: ["urlFile"],
+                        through: {
+                          attributes: []
+                        }
+                      }
                 }
             })
 
@@ -145,7 +152,14 @@ router.put("/removeProduct", async (req, res, next) => {
                     model: Product,
                     through: {
                         attributes: []
-                    }
+                    },
+                    include: {
+                        model: Image,
+                        attributes: ["urlFile"],
+                        through: {
+                          attributes: []
+                        }
+                      }
                 }
             })
 
@@ -233,7 +247,14 @@ router.get("/", async (req, res, next) => {
                     model: Product,
                     through: {
                         attributes: []
-                    }
+                    },
+                    include: {
+                        model: Image,
+                        attributes: ["urlFile"],
+                        through: {
+                          attributes: []
+                        }
+                      }
                 }
             })
 
