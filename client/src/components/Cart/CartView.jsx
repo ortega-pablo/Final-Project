@@ -17,11 +17,12 @@ import {
 import DetailRow from "./Rows/DetailRow";
 import { getCartById, setCartAmount } from "../../redux/actions";
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 const CartView = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-
+  const navigate = useNavigate()
   const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(() => {
     dispatch(getCartById(token));
@@ -43,6 +44,7 @@ const CartView = () => {
       showConfirmButton: false,
       timer: 1500
     })
+    navigate('/checkout')
   }
 
   return (
