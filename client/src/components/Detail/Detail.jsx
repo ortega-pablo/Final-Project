@@ -112,7 +112,7 @@ export const Detail = () => {
               }}
             />
 
-            <CartModal id={productDetail[0].id} />
+            <CartModal token={token} id={productDetail[0].id} description={productDetail[0].description} />
             
             <Divider textAlign="left">
               <Chip

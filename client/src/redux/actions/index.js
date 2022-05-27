@@ -856,7 +856,7 @@ export const getCartForChild = (id) => {
   }
 }
 
-export const addItemToCart = (productId, token) =>{
+export const addItemToCart = (productId, token, cantidad) =>{
   return async(dispatch) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -866,7 +866,7 @@ export const addItemToCart = (productId, token) =>{
           "http://localhost:3001/users/userId",
           config
         );
-        await axios.put(`http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,{ quantity: 165 })
+        await axios.put(`http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,{ quantity: cantidad })
         return dispatch({
           type: ADD_TO_CART,
         })

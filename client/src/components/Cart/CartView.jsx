@@ -50,7 +50,7 @@ const CartView = () => {
           </TableHead>
           <TableBody sx={{ width: "100%" }}>
             {cart?.products?.map((p) => {
-              return <DetailRow row={p} cartId={cart.id}/>;
+              return <DetailRow token={token} row={p} cartId={cart.id}/>;
             })}
             <TableRow>
                 <TableCell>

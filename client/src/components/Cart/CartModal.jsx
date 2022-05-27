@@ -4,9 +4,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FormControl, TextField } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart, getCartById } from "../../redux/actions";
 
-export default function CartModal({id}) {
+export default function CartModal({id, description, token}) {
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -22,9 +24,11 @@ export default function CartModal({id}) {
   const handleSetCantidad = (e) => {
     setCantidad(e.target.value)
   }
+  
   const handleSubmitCart = (e) => {
     e.preventDefault()
-    console.log(cantidad)
+    dispatch(addItemToCart(id,token,cantidad))
+    dispatch(getCartById(token))
   }
 
   return (
@@ -52,7 +56,7 @@ export default function CartModal({id}) {
           }}
         >
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            {description}
           </Typography>
           <form onSubmit={(e)=>{handleSubmitCart(e)}}>
           <TextField
