@@ -194,7 +194,6 @@ export const Home = () => {
                     }}
                   >
                       <Paper className={classes.paper} sx={{display: 'flex', heigth: "360px"}} >
-                    <Link href={"/detail/" + prod.id} underline="none">
                         <MultiActionAreaCard
                           key={index}
                           name={prod.name}
@@ -205,7 +204,6 @@ export const Home = () => {
                           description={prod.description}
                           images={prod.images}
                         />
-                    </Link>
                       </Paper>
                   </Grid>
                 );

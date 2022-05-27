@@ -16,13 +16,13 @@ import { getCartById } from "../../redux/actions";
 
 const CartView = () => {
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
   
   
 
   const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(()=>{
-    // dispatch(getCartById(token))
+    dispatch(getCartById(token))
   },[dispatch])
   
   
@@ -48,9 +48,9 @@ const CartView = () => {
               <Typography variant="h5">Total</Typography>
             </TableCell>
           </TableHead>
-          {/* <TableBody sx={{ width: "100%" }}>
-            {cartState?.map((c) => {
-              return <DetailRow row={c} />;
+          <TableBody sx={{ width: "100%" }}>
+            {cart?.products?.map((p) => {
+              return <DetailRow row={p} cartId={cart.id}/>;
             })}
             <TableRow>
                 <TableCell>
@@ -64,7 +64,7 @@ const CartView = () => {
                     </Typography>
                 </TableCell>
             </TableRow>
-          </TableBody> */}
+          </TableBody>
         </Table>
       </TableContainer>
     </Box>

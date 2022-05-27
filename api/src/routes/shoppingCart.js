@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, ShoppingCart, User } = require("../db");
+const { Product, ShoppingCart, User, ProductInventory, Image } = require("../db");
 const router = Router();
 
 
@@ -91,7 +91,14 @@ router.put("/removeProduct", async (req, res, next) => {
                     model: Product,
                     through: {
                         attributes: []
-                    }
+                    },
+                    include: {
+                        model: Image,
+                        attributes: ["urlFile"],
+                        through: {
+                          attributes: []
+                        }
+                      }
                 }
             })
 
@@ -127,7 +134,14 @@ router.put("/removeProduct", async (req, res, next) => {
                     model: Product,
                     through: {
                         attributes: []
-                    }
+                    },
+                    include: {
+                        model: Image,
+                        attributes: ["urlFile"],
+                        through: {
+                          attributes: []
+                        }
+                      }
                 }
             })
 
@@ -173,6 +187,7 @@ router.get("/", async (req, res, next) => {
                 where: {
                     id: userId
                 },
+                
             })
 
             console.log(findUser)
@@ -184,8 +199,14 @@ router.get("/", async (req, res, next) => {
                 include: {
                     model: Product,
                     through: {
-                        attributes: ["total"]
-                    }
+                        attributes: ["total"],
+                    },
+                    include: [
+                        {
+                            model: ProductInventory,
+                            attributes: ["quantity"]
+                        }
+                    ]
                     // {
                     //     model: Specification,
                     //     attributes: ["id", "name"],
@@ -208,7 +229,14 @@ router.get("/", async (req, res, next) => {
                     model: Product,
                     through: {
                         attributes: []
-                    }
+                    },
+                    include: {
+                        model: Image,
+                        attributes: ["urlFile"],
+                        through: {
+                          attributes: []
+                        }
+                      }
                 }
             })
 

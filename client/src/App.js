@@ -31,6 +31,7 @@ import Clients from "./components/AdminPanel/Clients";
 import Orders from "./components/AdminPanel/Orders";
 import { Perfil } from "./components/PerfilUser/Perfil";
 import CartView from "./components/Cart/CartView";
+import CartModal from "./components/Cart/CartModal";
 
 
 function App() {
@@ -73,7 +74,7 @@ function App() {
 
             <Route path="/cart" element={<CartView/>}/>
               
-            <Route path="/prueba" element={<Perfil/>}/>
+            <Route path="/prueba" element={<CartModal/>}/>
 
           </Routes>
         <Footer/>
