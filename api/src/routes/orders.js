@@ -123,7 +123,7 @@ router.post('/', async (req, res, next) => {
         amount: 0
       });
 
-      / Adding nodemailer when the order is created ////////
+       // Adding nodemailer when the order is created 
       let info = await transporter.sendMail({
         from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
         to: [findUser.email, newOrder.email], // list of receivers
