@@ -6,44 +6,60 @@ import Modal from "@mui/material/Modal";
 import { FormControl, IconButton, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, getCartById } from "../../../redux/actions";
-import EditIcon from '@mui/icons-material/Edit';
-import Swal from 'sweetalert2';
+import EditIcon from "@mui/icons-material/Edit";
+import Swal from "sweetalert2";
 
-
-export default function ModalToRow({id, token, cantidad, setCantidad}) {
-  const dispatch = useDispatch()
+export default function ModalToRow({
+  id,
+  token,
+  cantidad,
+  setCantidad,
+  stock,
+  render,
+  setRender
+}) {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
-  
-
   const handleSetCantidad = (e) => {
-    setCantidad(e.target.value)
-  }
-  
+    setCantidad(e.target.value);
+  };
+
   const handleSubmitCart = (e) => {
-    e.preventDefault()
-    dispatch(addItemToCart(id,token,cantidad))
-    dispatch(getCartById(token))
-    dispatch(getCartById(token))
-    setOpen(false)
-    Swal.fire({
-        background: '#DFDCD3',
-        icon: 'success',
-        title: 'Modificado',
+    e.preventDefault();
+    if( cantidad <= stock ){
+      dispatch(addItemToCart(id, token, cantidad));
+      setOpen(false);
+      setRender(!render);
+      Swal.fire({
+        background: "#DFDCD3",
+        icon: "success",
+        title: "Modificado",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
+      });
+    } else {
+      setOpen(false)
+      Swal.fire({
+        background: "#DFDCD3",
+        confirmButtonColor: "#B6893E",
+        icon: "error",
+        title: "Oops...",
+        text: "Stock insuficiente para la cantidad que seleccionaste",
+      }).then(()=>{
+        setOpen(true)
       })
-  }
+
+    }
+  };
 
   return (
     <div>
-
-    <IconButton onClick={handleOpen}>
-        <EditIcon/>
-    </IconButton>
+      <IconButton size='small' onClick={handleOpen}>
+        <EditIcon size='small' />
+      </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -63,21 +79,27 @@ export default function ModalToRow({id, token, cantidad, setCantidad}) {
             p: 4,
           }}
         >
-          <form onSubmit={(e)=>{handleSubmitCart(e)}}>
-          <TextField
-            margin="normal"
-            type="number"
-            required
-            id="cantidad"
-            label={cantidad}
-            value={cantidad}
-            name="cantidad"
-            sx={{
-              width: 100
+        <Typography>Stock: {stock}</Typography>
+          <form
+            onSubmit={(e) => {
+              handleSubmitCart(e);
             }}
-            onChange={(e)=>{ handleSetCantidad(e)}}
           >
-          </TextField>
+            <TextField
+              margin="normal"
+              type="number"
+              required
+              id="cantidad"
+              label={cantidad}
+              value={cantidad}
+              name="cantidad"
+              sx={{
+                width: 100,
+              }}
+              onChange={(e) => {
+                handleSetCantidad(e);
+              }}
+            ></TextField>
             <Button type="submit"> Confirmar </Button>
             <Button onClick={() => setOpen(false)}> Volver </Button>
           </form>

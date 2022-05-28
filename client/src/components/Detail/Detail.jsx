@@ -24,27 +24,25 @@ import { Footer } from "../Footer/Footer";
 import { BoxGeneral } from "../../personalizadTheme";
 import AllReviews from "./AllReviews";
 import Swal from "sweetalert2";
-import CartModal from "../Cart/CartModal"
+import CartModal from "../Cart/CartModal";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
-
-
 
 export const Detail = () => {
   const dispatch = useDispatch();
   //deberia ser un state.detail
   let productDetail = useSelector((state) => state.productDetail);
-  const cart = useSelector((state)=> state.cart)
+  const cart = useSelector((state) => state.cart);
   const userStatus = useSelector((state) => state.userStatus);
 
   let { id } = useParams();
@@ -60,22 +58,18 @@ export const Detail = () => {
   const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(() => {
     dispatch(getDetail(id));
-    dispatch(getCartById(token))
-    }, [dispatch]);
-    
+    dispatch(getCartById(token));
+  }, [dispatch]);
 
-    
-    const [openModal, setOpenModal] = React.useState(false);
-    const handleOpenModal = () => setOpenModal(true);
-    const handleCloseModal = () => setOpenModal(false);
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
-    let promedy = 0
-    productDetail[0]?.reviews?.forEach((r)=>{
-      return(
-        promedy = promedy + r.rating
-      )
-    })
-    promedy = promedy/(productDetail[0]?.reviews?.length)
+  let promedy = 0;
+  productDetail[0]?.reviews?.forEach((r) => {
+    return (promedy = promedy + r.rating);
+  });
+  promedy = promedy / productDetail[0]?.reviews?.length;
 
   return (
     <Box
@@ -113,8 +107,16 @@ export const Detail = () => {
               }}
             />
 
-            <CartModal token={token} id={productDetail[0].id} description={productDetail[0].description} cartProducts={cart.products} userStatus={userStatus} />
-            
+            <CartModal
+              token={token}
+              id={productDetail[0].id}
+              description={productDetail[0].description}
+              cartProducts={cart.products}
+              userStatus={userStatus}
+              name={productDetail[0].name}
+              stock={productDetail[0].productInventory.quantity}
+            />
+
             <Divider textAlign="left">
               <Chip
                 label="Descripción"
@@ -173,12 +175,12 @@ export const Detail = () => {
               </List>
             ) : (
               <>
-              <Rating
-                    name="half-rating-read"
-                    defaultValue={promedy}
-                    precision={0.5}
-                    readOnly
-                  />
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={promedy}
+                  precision={0.5}
+                  readOnly
+                />
                 <Button onClick={handleOpenModal}>Ver todas las Reviews</Button>
                 <Modal
                   open={openModal}
@@ -192,11 +194,10 @@ export const Detail = () => {
                       variant="h6"
                       component="h2"
                     >
-                <AllReviews reviews={productDetail[0].reviews} />
+                      <AllReviews reviews={productDetail[0].reviews} />
                     </Typography>
                   </Box>
                 </Modal>
-
               </>
             )}
 

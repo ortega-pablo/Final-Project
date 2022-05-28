@@ -15,6 +15,8 @@ export default function CartModal({
   token,
   cartProducts,
   userStatus,
+  name,
+  stock,
 }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -33,26 +35,53 @@ export default function CartModal({
   const handleSubmitCart = (e) => {
     e.preventDefault();
     let busqueda = cartProducts?.find((p) => p.id === id);
-    if (!busqueda) {
-      dispatch(addItemToCart(id, token, cantidad));
-      dispatch(getCartById(token));
-      Swal.fire({
-        background: "#DFDCD3",
-        icon: "success",
-        title: "Agregado",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setOpen(false);
+    if(cantidad <= stock){
+      if (!busqueda) {
+        dispatch(addItemToCart(id, token, cantidad));
+        dispatch(getCartById(token));
+        Swal.fire({
+          background: "#DFDCD3",
+          icon: "success",
+          title: "Agregado",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setOpen(false);
+      } else {
+        Swal.fire({
+          background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "Ya tenes este producto en tu carrito",
+          footer: "<a href='/cart'> Ir al carrito </a>",
+          confirmButtonText: "Seguir viendo",
+        });
+        setOpen(false);
+      }
     } else {
-      Swal.fire({
-        background: "#DFDCD3",
-        confirmButtonColor: "#B6893E",
-        icon: "error",
-        title: "Oops...",
-        text: "Ya tenes este producto en tu carrito",
-      });
-      setOpen(false);
+      if(stock === 0){
+        Swal.fire({
+          background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "Este producto esta agotado",
+        });
+        setOpen(false);
+      } else {
+        setOpen(false);
+        Swal.fire({
+          background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "Stock insuficiente para la cantidad que seleccionaste",
+        }).then(()=>{
+          setOpen(true)
+        });
+        
+      }
     }
   };
   const handleAlert = (e) => {
@@ -96,6 +125,10 @@ export default function CartModal({
             p: 4,
           }}
         >
+          <Typography variant='h6'>
+            {name}
+          </Typography>
+
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {description}
           </Typography>
@@ -104,6 +137,9 @@ export default function CartModal({
               handleSubmitCart(e);
             }}
           >
+          <Typography>
+            stock: {stock}
+          </Typography>
             <TextField
               margin="normal"
               type="number"
