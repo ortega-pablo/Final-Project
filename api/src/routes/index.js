@@ -12,6 +12,9 @@ const imagesRoute = require("./images")
 const shoppingCartRoute = require("./shoppingCart")
 const orderRoute = require("./orders")
 const checkOut = require("./checkOut");
+const addressRoute = require("./address")
+const sendEmail = require("./sendEmail")
+
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -36,6 +39,8 @@ router.use("/images", imagesRoute)
 router.use("/shoppingCart", shoppingCartRoute)
 router.use("/orders", orderRoute)
 router.use("/checkOut", checkOut);
+router.use("/users/address", addressRoute)
+router.use("/sendEmail", sendEmail);
 
 
 
