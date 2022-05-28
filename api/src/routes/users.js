@@ -58,11 +58,9 @@ router.post("/create", async (req, res, next) => {
       role,
     });
 
-    const addShoppingCart = await ShoppingCart.create({
-    });
-    
-    addShoppingCart.setUser(newUser);
+    const addShoppingCart = await ShoppingCart.create({});
 
+    addShoppingCart.setUser(newUser);
 
     res.status(200).send("done");
   } catch (error) {
@@ -140,8 +138,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
-          }
+            model: Address,
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -165,8 +163,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
-          }
+            model: Address,
+          },
         ],
       });
 
@@ -197,12 +195,12 @@ router.get("/:userId", async (req, res) => {
               },
               {
                 model: Product,
-                attributes: ["id", "name"]
-              }
+                attributes: ["id", "name"],
+              },
             ],
           },
           {
-            model: Address
+            model: Address,
           },
           {
             model: ShoppingCart,
@@ -210,14 +208,13 @@ router.get("/:userId", async (req, res) => {
             include: {
               model: Product,
               through: {
-                attributes: []
-              }
-            }
-          }
+                attributes: [],
+              },
+            },
+          },
         ],
       });
 
-      
       return res.send(findById);
     } else {
       return res.status(404).send("User not found");
@@ -228,26 +225,26 @@ router.get("/:userId", async (req, res) => {
 });
 
 router.delete("/deleteUser", async (req, res, next) => {
-
-  const {adminId, userId } = req.query;
+  const { adminId, userId } = req.query;
 
   try {
     const findAdmin = await User.findOne({
       where: {
         id: adminId,
-        role: "admin"
+        role: "admin",
       },
     });
 
     if (findAdmin) {
-     const findUser = await User.destroy({
+      const findUser = await User.destroy({
         where: {
           id: userId,
         },
       });
 
-      findUser ? res.status(200).send("User deleted successfully!") : res.send("User not found")
-
+      findUser
+        ? res.status(200).send("User deleted successfully!")
+        : res.send("User not found");
     } else {
       res.send("User not authorized");
     }
@@ -256,7 +253,6 @@ router.delete("/deleteUser", async (req, res, next) => {
   }
 });
 
-<<<<<<< HEAD
 router.put(
   "/changeUserToAdmin/:userId",
   [cors(), verifyToken],
@@ -308,6 +304,4 @@ router.post("/google-login", async (req, res) => {
   res.status(201).json({ name, email, picture });
 });
 
-=======
->>>>>>> 9a3484f786e8eb27f333abfe46b29f1093590fc4
 module.exports = router;
