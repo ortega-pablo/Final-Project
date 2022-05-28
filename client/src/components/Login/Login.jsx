@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -16,9 +16,11 @@ import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import GoogleLogin from 'react-google-login';
-
+import { gapi } from "gapi-script";
 
 const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
+
+
 
 const validationSchema = yup.object({
   email: yup
@@ -71,9 +73,35 @@ export const Login = () => {
     },
   });
 
-  function handleLoginGoogle (res){
-    console.log( "LOGEO WITH GOOGLE",res)
+  useEffect(() => {
+    function start() {
+    gapi.client.init({
+    clientId:idClientGoogleLogin,
+    scope: 'email',
+      });
+       }
+      gapi.load('client:auth2', start);
+       }, []);
+
+
+  const handleLoginGoogle = async (googleData) => {
+
+    const res = await fetch(`http://localhost:3001/users/google-login`, {
+      method: 'POST',
+      body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await res.json();
+    console.log("RPTA BACK", data)
+    //setLoginData(data)
+    //localStorage.setItem('loginData', JSON.stringify(data))
   }
+
   function handleFailureGoogle (fail){
     console.log("ERROR LOGEO GOOGLE",JSON.stringify (fail)) 
   }
@@ -165,3 +193,4 @@ export const Login = () => {
     </>
   );
 };
+

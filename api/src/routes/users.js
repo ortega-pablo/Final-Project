@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
 const verifyToken = require("../middleware/auth");
+const { OAuth2Client } = require("google-auth-library");
 const cors = require("cors");
 
 // Register User
@@ -304,5 +305,20 @@ router.put(
     }
   }
 );
+
+/*VALID USER WITH GOOGLE */
+
+const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
+
+router.post("/google-login", async (req, res) => {
+  const { token } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+  const { name, email, picture } = ticket.getPayload();
+  console.log("DATA: ", name, email);
+  res.status(201).json({ name, email, picture });
+});
 
 module.exports = router;
