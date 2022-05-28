@@ -127,8 +127,8 @@ Address.belongsTo(User)
 User.belongsToMany(Payment, { through: "user-payment"})
 Payment.belongsToMany(User, { through: "user-payment"})
 
-
-
+Order.belongsTo(Address, { as: 'order_address', foreignKey: 'orderId' });
+Address.hasMany(Order, { foreignKey: 'orderId' });
 
 
 module.exports = {

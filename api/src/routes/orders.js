@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, User, Review, Order, ShoppingCart, Image } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
 const router = Router();
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
@@ -61,30 +61,38 @@ router.post("/review", async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 
-  const { userId, productId } = req.query;
+  const { userId, addressId } = req.query;
   const { id, amount, total, state, address, email } = req.body;
 
 
   try {
 
-    const payment = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: "USD", 
-      description:"",
-      payment_method: id,
-      confirm: true,
-    })
+    // const payment = await stripe.paymentIntents.create({
+    //   amount: amount,
+    //   currency: "USD", 
+    //   description:"",
+    //   payment_method: id,
+    //   confirm: true,
+    // })
 
     // Aqui se agrega todo de la orden is payment fue exitoso
 
-    if (message === "success") {
+    if (true) {
 
       const findUser = await User.findOne({
         where: {
           id: userId
+        }, include: {
+          model: Address,
+          where: {
+            id: addressId
+          }
         }
       });
 
+      console.log(findUser)
+
+      
       const findCart = await ShoppingCart.findOne({
         where: {
           userId
@@ -113,48 +121,50 @@ router.post('/', async (req, res, next) => {
         quantity: findCart.amount
       });
 
-     
+      const oneAddress = findUser.addresses[0]
+
+      oneAddress.addOrder(newOrder)
       newOrder.setUser(userId);
       newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
 
 
-      await findCart.setProducts([]);
-      await findCart.update({
-        amount: 0
-      });
+      // await findCart.setProducts([]);
+      // await findCart.update({
+      //   amount: 0
+      // });
 
-       // Adding nodemailer when the order is created 
-      let info = await transporter.sendMail({
-        from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
-        to: [findUser.email, newOrder.email], // list of receivers
-        subject: "Confirmacion de Pedido", // Subject line
-        text: "", // plain text body
-        html: `<!doctype html>
-    <html ⚡4email>
-      <head>
-        <meta charset="utf-8">
-      </head>
-      <body>
-      <h1><a href=https://final-project-ten-theta.vercel.app/> Logo Exmine<a/></h1>
+    //    // Adding nodemailer when the order is created 
+    //   let info = await transporter.sendMail({
+    //     from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
+    //     to: [findUser.email, newOrder.email], // list of receivers
+    //     subject: "Confirmacion de Pedido", // Subject line
+    //     text: "", // plain text body
+    //     html: `<!doctype html>
+    // <html ⚡4email>
+    //   <head>
+    //     <meta charset="utf-8">
+    //   </head>
+    //   <body>
+    //   <h1><a href=https://final-project-ten-theta.vercel.app/> Logo Exmine<a/></h1>
 
-      <h1> Hola ${findUser.firstName} ! Gracias por tu pedido</h1>
-      <h3>Numero de Pedido: ${newOrder.id}</h3>
+    //   <h1> Hola ${findUser.firstName} ! Gracias por tu pedido</h1>
+    //   <h3>Numero de Pedido: ${newOrder.id}</h3>
 
-      <h4> Resumen de tu compra: </h4>
+    //   <h4> Resumen de tu compra: </h4>
 
-      <p>Total: <br>
-      ${newOrder.total}<p/>
+    //   <p>Total: <br>
+    //   ${newOrder.total}<p/>
       
-      <p>Envío a domicilio: <br>
-      108 Ocean Ave. in Amityville, New York -
-      Diego Alberto Juárez Ramírez - 555-555-5555<p/>
+    //   <p>Envío a domicilio: <br>
+    //   108 Ocean Ave. in Amityville, New York -
+    //   Diego Alberto Juárez Ramírez - 555-555-5555<p/>
       
-      </body>
-    </html>` // html body
-      });
+    //   </body>
+    // </html>` // html body
+    //   });
 
-      // return res.send(findCart)
-      return res.send("Order created successfully!")
+      return res.send(newOrder)
+      // return res.send("Order created successfully!")
 
     } else {
       return res.send("Payment error");
@@ -178,20 +188,26 @@ router.get("/", async (req, res, next) => {
         where: {
           id: orderId
         },
-        include: {
-          model: Product,
-          attributes: ["id", "name", "price"],
-          through: {
-            attributes: []
-          },
-          include: {
-            model: Image,
-            attributes: ["urlFile"],
+        include: [
+          {
+            model: Product,
+            attributes: ["id", "name", "price"],
             through: {
               attributes: []
-            }
+            },
+            include: {
+              model: Image,
+              attributes: ["urlFile"],
+              through: {
+                attributes: []
+              }
+            },
+          },
+          {
+            model: Address,
+            as: "order_address"
           }
-        }
+        ]
       })
 
       return res.send(getOrder)
