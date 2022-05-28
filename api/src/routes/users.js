@@ -37,17 +37,8 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const {
-    userName,
-    email,
-    password,
-    firstName,
-    lastName,
-    phone,
-    role,
-    amount,
-    shippingAddress,
-  } = req.body;
+  const { userName, email, password, firstName, lastName, phone, role } =
+    req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
     const userFound = await User.findOne({ where: { email } });
@@ -65,16 +56,13 @@ router.post("/create", async (req, res, next) => {
       lastName,
       phone,
       role,
-      amount,
-      shippingAddress,
     });
 
     const addShoppingCart = await ShoppingCart.create({
-      amount,
-      shippingAddress,
     });
-
+    
     addShoppingCart.setUser(newUser);
+
 
     res.status(200).send("done");
   } catch (error) {
@@ -85,10 +73,10 @@ router.post("/create", async (req, res, next) => {
 // Login User
 
 router.post("/login", async (req, res, next) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { userName } });
     //console.log(user);
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
@@ -152,8 +140,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address,
-          },
+            model: Address
+          }
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -177,8 +165,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address,
-          },
+            model: Address
+          }
         ],
       });
 
@@ -209,12 +197,12 @@ router.get("/:userId", async (req, res) => {
               },
               {
                 model: Product,
-                attributes: ["id", "name"],
-              },
+                attributes: ["id", "name"]
+              }
             ],
           },
           {
-            model: Address,
+            model: Address
           },
           {
             model: ShoppingCart,
@@ -222,13 +210,14 @@ router.get("/:userId", async (req, res) => {
             include: {
               model: Product,
               through: {
-                attributes: [],
-              },
-            },
-          },
+                attributes: []
+              }
+            }
+          }
         ],
       });
 
+      
       return res.send(findById);
     } else {
       return res.status(404).send("User not found");
@@ -238,30 +227,27 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/delete/:userId", async (req, res, next) => {
-  // Esto para el admin de la pagina
+router.delete("/deleteUser", async (req, res, next) => {
 
-  const { adminId, userId } = req.query;
+  const {adminId, userId } = req.query;
 
   try {
     const findAdmin = await User.findOne({
       where: {
         id: adminId,
-        role: "admin",
+        role: "admin"
       },
     });
-    //console.log(findUser.dataValues);
-    //res.send(findUser);
-    if (findUser) {
-      await findUser.destroy({
+
+    if (findAdmin) {
+     const findUser = await User.destroy({
         where: {
           id: userId,
         },
       });
 
-      findUser
-        ? res.status(200).send("User deleted successfully!")
-        : res.send("User not found");
+      findUser ? res.status(200).send("User deleted successfully!") : res.send("User not found")
+
     } else {
       res.send("User not authorized");
     }
@@ -270,6 +256,7 @@ router.delete("/delete/:userId", async (req, res, next) => {
   }
 });
 
+<<<<<<< HEAD
 router.put(
   "/changeUserToAdmin/:userId",
   [cors(), verifyToken],
@@ -321,4 +308,6 @@ router.post("/google-login", async (req, res) => {
   res.status(201).json({ name, email, picture });
 });
 
+=======
+>>>>>>> 9a3484f786e8eb27f333abfe46b29f1093590fc4
 module.exports = router;
