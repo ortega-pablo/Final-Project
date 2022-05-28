@@ -15,18 +15,18 @@ import { useDispatch } from "react-redux";
 import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-<<<<<<< HEAD
 import GoogleLogin from 'react-google-login';
 import { gapi } from "gapi-script";
-=======
 
->>>>>>> 9a3484f786e8eb27f333abfe46b29f1093590fc4
-
+const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
 
 
 
 const validationSchema = yup.object({
-  userName: yup.string("Enter your User Name").required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .required("Email is required"),
   password: yup
     .string("Enter your password")
     .min(8, "Password should be of minimum 8 characters length")
@@ -38,7 +38,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      userName: "",
+      email: "",
       password: "",
     },
     validationSchema: validationSchema,
@@ -73,7 +73,6 @@ export const Login = () => {
     },
   });
 
-<<<<<<< HEAD
   useEffect(() => {
     function start() {
     gapi.client.init({
@@ -107,8 +106,6 @@ export const Login = () => {
     console.log("ERROR LOGEO GOOGLE",JSON.stringify (fail)) 
   }
 
-=======
->>>>>>> 9a3484f786e8eb27f333abfe46b29f1093590fc4
   return (
     <>
 
@@ -141,13 +138,13 @@ export const Login = () => {
             margin="normal"
             required
             fullWidth
-            id="userName"
-            label="User Name"
-            name="userName"
-            value={formik.values.userName}
+            id="email"
+            label="Email"
+            name="email"
+            value={formik.values.email}
             onChange={formik.handleChange}
-            error={formik.touched.userName && Boolean(formik.errors.userName)}
-            helperText={formik.touched.userName && formik.errors.userName}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
           <TextField
             margin="normal"
@@ -182,6 +179,13 @@ export const Login = () => {
               </Link>
             </Grid>
           </Grid>
+          <GoogleLogin
+                    clientId={idClientGoogleLogin}
+                    buttonText="Logeate con Google"
+                    onSuccess={handleLoginGoogle}
+                    onFailure={handleFailureGoogle}
+                    cookiePolicy={'single_host_origin'}
+          />
         </Box>
       </Paper>
     </Container>
