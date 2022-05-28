@@ -493,7 +493,7 @@ console.log(productToUpdate)
         </TabPanel>
         
       </Paper>
-<Button type="button" onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
+<Button type="button" onClick={(e)=> setUpdating(false)} >Finalizar edición</Button>
     
 
       <hr />

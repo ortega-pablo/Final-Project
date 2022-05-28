@@ -59,7 +59,7 @@ export const GET_IMAGES = "GET_IMAGES";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const SET_TOTAL_CART = "SET_TOTAL_CART";
 export const GET_CART_BY_ID = "GET_CART_BY_ID";
-export const GET_USERS = "GET_USERS"
+export const GET_ALL_USERS = "GET_ALL_USERS"
 
 
 
@@ -73,7 +73,9 @@ export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
 export const GET_ALL_ORDER = "GET_ALL_ORDER";
 export const GET_ALL_ORDER_ONE_USER = "GET_ALL_ORDER_ONE_USER";
 export const GET_USER_ASK_FOR_ALL_PRODUCT = "GET_USER_ASK_FOR_ALL_PRODUCT";
-
+export const GET_ALL_ASK_ALL_PRODUCTS = "GET_ALL_ASK_ALL_PRODUCTS";
+export const GET_ASKS_ONE_USER_ONE_PRODUCT = "GET_ASKS_ONE_USER_ONE_PRODUCT";
+export const CLEAR_ASKS_ONE_USER_ONE_PRODUCT = "CLEAR_ASKS_ONE_USER_ONE_PRODUCT";
 
 
 
@@ -856,7 +858,6 @@ export function getDetailOneUsers( id) {
    
     try {
       const response = await axios(`http://localhost:3001/users/${id}`)
-      console.log("idUser en action",id )
       return dispatch({
         type: GET_ONE_USER,
         payload: response.data
@@ -920,5 +921,45 @@ export const getAllOrdersOneUser = (idUser) => {
     });
   };
 };
+
+export const getAllAsksAllProducts = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks/allUser`);
+    return dispatch({
+      type: GET_ALL_ASK_ALL_PRODUCTS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAllUsers = () => {
+
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/users`);
+    return dispatch({
+      type: GET_ALL_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export const getAsksOneUserOneProduct = (userId, productId) => {
+ 
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks?userId=${userId}&productId=${productId}`);
+    return dispatch({
+      type: GET_ASKS_ONE_USER_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+
+export function clearAsksOneUserOneProduct (){
+  return {
+      type: CLEAR_ASKS_ONE_USER_ONE_PRODUCT
+  }
+  
+}
+
 
 

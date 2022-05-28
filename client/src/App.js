@@ -31,6 +31,8 @@ import Clients from "./components/AdminPanel/Clients";
 import Orders from "./components/AdminPanel/Orders";
 import { Perfil } from "./components/PerfilUser/Perfil";
 import CartView from "./components/Cart/CartView";
+import { AskPanel } from "./components/AdminPanel/AskPanel";
+import { VerHilo } from "./components/AdminPanel/VerHilo";
 
 
 function App() {
@@ -70,10 +72,13 @@ function App() {
 
             <Route path="/clients" element={<Clients/>}/>
             <Route path="/orders" element={<Orders/>}/>
+            <Route path="/askPanel" element={<AskPanel/>}/>
+
 
             <Route path="/cart" element={<CartView/>}/>
               
             <Route path="/prueba" element={<Perfil/>}/>
+            <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/>
 
           </Routes>
         <Footer/>

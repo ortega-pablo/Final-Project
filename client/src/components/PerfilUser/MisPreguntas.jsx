@@ -53,6 +53,19 @@ export const MisPreguntas = ({ asks, userid }) => {
             <img src={prod?.images[0]?.urlFile} width="75" alt="" />
             <img src={prod?.images[1]?.urlFile} width="75" alt="" />
             <h2>$ {p?.price} </h2>
+            { prod?.discounts?.map( d => {
+                return (
+                  <>
+                  {d.active && 
+                  <h3> {d.name} : - {d.discountPercent} % </h3>
+                  }
+                
+                  </>
+                  
+                )
+            })
+
+            }
 
             {prod?.productInventory?.quantity === 0 ? (
               <Typography>¡Sin stock! </Typography>

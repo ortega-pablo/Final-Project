@@ -58,7 +58,11 @@ import {
   GET_ALL_ASK,
   GET_USER_ASK_FOR_ONE_PRODUCT,
   GET_ALL_ORDER_ONE_USER,
-  GET_USER_ASK_FOR_ALL_PRODUCT
+  GET_USER_ASK_FOR_ALL_PRODUCT,
+  GET_ALL_ASK_ALL_PRODUCTS,
+  GET_ALL_USERS,
+  GET_ASKS_ONE_USER_ONE_PRODUCT,
+  CLEAR_ASKS_ONE_USER_ONE_PRODUCT
 } from "../actions";
 
 const initialState = {
@@ -80,7 +84,10 @@ const initialState = {
   allAsk: [],
   userAskOneProduc: [],
   allOrderOneUser:[],
-  userAskAllProducs:[]
+  userAskAllProducs:[],
+  allAsksAllProducts:[],
+  getAllUsers: [],
+  getAsksOneUserOnePruduct:[]
 };
 
 // funcion para que el carrito se guarde siempre 
@@ -514,6 +521,32 @@ case GET_USER_ASK_FOR_ALL_PRODUCT:
         allOrderOneUser: action.payload,
        
       };
+
+      case GET_ALL_ASK_ALL_PRODUCTS:
+        return {
+          ...state,
+          allAsksAllProducts: action.payload,
+         
+        };
+        case GET_ALL_USERS: {
+          return {
+            ...state,
+            getAllUsers: action.payload,
+          };
+        }
+  
+        case GET_ASKS_ONE_USER_ONE_PRODUCT: {
+          return {
+            ...state,
+            getAsksOneUserOnePruduct: action.payload,
+          };
+        }
+        case CLEAR_ASKS_ONE_USER_ONE_PRODUCT:
+          return {
+              ...state,
+              getAsksOneUserOnePruduct: []
+          }  
+      
     default:
       return state;
   }

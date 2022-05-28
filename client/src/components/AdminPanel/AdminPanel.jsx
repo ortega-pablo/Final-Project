@@ -50,7 +50,7 @@ function AdminPanel() {
           >
 
             <Bienvenida/>
-
+            
           </Container>
         </Container>
       </Box>

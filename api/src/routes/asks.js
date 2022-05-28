@@ -171,4 +171,28 @@ router.get("/user", async (req, res, next) => {
 //       }
 //     })
 
+router.get("/allUser", async (req, res, next) => {
+  try {
+    
+      const products = await Product.findAll({
+        include :[
+          {
+            model: Ask,
+            include:[{
+              model: Answer
+            }
+            ]
+          }
+
+        ]
+       
+      });
+      res.status(200).send(products)
+    
+
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
