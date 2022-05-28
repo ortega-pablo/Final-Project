@@ -98,8 +98,17 @@ export const Login = () => {
 
     const data = await res.json();
     console.log("RPTA BACK", data)
-    //setLoginData(data)
-    //localStorage.setItem('loginData', JSON.stringify(data))
+    window.localStorage.setItem("token", JSON.stringify(data)); 
+    const ls = JSON.parse(localStorage.getItem("token"))
+    dispatch(verifyToken(ls?.token))
+    Swal.fire({
+      background: '#DFDCD3',
+      icon: 'success',
+      title: 'Logeado',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    navigate(`/`)
   }
 
   function handleFailureGoogle (fail){

@@ -299,9 +299,27 @@ router.post("/google-login", async (req, res) => {
     idToken: token,
     audience: process.env.CLIENT_ID,
   });
-  const { name, email, picture } = ticket.getPayload();
-  console.log("DATA: ", name, email);
-  res.status(201).json({ name, email, picture });
+  const { name, email, given_name, family_name } = ticket.getPayload();
+  const [user, created] = await User.findOrCreate({
+    where: { email: email },
+    defaults: {
+      userName: name,
+      firstName: given_name,
+      lastName: family_name,
+    },
+  });
+  const userforToken = {
+    id: user.dataValues.id,
+    username: user.dataValues.username,
+    rol: user.dataValues.rol,
+  };
+
+  const token2 = jwt.sign(userforToken, KEY_WORD_JWT);
+  res.status(200).send({
+    firstName: user.dataValues.firstName,
+    username: user.dataValues.username,
+    token: token2,
+  });
 });
 
 module.exports = router;
