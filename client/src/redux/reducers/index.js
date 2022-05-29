@@ -61,12 +61,18 @@ import {
   GET_CART_FOR_CHILD,
   GET_ALL_ORDER_ONE_USER,
   GET_USER_ASK_FOR_ALL_PRODUCT,
+  GET_ALL_ASK_ALL_PRODUCTS,
   GET_ALL_USERS,
+  GET_ASKS_ONE_USER_ONE_PRODUCT,
+  CLEAR_ASKS_ONE_USER_ONE_PRODUCT,
+ 
   DELETE_USER,
   DELETE_ADMIN,
   UPDATE_USER,
   UPDATE_ADMIN,
   SET_AMOUNT,
+  UPDATE_USER_FOR_USER,
+  CLEAR_CART,
 } from "../actions";
 
 const initialState = {
@@ -87,8 +93,12 @@ const initialState = {
   getDetailOneUser: [],
   allAsk: [],
   userAskOneProduc: [],
-  allOrderOneUser: [],
-  userAskAllProducs: [],
+  allOrderOneUser:[],
+  userAskAllProducs:[],
+  allAsksAllProducts:[],
+  getAllUsers: [],
+  getAsksOneUserOnePruduct:[],
+ 
   allUsers: [],
 };
 
@@ -522,6 +532,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case CLEAR_CART:
+      return{
+        ...state,
+        cart: []
+      }
 
     case GET_USER_ASK_FOR_ALL_PRODUCT:
       return {
@@ -535,10 +550,32 @@ const rootReducer = (state = initialState, action) => {
         allOrderOneUser: action.payload,
       };
 
+      case GET_ALL_ASK_ALL_PRODUCTS:
+        return {
+          ...state,
+          allAsksAllProducts: action.payload,
+         
+        };
+   
+  
+        case GET_ASKS_ONE_USER_ONE_PRODUCT: {
+          return {
+            ...state,
+            getAsksOneUserOnePruduct: action.payload,
+          };
+        }
+        case CLEAR_ASKS_ONE_USER_ONE_PRODUCT:
+          return {
+              ...state,
+              getAsksOneUserOnePruduct: []
+          }  
+      
     case GET_ALL_USERS: {
       return {
         ...state,
         allUsers: action.payload,
+        getAllUsers: action.payload,
+
       };
     }
 
@@ -561,6 +598,12 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case UPDATE_ADMIN: {
+      return {
+        ...state,
+      };
+    }
+
+    case UPDATE_USER_FOR_USER: {
       return {
         ...state,
       };

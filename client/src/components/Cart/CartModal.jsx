@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, getCartById } from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function CartModal({
   id,
@@ -15,6 +16,8 @@ export default function CartModal({
   token,
   cartProducts,
   userStatus,
+  name,
+  stock,
 }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -33,50 +36,79 @@ export default function CartModal({
   const handleSubmitCart = (e) => {
     e.preventDefault();
     let busqueda = cartProducts?.find((p) => p.id === id);
-    if (!busqueda) {
-      dispatch(addItemToCart(id, token, cantidad));
-      dispatch(getCartById(token));
-      Swal.fire({
-        background: "#DFDCD3",
-        icon: "success",
-        title: "Agregado",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setOpen(false);
+    if (cantidad <= stock) {
+      if (!busqueda) {
+        dispatch(addItemToCart(id, token, cantidad));
+        dispatch(getCartById(token));
+        Swal.fire({
+          background: "#DFDCD3",
+          icon: "success",
+          title: "Agregado",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setOpen(false);
+      } else {
+        Swal.fire({
+          background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "Ya tenes este producto en tu carrito",
+          footer: "<a href='/cart'> Ir al carrito </a>",
+          confirmButtonText: "Seguir viendo",
+        });
+        setOpen(false);
+      }
     } else {
-      Swal.fire({
-        background: "#DFDCD3",
-        confirmButtonColor: "#B6893E",
-        icon: "error",
-        title: "Oops...",
-        text: "Ya tenes este producto en tu carrito",
-      });
-      setOpen(false);
+      if (stock === 0) {
+        Swal.fire({
+          background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "Este producto esta agotado",
+        });
+        setOpen(false);
+      } else {
+        setOpen(false);
+        Swal.fire({
+          background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "Stock insuficiente para la cantidad que seleccionaste",
+        }).then(() => {
+          setOpen(true);
+        });
+      }
     }
   };
   const handleAlert = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     Swal.fire({
-      title: 'Logeate',
+      title: "Logeate",
       text: "Debes estar logeado para ver tu carrito",
-      icon: 'warning',
-      background: '#DFDCD3',
+      icon: "warning",
+      background: "#DFDCD3",
       showCancelButton: true,
-      confirmButtonColor: '#B6893E',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'ok, ir al login',
-      cancelButtonText: 'cancelar',
+      confirmButtonColor: "#B6893E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ok, ir al login",
+      cancelButtonText: "cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/login')
+        navigate("/login");
       }
-    })
-  }
+    });
+  };
 
   return (
-    <div>
-      <Button onClick={ userStatus !== null ? handleOpen : handleAlert}>Agregar al Carrito</Button>
+    <Box sx ={{textAlign:'center'}}>
+      <Button color="ambar3" variant="contained" onClick={userStatus !== null ? handleOpen : handleAlert}>
+        Agregar al Carrito
+        <ShoppingCartIcon/>
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -94,8 +126,11 @@ export default function CartModal({
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
+            textAlign: 'center',
           }}
         >
+          <Typography variant="h6">{name}</Typography>
+
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {description}
           </Typography>
@@ -104,27 +139,46 @@ export default function CartModal({
               handleSubmitCart(e);
             }}
           >
-            <TextField
-              margin="normal"
-              type="number"
-              required
-              id="cantidad"
-              label={cantidad}
-              value={cantidad}
-              name="cantidad"
+            <Typography>stock: {stock}</Typography>
+            <Box
               sx={{
-                width: 100,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
               }}
-              onChange={(e) => {
-                handleSetCantidad(e);
-              }}
-            ></TextField>
+            >
+              <TextField
+                margin="normal"
+                type="number"
+                required
+                id="cantidad"
+                label={cantidad}
+                value={cantidad}
+                name="cantidad"
+                sx={{
+                  width: 100,
+                }}
+                onChange={(e) => {
+                  handleSetCantidad(e);
+                }}
+              />
 
-            <Button type="submit"> Agregar </Button>
-            <Button onClick={() => setOpen(false)}> Cancelar </Button>
+              <Button type="submit" variant="contained" color="ambar3">
+                {" "}
+                Agregar{" "}
+              </Button>
+              <Button
+                onClick={() => setOpen(false)}
+                variant="contained"
+                color="ambar3"
+              >
+                {" "}
+                Cancelar{" "}
+              </Button>
+            </Box>
           </form>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

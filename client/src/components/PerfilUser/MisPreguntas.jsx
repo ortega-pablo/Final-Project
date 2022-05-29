@@ -19,7 +19,6 @@ export const MisPreguntas = ({ asks, userid }) => {
   const [render, setRender] = useState("");
   const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
 
-  console.log(allProducts);
 
   // const allAsk = useSelector(state=> state.allAsk)
 
@@ -32,16 +31,13 @@ export const MisPreguntas = ({ asks, userid }) => {
   }, [dispatch]);
 
   const allAskForAllProducts = useSelector((state) => state.userAskAllProducs);
-  console.log(allAskForAllProducts);
   //  const askForUser = allAsk?.filter( p => p.userId === userid)
-  console.log(asks);
 
   return (
     <>
       <div>MisPreguntas :__</div>
       {allAskForAllProducts?.map((p) => {
         const prod = allProducts.find((pr) => pr.id === p.id);
-        console.log(prod);
 
         return (
           <>
@@ -53,6 +49,19 @@ export const MisPreguntas = ({ asks, userid }) => {
             <img src={prod?.images[0]?.urlFile} width="75" alt="" />
             <img src={prod?.images[1]?.urlFile} width="75" alt="" />
             <h2>$ {p?.price} </h2>
+            { prod?.discounts?.map( d => {
+                return (
+                  <>
+                  {d.active && 
+                  <h3> {d.name} : - {d.discountPercent} % </h3>
+                  }
+                
+                  </>
+                  
+                )
+            })
+
+            }
 
             {prod?.productInventory?.quantity === 0 ? (
               <Typography>¡Sin stock! </Typography>

@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import {  getAsksForAllProductsOneUser, getDetailOneUsers, getProducts, getUserIdByToken, getUsers } from '../../redux/actions';
@@ -13,13 +13,13 @@ import { UltimasCompras } from './UltimasCompras';
 export const Perfil =  () => {
     const dispatch = useDispatch();
     const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
-    
+    const [render, setRender] = useState(0)
     useEffect(  () => {
       dispatch(getUserIdByToken(idToken))
       .then( r => r)
       .then( r=>  dispatch(getDetailOneUsers(r)))
-
-    }, [dispatch]);
+      
+    }, [render]);
     
     const user = useSelector(state => state.getDetailOneUser)
    
@@ -32,7 +32,12 @@ export const Perfil =  () => {
       <>
     <h1>MI CUENTA</h1>
         <h3>Editar perfil:</h3>
-        <EditarPerfil/>
+        <EditarPerfil
+        setRender={setRender}
+        render={render}
+        user={user}
+        idToken={idToken}/>
+
         <h3>{user?.userName}</h3>
         
         <h4>Mis preguntas</h4>
