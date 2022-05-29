@@ -65,6 +65,7 @@ export const GET_USERS = "GET_USERS";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const GET_CART_FOR_CHILD ="GET_CART_FOR_CHILD";
 export const SET_AMOUNT = "SET_AMOUNT";
+export const CLEAR_CART = "CLEAR_CART"
 
 
 
@@ -912,6 +913,14 @@ export const setCartAmount = (id, amount) => {
     } catch(error){
       console.log('rompi en setCartAmount => ', error)
     }
+  }
+}
+
+export const clearCart = () => {
+  return async(dispatch) => {
+    return dispatch({
+      type: CLEAR_CART
+    })
   }
 }
 

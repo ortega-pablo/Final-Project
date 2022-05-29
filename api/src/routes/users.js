@@ -546,7 +546,7 @@ router.post("/google-login", async (req, res) => {
   const { token } = req.body;
   const ticket = await client.verifyIdToken({
     idToken: token,
-    audience: process.env.CLIENT_ID,
+    audience: process.env.CLIENT_ID_GOOGLE,
   });
   const { name, email, given_name, family_name } = ticket.getPayload();
   const [user, created] = await User.findOrCreate({
