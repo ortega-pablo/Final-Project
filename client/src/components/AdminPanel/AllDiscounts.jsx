@@ -9,7 +9,7 @@ import { GetAllDiscountsToAdmin } from './Get/GetAllDiscountsToAdmin'
 function AllDiscounts() {
   const userStatus = useSelector((state) => state.userStatus);
   return (
-    userStatus ==='admin' ? 
+    userStatus === "admin" || userStatus === "superAdmin" ? 
     <Box
       maxWidth="vp"
       sx={{

@@ -8,7 +8,7 @@ import AdminMenuMobile from "./AdminMenuMobile";
 
 function Orders() {
     const userStatus = useSelector((state) => state.userStatus);
-    return userStatus === "admin" ? (
+    return userStatus === "admin" || userStatus === "superAdmin" ? (
       <Box
         maxWidth="vp"
         sx={{
