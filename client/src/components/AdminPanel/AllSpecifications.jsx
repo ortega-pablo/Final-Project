@@ -9,7 +9,7 @@ import GetAllSpecificationsToAdmin from './Get/GetAllSpecificationsToAdmin'
 function AllSpecifications() {
   const userStatus = useSelector((state) => state.userStatus);
     return (
-      userStatus === 'admin' ?
+      userStatus === "admin" || userStatus === "superAdmin" ?
         <Box
           maxWidth="vp"
           sx={{

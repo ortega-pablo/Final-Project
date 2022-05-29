@@ -19,7 +19,6 @@ export const VerHilo = ({ user, prod, preg }) => {
     dispatch(getAsksOneUserOneProduct(user, prod));
   }, [dispatch]);
 
-  console.log(pregunta);
   return (
     <div>
           {

@@ -9,7 +9,7 @@ import GetAllProductsToAdmin from './Get/GetAllProductsToAdmin'
 function AllProducts() {
   const userStatus = useSelector((state) => state.userStatus);
   return (
-    userStatus ==='admin' ?
+    userStatus === "admin" || userStatus === "superAdmin" ?
     <Box
       maxWidth="vp"
       sx={{

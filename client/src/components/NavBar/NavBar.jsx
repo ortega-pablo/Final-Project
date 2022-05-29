@@ -162,7 +162,7 @@ export const NavBar = (props) => {
               </MenuItem>
             </Link>
           </>
-        ) : userStatus === "admin" ? (
+        ) : userStatus === "admin" || userStatus === "superAdmin" ? (
           <>
             <Link sx={{ textDecoration: "none" }} href="/profile/asd">
               <MenuItem onClick={handleMenuProfileClose}>
