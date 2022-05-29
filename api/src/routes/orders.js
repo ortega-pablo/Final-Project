@@ -6,7 +6,7 @@ const { KEY_STRIPE } = process.env
 const stripe = new Stripe(KEY_STRIPE);
 const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
-const {orderCreated} = require("./sendEmail")
+const { orderCreated } = require("./sendEmail")
 
 
 
@@ -64,7 +64,7 @@ router.post('/', async (req, res, next) => {
 
   const { userId, addressId } = req.query;
   const { id, amount, total, state, address, email } = req.body;
-  
+
   try {
 
     // const payment = await stripe.paymentIntents.create({
@@ -91,7 +91,7 @@ router.post('/', async (req, res, next) => {
       });
 
 
-      
+
       const findCart = await ShoppingCart.findOne({
         where: {
           userId
@@ -127,7 +127,7 @@ router.post('/', async (req, res, next) => {
       newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
 
 
-    //    // Adding nodemailer when the order is created 
+      //    // Adding nodemailer when the order is created 
       let info = await transporter.sendMail({
         from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
         to: [findUser.email], // list of receivers
@@ -223,7 +223,7 @@ router.post('/', async (req, res, next) => {
         <td align="left" style="padding:0;Margin:0;width:282px">
         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
         <tr style="border-collapse:collapse">
-        
+      
         </tr>
         </table></td>
         </tr>
@@ -314,7 +314,7 @@ router.post('/', async (req, res, next) => {
         </tr>
         <tr style="border-collapse:collapse">
         <td style="padding:5px 10px 5px 0;Margin:0" width="80%" align="left"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">Envio</p></td>
-        <td style="padding:5px 0;Margin:0" width="20%" align="left"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">GRATIS</p></td>
+        <td style="padding:5px 0;Margin:0" width="20%" align="left"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">$10.00</p></td>
         </tr>
         <tr style="border-collapse:collapse">
         <td style="padding:5px 10px 5px 0;Margin:0" width="80%" align="left"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px"><br></p></td>
@@ -324,20 +324,48 @@ router.post('/', async (req, res, next) => {
         </tr>
         <tr style="border-collapse:collapse">
         <td align="left" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px">
-        
-        
+      
+      
         <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
-    
+      
         
-        
-        </table></td>
-        
-        
-        </tr> 
-        </table></td>
-        </tr>
-        </table></td>
-        </tr>
+        <table id="output_div" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
+      
+             
+      
+              <script>
+      
+                      var outputHTML = "";
+                      outputHTML += "<table>"
+      
+                      for(var i = 0; i < newOrder.products.length; i++){
+      
+                              outputHTML += "<tr style=\"border-collapse:collapse\">";
+      
+                              outputHTML += <td style=\"padding:5px 10px 5px 0; Margin:0\" width=\"80%\" align=\"left\"> <p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:\'open sans\', \'helvetica neue\', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px\">${newOrder[i].name}</p></td>
+
+
+
+          <td style =\"padding:5px 0;Margin:0\" width=\"20%\" align=\"left\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:\'open sans\', \'helvetica neue\', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px\">${newOrder[i].price}</p></td>
+      
+                      outputHTML += "</tr>"
+                      outputHTML += "</table>"
+                      }
+
+                      document.getElementById("output_div").innerHTML = outputHTML;
+      
+       
+      
+              </script >
+      
+        </table ></td >
+      
+      
+        </tr > 
+        </table ></td >
+        </tr >
+        </table ></td >
+        </tr >
         <tr style="border-collapse:collapse">
         <td align="left" style="padding:0;Margin:0;padding-top:10px;padding-left:35px;padding-right:35px">
         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
@@ -349,7 +377,7 @@ router.post('/', async (req, res, next) => {
         <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
         <tr style="border-collapse:collapse">
         <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-        <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">$ ${newOrder.total}</h4></td>
+        <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${newOrder.total}</h4></td>
         </tr>
         </table></td>
         </tr>
@@ -386,9 +414,9 @@ router.post('/', async (req, res, next) => {
         </tr>
         </table><!--[if mso]></td></tr></table><![endif]--></td>
         </tr>
-        </table></td>
-        </tr>
-        </table>
+        </table ></td >
+        </tr >
+        </table >
         <table cellpadding="0" cellspacing="0" class="es-footer" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top">
         <tr style="border-collapse:collapse">
         <td align="center" style="padding:0;Margin:0">
@@ -428,12 +456,12 @@ router.post('/', async (req, res, next) => {
         </tr>
         </table></td>
         </tr>
-        </table></td>
-        </tr>
-        </table>
-        </div>
-        </body>
-        </html>`
+        </table></td >
+        </tr >
+        </table >
+        </div >
+        </body >
+        </html >`
       });
 
       // await findCart.setProducts([]);
