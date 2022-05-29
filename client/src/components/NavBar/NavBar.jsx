@@ -21,7 +21,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartById, verifyToken } from "../../redux/actions";
+import { clearCart, getCartById, verifyToken } from "../../redux/actions";
 import Swal from "sweetalert2";
 
 const Search = styled("div")(({ theme }) => ({
@@ -79,7 +79,8 @@ export const NavBar = (props) => {
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
     dispatch(getCartById(ls?.token));
-  }, [dispatch, numerito]);
+    // return (() => dispatch(clearCart()))
+  }, []);
 
   const handleChangeForName = (e) => {
     setName(e.target.value);

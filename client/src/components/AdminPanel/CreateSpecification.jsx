@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { AddSpecification } from '../Forms/AddSpecification/AddSpecification'
@@ -52,7 +52,24 @@ function CreateSpecification() {
           </Container>
         </Box>
         :
-        <NotFound/>
+        <Box
+        maxWidth="vp"
+        sx={{
+          gap: 0,
+          display: "flex",
+          flexDirection: "column",
+          margin: 0,
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+        <CircularProgress
+          sx={{
+            alignSelf: 'center',
+            mt: '20%'
+          }}
+        /> 
+        </Box>
       )
 }
 
