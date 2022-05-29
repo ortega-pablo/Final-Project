@@ -14,6 +14,7 @@ import { Box } from "@mui/system";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 import { editUser, editUserForUser } from "../../redux/actions";
 
@@ -47,11 +48,11 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
     newPassword: yup
       .string("Ingrese la descripción")
        .min(8, 'Password should be of minimum 8 characters length')
-      .required("La descripción es requerida"),
+      .required("La nueva contraseña es requerida"),
     oldPassword: yup
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
-      .required("La descripción es requerida"),
+      .required("La actual contraseña es requerida para modificar tu perfil"),
       passwordConfirmation: yup.string()
     .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
     .required("Confirma la nueva contraseña")
@@ -74,10 +75,28 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
     },
     validationSchema: validationSchema, 
     onSubmit: async (values, { resetForm }) => {
-      console.log("holaaa", values);
-     await dispatch(editUserForUser(idToken, values));
-     setRender(values)
-      resetForm({ values: "" });
+      Swal.fire({
+        title: `¿Está seguro de modificar a ${user.userName}?`,
+        // text: "Esta acción no se puede deshacer!",
+        icon: "warning",
+        background: "#DFDCD3",
+        showCancelButton: true,
+        confirmButtonColor: "#B6893E",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, modificar!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await dispatch(editUserForUser(idToken, values));
+          setRender(values)
+          Swal.fire("Modificado!");
+        }
+      } 
+
+      )
+      
+    //  await dispatch(editUserForUser(idToken, values));
+    //  setRender(values)
+    //   resetForm({ values: "" });
     },
   });
 
@@ -155,6 +174,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
               helperText={formik.touched.phone && formik.errors.phone}
             />
             <TextField
+            autoComplete="off"
               id="outlined-basic"
               label="Actual Contraseña *"
               variant="outlined"
@@ -189,7 +209,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
         <TextField
            
             required
-           
+            autoComplete="off"
             id="password"
             label="Confirmar Contraseña"
             name="passwordConfirmation"
@@ -199,7 +219,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
             error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
             helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
             />
-            <Button type="submit">Crear</Button>
+            <Button type="submit">Modificar</Button>
           </Box>
         </div>
       }
