@@ -495,10 +495,10 @@ router.put("/resetPasswordWithoutOld/:userId", async (req, res, next) => {
   }
 });
 /* RESET PASSWORD USER WITH THE OLD PASSWORD */
-router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
+router.put("/resetPasswordWithOld", async (req, res, next) => {
   try {
-    const { userId } = req.params;
-    const { oldPassword, newPassword } = req.body;
+    const { userId } = req.query;
+    const { oldPassword, newPassword, userName, lastName, phone, firstName } = req.body;
     const findUser = await User.findOne({
       where: {
         id: userId,
@@ -510,14 +510,18 @@ router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
           ? false
           : await bcrypt.compare(oldPassword, findUser.dataValues.password);
       if (!passwordCorrect) {
-        res.status(400).json({
-          error: "invalid user or password",
+       return res.status(400).json({
+          error: "invalid  password",
         });
       }
       let Hashpassword = bcrypt.hashSync(newPassword, 10);
       await User.update(
         {
           password: Hashpassword,
+          userName,
+          lastName,
+          phone,
+          firstName
         },
         {
           where: {
