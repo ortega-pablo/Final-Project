@@ -57,11 +57,9 @@ router.post("/create", async (req, res, next) => {
       role,
     });
 
-    const addShoppingCart = await ShoppingCart.create({
-    });
-    
-    addShoppingCart.setUser(newUser);
+    const addShoppingCart = await ShoppingCart.create({});
 
+    addShoppingCart.setUser(newUser);
 
     res.status(200).send("done");
   } catch (error) {
@@ -139,8 +137,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
-          }
+            model: Address,
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -164,8 +162,8 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
-          }
+            model: Address,
+          },
         ],
       });
 
@@ -196,12 +194,12 @@ router.get("/:userId", async (req, res) => {
               },
               {
                 model: Product,
-                attributes: ["id", "name"]
-              }
+                attributes: ["id", "name"],
+              },
             ],
           },
           {
-            model: Address
+            model: Address,
           },
           {
             model: ShoppingCart,
@@ -209,14 +207,13 @@ router.get("/:userId", async (req, res) => {
             include: {
               model: Product,
               through: {
-                attributes: []
-              }
-            }
-          }
+                attributes: [],
+              },
+            },
+          },
         ],
       });
 
-      
       return res.send(findById);
     } else {
       return res.status(404).send("User not found");
@@ -227,26 +224,32 @@ router.get("/:userId", async (req, res) => {
 });
 
 router.delete("/deleteUser", async (req, res, next) => {
-
-  const {adminId, userId } = req.query;
+  const { adminId, userId } = req.query;
 
   try {
     const findAdmin = await User.findOne({
       where: {
         id: adminId,
-        role: "admin"
+        role: "admin",
+      },
+    });
+    const findSuperAdmin = await User.findOne({
+      where: {
+        id: adminId,
+        role: "superAdmin",
       },
     });
 
-    if (findAdmin) {
-     const findUser = await User.destroy({
+    if (findAdmin || findSuperAdmin) {
+      const findUser = await User.destroy({
         where: {
           id: userId,
         },
       });
 
-      findUser ? res.status(200).send("User deleted successfully!") : res.send("User not found")
-
+      findUser
+        ? res.status(200).send("User deleted successfully!")
+        : res.send("User not found");
     } else {
       res.send("User not authorized");
     }
@@ -254,5 +257,163 @@ router.delete("/deleteUser", async (req, res, next) => {
     next(error);
   }
 });
+
+router.delete("/deleteAdmin", async (req, res, next) => {
+  const { superAdminId, adminId } = req.query;
+
+  try {
+    const findSuperAdmin = await User.findOne({
+      where: {
+        id: superAdminId,
+        role: "superAdmin",
+      },
+    });
+
+    if (findSuperAdmin) {
+      const findUser = await User.destroy({
+        where: {
+          id: adminId,
+          role: "admin",
+        },
+      });
+
+      findUser
+        ? res.status(200).send("Admin deleted successfully!")
+        : res.send("Admin not found");
+    } else {
+      res.send("User not authorized");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/editUser", async (req, res, next) => {
+  const { adminId, userId } = req.query;
+  const {userName,email,firstName,lastName,phone,role,}=req.body
+  try {
+    const findAdmin = await User.findOne({
+      where: {
+        id: adminId,
+        role: "admin",
+      },
+    });
+    const findSuperAdmin = await User.findOne({
+      where: {
+        id: adminId,
+        role: "superAdmin",
+      },
+    });
+
+    if (findAdmin || findSuperAdmin) {
+      const findUser = await User.findOne({
+        where: {
+          id: userId,
+        },
+      });
+      if (findUser) {
+        await User.update({
+          userName,
+          email,
+          firstName,
+          lastName,
+          phone,
+          role,
+        },
+        {
+          where: {
+              id: userId
+          }
+        });
+        res.status(200).send("User updated successfully!") 
+      }else{
+        res.send("User not found")
+      }
+    } else {
+      res.send("User not authorized");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/editAdmin", async (req, res, next) => {
+  const { adminId, superAdminId } = req.query;
+  const {userName,email,firstName,lastName,phone,role,}=req.body
+  try {
+    const findSuperAdmin = await User.findOne({
+      where: {
+        id: superAdminId,
+        role: "superAdmin",
+      },
+    });
+
+    if (findSuperAdmin) {
+      const findUser = await User.findOne({
+        where: {
+          id: adminId,
+        },
+      });
+      if (findUser) {
+        await User.update({
+          userName,
+          email,
+          firstName,
+          lastName,
+          phone,
+          role,
+        },
+        {
+          where: {
+              id: adminId
+          }
+        });
+        res.status(200).send("User updated successfully!") 
+      }else{
+        res.send("User not found")
+      }
+    } else {
+      res.send("User not authorized");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put(
+  "/changeUserToAdmin/:userId",
+  [cors(), verifyToken],
+  async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+      if (req.role === "superAdmin") {
+        const findUser = await User.findOne({
+          where: {
+            id: userId,
+          },
+        });
+        if (findUser && findUser.dataValues.role === "user") {
+          await User.update(
+            {
+              role: "admin",
+            },
+            {
+              where: {
+                id: userId,
+              },
+            }
+          );
+          res.status(200).send("User updated successfully!");
+        } else {
+          res.send("User not found or isnot a User");
+        }
+      } else {
+        res.status(401).send("User not authorized");
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

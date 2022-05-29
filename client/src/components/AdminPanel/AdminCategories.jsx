@@ -10,7 +10,7 @@ import AdministrateCategoriesToAdmin from './Get/Create-Modify/AdministrateCateg
 function AdminCategories() {
   const userStatus = useSelector((state) => state.userStatus);
   return (
-    userStatus === 'admin' ?
+    userStatus === "admin" || userStatus === "superAdmin" ?
     <Box
       maxWidth="vp"
       sx={{
