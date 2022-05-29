@@ -498,7 +498,7 @@ router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
           ? false
           : await bcrypt.compare(oldPassword, findUser.dataValues.password);
       if (!passwordCorrect) {
-        res.status(400).json({
+        return res.status(400).json({
           error: "invalid user or password",
         });
       }
@@ -514,6 +514,38 @@ router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
         }
       );
       res.status(200).send("password updated successfully!");
+    } else {
+      res.send("user not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/updateDatesUser/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { userName, firstName, lastName, phone } = req.body;
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (findUser) {
+      await User.update(
+        {
+          userName,
+          firstName,
+          lastName,
+          phone,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("user updated successfully!");
     } else {
       res.send("user not found");
     }
