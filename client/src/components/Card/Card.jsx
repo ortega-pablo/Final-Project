@@ -55,7 +55,6 @@ export default function MultiActionAreaCard({
           <Typography gutterBottom variant="h6" component="div" sx={{mb:'auto'}}>Marca: {brand}</Typography>
         </CardContent>
       </CardActionArea>
-      <CartModal id={id}/>
     </Card>
   );
 }

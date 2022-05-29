@@ -66,6 +66,7 @@ import {
   DELETE_ADMIN,
   UPDATE_USER,
   UPDATE_ADMIN,
+  SET_AMOUNT,
 } from "../actions";
 
 const initialState = {
@@ -517,6 +518,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
+    case SET_AMOUNT:
+      return {
+        ...state,
+      };
 
     case GET_USER_ASK_FOR_ALL_PRODUCT:
       return {
@@ -548,7 +553,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     }
-    
+
     case UPDATE_USER: {
       return {
         ...state,

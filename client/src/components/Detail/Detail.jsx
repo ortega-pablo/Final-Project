@@ -45,6 +45,7 @@ export const Detail = () => {
   //deberia ser un state.detail
   let productDetail = useSelector((state) => state.productDetail);
   const cart = useSelector((state)=> state.cart)
+  const userStatus = useSelector((state) => state.userStatus);
 
   let { id } = useParams();
 
@@ -112,7 +113,7 @@ export const Detail = () => {
               }}
             />
 
-            <CartModal id={productDetail[0].id} />
+            <CartModal token={token} id={productDetail[0].id} description={productDetail[0].description} cartProducts={cart.products} userStatus={userStatus} />
             
             <Divider textAlign="left">
               <Chip

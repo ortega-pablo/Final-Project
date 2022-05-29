@@ -22,6 +22,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartById, verifyToken } from "../../redux/actions";
+import Swal from 'sweetalert2';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -71,14 +72,13 @@ export const NavBar = (props) => {
   const dispatch = useDispatch();
 
   const userStatus = useSelector((state) => state.userStatus);
-  console.log("user status  => ", userStatus);
-
   const cartStatus = useSelector((state) => state.cart)
   
 
   const ls = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
+    dispatch(getCartById(ls?.token));
     dispatch(getCartById(ls?.token));
   }, [dispatch]);
 
@@ -105,6 +105,25 @@ export const NavBar = (props) => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleAlertCart = () => {
+    Swal.fire({
+      title: 'Logeate',
+      text: "Debes estar logeado para ver tu carrito",
+      icon: 'warning',
+      background: '#DFDCD3',
+      showCancelButton: true,
+      confirmButtonColor: '#B6893E',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ok, ir al login',
+      cancelButtonText: 'cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login')
+      }
+    })
+  }
+
 
   const menuProfileId = "primary-search-account-menu";
   const renderProfileMenu = (
@@ -368,11 +387,22 @@ export const NavBar = (props) => {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex"}}}>
-            <IconButton size="large" color="ambar1" sx={{mr: 1}} href="/cart">
-              <Badge badgeContent={cartStatus?.products?.length} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+          {
+            userStatus !== null ? (
+              <IconButton size="large" color="ambar1" sx={{mr: 1}} href="/cart">
+                <Badge badgeContent={cartStatus?.products?.length} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            ) : 
+            (
+              <IconButton size="large" color="ambar1" sx={{mr: 1}} onClick={handleAlertCart}>
+                <Badge  color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            )
+          }
             {userStatus !== null ? (
               <IconButton
                 size="large"
