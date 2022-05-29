@@ -301,11 +301,11 @@ function AdminMenuMobile({handleClickForCategories, handleClickForSubcategories,
 
         <Divider variant="middle" />
 
-        <ListItemButton>
+        <ListItemButton component="a" href="/usersPanel" sx={{ pl: 4 }}>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Clientes" />
+          <ListItemText primary="Usuarios" />
         </ListItemButton>
 
       </List>
