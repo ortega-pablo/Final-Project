@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer, ShoppingCart, Address, Product } = require("../db");
+const { User, Ask, Answer, ShoppingCart, Address, Product, Order } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -140,7 +140,13 @@ router.get("/", async (req, res, next) => {
           },
           {
             model: Address
-          }
+          },
+          {
+            model: Order,
+            include: {
+              model: Product
+            }
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -202,6 +208,12 @@ router.get("/:userId", async (req, res) => {
           },
           {
             model: Address
+          },
+          {
+            model: Order,
+            include: {
+              model: Product
+            }
           },
           {
             model: ShoppingCart,

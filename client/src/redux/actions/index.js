@@ -61,6 +61,10 @@ export const SET_TOTAL_CART = "SET_TOTAL_CART";
 export const GET_CART_BY_ID = "GET_CART_BY_ID";
 export const GET_ALL_USERS = "GET_ALL_USERS"
 
+export const GET_USERS = "GET_USERS";
+export const DELETE_FROM_CART = "DELETE_FROM_CART";
+export const GET_CART_FOR_CHILD ="GET_CART_FOR_CHILD";
+export const SET_AMOUNT = "SET_AMOUNT";
 
 
 
@@ -326,7 +330,10 @@ export const postRegisterUser = (payload) => {
         "http://localhost:3001/users/create",
         payload
       );
-      console.log(response);
+      await axios.post(
+        "http://localhost:3001/sendEmail/welcome",
+        payload
+      )
       return response;
     } catch (error) {
       console.log("hubo un error");
@@ -842,15 +849,64 @@ export const getCartById = (token) => {
   }
 }
 }
-//http://localhost:3001/shoppingCart/addProduct?shoppingCartId=5&userId=5&productId=2
-export const addItemToCart = () =>{
-  return async(dispatch) => {
-    let response = await axios(`http://localhost:3001/shoppingCart/addProduct?shoppingCartId`)
-    return dispatch({
-      type: ADD_TO_CART,
-      payload: response.data
-    })
+export const getCartForChild = (id) => {
+  return async (dispatch) => {
+    try{
+      let response = await axios(`http://localhost:3001/shoppingCart?userId=${id}`)
+      return dispatch({
+        type: GET_CART_FOR_CHILD,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log('rompi en getCartForChild => ', error)
     }
+  }
+}
+
+export const addItemToCart = (productId, token, cantidad) =>{
+  return async(dispatch) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+      try {
+        let responseId = await axios.get(
+          "http://localhost:3001/users/userId",
+          config
+        );
+        await axios.put(`http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,{ quantity: cantidad })
+        return dispatch({
+          type: ADD_TO_CART,
+        })
+    } catch(error) {
+    console.log("rompi en getCartById -> ",error)
+    }
+}
+}
+
+export const deleteFromCart = (productId, userId) => {
+  return async(dispatch) => {
+    try {
+      await axios.put(`http://localhost:3001/shoppingCart/removeProduct?userId=${userId}&productId=${productId}`)
+      return dispatch ({
+        type: DELETE_FROM_CART,
+      })
+    } catch(error) {
+      console.log('rompi en el deleteFromCart -> ', error)
+    }
+  }
+}
+
+export const setCartAmount = (id, amount) => {
+  return async(dispatch) => {
+    try{
+      await axios.put(`http://localhost:3001/shoppingCart/addAmount?userId=${id}`,{amount})
+      return dispatch({
+        type: SET_AMOUNT,
+      })
+    } catch(error){
+      console.log('rompi en setCartAmount => ', error)
+    }
+  }
 }
 
 export function getDetailOneUsers( id) {

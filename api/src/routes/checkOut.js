@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
             confirm: true,
         })
         
+        console.log(payment)
         res.send({message: "success"});
         
     } catch (error) {

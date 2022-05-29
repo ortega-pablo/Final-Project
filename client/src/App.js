@@ -33,6 +33,7 @@ import { Perfil } from "./components/PerfilUser/Perfil";
 import CartView from "./components/Cart/CartView";
 import { AskPanel } from "./components/AdminPanel/AskPanel";
 import { VerHilo } from "./components/AdminPanel/VerHilo";
+import CartModal from "./components/Cart/CartModal";
 
 
 function App() {
@@ -77,8 +78,10 @@ function App() {
 
             <Route path="/cart" element={<CartView/>}/>
               
-            <Route path="/prueba" element={<Perfil/>}/>
-            <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/>
+            <Route path="/prueba1" element={<Perfil/>}/> 
+            {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
+
+            <Route path="/prueba" element={<CartModal/>}/>
 
           </Routes>
         <Footer/>

@@ -1,6 +1,10 @@
 import {
   Button,
+  InputLabel,
+  MenuItem,
+  Modal,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -9,12 +13,14 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getAllAsksAllProducts,
   getAllUsers,
+  getAsksForAllProductsOneUser,
   getAsksOneUserOneProduct,
   getDetailOneUsers,
   getUserIdByToken,
@@ -22,41 +28,52 @@ import {
 import { PreguntasHilo } from "./PreguntasHilo";
 import { ResponderPregunta } from "./ResponderPregunta";
 import { VerHilo } from "./VerHilo";
+import { VerHistorialPreguntasUsuario } from "./VerHistorialPreguntasUsuario";
 
 export const Preguntas = () => {
   const dispatch = useDispatch();
   const allAsks = useSelector((state) => state.allAsksAllProducts);
   const allUsers = useSelector((state) => state.getAllUsers);
   console.log(allUsers);
-  console.log(allAsks);
-  const us = allUsers.map( u => u.asks)
+  const [sinResponder, setSinResponder] = useState(false);
+  const [historial, setHistorial] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const pregs = useSelector((state) => state.userAskAllProducs);
+ 
 
-  // const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
+
+
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     dispatch(getAllAsksAllProducts());
     dispatch(getAllUsers());
+    dispatch(getAsksForAllProductsOneUser(userId));
   }, [dispatch]);
 
-  const [sinResponder, setSinResponder] = useState(false);
-  const [historial, setHistorial] = useState(false);
-  // const [render, setRender] = useState("")
-
-  function clickHistorial(e) {
+  function handleClickSearch(e) {
     e.preventDefault();
-    setHistorial(!historial);
+    dispatch(getAsksForAllProductsOneUser(userId));
   }
+
+  function handleGetAsk(e) {
+    e.preventDefault();
+    setUserId(e.target.value);
+  }
+
+  const navigate = useNavigate();
 
   return (
     <>
       <div>Preguntas</div>
-      <Button onClick={() => setSinResponder(!sinResponder)}>
+      {/* <Button onClick={() => setSinResponder(!sinResponder)}>
         Mostrar preguntas sin respoder
-      </Button>
+      </Button> */}
 
-      <h2>Preguntas sin responder:</h2>
-
-      {sinResponder ? (
+      {
         <>
           {allAsks?.map((prod) => {
             return (
@@ -68,10 +85,9 @@ export const Preguntas = () => {
                     </Typography>
                   </Link>
 
-                
                   {prod?.asks?.map((preg) => {
                     const userPreg = allUsers.find((u) => u.id == preg.userId);
-                    console.log(userPreg)
+                    console.log(userPreg);
                     const p = allAsks.filter((pro) => pro.id === prod.id);
                     const r = p[0].asks.filter((q) => q.userId === preg.userId);
                     // const r = p?.filter( s=> s?.userId=== preg.userId)
@@ -81,13 +97,15 @@ export const Preguntas = () => {
                     return (
                       !preg.answer && (
                         <>
-                        <Link to={`prueba2/${preg.userId}/${prod.id}/${preg.id}`}>
-                            <Typography>
-                            <b>{userPreg.userName}</b> ha preguntado:{" "}
+                          {/* <Link
+                            to={`prueba2/${preg?.userId}/${prod?.id}/${preg?.id}`}
+                          > */}
+                          <Typography>
+                            <b>{userPreg?.userName}</b> ha preguntado:{" "}
                           </Typography>
-                        </Link>
+                          {/* </Link> */}
                           <Typography component="h2" variant="h5">
-                            {preg.content}
+                            {preg?.content}
                           </Typography>
 
                           {preg?.answer ? (
@@ -101,40 +119,44 @@ export const Preguntas = () => {
                           )}
                           <hr />
 
-                          <Button onClick={(e) => clickHistorial(e)}>
-                            Ver historial
-                          </Button>
+                          {/* <Link
+                          
+                            to={`prueba2/${preg?.userId}/${prod?.id}/${preg?.id}`}
+                            variant="contained"
+                            color="ambar3"
+                            >
+                          
+                            <Button>
+                              Ver historial entre este usuario y producto
+                            </Button>
+                            </Link> */}
+                            <Button onClick={handleOpen}> Ver historial entre este usuario y producto</Button>
+<Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 800,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}>
+        
+    <VerHilo
+      user={preg?.userId}
+      prod={prod?.id} 
+      preg={preg?.id} />
 
-                          {historial && (
-                            <>
-                              <TableContainer component={Paper} align="center">
-                                <Table>
-                                  <TableHead>
-                                    <TableCell>Pregunta</TableCell>
-                                    <TableCell>Respuesta</TableCell>
-                                  </TableHead>
-                                  <TableBody>
-                                    {r.map((p) => {
-                                      return (
-                                        <TableRow>
-                                          <TableCell>
-                                            <Typography>
-                                              {p?.content}
-                                            </Typography>
-                                          </TableCell>
-                                          <TableCell>
-                                            <Typography>
-                                              {p?.answer?.content}
-                                            </Typography>
-                                          </TableCell>
-                                        </TableRow>
-                                      );
-                                    })}
-                                  </TableBody>
-                                </Table>
-                              </TableContainer>
-                            </>
-                          )}
+  </Box>
+</Modal>
+
 
                           <ResponderPregunta askId={preg.id} />
                         </>
@@ -148,102 +170,78 @@ export const Preguntas = () => {
             );
           })}
         </>
-      ) : (
-        <h3>¿Hoy has consultado tu bandeja de preguntas?</h3>
-      )}
+      }
 
-              {/* <VerHilo
-                  productId={prod.id} 
-                  userId={preg.userId} /> */}
+      <InputLabel id="demo-simple-select-standard-label">
+        Seleccione un usuario
+      </InputLabel>
+      <Select
+        labelId="demo-simple-select-standard-label"
+        id="demo-simple-select-standard"
+        //   value={category}
+        onChange={handleGetAsk}
+        label="Age"
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {allUsers?.map((u, i) => {
+          return (
+            <MenuItem key={i} value={u.id}>
+              {u?.userName}
+            </MenuItem>
+          );
+        })}
+      </Select>
+      <Button onClick={handleClickSearch}> Buscar</Button>
 
-      {/* <Button onClick={() => setHistorial(!historial)}>
-        Mostrar historial de preguntas
-      </Button>
-      <h2>Historial de preguntas:</h2> */}
+      {/* <VerHistorialPreguntasUsuario
+        userId={userId}
+        pregs={pregs}/> */}
 
-      {/* {historial && (
-        <>
-          {allAsks?.map((prod) => {
-            return (
-              <>
-                <Link to={`/detail/${prod?.id}`}>
-                  <Typography component="h1" variant="h5">
-                    {prod.name}
-                  </Typography>
-                </Link>
-                {prod?.asks?.map((preg) => {
-                  const userPreg = allUsers.find((u) => u.id == preg.userId);
-
-                  const p = allAsks.filter((pro) => pro.id === prod.id);
-                  const r = p[0].asks.filter((q) => q.userId === preg.userId);
-                  // const r = p?.filter( s=> s?.userId=== preg.userId)
-
+      {
+        <div>
+          <TableContainer component={Paper} align="center">
+            <Table>
+              <TableHead>
+                <TableCell>Producto</TableCell>
+                <TableCell>Pregunta</TableCell>
+                <TableCell>Respuesta</TableCell>
+              </TableHead>
+              <TableBody>
+                {pregs.map((p) => {
                   return (
-                    preg.answer && (
-                      <>
-                        <hr />
-                        <Typography>
-                          <b>{userPreg.userName}</b> ha preguntado:
-                        </Typography>
-                      
-                        { (
-                                                 
-                          <>                                                     
-
-                            <Button onClick={(e) => clickHistorial(e)}>
-                              Ver historial
-                            </Button>
-
-                            {historial && (
-                              
-                              <>
-                                <TableContainer
-                                  component={Paper}
-                                  align="center"
-                                >
-                                  <Table>
-                                    <TableHead>
-                                      <TableCell>Pregunta</TableCell>
-                                      <TableCell>Respuesta</TableCell>
-                                    </TableHead>
-                                    <TableBody>
-                                      {us.map( async (p) => {
-                                    
-                                        return (
-                                          <TableRow>
-                                            <TableCell>
-                                              <Typography>
-                                                {p?.content}
-                                              </Typography>
-                                            </TableCell>
-                                            <TableCell>
-                                              <Typography>
-                                                {p?.answer?.content}
-                                              </Typography>
-                                            </TableCell>
-                                          </TableRow>
-                                        );
-                                      })}
-                                    </TableBody>
-                                  </Table>
-                                </TableContainer>
-                              </>
-                            )}
-
-                            <ResponderPregunta />
-                          </>
-                        )}
-                      </>
-                    )
+                    <TableRow>
+                      <TableCell>
+                        <Typography>{p?.name}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        {p?.asks?.map((pr) => {
+                          return (
+                            <>
+                              <Typography> {pr.content}</Typography>
+                            </>
+                          );
+                        })}
+                      </TableCell>
+                      <TableCell>
+                        {p?.asks?.map((pr) => {
+                          console.log(pr);
+                          return (
+                            <>
+                              <Typography> {pr?.answer?.content}</Typography>
+                            </>
+                          );
+                        })}
+                      </TableCell>
+                    </TableRow>
                   );
                 })}
-                <hr />
-                <hr />
-              </>
-            );
-          })}
-        </>
-      )} */}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      }
     </>
   );
 };

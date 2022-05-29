@@ -1,15 +1,19 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsksOneUserOneProduct } from "../../redux/actions";
 import { ResponderPregunta } from "./ResponderPregunta";
 
-export const VerHilo = ({ userId, productId }) => {
+export const VerHilo = ({ user, prod, preg }) => {
   const dispatch = useDispatch();
   const pregunta = useSelector((state) => state.getAsksOneUserOnePruduct);
 
-  let { user, prod, preg } = useParams();
+  // let { user, prod, preg } = useParams();
+
+
+
+
 
   useEffect(() => {
     dispatch(getAsksOneUserOneProduct(user, prod));
@@ -51,6 +55,29 @@ export const VerHilo = ({ userId, productId }) => {
 
                           <ResponderPregunta askId={preg} />
                       
+
+{/* {
+  <div>
+
+ <Button onClick={ handleOpen }>Agregar al Carrito</Button>
+<Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        
+        ssss
+
+            <Button type="submit"> Agregar </Button>
+            <Button onClick={() => setOpen(false)}> Cancelar </Button>
+       
+      
+      </Modal>
+      </div>
+      } */}
+
+
     </div>
   );
 };
