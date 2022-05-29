@@ -277,11 +277,11 @@ export default function AdminMenuLarge() {
 
         <Divider variant="middle" />
 
-        <ListItemButton component="a" href="/clients" sx={{ pl: 4 }}>
+        <ListItemButton component="a" href="/usersPanel" sx={{ pl: 4 }}>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Clientes" />
+          <ListItemText primary="Usuarios" />
         </ListItemButton>
 
       </List>

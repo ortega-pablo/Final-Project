@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -15,11 +15,18 @@ import { useDispatch } from "react-redux";
 import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import GoogleLogin from 'react-google-login';
+import { gapi } from "gapi-script";
+
+const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
 
 
 
 const validationSchema = yup.object({
-  userName: yup.string("Enter your User Name").required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .required("Email is required"),
   password: yup
     .string("Enter your password")
     .min(8, "Password should be of minimum 8 characters length")
@@ -31,7 +38,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      userName: "",
+      email: "",
       password: "",
     },
     validationSchema: validationSchema,
@@ -66,6 +73,48 @@ export const Login = () => {
     },
   });
 
+  useEffect(() => {
+    function start() {
+    gapi.client.init({
+    clientId:idClientGoogleLogin,
+    scope: 'email',
+      });
+       }
+      gapi.load('client:auth2', start);
+       }, []);
+
+
+  const handleLoginGoogle = async (googleData) => {
+
+    const res = await fetch(`http://localhost:3001/users/google-login`, {
+      method: 'POST',
+      body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await res.json();
+    console.log("RPTA BACK", data)
+    window.localStorage.setItem("token", JSON.stringify(data)); 
+    const ls = JSON.parse(localStorage.getItem("token"))
+    dispatch(verifyToken(ls?.token))
+    Swal.fire({
+      background: '#DFDCD3',
+      icon: 'success',
+      title: 'Logeado',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    navigate(`/`)
+  }
+
+  function handleFailureGoogle (fail){
+    console.log("ERROR LOGEO GOOGLE",JSON.stringify (fail)) 
+  }
+
   return (
     <>
 
@@ -98,13 +147,13 @@ export const Login = () => {
             margin="normal"
             required
             fullWidth
-            id="userName"
-            label="User Name"
-            name="userName"
-            value={formik.values.userName}
+            id="email"
+            label="Email"
+            name="email"
+            value={formik.values.email}
             onChange={formik.handleChange}
-            error={formik.touched.userName && Boolean(formik.errors.userName)}
-            helperText={formik.touched.userName && formik.errors.userName}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
           <TextField
             margin="normal"
@@ -139,6 +188,13 @@ export const Login = () => {
               </Link>
             </Grid>
           </Grid>
+          <GoogleLogin
+                    clientId={idClientGoogleLogin}
+                    buttonText="Logeate con Google"
+                    onSuccess={handleLoginGoogle}
+                    onFailure={handleFailureGoogle}
+                    cookiePolicy={'single_host_origin'}
+          />
         </Box>
       </Paper>
     </Container>
@@ -146,3 +202,4 @@ export const Login = () => {
     </>
   );
 };
+

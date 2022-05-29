@@ -11,7 +11,7 @@ import CreateCategoryToAdmin from './Get/Create-Modify/CreateCategoryToAdmin'
 function CreateCategory() {
   const userStatus = useSelector((state) => state.userStatus);
     return (
-      userStatus === 'admin'?
+      userStatus === "admin" || userStatus === "superAdmin"?
         <Box
           maxWidth="vp"
           sx={{
