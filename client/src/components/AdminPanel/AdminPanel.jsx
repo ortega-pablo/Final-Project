@@ -11,7 +11,7 @@ function AdminPanel() {
 
   return (
     
-      userStatus === "admin" ?
+    userStatus === "admin" || userStatus === "superAdmin" ?
       <Box
         maxWidth="vp"
         sx={{

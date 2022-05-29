@@ -9,7 +9,7 @@ import {NewProduct} from './Get/Create-Modify/NewProduct'
 function CreateProduct() {
   const userStatus = useSelector((state) => state.userStatus);
     return (
-      userStatus === 'admin' ?
+      userStatus === "admin" || userStatus === "superAdmin" ?
         <Box
           maxWidth="vp"
           sx={{

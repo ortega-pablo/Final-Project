@@ -9,7 +9,7 @@ import { AdministrateProduct } from './Get/Create-Modify/AdministrateProducts';
 function AdminProducts() {
   const userStatus = useSelector((state) => state.userStatus);
   return (
-    userStatus === 'admin'?
+    userStatus === "admin" || userStatus === "superAdmin"?
     <Box
       maxWidth="vp"
       sx={{
