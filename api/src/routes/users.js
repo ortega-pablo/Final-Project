@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
 const verifyToken = require("../middleware/auth");
+const { OAuth2Client } = require("google-auth-library");
 const cors = require("cors");
 
 // Register User
@@ -70,11 +71,10 @@ router.post("/create", async (req, res, next) => {
 // Login User
 
 router.post("/login", async (req, res, next) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { userName } });
-    //console.log(user);
+    const user = await User.findOne({ where: { email } });
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.password);
     if (!(user && passwordCorrect)) {
@@ -100,21 +100,17 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.get("/verifyToken", [cors(), verifyToken], async (req, res) => {
-  //console.log(req);
   try {
     res.json({ msg: req.role });
   } catch (error) {
-    console.error(error.message);
     res.status(500).send("Error en el servidor");
   }
 });
 
 router.get("/userId", [cors(), verifyToken], async (req, res) => {
-  //console.log(req);
   try {
     res.json({ idUser: req.id });
   } catch (error) {
-    console.error(error.message);
     res.status(500).send("Error en el servidor");
   }
 });
@@ -225,7 +221,6 @@ router.get("/:userId", async (req, res) => {
 
 router.delete("/deleteUser", async (req, res, next) => {
   const { adminId, userId } = req.query;
-
   try {
     const findAdmin = await User.findOne({
       where: {
@@ -290,7 +285,7 @@ router.delete("/deleteAdmin", async (req, res, next) => {
 
 router.put("/editUser", async (req, res, next) => {
   const { adminId, userId } = req.query;
-  const {userName,email,firstName,lastName,phone,role,}=req.body
+  const { userName, email, firstName, lastName, phone, role } = req.body;
   try {
     const findAdmin = await User.findOne({
       where: {
@@ -312,22 +307,24 @@ router.put("/editUser", async (req, res, next) => {
         },
       });
       if (findUser) {
-        await User.update({
-          userName,
-          email,
-          firstName,
-          lastName,
-          phone,
-          role,
-        },
-        {
-          where: {
-              id: userId
+        await User.update(
+          {
+            userName,
+            email,
+            firstName,
+            lastName,
+            phone,
+            role,
+          },
+          {
+            where: {
+              id: userId,
+            },
           }
-        });
-        res.status(200).send("User updated successfully!") 
-      }else{
-        res.send("User not found")
+        );
+        res.status(200).send("User updated successfully!");
+      } else {
+        res.send("User not found");
       }
     } else {
       res.send("User not authorized");
@@ -339,7 +336,7 @@ router.put("/editUser", async (req, res, next) => {
 
 router.put("/editAdmin", async (req, res, next) => {
   const { adminId, superAdminId } = req.query;
-  const {userName,email,firstName,lastName,phone,role,}=req.body
+  const { userName, email, firstName, lastName, phone, role } = req.body;
   try {
     const findSuperAdmin = await User.findOne({
       where: {
@@ -355,22 +352,24 @@ router.put("/editAdmin", async (req, res, next) => {
         },
       });
       if (findUser) {
-        await User.update({
-          userName,
-          email,
-          firstName,
-          lastName,
-          phone,
-          role,
-        },
-        {
-          where: {
-              id: adminId
+        await User.update(
+          {
+            userName,
+            email,
+            firstName,
+            lastName,
+            phone,
+            role,
+          },
+          {
+            where: {
+              id: adminId,
+            },
           }
-        });
-        res.status(200).send("User updated successfully!") 
-      }else{
-        res.send("User not found")
+        );
+        res.status(200).send("User updated successfully!");
+      } else {
+        res.send("User not found");
       }
     } else {
       res.send("User not authorized");
@@ -415,5 +414,145 @@ router.put(
     }
   }
 );
+
+router.put(
+  "/changeAdminToUser/:userId",
+  [cors(), verifyToken],
+  async (req, res, next) => {
+    const { userId } = req.params;
+    try {
+      if (req.role === "superAdmin") {
+        const findUser = await User.findOne({
+          where: {
+            id: userId,
+          },
+        });
+        if (findUser && findUser.dataValues.role === "admin") {
+          await User.update(
+            {
+              role: "user",
+            },
+            {
+              where: {
+                id: userId,
+              },
+            }
+          );
+          res.status(200).send("User updated successfully!");
+        } else {
+          res.send("Admin not found or isnot a Admin");
+        }
+      } else {
+        res.status(401).send("User not authorized");
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/* RESET PASSWORD USER WITHOUT THE OLD PASSWORD */
+router.put("/resetPasswordWithoutOld/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { newPassword } = req.body;
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (findUser) {
+      let Hashpassword = bcrypt.hashSync(newPassword, 10);
+
+      await User.update(
+        {
+          password: Hashpassword,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("password updated successfully!");
+    } else {
+      res.send("user not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+/* RESET PASSWORD USER WITH THE OLD PASSWORD */
+router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { oldPassword, newPassword } = req.body;
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (findUser) {
+      const passwordCorrect =
+        findUser === null
+          ? false
+          : await bcrypt.compare(oldPassword, findUser.dataValues.password);
+      if (!passwordCorrect) {
+        res.status(400).json({
+          error: "invalid user or password",
+        });
+      }
+      let Hashpassword = bcrypt.hashSync(newPassword, 10);
+      await User.update(
+        {
+          password: Hashpassword,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("password updated successfully!");
+    } else {
+      res.send("user not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+/*VALID USER WITH GOOGLE */
+
+const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
+
+router.post("/google-login", async (req, res) => {
+  const { token } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+  const { name, email, given_name, family_name } = ticket.getPayload();
+  const [user, created] = await User.findOrCreate({
+    where: { email: email },
+    defaults: {
+      userName: name,
+      firstName: given_name,
+      lastName: family_name,
+    },
+  });
+  const userforToken = {
+    id: user.dataValues.id,
+    username: user.dataValues.username,
+    rol: user.dataValues.rol,
+  };
+
+  const token2 = jwt.sign(userforToken, KEY_WORD_JWT);
+  res.status(200).send({
+    firstName: user.dataValues.firstName,
+    username: user.dataValues.username,
+    token: token2,
+  });
+});
 
 module.exports = router;
