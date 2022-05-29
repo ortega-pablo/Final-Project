@@ -16,7 +16,8 @@ export default function ModalToRow({
   setCantidad,
   stock,
   render,
-  setRender
+  setRender,
+  precio
 }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -29,7 +30,7 @@ export default function ModalToRow({
 
   const handleSubmitCart = (e) => {
     e.preventDefault();
-    if( cantidad <= stock ){
+    if (cantidad <= stock) {
       dispatch(addItemToCart(id, token, cantidad));
       setOpen(false);
       setRender(!render);
@@ -41,24 +42,24 @@ export default function ModalToRow({
         timer: 1500,
       });
     } else {
-      setOpen(false)
+      setOpen(false);
       Swal.fire({
         background: "#DFDCD3",
         confirmButtonColor: "#B6893E",
         icon: "error",
         title: "Oops...",
         text: "Stock insuficiente para la cantidad que seleccionaste",
-      }).then(()=>{
-        setOpen(true)
-      })
-
+      }).then(() => {
+        setOpen(true);
+      });
     }
   };
+  const subTotal = precio*cantidad
 
   return (
-    <div>
-      <IconButton size='small' onClick={handleOpen}>
-        <EditIcon size='small' />
+    <Box>
+      <IconButton size="small" onClick={handleOpen}>
+        <EditIcon size="small" />
       </IconButton>
       <Modal
         open={open}
@@ -79,32 +80,54 @@ export default function ModalToRow({
             p: 4,
           }}
         >
-        <Typography>Stock: {stock}</Typography>
+        <Box sx={{display:'flex', justifyContent:'space-around'}}>
+          <Typography>Stock: {stock}</Typography>
+          <Typography>Precio: {precio}</Typography>
+          <Typography>SubTotal: {subTotal}</Typography>
+        </Box>
           <form
             onSubmit={(e) => {
               handleSubmitCart(e);
             }}
           >
-            <TextField
-              margin="normal"
-              type="number"
-              required
-              id="cantidad"
-              label={cantidad}
-              value={cantidad}
-              name="cantidad"
+            <Box
               sx={{
-                width: 100,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
               }}
-              onChange={(e) => {
-                handleSetCantidad(e);
-              }}
-            ></TextField>
-            <Button type="submit"> Confirmar </Button>
-            <Button onClick={() => setOpen(false)}> Volver </Button>
+            >
+              <TextField
+                margin="normal"
+                type="number"
+                required
+                id="cantidad"
+                label={cantidad}
+                value={cantidad}
+                name="cantidad"
+                sx={{
+                  width: 100,
+                }}
+                onChange={(e) => {
+                  handleSetCantidad(e);
+                }}
+              ></TextField>
+              <Button type="submit" variant="contained" color="ambar3">
+                {" "}
+                Confirmar{" "}
+              </Button>
+              <Button
+                onClick={() => setOpen(false)}
+                variant="contained"
+                color="ambar3"
+              >
+                {" "}
+                Volver{" "}
+              </Button>
+            </Box>
           </form>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

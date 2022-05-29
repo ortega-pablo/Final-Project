@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import DetailRow from "./Rows/DetailRow";
-import { getCartById, setCartAmount } from "../../redux/actions";
+import { clearCart, getCartById, setCartAmount } from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -30,7 +30,8 @@ const CartView = () => {
 
   useEffect(() => {
     dispatch(getCartById(token));
-  }, [render]);
+    return (()=> dispatch(clearCart()))
+  }, [dispatch, render]);
 
   let totalAmount = 0;
   cart.products?.forEach((p) => {
@@ -51,57 +52,79 @@ const CartView = () => {
     navigate("/checkout");
   };
 
+
+
   return (
     <>
-      <Box maxHeight={600} sx={{  p:5,  mt: 5,  display:'flex', justifyContent:'space-around' }}>
-        <TableContainer   sx={{  alignItems:'center',width:'60%'}} component={Paper} >
-          <Table>
-            <TableHead>
-              <TableCell>
-                <Typography variant="h5">Producto</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="h5">Cantidad</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="h5">Precio</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="h5">SubTotal</Typography>
-              </TableCell>
-              <TableCell>
-              <DeleteIcon fontSize="small" />
-              </TableCell>
-            </TableHead>
-            <TableBody sx={{ width: "100%" }}>
-              {cart?.products?.map((p) => {
-                return (
-                  <DetailRow
-                    token={token}
-                    row={p}
-                    cartId={cart.id}
-                    setRender={setRender}
-                    render={render}
-                  />
-                );
-              })}
-              <TableRow >
+      <Box
+        sx={{ p: 5, mt: 5, display: "flex", justifyContent: "space-around" }}
+      >
+        <Box sx={{ alignItems: "center", width: "60%" }}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
                 <TableCell>
-                  <Typography variant="h4" >Total</Typography>
+                  <Typography variant="h5">Producto</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="h6" >{totalAmount}</Typography>
+                  <Typography variant="h5">Cantidad</Typography>
                 </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-          <Button onClick={(e) => handleConfirmAndSetAmount(e)}>
-            {" "}
-            Confirmar carrito
-          </Button>
-        </TableContainer>
-        <Container  sx={{width:'25%'}}>
-          <CartResume totalAmount={totalAmount}/>
+                <TableCell>
+                  <Typography variant="h5">Precio</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="h5">SubTotal</Typography>
+                </TableCell>
+
+              </TableHead>
+              <TableBody sx={{ width: "100%" }}>
+                {cart?.products?.map((p) => {
+                  return (
+                    <DetailRow
+                      token={token}
+                      row={p}
+                      cartId={cart.id}
+                      setRender={setRender}
+                      render={render}
+                    />
+                  );
+                })}
+                <TableRow>
+                  <TableCell>
+                    <Typography variant="h4">Total</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="h6">{totalAmount}</Typography>
+                  </TableCell>
+                  <TableCell sx={{ border: "none" }}/>
+                  <TableCell sx={{ border: "none" }} align='ri'>
+                    <Button
+                      onClick={(e) => handleConfirmAndSetAmount(e)}
+                      variant="contained"
+                      color="ambar3"
+                      
+                    >
+                      Confirmar
+                    </Button>
+                  </TableCell>
+                  
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        <Container sx={{ width: "35%" }}>
+          <CartResume totalAmount={totalAmount} />
+          <Container sx={{ mt: 10, textAlign: "center" }}>
+            <Button
+              variant="contained"
+              color="ambar3"
+              sx={{ alignSelf: "flex-end" }}
+              href='/'
+            >
+              Volver
+            </Button>
+          </Container>
         </Container>
       </Box>
     </>

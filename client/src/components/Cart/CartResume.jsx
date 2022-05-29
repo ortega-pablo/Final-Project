@@ -11,28 +11,28 @@ export const CartResume = ({totalAmount}) => {
             Resumen de la compra
           </Typography>
           <Divider/>
-          <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between',p:1}}>
-            <Typography variant='h5'>
+          <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between',p:1 , m:1}}>
+            <Typography >
               Subtotal
             </Typography>
-            <Typography variant='h6'>
+            <Typography >
               {totalAmount} $
             </Typography>
           </Box>
-          <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', p:1}}>
-            <Typography variant='h5'>
-              Envio gratuito
+          <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', p:1, m:1}}>
+            <Typography>
+              Envio 
             </Typography>
-            <Typography variant='h6'>
+            <Typography >
               0 $
             </Typography>
           </Box>
           <Divider/>
-          <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between',p:1}}>
-            <Typography variant='h4'>
+          <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between',p:1, m:1}}>
+            <Typography variant='h6'>
               Total a pagar
             </Typography>
-            <Typography variant='h5'>
+            <Typography variant='h6'>
               {totalAmount} $
             </Typography>
 

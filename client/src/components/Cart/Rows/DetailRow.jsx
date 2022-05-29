@@ -21,9 +21,8 @@ const DetailRow = (props) => {
   const dispatch = useDispatch();
   const { row, cartId, token, setRender, render } = props;
   const [cantidad, setCantidad] = useState(row.Quantity.total);
-  const [precio, setPrecio] = useState(row.price);
 
-  const total = precio * row.Quantity.total;
+  const total = row.price * row.Quantity.total;
   const handleDelete = (e) => {
     e.preventDefault();
     Swal.fire({
@@ -67,15 +66,15 @@ const DetailRow = (props) => {
           stock={row.productInventory.quantity}
           setRender={setRender}
           render={render}
+          precio={row.price}
         />
       </TableCell>
-      <TableCell >
+      <TableCell>
         <Typography>{row.price}</Typography>
       </TableCell>
-      <TableCell >
+      <TableCell width='20%'>
         <Typography>{total}</Typography>
       </TableCell>
-      <TableCell>
         <IconButton
           aria-label="delete"
           size="small"
@@ -86,7 +85,6 @@ const DetailRow = (props) => {
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
-      </TableCell>
     </TableRow>
   );
 };

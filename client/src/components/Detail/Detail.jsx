@@ -142,7 +142,6 @@ export const Detail = () => {
                 sx={{ fontSize: "18px", color: "ambar5.main" }}
               />
             </Divider>
-
             <TableDetail productDetail={productDetail} />
 
             <Divider textAlign="left" sx={{ mt: "2%", mb: "2%" }}>
