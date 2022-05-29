@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../../redux/actions";
+import { addItemToCart, getCartById, getDetail } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
@@ -24,6 +24,8 @@ import { Footer } from "../Footer/Footer";
 import { BoxGeneral } from "../../personalizadTheme";
 import AllReviews from "./AllReviews";
 import Swal from "sweetalert2";
+import CartModal from "../Cart/CartModal"
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -42,6 +44,8 @@ export const Detail = () => {
   const dispatch = useDispatch();
   //deberia ser un state.detail
   let productDetail = useSelector((state) => state.productDetail);
+  const cart = useSelector((state)=> state.cart)
+  const userStatus = useSelector((state) => state.userStatus);
 
   let { id } = useParams();
 
@@ -53,26 +57,13 @@ export const Detail = () => {
     dispatch(getDetail(id));
   };
 
+  const token = JSON.parse(window.localStorage.getItem("token"))?.token;
   useEffect(() => {
-    //tendria que ser un getDitail(id) desde las action
     dispatch(getDetail(id));
-    // return (()=>{
-
-      //     dispatch(clearDetail())
-      // })
+    dispatch(getCartById(token))
     }, [dispatch]);
-
-    const handleAddToCart = (e) => {
-    e.preventDefault();
     
-    Swal.fire({
-      background: '#DFDCD3',
-      icon: 'success',
-      title: 'Agregado al carrito',
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
+
     
     const [openModal, setOpenModal] = React.useState(false);
     const handleOpenModal = () => setOpenModal(true);
@@ -122,8 +113,8 @@ export const Detail = () => {
               }}
             />
 
-            <Button onClick={(e)=>handleAddToCart(e)} > Agregar al carrito </Button>
-
+            <CartModal token={token} id={productDetail[0].id} description={productDetail[0].description} cartProducts={cart.products} userStatus={userStatus} />
+            
             <Divider textAlign="left">
               <Chip
                 label="Descripción"

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer, ShoppingCart, Address, Product } = require("../db");
+const { User, Ask, Answer, ShoppingCart, Address, Product, Order } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -36,7 +36,7 @@ const cors = require("cors");
 //   }
 // });
 router.post("/create", async (req, res, next) => {
-  const { userName, email, password, firstName, lastName, phone, role, amount, shippingAddress } =
+  const { userName, email, password, firstName, lastName, phone, role } =
     req.body;
   try {
     let Hashpassword = bcrypt.hashSync(password, 10);
@@ -55,15 +55,11 @@ router.post("/create", async (req, res, next) => {
       lastName,
       phone,
       role,
-      amount,
-      shippingAddress
     });
 
     const addShoppingCart = await ShoppingCart.create({
-      amount,
-      shippingAddress
     });
-
+    
     addShoppingCart.setUser(newUser);
 
 
@@ -144,7 +140,13 @@ router.get("/", async (req, res, next) => {
           },
           {
             model: Address
-          }
+          },
+          {
+            model: Order,
+            include: {
+              model: Product
+            }
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -206,6 +208,12 @@ router.get("/:userId", async (req, res) => {
           },
           {
             model: Address
+          },
+          {
+            model: Order,
+            include: {
+              model: Product
+            }
           },
           {
             model: ShoppingCart,

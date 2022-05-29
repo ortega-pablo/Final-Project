@@ -18,6 +18,9 @@ module.exports = (sequelize) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
     }
   });
 };
