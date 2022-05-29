@@ -1,62 +1,76 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, CircularProgress } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import AdminMenuLarge from "./AdminMenuLarge";
 import AdminMenuMobile from "./AdminMenuMobile";
 import Bienvenida from "./Bienvenida";
 import { NotFound } from "../NotFound/NotFound";
+import { useNavigate } from "react-router-dom";
 
 function AdminPanel() {
   const userStatus = useSelector((state) => state.userStatus);
+  const navigate = useNavigate();
 
-  return (
-    
-    userStatus === "admin" || userStatus === "superAdmin" ?
-      <Box
+  return userStatus === "admin" || userStatus === "superAdmin" ? (
+    <Box
+      maxWidth="vp"
+      sx={{
+        gap: 0,
+        display: "flex",
+        flexDirection: "column",
+        margin: 0,
+        width: "100%",
+        justifyContent: "space-between",
+      }}
+    >
+      <AdminMenuMobile />
+
+      <Container
         maxWidth="vp"
         sx={{
-          gap: 0,
           display: "flex",
-          flexDirection: "column",
-          margin: 0,
+          flexDirection: "row",
           width: "100%",
-          justifyContent: "space-between",
+          height: "100%",
+          marginTop: 1,
+          padding: 0,
         }}
       >
-        <AdminMenuMobile />
+        <AdminMenuLarge />
 
         <Container
-          maxWidth="vp"
           sx={{
             display: "flex",
-            flexDirection: "row",
-            width: "100%",
+            flexDirection: "column",
             height: "100%",
-            marginTop: 1,
+            width: "100%",
             padding: 0,
+            alignItems: "center",
           }}
         >
-          <AdminMenuLarge />
-
-          <Container
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-              width: "100%",
-              padding: 0,
-              alignItems: "center",
-            }}
-          >
-
-            <Bienvenida/>
-            
-          </Container>
+          <Bienvenida />
         </Container>
-      </Box>
-      :
-      <NotFound />
-    
+      </Container>
+    </Box>
+  ) : (
+    <Box
+      maxWidth="vp"
+      sx={{
+        gap: 0,
+        display: "flex",
+        flexDirection: "column",
+        margin: 0,
+        width: "100%",
+        justifyContent: "space-between",
+      }}
+    >
+      <CircularProgress
+        sx={{
+          alignSelf: "center",
+          mt: "20%",
+        }}
+      />
+    </Box>
   );
 }
 

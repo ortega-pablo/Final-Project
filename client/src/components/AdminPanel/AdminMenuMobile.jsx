@@ -357,7 +357,7 @@ function AdminMenuMobile({
 
             <Divider variant="middle" />
 
-            <ListItemButton>
+            <ListItemButton component="a" href="/usersPanel">
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
