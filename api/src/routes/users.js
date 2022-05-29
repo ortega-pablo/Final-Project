@@ -1,7 +1,15 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer, ShoppingCart, Address, Product, Order } = require("../db");
+const {
+  User,
+  Ask,
+  Answer,
+  ShoppingCart,
+  Address,
+  Product,
+  Order,
+} = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -133,13 +141,13 @@ router.get("/", async (req, res, next) => {
             ],
           },
           {
-            model: Address
+            model: Address,
           },
           {
             model: Order,
             include: {
-              model: Product
-            }
+              model: Product,
+            },
           },
         ],
       });
@@ -206,8 +214,8 @@ router.get("/:userId", async (req, res) => {
           {
             model: Order,
             include: {
-              model: Product
-            }
+              model: Product,
+            },
           },
           {
             model: ShoppingCart,
@@ -498,7 +506,7 @@ router.put("/resetPasswordWithoutOld/:userId", async (req, res, next) => {
 router.put("/resetPasswordWithOld", async (req, res, next) => {
   try {
     const { userId } = req.query;
-    const { oldPassword, newPassword, userName, lastName, phone, firstName } = req.body;
+    const { oldPassword, newPassword } = req.body;
     const findUser = await User.findOne({
       where: {
         id: userId,
@@ -510,18 +518,14 @@ router.put("/resetPasswordWithOld", async (req, res, next) => {
           ? false
           : await bcrypt.compare(oldPassword, findUser.dataValues.password);
       if (!passwordCorrect) {
-       return res.status(400).json({
-          error: "invalid  password",
+        return res.status(400).json({
+          error: "invalid user or password",
         });
       }
       let Hashpassword = bcrypt.hashSync(newPassword, 10);
       await User.update(
         {
           password: Hashpassword,
-          userName,
-          lastName,
-          phone,
-          firstName
         },
         {
           where: {
@@ -530,6 +534,38 @@ router.put("/resetPasswordWithOld", async (req, res, next) => {
         }
       );
       res.status(200).send("password updated successfully!");
+    } else {
+      res.send("user not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/updateDatesUser/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { userName, firstName, lastName, phone } = req.body;
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (findUser) {
+      await User.update(
+        {
+          userName,
+          firstName,
+          lastName,
+          phone,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("user updated successfully!");
     } else {
       res.send("user not found");
     }
