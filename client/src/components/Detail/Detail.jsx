@@ -50,7 +50,6 @@ export const Detail = () => {
   const [reRender, setReRender] = React.useState("");
 
   const handleReRender = (e) => {
-    console.log(e);
     setReRender(`Ultimo ordenamiento ${e}`);
     dispatch(getDetail(id));
   };
