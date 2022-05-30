@@ -9,7 +9,6 @@ export const OrdersOneUser = ({userId}) => {
     useEffect(()=>{
         dispatch(getAllOrdersOneUser(2))
     }, [dispatch])
-
     console.log(allOrderOneUser)
   return (
       <>

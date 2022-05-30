@@ -78,7 +78,7 @@ export const AdminDiscount = () => {
             <Button
               value={d.id}
                 onClick={(e) => handleEditDiscount(e)}
-              name="delete"
+              name="edit"
               //   startIcon={<EditIcon />}
             >
               Editar

@@ -1,14 +1,22 @@
-import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../../redux/actions";
-import { NotFound } from "../../NotFound/NotFound";
 import AdminMenuLarge from "../AdminMenuLarge";
 import AdminMenuMobile from "../AdminMenuMobile";
 import GetAllUsersToAdmin from "../UserPanel/GetAllUsersToAdmin";
+import UsersFilters from "./UsersFilters";
+import { NotFound } from "../../NotFound/NotFound";
+import { Box, Container } from "@mui/material";
 
 function UsersPanel() {
   const userStatus = useSelector((state) => state.userStatus)
+  const dispatch = useDispatch();
+  const [render,setRender] = useState("")
+  const [order,setOrder]= useState("")
+  
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [render]);
 
   return (userStatus === "admin" || userStatus === "superAdmin") ? (
     <Box
@@ -47,7 +55,8 @@ function UsersPanel() {
             alignItems: "center",
           }}
         >
-          <GetAllUsersToAdmin user={userStatus}  />
+          <UsersFilters order={order} setOrder={setOrder} />
+          <GetAllUsersToAdmin user={userStatus} render={render} setRender={setRender} />
           
         </Container>
       </Container>
