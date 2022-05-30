@@ -97,9 +97,9 @@ export const getProducts = (name) => {
   return async (dispatch) => {
     let response;
     if (name === undefined)
-      response = await axios(`http://localhost:3001/products`);
+      response = await axios(`/products`);
     else {
-      response = await axios(`http://localhost:3001/products?name=${name}`);
+      response = await axios(`/products?name=${name}`);
     }
 
     return dispatch({
@@ -111,7 +111,7 @@ export const getProducts = (name) => {
 
 export const getDetail = (id) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/productDetail/${id}`);
+    let response = await axios(`/productDetail/${id}`);
     return dispatch({
       type: GET_DETAIL,
       payload: response.data,
@@ -123,7 +123,7 @@ export const postProduct = (payload) => {
   console.log(payload);
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/products`, payload);
+      let json = await axios.post(`/products`, payload);
       return json;
     } catch (error) {
       console.log(error);
@@ -136,7 +136,7 @@ export const postNewAsk = (payload, productId, userId) => {
     try {
       console.log(payload);
       let json = await axios.post(
-        `http://localhost:3001/asks?userId=${userId}&productId=${productId}`,
+        `/asks?userId=${userId}&productId=${productId}`,
         payload
       );
       return json;
@@ -150,7 +150,7 @@ export const postNewAnswer = (payload, askId, userId) => {
     try {
       console.log(payload);
       await axios.post(
-        `http://localhost:3001/answers?userId=${userId}&askId=${askId}`,
+        `/answers?userId=${userId}&askId=${askId}`,
         payload
       );
     } catch (error) {
@@ -167,7 +167,7 @@ export const postNewReview = (payload, productId, userId) => {
     try {
       console.log(payload);
       await axios.post(
-        `http://localhost:3001/orders/review?userId=${userId}&productId=${productId}`,
+        `/orders/review?userId=${userId}&productId=${productId}`,
         payload
       );
     } catch (error) {
@@ -183,7 +183,7 @@ export const postAddCateroryToProduct = (idP, idC, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/products/addCategory?productId=${idP}&categoryId=${idC}`,
+        `/products/addCategory?productId=${idP}&categoryId=${idC}`,
         payload
       ); //url + body
 
@@ -197,7 +197,7 @@ export const postAddSubCateroryToProduct = (idP, idSC, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/products/addSubCategory?productId=${idP}&subCategoryId=${idSC}`,
+        `/products/addSubCategory?productId=${idP}&subCategoryId=${idSC}`,
         payload
       ); //url + body
 
@@ -211,7 +211,7 @@ export const postAddSubCateroryToProduct = (idP, idSC, payload) => {
 export const postAddCaterory = (payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/categories`, payload);
+      let json = await axios.post(`/categories`, payload);
 
       return json;
     } catch (error) {
@@ -224,7 +224,7 @@ export const postAddSubCategory = (idC, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/categories?categoryId=${idC}`,
+        `/categories?categoryId=${idC}`,
         payload
       );
 
@@ -239,7 +239,7 @@ export const postAddQuantity = (idP, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/inventory?productId=${idP}`,
+        `/inventory?productId=${idP}`,
         payload
       );
 
@@ -254,7 +254,7 @@ export const postAddNewSpecification = (payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/specifications`,
+        `/specifications`,
         payload
       );
 
@@ -269,7 +269,7 @@ export const postAddSpecificationToProduct = (idP, idE, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/products/addSpecification?productId=${idP}&specificationId=${idE}`,
+        `/products/addSpecification?productId=${idP}&specificationId=${idE}`,
         payload
       ); //url + body
 
@@ -282,7 +282,7 @@ export const postAddSpecificationToProduct = (idP, idE, payload) => {
 
 export const getAllSpecifications = () => {
   return async (dispatch) => {
-    let response = await axios("http://localhost:3001/specifications/all");
+    let response = await axios("/specifications/all");
     return dispatch({
       type: GET_ALL_SPECIFICATIONS,
       payload: response.data,
@@ -294,7 +294,7 @@ export const postAddDiscountToProduct = (idP, idD) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/products/addDiscount?productId=${idP}&discountId=${idD}`
+        `/products/addDiscount?productId=${idP}&discountId=${idD}`
       );
 
       return json;
@@ -306,7 +306,7 @@ export const postAddDiscountToProduct = (idP, idD) => {
 
 export const getCategories = () => {
   return async (dispatch) => {
-    let response = await axios("http://localhost:3001/categories");
+    let response = await axios("/categories");
     return dispatch({
       type: GET_CATEGORIES,
       payload: response.data,
@@ -336,10 +336,10 @@ export const postRegisterUser = (payload) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(
-        "http://localhost:3001/users/create",
+        "/users/create",
         payload
       );
-      await axios.post("http://localhost:3001/sendEmail/welcome", payload);
+      await axios.post("/sendEmail/welcome", payload);
       return response;
     } catch (error) {
       console.log("hubo un error");
@@ -353,7 +353,7 @@ export const postLoginUser = (payload) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(
-        "http://localhost:3001/users/login",
+        "/users/login",
         payload
       );
       console.log(response);
@@ -385,7 +385,7 @@ export const clearFilters = () => {
 export function deleteProduct(id) {
   return async function (dispatch) {
     try {
-      await axios.delete(`http://localhost:3001/products/${id}`);
+      await axios.delete(`/products/${id}`);
 
       return dispatch({
         type: DELETE_PRODUCT,
@@ -401,7 +401,7 @@ export function putProduct(id, payload) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/products?productId=${id}`,
+        `/products?productId=${id}`,
         payload
       );
 
@@ -417,7 +417,7 @@ export function putProduct(id, payload) {
 
 export const getInventary = (id) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/inventory`);
+    let response = await axios(`/inventory`);
     return dispatch({
       type: GET_INVENTORY,
       payload: response.data,
@@ -428,7 +428,7 @@ export const getInventary = (id) => {
 export function putQuantity(id, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(`http://localhost:3001/inventory/${id}`, payload);
+      await axios.put(`/inventory/${id}`, payload);
 
       return dispatch({
         type: PUT_INVENTORY,
@@ -444,7 +444,7 @@ export function putCategoryToProduct(idP, idC) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/products?productId=${idP}&categoryId=${idC}`
+        `/products?productId=${idP}&categoryId=${idC}`
       );
       return dispatch({
         type: PUT_CATEGORY_TO_PRODUCT,
@@ -460,7 +460,7 @@ export function putSubCategoryToProduct(idP, idSc) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`
+        `/products?productId=${idP}&subCategoryId=${idSc}`
       );
       console.log("quiero eliminar las sub desde redux");
       console.log(idP);
@@ -477,7 +477,7 @@ export function putSubCategoryToProduct(idP, idSc) {
 export function deleteCategory(idCat) {
   return async function (dispatch) {
     try {
-      await axios.delete(`http://localhost:3001/categories/${idCat}`);
+      await axios.delete(`/categories/${idCat}`);
       console.log("eliminando categoria");
 
       return dispatch({
@@ -492,7 +492,7 @@ export function deleteCategory(idCat) {
 export function putCategory(idC, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(`http://localhost:3001/categories/${idC}`, payload);
+      await axios.put(`/categories/${idC}`, payload);
 
       return dispatch({
         type: PUT_CATEGORY,
@@ -507,7 +507,7 @@ export function putSubCategory(idSc, payload) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/categories/subcategories/${idSc}`,
+        `/categories/subcategories/${idSc}`,
         payload
       );
 
@@ -523,7 +523,7 @@ export function putSubCategory(idSc, payload) {
 export const getSubCategories = () => {
   return async (dispatch) => {
     let response = await axios(
-      "http://localhost:3001/categories/subcategories"
+      "/categories/subcategories"
     );
     return dispatch({
       type: GET_SUB_CATEGORIES,
@@ -536,7 +536,7 @@ export function deleteSubCategory(idSc) {
   return async function (dispatch) {
     try {
       await axios.delete(
-        `http://localhost:3001/categories/subcategories/${idSc}`
+        `/categories/subcategories/${idSc}`
       );
       console.log("eliminando sub categoria");
 
@@ -552,7 +552,7 @@ export function deleteSubCategory(idSc) {
 
 export const getAllDiscount = () => {
   return async (dispatch) => {
-    let response = await axios("http://localhost:3001/discounts");
+    let response = await axios("/discounts");
     return dispatch({
       type: GET_ALL_DISCOUNT,
       payload: response.data,
@@ -564,7 +564,7 @@ export function putRemoveOneDiscuntToProduct(idP, idD, payload) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/products?productId=${idP}&discountId=${idD}`,
+        `/products?productId=${idP}&discountId=${idD}`,
         payload
       );
 
@@ -580,7 +580,7 @@ export function putRemoveOneDiscuntToProduct(idP, idD, payload) {
 export function putDiscount(idD, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(`http://localhost:3001/discounts/${idD}`, payload);
+      await axios.put(`/discounts/${idD}`, payload);
       return dispatch({
         type: PUT_DISCOUNT,
       });
@@ -593,7 +593,7 @@ export function putDiscount(idD, payload) {
 export const postDiscount = (payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/discounts`, payload);
+      let json = await axios.post(`/discounts`, payload);
 
       return json;
     } catch (error) {
@@ -609,7 +609,7 @@ export const verifyToken = (token) => {
     };
     try {
       let response = await axios.get(
-        "http://localhost:3001/users/verifyToken",
+        "/users/verifyToken",
         config
       );
       return dispatch({
@@ -629,7 +629,7 @@ export const getUserIdByToken = (token) => {
     };
     try {
       let response = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
       return response.data.idUser;
@@ -642,7 +642,7 @@ export const getUserIdByToken = (token) => {
 export function deleteDiscount(idD) {
   return async function (dispatch) {
     try {
-      await axios.delete(`http://localhost:3001/discounts/${idD}`);
+      await axios.delete(`/discounts/${idD}`);
 
       return dispatch({
         type: DELETE_DISCOUTN,
@@ -658,7 +658,7 @@ export function putValueSpecificationOneProduct(idP, idS, payload) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/specifications?productId=${idP}&specificationId=${idS}`,
+        `/specifications?productId=${idP}&specificationId=${idS}`,
         payload
       );
 
@@ -676,7 +676,7 @@ export function putRemoveOneSpecificationOneProduct(idP, idS, payload) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/products?productId=${idP}&specificationId=${idS}`,
+        `/products?productId=${idP}&specificationId=${idS}`,
         payload
       );
 
@@ -693,7 +693,7 @@ export function putRemoveOneSpecificationOneProduct(idP, idS, payload) {
 export const getImages = () => {
   return async (dispatch) => {
     let response = await axios(
-      "http://localhost:3001/categories/subcategories"
+      "/categories/subcategories"
     );
     return dispatch({
       type: GET_SUB_CATEGORIES,
@@ -706,7 +706,7 @@ export const postAddImageToProduct = (idP, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/images/uploadProduct?productId=${idP}`,
+        `/images/uploadProduct?productId=${idP}`,
         payload
       ); //url + body
       console.log(idP);
@@ -721,7 +721,7 @@ export const postAddImageToProduct = (idP, payload) => {
 export function deleteSpecification(idS) {
   return async function (dispatch) {
     try {
-      await axios.delete(`http://localhost:3001/specifications/${idS}`);
+      await axios.delete(`/specifications/${idS}`);
 
       return dispatch({
         type: DELETE_SPECIFICATION,
@@ -737,7 +737,7 @@ export function deleteImageToProduct(idP, idI) {
   return async function (dispatch) {
     try {
       await axios.delete(
-        `http://localhost:3001/images?productId=${idP}&imageId=${idI}`
+        `/images?productId=${idP}&imageId=${idI}`
       );
 
       return dispatch({
@@ -754,7 +754,7 @@ export function putNameSpecification(idS, payload) {
   console.log("payload => ", payload);
   return async function (dispatch) {
     try {
-      await axios.put(`http://localhost:3001/specifications/${idS}`, payload);
+      await axios.put(`/specifications/${idS}`, payload);
 
       return dispatch({
         type: PUT_NAME_SPECIFICATION,
@@ -771,7 +771,7 @@ export const postNewPaymentMethod = (payload) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `http://localhost:3001/checkOut`,
+        `/checkOut`,
         payload
       );
       return response.data;
@@ -794,7 +794,7 @@ export function putNameSubcategoria(idS, payload) {
   return async function (dispatch) {
     try {
       await axios.put(
-        `http://localhost:3001/categories/subcategories/${idS}`,
+        `/categories/subcategories/${idS}`,
         payload
       );
 
@@ -810,7 +810,7 @@ export function putNameSubcategoria(idS, payload) {
 
 export const getImage = () => {
   return async (dispatch) => {
-    let response = await axios("http://localhost:3001/images");
+    let response = await axios("/images");
     return dispatch({
       type: GET_IMAGES,
       payload: response.data,
@@ -819,7 +819,7 @@ export const getImage = () => {
 };
 export const getDetailOneProduct = (id) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/productDetail/${id}`);
+    let response = await axios(`/productDetail/${id}`);
     return dispatch({
       type: GET_DETAIL_ONE_PRODUCT,
       payload: response.data,
@@ -834,11 +834,11 @@ export const getCartById = (token) => {
   return async (dispatch) => {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
       let response = await axios(
-        `http://localhost:3001/shoppingCart?userId=${responseId.data.idUser}`
+        `/shoppingCart?userId=${responseId.data.idUser}`
       );
       return dispatch({
         type: GET_CART_BY_ID,
@@ -853,7 +853,7 @@ export const getCartForChild = (id) => {
   return async (dispatch) => {
     try {
       let response = await axios(
-        `http://localhost:3001/shoppingCart?userId=${id}`
+        `/shoppingCart?userId=${id}`
       );
       return dispatch({
         type: GET_CART_FOR_CHILD,
@@ -872,11 +872,11 @@ export const addItemToCart = (productId, token, cantidad) => {
     };
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
       await axios.put(
-        `http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,
+        `/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,
         { quantity: cantidad }
       );
       return dispatch({
@@ -892,7 +892,7 @@ export const deleteFromCart = (productId, userId) => {
   return async (dispatch) => {
     try {
       await axios.put(
-        `http://localhost:3001/shoppingCart/removeProduct?userId=${userId}&productId=${productId}`
+        `/shoppingCart/removeProduct?userId=${userId}&productId=${productId}`
       );
       return dispatch({
         type: DELETE_FROM_CART,
@@ -907,7 +907,7 @@ export const setCartAmount = (id, amount) => {
   return async (dispatch) => {
     try {
       await axios.put(
-        `http://localhost:3001/shoppingCart/addAmount?userId=${id}`,
+        `/shoppingCart/addAmount?userId=${id}`,
         { amount }
       );
       return dispatch({
@@ -930,7 +930,7 @@ export const clearCart = () => {
 export function getDetailOneUsers( id) {
   return async function(dispatch) {
     try {
-      const response = await axios(`http://localhost:3001/users/${id}`)
+      const response = await axios(`/users/${id}`)
       return dispatch({
         type: GET_ONE_USER,
         payload: response.data,
@@ -943,7 +943,7 @@ export function getDetailOneUsers( id) {
 
 export const getAllAsk = () => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/asks`);
+    let response = await axios(`/asks`);
     return dispatch({
       type: GET_ALL_ASK,
       payload: response.data,
@@ -954,7 +954,7 @@ export const getAllAsk = () => {
 export const getAsksForOneProducts = (idUser, idProduct) => {
   return async (dispatch) => {
     let response = await axios(
-      `http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`
+      `/asks?userId=${idUser}&productId=${idProduct}`
     );
     return dispatch({
       type: GET_USER_ASK_FOR_ONE_PRODUCT,
@@ -966,7 +966,7 @@ export const getAsksForOneProducts = (idUser, idProduct) => {
 export const getAsksForAllProductsOneUser = (idUser) => {
   return async (dispatch) => {
     let response = await axios(
-      `http://localhost:3001/asks/user?userId=${idUser}`
+      `/asks/user?userId=${idUser}`
     );
     return dispatch({
       type: GET_USER_ASK_FOR_ALL_PRODUCT,
@@ -977,7 +977,7 @@ export const getAsksForAllProductsOneUser = (idUser) => {
 
 export const getAllOrders = () => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/orders`);
+    let response = await axios(`/orders`);
     return dispatch({
       type: GET_ALL_ORDER,
       payload: response.data,
@@ -987,7 +987,7 @@ export const getAllOrders = () => {
 
 export const getAllOrdersOneUser = (idUser) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/orders?userId=${idUser}`);
+    let response = await axios(`/orders?userId=${idUser}`);
     return dispatch({
       type: GET_ALL_ORDER_ONE_USER,
       payload: response.data,
@@ -998,7 +998,7 @@ export const getAllOrdersOneUser = (idUser) => {
 export const getAllDirections = (idUser) => {
   return async (dispatch) => {
     try {
-      let response = await axios(`http://localhost:3001/users/address/${idUser}`)
+      let response = await axios(`/users/address/${idUser}`)
       return dispatch({
         type: GET_ALL_DIRECTIONS,
         payload: response.data
@@ -1013,7 +1013,7 @@ export const getAllDirections = (idUser) => {
 export const postNewDirection = (idUser, payload) => {
 return async (dispatch) => {
   try {
-    await axios.post(`http://localhost:3001/users/address/${idUser}`, payload)    
+    await axios.post(`/users/address/${idUser}`, payload)    
   } catch (error) {
     console.log(error)
   }
@@ -1024,7 +1024,7 @@ return async (dispatch) => {
 }
 export const getAllAsksAllProducts = () => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/asks/allUser`);
+    let response = await axios(`/asks/allUser`);
     return dispatch({
       type: GET_ALL_ASK_ALL_PRODUCTS,
       payload: response.data,
@@ -1034,7 +1034,7 @@ export const getAllAsksAllProducts = () => {
 
 export const getAllUsers = () => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/users`);
+    let response = await axios(`/users`);
     return dispatch({
       type: GET_ALL_USERS,
       payload: response.data,
@@ -1044,7 +1044,7 @@ export const getAllUsers = () => {
 
 export const getAsksOneUserOneProduct = (userId, productId) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/asks?userId=${userId}&productId=${productId}`);
+    let response = await axios(`/asks?userId=${userId}&productId=${productId}`);
     return dispatch({
       type: GET_ASKS_ONE_USER_ONE_PRODUCT,
       payload: response.data,
@@ -1066,12 +1066,12 @@ export function deleteUser({userId , token}) {
   return async function (dispatch) {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
 
       await axios.delete(
-        `http://localhost:3001/users/deleteUser?adminId=${responseId.data.idUser}&userId=${userId}`
+        `/users/deleteUser?adminId=${responseId.data.idUser}&userId=${userId}`
       );
       return dispatch({
         type: DELETE_USER,
@@ -1090,12 +1090,12 @@ export function deleteAdmin({ adminId, token }) {
   return async function (dispatch) {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
 
       await axios.delete(
-        `http://localhost:3001/users/deleteAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`
+        `/users/deleteAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`
       );
       return dispatch({
         type: DELETE_ADMIN,
@@ -1114,12 +1114,12 @@ export function editUser({ userId, token, payload }) {
   return async function (dispatch) {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
 
       await axios.put(
-        `http://localhost:3001/users/editUser?userId=${userId}&adminId=${responseId.data.idUser}`,
+        `/users/editUser?userId=${userId}&adminId=${responseId.data.idUser}`,
         payload
       );
       return dispatch({
@@ -1139,12 +1139,12 @@ export function editAdmin({ adminId, token, payload }) {
   return async function (dispatch) {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
 
       await axios.put(
-        `http://localhost:3001/users/editAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`,
+        `/users/editAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`,
         payload
       );
       return dispatch({
@@ -1188,7 +1188,7 @@ export function userToAdmin(userId, token) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      await axios.put(`http://localhost:3001/users/changeUserToAdmin/${userId}`,null,config);
+      await axios.put(`/users/changeUserToAdmin/${userId}`,null,config);
       return dispatch({
         type: CHANGE_ROLE_USER,
       });
@@ -1205,10 +1205,10 @@ export function editUserForUser( token , payload) {
   return async function (dispatch) {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
-      await axios.put(`http://localhost:3001/users/updateDatesUser/${responseId.data.idUser}`,payload);
+      await axios.put(`/users/updateDatesUser/${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_USER_FOR_USER,
       });
@@ -1224,7 +1224,7 @@ export function adminToUser(userId, token) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      await axios.put(`http://localhost:3001/users/changeAdminToUser/${userId}`,null,config);
+      await axios.put(`/users/changeAdminToUser/${userId}`,null,config);
       return dispatch({
         type: CHANGE_ROLE_ADMIN,
       });
@@ -1241,10 +1241,10 @@ export function editPasswordForUser( token , payload) {
   return async function (dispatch) {
     try {
       let responseId = await axios.get(
-        "http://localhost:3001/users/userId",
+        "/users/userId",
         config
       );
-      await axios.put(`http://localhost:3001/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
+      await axios.put(`/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_PASSWORD_FOR_USER,
       });
