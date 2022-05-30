@@ -65,17 +65,21 @@ import {
   GET_ALL_USERS,
   GET_ASKS_ONE_USER_ONE_PRODUCT,
   CLEAR_ASKS_ONE_USER_ONE_PRODUCT,
- 
   DELETE_USER,
   DELETE_ADMIN,
   UPDATE_USER,
   UPDATE_ADMIN,
   SET_AMOUNT,
+  ORDER_USERS,
+  FILTER_USERS,
+  FILTER_USERS_ALL,
+  CHANGE_ROLE_USER,
+  CHANGE_ROLE_ADMIN,
   POST_NEW_DIRECTION,
   GET_ALL_DIRECTIONS,
   UPDATE_USER_FOR_USER,
   CLEAR_CART,
-  UPDATE_PASSWORD_FOR_USER
+  UPDATE_PASSWORD_FOR_USER,
 } from "../actions";
 
 const initialState = {
@@ -96,14 +100,14 @@ const initialState = {
   getDetailOneUser: [],
   allAsk: [],
   userAskOneProduc: [],
-  allOrderOneUser:[],
-  userAskAllProducs:[],
-  allDirections:[],
-  allAsksAllProducts:[],
+  allOrderOneUser: [],
+  userAskAllProducs: [],
+  allDirections: [],
+  allAsksAllProducts: [],
   getAllUsers: [],
-  getAsksOneUserOnePruduct:[],
- 
+  getAsksOneUserOnePruduct: [],
   allUsers: [],
+  filteredUsers: [],
 };
 
 // funcion para que el carrito se guarde siempre
@@ -518,29 +522,33 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allAsk: action.payload,
       };
+
     case GET_USER_ASK_FOR_ONE_PRODUCT:
       return {
         ...state,
         userAskOneProduc: action.payload,
       };
+
     case DELETE_FROM_CART:
       return {
         ...state,
       };
+
     case GET_CART_FOR_CHILD:
       return {
         ...state,
         cart: action.payload,
       };
+
     case SET_AMOUNT:
       return {
         ...state,
       };
     case CLEAR_CART:
-      return{
+      return {
         ...state,
-        cart: []
-      }
+        cart: [],
+      };
 
     case GET_USER_ASK_FOR_ALL_PRODUCT:
       return {
@@ -554,32 +562,30 @@ const rootReducer = (state = initialState, action) => {
         allOrderOneUser: action.payload,
       };
 
-      case GET_ALL_ASK_ALL_PRODUCTS:
-        return {
-          ...state,
-          allAsksAllProducts: action.payload,
-         
-        };
-   
-  
-        case GET_ASKS_ONE_USER_ONE_PRODUCT: {
-          return {
-            ...state,
-            getAsksOneUserOnePruduct: action.payload,
-          };
-        }
-        case CLEAR_ASKS_ONE_USER_ONE_PRODUCT:
-          return {
-              ...state,
-              getAsksOneUserOnePruduct: []
-          }  
-      
+    case GET_ALL_ASK_ALL_PRODUCTS:
+      return {
+        ...state,
+        allAsksAllProducts: action.payload,
+      };
+
+    case GET_ASKS_ONE_USER_ONE_PRODUCT: {
+      return {
+        ...state,
+        getAsksOneUserOnePruduct: action.payload,
+      };
+    }
+    case CLEAR_ASKS_ONE_USER_ONE_PRODUCT:
+      return {
+        ...state,
+        getAsksOneUserOnePruduct: [],
+      };
+
     case GET_ALL_USERS: {
       return {
         ...state,
         allUsers: action.payload,
+        filteredUsers: action.payload,
         getAllUsers: action.payload,
-
       };
     }
 
@@ -607,6 +613,91 @@ const rootReducer = (state = initialState, action) => {
       };
     }
 
+    case ORDER_USERS: {
+      let sortedUsers = state.filteredUsers.sort((a, b) => {
+        if (action.payload === "asc") {
+          if (a.id < b.id) {
+            return -1;
+          }
+          if (a.id > b.id) {
+            return 1;
+          }
+          return 0;
+        }
+
+        if (action.payload === "desc") {
+          if (a.id < b.id) {
+            return 1;
+          }
+          if (a.id > b.id) {
+            return -1;
+          }
+          return 0;
+        }
+
+        if (action.payload === "AtoZ") {
+          if (a.userName < b.userName) {
+            return -1;
+          }
+          if (a.userName > b.userName) {
+            return 1;
+          }
+          return 0;
+        }
+
+        if (action.payload === "ZtoA") {
+          if (a.userName < b.userName) {
+            return 1;
+          }
+          if (a.userName > b.userName) {
+            return -1;
+          }
+          return 0;
+        }
+      });
+      return {
+        ...state,
+        filteredUsers: sortedUsers,
+      };
+    }
+
+    case FILTER_USERS: {
+      if (action.payload === "user") {
+        let userUsers = state.allUsers.filter((user) => user.role === "user");
+        return {
+          ...state,
+          filteredUsers: userUsers,
+        };
+      }
+
+      if (action.payload === "admin") {
+        let adminUsers = state.allUsers.filter((user) => user.role === "admin");
+        return {
+          ...state,
+          filteredUsers: adminUsers,
+        };
+      }
+    }
+
+    case FILTER_USERS_ALL: {
+      return {
+        ...state,
+        filteredUsers: state.allUsers,
+      };
+    }
+
+    case CHANGE_ROLE_USER: {
+      return {
+        ...state,
+      };
+    }
+
+    case CHANGE_ROLE_ADMIN: {
+      return {
+        ...state,
+      };
+    }
+
     case UPDATE_USER_FOR_USER: {
       return {
         ...state,
@@ -620,22 +711,20 @@ const rootReducer = (state = initialState, action) => {
 
     case POST_NEW_DIRECTION: {
       return {
-        ...state
-      }
+        ...state,
+      };
     }
-  case GET_ALL_DIRECTIONS:{
-    
-    let fixedAllDirections = [];
-    action.payload.forEach(d => fixedAllDirections.push(d));
+    case GET_ALL_DIRECTIONS: {
+      let fixedAllDirections = [];
+      action.payload.forEach((d) => fixedAllDirections.push(d));
 
-    fixedAllDirections.forEach((d, i) => d.id2 = i);
+      fixedAllDirections.forEach((d, i) => (d.id2 = i));
 
-
-    return {
-      ...state,
-      allDirections: fixedAllDirections
+      return {
+        ...state,
+        allDirections: fixedAllDirections,
+      };
     }
-  }
     default:
       return state;
   }
