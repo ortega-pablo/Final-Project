@@ -67,6 +67,11 @@ import {
   UPDATE_USER,
   UPDATE_ADMIN,
   SET_AMOUNT,
+  ORDER_USERS,
+  FILTER_USERS,
+  FILTER_USERS_ALL,
+  CHANGE_ROLE_USER,
+  CHANGE_ROLE_ADMIN,
 } from "../actions";
 
 const initialState = {
@@ -90,6 +95,7 @@ const initialState = {
   allOrderOneUser: [],
   userAskAllProducs: [],
   allUsers: [],
+  filteredUsers: [],
 };
 
 // funcion para que el carrito se guarde siempre
@@ -504,20 +510,24 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allAsk: action.payload,
       };
+
     case GET_USER_ASK_FOR_ONE_PRODUCT:
       return {
         ...state,
         userAskOneProduc: action.payload,
       };
+
     case DELETE_FROM_CART:
       return {
         ...state,
       };
+
     case GET_CART_FOR_CHILD:
       return {
         ...state,
         cart: action.payload,
       };
+
     case SET_AMOUNT:
       return {
         ...state,
@@ -539,6 +549,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allUsers: action.payload,
+        filteredUsers: action.payload,
       };
     }
 
@@ -565,6 +576,92 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     }
+
+    case ORDER_USERS: {
+      let sortedUsers = state.filteredUsers.sort((a, b) => {
+        if (action.payload === "asc") {
+          if (a.id < b.id) {
+            return -1;
+          }
+          if (a.id > b.id) {
+            return 1;
+          }
+          return 0;
+        }
+
+        if (action.payload === "desc") {
+          if (a.id < b.id) {
+            return 1;
+          }
+          if (a.id > b.id) {
+            return -1;
+          }
+          return 0;
+        }
+
+        if (action.payload === "AtoZ") {
+          if (a.userName < b.userName) {
+            return -1;
+          }
+          if (a.userName > b.userName) {
+            return 1;
+          }
+          return 0;
+        }
+
+        if (action.payload === "ZtoA") {
+          if (a.userName < b.userName) {
+            return 1;
+          }
+          if (a.userName > b.userName) {
+            return -1;
+          }
+          return 0;
+        }
+      });
+      return {
+        ...state,
+        filteredUsers: sortedUsers,
+      };
+    }
+
+    case FILTER_USERS: {
+      if (action.payload === "user") {
+        let userUsers = state.allUsers.filter((user) => user.role === "user");
+        return {
+          ...state,
+          filteredUsers: userUsers,
+        };
+      }
+
+      if (action.payload === "admin") {
+        let adminUsers = state.allUsers.filter((user) => user.role === "admin");
+        return {
+          ...state,
+          filteredUsers: adminUsers,
+        };
+      }
+    }
+
+    case FILTER_USERS_ALL: {
+      return {
+        ...state,
+        filteredUsers: state.allUsers,
+      };
+    }
+
+    case CHANGE_ROLE_USER: {
+      return {
+        ...state,
+      };
+    }
+
+    case CHANGE_ROLE_ADMIN: {
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }

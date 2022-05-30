@@ -379,11 +379,9 @@ router.put("/editAdmin", async (req, res, next) => {
   }
 });
 
-router.put(
-  "/changeUserToAdmin/:userId",
-  [cors(), verifyToken],
-  async (req, res, next) => {
+router.put("/changeUserToAdmin/:userId", [cors(), verifyToken], async (req, res, next) => {
     const { userId } = req.params;
+    console.log("EMPECE A EJECUTAR LA RUTA")
     try {
       if (req.role === "superAdmin") {
         const findUser = await User.findOne({
@@ -391,6 +389,7 @@ router.put(
             id: userId,
           },
         });
+        console.log("EL ROL ES:", findUser)
         if (findUser && findUser.dataValues.role === "user") {
           await User.update(
             {
@@ -415,10 +414,7 @@ router.put(
   }
 );
 
-router.put(
-  "/changeAdminToUser/:userId",
-  [cors(), verifyToken],
-  async (req, res, next) => {
+router.put("/changeAdminToUser/:userId",[cors(), verifyToken],async (req, res, next) => {
     const { userId } = req.params;
     try {
       if (req.role === "superAdmin") {

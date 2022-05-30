@@ -61,10 +61,8 @@ export const SET_TOTAL_CART = "SET_TOTAL_CART";
 export const GET_CART_BY_ID = "GET_CART_BY_ID";
 export const GET_USERS = "GET_USERS";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
-export const GET_CART_FOR_CHILD ="GET_CART_FOR_CHILD";
+export const GET_CART_FOR_CHILD = "GET_CART_FOR_CHILD";
 export const SET_AMOUNT = "SET_AMOUNT";
-
-
 
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
 
@@ -75,12 +73,16 @@ export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
 export const GET_ALL_ORDER = "GET_ALL_ORDER";
 export const GET_ALL_ORDER_ONE_USER = "GET_ALL_ORDER_ONE_USER";
 export const GET_USER_ASK_FOR_ALL_PRODUCT = "GET_USER_ASK_FOR_ALL_PRODUCT";
-export const GET_ALL_USERS ="GET_ALL_USERS";
-export const DELETE_USER ="DELETE_USER";
-export const DELETE_ADMIN ="DELETE_ADMIN";
-export const UPDATE_USER ="UPDATE_USER";
-export const UPDATE_ADMIN ="UPDATE_ADMIN";
-
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const DELETE_USER = "DELETE_USER";
+export const DELETE_ADMIN = "DELETE_ADMIN";
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_ADMIN = "UPDATE_ADMIN";
+export const ORDER_USERS = "ORDER_USERS";
+export const FILTER_USERS = "FILTER_USERS";
+export const FILTER_USERS_ALL = "FILTER_USERS_ALL";
+export const CHANGE_ROLE_USER = "CHANGE_ROLE_USER";
+export const CHANGE_ROLE_ADMIN = "CHANGE_ROLE_ADMIN";
 
 
 export const getProducts = (name) => {
@@ -329,10 +331,7 @@ export const postRegisterUser = (payload) => {
         "http://localhost:3001/users/create",
         payload
       );
-      await axios.post(
-        "http://localhost:3001/sendEmail/welcome",
-        payload
-      )
+      await axios.post("http://localhost:3001/sendEmail/welcome", payload);
       return response;
     } catch (error) {
       console.log("hubo un error");
@@ -448,24 +447,24 @@ export function putCategoryToProduct(idP, idC) {
   };
 }
 
-export function putSubCategoryToProduct (idP, idSc ){
-  console.log("desero borrar", idP, idSc)
-  return async function (dispatch){
-      try {
-           await axios.put(`http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`  )
-        console.log("quiero eliminar las sub desde redux")
-        console.log(idP)
-        console.log(idSc)
-          return dispatch({
-              type: PUT_SUBCATEGORY_TO_PRODUCT,
-                                       
-          })
-      } catch (error) {
-          console.log(error)
-      }
-  }
-};
-
+export function putSubCategoryToProduct(idP, idSc) {
+  console.log("desero borrar", idP, idSc);
+  return async function (dispatch) {
+    try {
+      await axios.put(
+        `http://localhost:3001/products?productId=${idP}&subCategoryId=${idSc}`
+      );
+      console.log("quiero eliminar las sub desde redux");
+      console.log(idP);
+      console.log(idSc);
+      return dispatch({
+        type: PUT_SUBCATEGORY_TO_PRODUCT,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 export function deleteCategory(idCat) {
   return async function (dispatch) {
@@ -616,7 +615,7 @@ export const verifyToken = (token) => {
 };
 
 export const getUserIdByToken = (token) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -629,7 +628,7 @@ export const getUserIdByToken = (token) => {
     } catch (error) {
       console.log("id no encontrado");
     }
-  }
+  };
 };
 
 export function deleteDiscount(idD) {
@@ -677,16 +676,17 @@ export function putRemoveOneSpecificationOneProduct(idP, idS, payload) {
         type: PUT_REMOVE_ONE_SPECIFICATION_ONE_PRODUCT,
         payload: payload,
       });
-    }     catch (error) {
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
-
 
 export const getImages = () => {
   return async (dispatch) => {
-    let response = await axios("http://localhost:3001/categories/subcategories");
+    let response = await axios(
+      "http://localhost:3001/categories/subcategories"
+    );
     return dispatch({
       type: GET_SUB_CATEGORIES,
       payload: response.data,
@@ -694,23 +694,21 @@ export const getImages = () => {
   };
 };
 
-
-
 export const postAddImageToProduct = (idP, payload) => {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/images/uploadProduct?productId=${idP}`, payload
+        `http://localhost:3001/images/uploadProduct?productId=${idP}`,
+        payload
       ); //url + body
-          console.log(idP)
-          console.log(payload)
+      console.log(idP);
+      console.log(payload);
       return json;
     } catch (error) {
       console.log(error);
     }
   };
-}
-
+};
 
 export function deleteSpecification(idS) {
   return async function (dispatch) {
@@ -727,34 +725,28 @@ export function deleteSpecification(idS) {
   };
 }
 
-
-
-
-export function deleteImageToProduct (idP, idI){
-  return async function (dispatch){
-      try {
-           await axios.delete(`http://localhost:3001/images?productId=${idP}&imageId=${idI}` )
-          
-          return dispatch({
-              type: DELETE_IMAGE_TO_PRODUCT,
-             
-              
-          })
-      } catch (error) {
-          console.log(error)
-      }
-  }
-};
-
-export function putNameSpecification(idS, payload) {
-  console.log('ids => ', idS)
-  console.log('payload => ', payload)
+export function deleteImageToProduct(idP, idI) {
   return async function (dispatch) {
     try {
-      await axios.put(
-        `http://localhost:3001/specifications/${idS}`,
-        payload
+      await axios.delete(
+        `http://localhost:3001/images?productId=${idP}&imageId=${idI}`
       );
+
+      return dispatch({
+        type: DELETE_IMAGE_TO_PRODUCT,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function putNameSpecification(idS, payload) {
+  console.log("ids => ", idS);
+  console.log("payload => ", payload);
+  return async function (dispatch) {
+    try {
+      await axios.put(`http://localhost:3001/specifications/${idS}`, payload);
 
       return dispatch({
         type: PUT_NAME_SPECIFICATION,
@@ -766,30 +758,31 @@ export function putNameSpecification(idS, payload) {
   };
 }
 
-export const postNewPaymentMethod =  (payload) => {
-  console.log(payload)
+export const postNewPaymentMethod = (payload) => {
+  console.log(payload);
   return async (dispatch) => {
     try {
-      const response = await axios.post(`http://localhost:3001/checkOut`, payload);
+      const response = await axios.post(
+        `http://localhost:3001/checkOut`,
+        payload
+      );
       return response.data;
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const setShippingData = (payload) => {
-  return async dispatch => {
+  return async (dispatch) => {
     return dispatch({
       type: SET_SHIPPING_DATA,
-      payload: payload
-    })
-  }
-}
-
+      payload: payload,
+    });
+  };
+};
 
 export function putNameSubcategoria(idS, payload) {
-
   return async function (dispatch) {
     try {
       await axios.put(
@@ -806,8 +799,6 @@ export function putNameSubcategoria(idS, payload) {
     }
   };
 }
-
-
 
 export const getImage = () => {
   return async (dispatch) => {
@@ -838,90 +829,101 @@ export const getCartById = (token) => {
         "http://localhost:3001/users/userId",
         config
       );
-      let response = await axios(`http://localhost:3001/shoppingCart?userId=${responseId.data.idUser}`)
+      let response = await axios(
+        `http://localhost:3001/shoppingCart?userId=${responseId.data.idUser}`
+      );
       return dispatch({
         type: GET_CART_BY_ID,
-        payload: response.data 
-      })
-  } catch(error) {
-  console.log("rompi en getCartById -> ",error)
-  }
-}
-}
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("rompi en getCartById -> ", error);
+    }
+  };
+};
 export const getCartForChild = (id) => {
   return async (dispatch) => {
-    try{
-      let response = await axios(`http://localhost:3001/shoppingCart?userId=${id}`)
+    try {
+      let response = await axios(
+        `http://localhost:3001/shoppingCart?userId=${id}`
+      );
       return dispatch({
         type: GET_CART_FOR_CHILD,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log('rompi en getCartForChild => ', error)
+      console.log("rompi en getCartForChild => ", error);
     }
-  }
-}
+  };
+};
 
-export const addItemToCart = (productId, token, cantidad) =>{
-  return async(dispatch) => {
+export const addItemToCart = (productId, token, cantidad) => {
+  return async (dispatch) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      await axios.put(
+        `http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,
+        { quantity: cantidad }
+      );
+      return dispatch({
+        type: ADD_TO_CART,
+      });
+    } catch (error) {
+      console.log("rompi en getCartById -> ", error);
     }
-      try {
-        let responseId = await axios.get(
-          "http://localhost:3001/users/userId",
-          config
-        );
-        await axios.put(`http://localhost:3001/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,{ quantity: cantidad })
-        return dispatch({
-          type: ADD_TO_CART,
-        })
-    } catch(error) {
-    console.log("rompi en getCartById -> ",error)
-    }
-}
-}
+  };
+};
 
 export const deleteFromCart = (productId, userId) => {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
-      await axios.put(`http://localhost:3001/shoppingCart/removeProduct?userId=${userId}&productId=${productId}`)
-      return dispatch ({
+      await axios.put(
+        `http://localhost:3001/shoppingCart/removeProduct?userId=${userId}&productId=${productId}`
+      );
+      return dispatch({
         type: DELETE_FROM_CART,
-      })
-    } catch(error) {
-      console.log('rompi en el deleteFromCart -> ', error)
+      });
+    } catch (error) {
+      console.log("rompi en el deleteFromCart -> ", error);
     }
-  }
-}
+  };
+};
 
 export const setCartAmount = (id, amount) => {
-  return async(dispatch) => {
-    try{
-      await axios.put(`http://localhost:3001/shoppingCart/addAmount?userId=${id}`,{amount})
+  return async (dispatch) => {
+    try {
+      await axios.put(
+        `http://localhost:3001/shoppingCart/addAmount?userId=${id}`,
+        { amount }
+      );
       return dispatch({
         type: SET_AMOUNT,
-      })
-    } catch(error){
-      console.log('rompi en setCartAmount => ', error)
+      });
+    } catch (error) {
+      console.log("rompi en setCartAmount => ", error);
     }
-  }
-}
+  };
+};
 
-export function getDetailOneUsers( id) {
-  return async function(dispatch) {
-   
+export function getDetailOneUsers(id) {
+  return async function (dispatch) {
     try {
-      const response = await axios(`http://localhost:3001/users/${id}`)
-      console.log("idUser en action",id )
+      const response = await axios(`http://localhost:3001/users/${id}`);
+      console.log("idUser en action", id);
       return dispatch({
         type: GET_ONE_USER,
-        payload: response.data
-      })
-    } catch(error){
-      console.log(error)
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 }
 
 export const getAllAsk = () => {
@@ -934,10 +936,11 @@ export const getAllAsk = () => {
   };
 };
 
-
 export const getAsksForOneProducts = (idUser, idProduct) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`);
+    let response = await axios(
+      `http://localhost:3001/asks?userId=${idUser}&productId=${idProduct}`
+    );
     return dispatch({
       type: GET_USER_ASK_FOR_ONE_PRODUCT,
       payload: response.data,
@@ -947,16 +950,15 @@ export const getAsksForOneProducts = (idUser, idProduct) => {
 
 export const getAsksForAllProductsOneUser = (idUser) => {
   return async (dispatch) => {
-    let response = await axios(`http://localhost:3001/asks/user?userId=${idUser}`);
+    let response = await axios(
+      `http://localhost:3001/asks/user?userId=${idUser}`
+    );
     return dispatch({
       type: GET_USER_ASK_FOR_ALL_PRODUCT,
       payload: response.data,
     });
   };
 };
-
-
-
 
 export const getAllOrders = () => {
   return async (dispatch) => {
@@ -979,7 +981,6 @@ export const getAllOrdersOneUser = (idUser) => {
 };
 
 export const getAllUsers = () => {
-
   return async (dispatch) => {
     let response = await axios(`http://localhost:3001/users`);
     return dispatch({
@@ -989,10 +990,10 @@ export const getAllUsers = () => {
   };
 };
 
-export function deleteUser({userId , token}) {
+export function deleteUser({ userId, token }) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  }
+  };
 
   return async function (dispatch) {
     try {
@@ -1000,8 +1001,10 @@ export function deleteUser({userId , token}) {
         "http://localhost:3001/users/userId",
         config
       );
-      
-      await axios.delete(`http://localhost:3001/users/deleteUser?adminId=${responseId.data.idUser}&userId=${userId}`);
+
+      await axios.delete(
+        `http://localhost:3001/users/deleteUser?adminId=${responseId.data.idUser}&userId=${userId}`
+      );
       return dispatch({
         type: DELETE_USER,
       });
@@ -1009,22 +1012,23 @@ export function deleteUser({userId , token}) {
       console.log(error);
     }
   };
-};
+}
 
-export function deleteAdmin({adminId , token}) {
+export function deleteAdmin({ adminId, token }) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  }
+  };
 
   return async function (dispatch) {
     try {
-  
       let responseId = await axios.get(
         "http://localhost:3001/users/userId",
         config
       );
-      
-      await axios.delete(`http://localhost:3001/users/deleteAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`);
+
+      await axios.delete(
+        `http://localhost:3001/users/deleteAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`
+      );
       return dispatch({
         type: DELETE_ADMIN,
       });
@@ -1032,12 +1036,12 @@ export function deleteAdmin({adminId , token}) {
       console.log(error);
     }
   };
-};
+}
 
-export function editUser({userId , token, payload}) {
+export function editUser({ userId, token, payload }) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  }
+  };
 
   return async function (dispatch) {
     try {
@@ -1045,8 +1049,11 @@ export function editUser({userId , token, payload}) {
         "http://localhost:3001/users/userId",
         config
       );
-      
-      await axios.put(`http://localhost:3001/users/editUser?userId=${userId}&adminId=${responseId.data.idUser}`,payload);
+
+      await axios.put(
+        `http://localhost:3001/users/editUser?userId=${userId}&adminId=${responseId.data.idUser}`,
+        payload
+      );
       return dispatch({
         type: UPDATE_USER,
       });
@@ -1054,15 +1061,12 @@ export function editUser({userId , token, payload}) {
       console.log(error);
     }
   };
-};
+}
 
-export function editAdmin({adminId , token, payload}) {
-  console.log("Este es el user ID:", adminId)
-  console.log("Este es el token:", token)
-  console.log("Este es el payload", payload)
+export function editAdmin({ adminId, token, payload }) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  }
+  };
 
   return async function (dispatch) {
     try {
@@ -1070,8 +1074,11 @@ export function editAdmin({adminId , token, payload}) {
         "http://localhost:3001/users/userId",
         config
       );
-      
-      await axios.put(`http://localhost:3001/users/editAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`,payload);
+
+      await axios.put(
+        `http://localhost:3001/users/editAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`,
+        payload
+      );
       return dispatch({
         type: UPDATE_ADMIN,
       });
@@ -1079,4 +1086,70 @@ export function editAdmin({adminId , token, payload}) {
       console.log(error);
     }
   };
-};
+}
+
+export function orderUsers(orderType) {
+  return async function (dispatch) {
+    return dispatch({
+      type: ORDER_USERS,
+      payload: orderType,
+    });
+  };
+}
+
+export function filterUsers(filterType) {
+  return async function (dispatch) {
+    return dispatch({
+      type: FILTER_USERS,
+      payload: filterType,
+    });
+  };
+}
+
+export function filterUsersAll() {
+  return async function (dispatch) {
+    return dispatch({
+      type: FILTER_USERS_ALL,
+    });
+  };
+}
+
+export function userToAdmin(userId, token) {
+
+  return async function (dispatch) {
+    try {
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      
+      await axios.put(`http://localhost:3001/users/changeUserToAdmin/${userId}`,null,config);
+      return dispatch({
+        type: CHANGE_ROLE_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function adminToUser(userId, token) {
+
+  return async function (dispatch) {
+    try {
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      
+      await axios.put(`http://localhost:3001/users/changeAdminToUser/${userId}`,null,config);
+      return dispatch({
+        type: CHANGE_ROLE_ADMIN,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
