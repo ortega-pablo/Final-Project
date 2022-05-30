@@ -79,7 +79,7 @@ export const NavBar = (props) => {
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
     dispatch(getCartById(ls?.token));
-    // return (() => dispatch(clearCart()))
+    return (() => dispatch(clearCart()))
   }, []);
 
   const handleChangeForName = (e) => {

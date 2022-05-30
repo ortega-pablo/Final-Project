@@ -28,10 +28,22 @@ export default function ModalToRow({
     setCantidad(e.target.value);
   };
 
-  const handleSubmitCart = (e) => {
+  const  handleSubmitCart = async (e) => {
     e.preventDefault();
-    if (cantidad <= stock) {
-      dispatch(addItemToCart(id, token, cantidad));
+    if(cantidad <= 0){
+      setOpen(false);
+      Swal.fire({
+        background: "#DFDCD3",
+        confirmButtonColor: "#B6893E",
+        icon: "error",
+        title: "Oops...",
+        text: "La cantidad no puede ser menor a 0",
+      }).then(() => {
+        setOpen(true);
+      });
+    }
+    else if (cantidad <= stock) {
+      await dispatch(addItemToCart(id, token, cantidad));
       setOpen(false);
       setRender(!render);
       Swal.fire({
