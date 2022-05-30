@@ -1,7 +1,15 @@
 const { Router } = require("express");
 const router = Router();
 const jwt = require("jsonwebtoken");
-const { User, Ask, Answer, ShoppingCart, Address, Product } = require("../db");
+const {
+  User,
+  Ask,
+  Answer,
+  ShoppingCart,
+  Address,
+  Product,
+  Order,
+} = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { KEY_WORD_JWT } = process.env;
@@ -135,6 +143,12 @@ router.get("/", async (req, res, next) => {
           {
             model: Address,
           },
+          {
+            model: Order,
+            include: {
+              model: Product,
+            },
+          },
         ],
       });
       const found = await findByName?.filter((e) =>
@@ -196,6 +210,12 @@ router.get("/:userId", async (req, res) => {
           },
           {
             model: Address,
+          },
+          {
+            model: Order,
+            include: {
+              model: Product,
+            },
           },
           {
             model: ShoppingCart,
@@ -479,9 +499,9 @@ router.put("/resetPasswordWithoutOld/:userId", async (req, res, next) => {
   }
 });
 /* RESET PASSWORD USER WITH THE OLD PASSWORD */
-router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
+router.put("/resetPasswordWithOld", async (req, res, next) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.query;
     const { oldPassword, newPassword } = req.body;
     const findUser = await User.findOne({
       where: {
@@ -494,7 +514,7 @@ router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
           ? false
           : await bcrypt.compare(oldPassword, findUser.dataValues.password);
       if (!passwordCorrect) {
-        res.status(400).json({
+        return res.status(400).json({
           error: "invalid user or password",
         });
       }
@@ -511,6 +531,65 @@ router.put("/resetPasswordWithOld/:userId", async (req, res, next) => {
       );
       res.status(200).send("password updated successfully!");
     } else {
+      res.send("user not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/updateDatesUser/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { currentPassword, userName, firstName, lastName, phone } = req.body;
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (findUser && !findUser.loginWithGoogle) {
+      const passwordCorrect =
+      findUser === null
+        ? false
+        : await bcrypt.compare(currentPassword, findUser.dataValues.password);
+    if (!passwordCorrect) {
+      return res.status(400).json({
+        error: "invalid user or password",
+      });
+    }
+      await User.update(
+        {
+          userName,
+          firstName,
+          lastName,
+          phone,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("user updated successfully!");
+    } else if(findUser && findUser.loginWithGoogle){
+      await User.update(
+        {
+          userName,
+          firstName,
+          lastName,
+          phone,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("user updated successfully!");
+    }
+    
+    
+    else {
       res.send("user not found");
     }
   } catch (error) {
@@ -535,6 +614,7 @@ router.post("/google-login", async (req, res) => {
       userName: name,
       firstName: given_name,
       lastName: family_name,
+      loginWithGoogle: true,
     },
   });
   const userforToken = {
@@ -550,5 +630,36 @@ router.post("/google-login", async (req, res) => {
     token: token2,
   });
 });
+
+
+router.delete("/autoDeleteUser", async (req, res, next) => {
+  const {  userId } = req.query;
+  try {
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+   
+
+    if (findUser) {
+      const findUser = await User.destroy({
+        where: {
+          id: userId,
+        },
+      });
+
+      findUser
+        ? res.status(200).send("User deleted successfully!")
+        : res.send("User not found");
+    } else {
+      res.send("User not authorized");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 module.exports = router;

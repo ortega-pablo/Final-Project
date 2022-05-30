@@ -20,6 +20,7 @@ export const POST_CREATE_USER = "POST_CREATE_USER";
 export const POST_LOGIN_USER = "POST_LOGIN_USER";
 export const POST_ADD_SUB_CATEGORY_TO_PRODUCT =
   "POST_ADD_SUB_CATEGORY_TO_PRODUCT";
+export const POST_NEW_DIRECTION = "POST_NEW_DIRECTION";
 export const POST_ADD_SUB_CATEGORY = "POST_ADD_SUB_CATEGORY";
 export const POST_ADD_QUANTITY = "POST_ADD_QUANTITY";
 export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
@@ -63,9 +64,9 @@ export const GET_USERS = "GET_USERS";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const GET_CART_FOR_CHILD = "GET_CART_FOR_CHILD";
 export const SET_AMOUNT = "SET_AMOUNT";
-
+export const CLEAR_CART = "CLEAR_CART"
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
-
+export const GET_ALL_DIRECTIONS = "GET_ALL_DIRECTIONS";
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_ALL_ASK = "GET_ALL_ASK";
@@ -83,6 +84,13 @@ export const FILTER_USERS = "FILTER_USERS";
 export const FILTER_USERS_ALL = "FILTER_USERS_ALL";
 export const CHANGE_ROLE_USER = "CHANGE_ROLE_USER";
 export const CHANGE_ROLE_ADMIN = "CHANGE_ROLE_ADMIN";
+export const GET_ALL_ASK_ALL_PRODUCTS = "GET_ALL_ASK_ALL_PRODUCTS";
+export const GET_ASKS_ONE_USER_ONE_PRODUCT = "GET_ASKS_ONE_USER_ONE_PRODUCT";
+export const CLEAR_ASKS_ONE_USER_ONE_PRODUCT = "CLEAR_ASKS_ONE_USER_ONE_PRODUCT";
+export const UPDATE_USER_FOR_USER ="UPDATE_USER_FOR_USER";
+export const UPDATE_PASSWORD_FOR_USER ="UPDATE_PASSWORD_FOR_USER";
+
+
 
 
 export const getProducts = (name) => {
@@ -911,11 +919,18 @@ export const setCartAmount = (id, amount) => {
   };
 };
 
-export function getDetailOneUsers(id) {
-  return async function (dispatch) {
+export const clearCart = () => {
+  return async(dispatch) => {
+    return dispatch({
+      type: CLEAR_CART
+    })
+  }
+}
+
+export function getDetailOneUsers( id) {
+  return async function(dispatch) {
     try {
-      const response = await axios(`http://localhost:3001/users/${id}`);
-      console.log("idUser en action", id);
+      const response = await axios(`http://localhost:3001/users/${id}`)
       return dispatch({
         type: GET_ONE_USER,
         payload: response.data,
@@ -980,6 +995,43 @@ export const getAllOrdersOneUser = (idUser) => {
   };
 };
 
+export const getAllDirections = (idUser) => {
+  return async (dispatch) => {
+    try {
+      let response = await axios(`http://localhost:3001/users/address/${idUser}`)
+      return dispatch({
+        type: GET_ALL_DIRECTIONS,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+}
+
+export const postNewDirection = (idUser, payload) => {
+return async (dispatch) => {
+  try {
+    await axios.post(`http://localhost:3001/users/address/${idUser}`, payload)    
+  } catch (error) {
+    console.log(error)
+  }
+  return dispatch({
+    type: POST_NEW_DIRECTION
+  })
+}
+}
+export const getAllAsksAllProducts = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks/allUser`);
+    return dispatch({
+      type: GET_ALL_ASK_ALL_PRODUCTS,
+      payload: response.data,
+    });
+  };
+};
+
 export const getAllUsers = () => {
   return async (dispatch) => {
     let response = await axios(`http://localhost:3001/users`);
@@ -990,7 +1042,23 @@ export const getAllUsers = () => {
   };
 };
 
-export function deleteUser({ userId, token }) {
+export const getAsksOneUserOneProduct = (userId, productId) => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/asks?userId=${userId}&productId=${productId}`);
+    return dispatch({
+      type: GET_ASKS_ONE_USER_ONE_PRODUCT,
+      payload: response.data,
+    });
+  };
+};
+export function clearAsksOneUserOneProduct (){
+  return {
+      type: CLEAR_ASKS_ONE_USER_ONE_PRODUCT
+  }
+  
+}
+
+export function deleteUser({userId , token}) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -1115,14 +1183,11 @@ export function filterUsersAll() {
 }
 
 export function userToAdmin(userId, token) {
-
   return async function (dispatch) {
     try {
-
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      
       await axios.put(`http://localhost:3001/users/changeUserToAdmin/${userId}`,null,config);
       return dispatch({
         type: CHANGE_ROLE_USER,
@@ -1133,15 +1198,32 @@ export function userToAdmin(userId, token) {
   };
 }
 
-export function adminToUser(userId, token) {
-
+export function editUserForUser( token , payload) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
   return async function (dispatch) {
     try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      await axios.put(`http://localhost:3001/users/updateDatesUser/${responseId.data.idUser}`,payload);
+      return dispatch({
+        type: UPDATE_USER_FOR_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
+export function adminToUser(userId, token) {
+  return async function (dispatch) {
+    try {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      
       await axios.put(`http://localhost:3001/users/changeAdminToUser/${userId}`,null,config);
       return dispatch({
         type: CHANGE_ROLE_ADMIN,
@@ -1152,4 +1234,22 @@ export function adminToUser(userId, token) {
   };
 }
 
-
+export function editPasswordForUser( token , payload) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+  return async function (dispatch) {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      await axios.put(`http://localhost:3001/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
+      return dispatch({
+        type: UPDATE_PASSWORD_FOR_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
   AppBar,
@@ -21,8 +21,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartById, verifyToken } from "../../redux/actions";
-import Swal from 'sweetalert2';
+import { clearCart, getCartById, verifyToken } from "../../redux/actions";
+import Swal from "sweetalert2";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -72,15 +72,15 @@ export const NavBar = (props) => {
   const dispatch = useDispatch();
 
   const userStatus = useSelector((state) => state.userStatus);
-  const cartStatus = useSelector((state) => state.cart)
-  
+  const cartStatus = useSelector((state) => state.cart);
 
+  const numerito = cartStatus?.products?.length;
   const ls = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     dispatch(verifyToken(ls?.token));
     dispatch(getCartById(ls?.token));
-    dispatch(getCartById(ls?.token));
-  }, [dispatch]);
+    return (() => dispatch(clearCart()))
+  }, []);
 
   const handleChangeForName = (e) => {
     setName(e.target.value);
@@ -108,22 +108,21 @@ export const NavBar = (props) => {
 
   const handleAlertCart = () => {
     Swal.fire({
-      title: 'Logeate',
+      title: "Logeate",
       text: "Debes estar logeado para ver tu carrito",
-      icon: 'warning',
-      background: '#DFDCD3',
+      icon: "warning",
+      background: "#DFDCD3",
       showCancelButton: true,
-      confirmButtonColor: '#B6893E',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'ok, ir al login',
-      cancelButtonText: 'cancelar',
+      confirmButtonColor: "#B6893E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ok, ir al login",
+      cancelButtonText: "cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/login')
+        navigate("/login");
       }
-    })
-  }
-
+    });
+  };
 
   const menuProfileId = "primary-search-account-menu";
   const renderProfileMenu = (
@@ -146,7 +145,7 @@ export const NavBar = (props) => {
         //userStatus === user
         userStatus === "user" ? (
           <>
-            <Link sx={{ textDecoration: "none" }} href="/profile/asd">
+            <Link sx={{ textDecoration: "none" }} href="/userProfile">
               <MenuItem onClick={handleMenuProfileClose}>
                 <Typography variant="body1" color="ambar5.main">
                   Perfil
@@ -164,7 +163,7 @@ export const NavBar = (props) => {
           </>
         ) : userStatus === "admin" || userStatus === "superAdmin" ? (
           <>
-            <Link sx={{ textDecoration: "none" }} href="/profile/asd">
+            <Link sx={{ textDecoration: "none" }} href="/adminProfile">
               <MenuItem onClick={handleMenuProfileClose}>
                 <Typography variant="body1" color="ambar5.main">
                   Perfil
@@ -237,12 +236,12 @@ export const NavBar = (props) => {
             <AccountCircle />
           </IconButton>
           <Typography variant="body1" color="ambar5">
-            Profile
+            Perfil
           </Typography>
         </MenuItem>
       ) : (
         <>
-          <Link sx={{ textDecoration: "none" }} href='/createaccount'>
+          <Link sx={{ textDecoration: "none" }} href="/createaccount">
             <MenuItem>
               <IconButton
                 size="large"
@@ -258,7 +257,7 @@ export const NavBar = (props) => {
               </Typography>
             </MenuItem>
           </Link>
-          <Link sx={{ textDecoration: "none" }} href='login'>
+          <Link sx={{ textDecoration: "none" }} href="login">
             <MenuItem>
               <IconButton
                 size="large"
@@ -277,16 +276,18 @@ export const NavBar = (props) => {
         </>
       )}
 
-      <MenuItem>
-        <IconButton size="large" color="ambar5">
-          <Badge color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <Typography variant="body1" color="ambar5">
-          Cart
-        </Typography>
-      </MenuItem>
+      <Link sx={{ textDecoration: "none" }} href="/cart">
+        <MenuItem>
+          <IconButton size="large" color="ambar5">
+            <Badge color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+          <Typography sx={{ textDecoration: "none" }} variant="body1" color="ambar5.main">
+            Cart
+          </Typography>
+        </MenuItem>
+      </Link>
 
       <Link sx={{ textDecoration: "none" }} href="/about">
         <MenuItem>
@@ -386,23 +387,30 @@ export const NavBar = (props) => {
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex"}}}>
-          {
-            userStatus !== null ? (
-              <IconButton size="large" color="ambar1" sx={{mr: 1}} href="/cart">
-                <Badge badgeContent={cartStatus?.products?.length} color="error">
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {userStatus !== null ? (
+              <IconButton
+                size="large"
+                color="ambar1"
+                sx={{ mr: 1 }}
+                href="/cart"
+              >
+                <Badge badgeContent={numerito} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-            ) : 
-            (
-              <IconButton size="large" color="ambar1" sx={{mr: 1}} onClick={handleAlertCart}>
-                <Badge  color="error">
+            ) : (
+              <IconButton
+                size="large"
+                color="ambar1"
+                sx={{ mr: 1 }}
+                onClick={handleAlertCart}
+              >
+                <Badge color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-            )
-          }
+            )}
             {userStatus !== null ? (
               <IconButton
                 size="large"

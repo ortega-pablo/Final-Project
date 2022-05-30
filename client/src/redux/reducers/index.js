@@ -61,7 +61,10 @@ import {
   GET_CART_FOR_CHILD,
   GET_ALL_ORDER_ONE_USER,
   GET_USER_ASK_FOR_ALL_PRODUCT,
+  GET_ALL_ASK_ALL_PRODUCTS,
   GET_ALL_USERS,
+  GET_ASKS_ONE_USER_ONE_PRODUCT,
+  CLEAR_ASKS_ONE_USER_ONE_PRODUCT,
   DELETE_USER,
   DELETE_ADMIN,
   UPDATE_USER,
@@ -72,6 +75,11 @@ import {
   FILTER_USERS_ALL,
   CHANGE_ROLE_USER,
   CHANGE_ROLE_ADMIN,
+  POST_NEW_DIRECTION,
+  GET_ALL_DIRECTIONS,
+  UPDATE_USER_FOR_USER,
+  CLEAR_CART,
+  UPDATE_PASSWORD_FOR_USER,
 } from "../actions";
 
 const initialState = {
@@ -94,6 +102,10 @@ const initialState = {
   userAskOneProduc: [],
   allOrderOneUser: [],
   userAskAllProducs: [],
+  allDirections: [],
+  allAsksAllProducts: [],
+  getAllUsers: [],
+  getAsksOneUserOnePruduct: [],
   allUsers: [],
   filteredUsers: [],
 };
@@ -532,6 +544,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: [],
+      };
 
     case GET_USER_ASK_FOR_ALL_PRODUCT:
       return {
@@ -545,11 +562,30 @@ const rootReducer = (state = initialState, action) => {
         allOrderOneUser: action.payload,
       };
 
+    case GET_ALL_ASK_ALL_PRODUCTS:
+      return {
+        ...state,
+        allAsksAllProducts: action.payload,
+      };
+
+    case GET_ASKS_ONE_USER_ONE_PRODUCT: {
+      return {
+        ...state,
+        getAsksOneUserOnePruduct: action.payload,
+      };
+    }
+    case CLEAR_ASKS_ONE_USER_ONE_PRODUCT:
+      return {
+        ...state,
+        getAsksOneUserOnePruduct: [],
+      };
+
     case GET_ALL_USERS: {
       return {
         ...state,
         allUsers: action.payload,
         filteredUsers: action.payload,
+        getAllUsers: action.payload,
       };
     }
 
@@ -662,6 +698,33 @@ const rootReducer = (state = initialState, action) => {
       };
     }
 
+    case UPDATE_USER_FOR_USER: {
+      return {
+        ...state,
+      };
+    }
+    case UPDATE_PASSWORD_FOR_USER: {
+      return {
+        ...state,
+      };
+    }
+
+    case POST_NEW_DIRECTION: {
+      return {
+        ...state,
+      };
+    }
+    case GET_ALL_DIRECTIONS: {
+      let fixedAllDirections = [];
+      action.payload.forEach((d) => fixedAllDirections.push(d));
+
+      fixedAllDirections.forEach((d, i) => (d.id2 = i));
+
+      return {
+        ...state,
+        allDirections: fixedAllDirections,
+      };
+    }
     default:
       return state;
   }

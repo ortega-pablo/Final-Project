@@ -6,44 +6,73 @@ import Modal from "@mui/material/Modal";
 import { FormControl, IconButton, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, getCartById } from "../../../redux/actions";
-import EditIcon from '@mui/icons-material/Edit';
-import Swal from 'sweetalert2';
+import EditIcon from "@mui/icons-material/Edit";
+import Swal from "sweetalert2";
 
-
-export default function ModalToRow({id, token, cantidad, setCantidad}) {
-  const dispatch = useDispatch()
+export default function ModalToRow({
+  id,
+  token,
+  cantidad,
+  setCantidad,
+  stock,
+  render,
+  setRender,
+  precio
+}) {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
-  
-
   const handleSetCantidad = (e) => {
-    setCantidad(e.target.value)
-  }
-  
-  const handleSubmitCart = (e) => {
-    e.preventDefault()
-    dispatch(addItemToCart(id,token,cantidad))
-    dispatch(getCartById(token))
-    dispatch(getCartById(token))
-    setOpen(false)
-    Swal.fire({
-        background: '#DFDCD3',
-        icon: 'success',
-        title: 'Modificado',
+    setCantidad(e.target.value);
+  };
+
+  const  handleSubmitCart = async (e) => {
+    e.preventDefault();
+    if(cantidad <= 0){
+      setOpen(false);
+      Swal.fire({
+        background: "#DFDCD3",
+        confirmButtonColor: "#B6893E",
+        icon: "error",
+        title: "Oops...",
+        text: "La cantidad no puede ser menor a 0",
+      }).then(() => {
+        setOpen(true);
+      });
+    }
+    else if (cantidad <= stock) {
+      await dispatch(addItemToCart(id, token, cantidad));
+      setOpen(false);
+      setRender(!render);
+      Swal.fire({
+        background: "#DFDCD3",
+        icon: "success",
+        title: "Modificado",
         showConfirmButton: false,
-        timer: 1500
-      })
-  }
+        timer: 1500,
+      });
+    } else {
+      setOpen(false);
+      Swal.fire({
+        background: "#DFDCD3",
+        confirmButtonColor: "#B6893E",
+        icon: "error",
+        title: "Oops...",
+        text: "Stock insuficiente para la cantidad que seleccionaste",
+      }).then(() => {
+        setOpen(true);
+      });
+    }
+  };
+  const subTotal = precio*cantidad
 
   return (
-    <div>
-
-    <IconButton onClick={handleOpen}>
-        <EditIcon/>
-    </IconButton>
+    <Box>
+      <IconButton size="small" onClick={handleOpen}>
+        <EditIcon size="small" />
+      </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -63,26 +92,54 @@ export default function ModalToRow({id, token, cantidad, setCantidad}) {
             p: 4,
           }}
         >
-          <form onSubmit={(e)=>{handleSubmitCart(e)}}>
-          <TextField
-            margin="normal"
-            type="number"
-            required
-            id="cantidad"
-            label={cantidad}
-            value={cantidad}
-            name="cantidad"
-            sx={{
-              width: 100
+        <Box sx={{display:'flex', justifyContent:'space-around'}}>
+          <Typography>Stock: {stock}</Typography>
+          <Typography>Precio: {precio}</Typography>
+          <Typography>SubTotal: {subTotal}</Typography>
+        </Box>
+          <form
+            onSubmit={(e) => {
+              handleSubmitCart(e);
             }}
-            onChange={(e)=>{ handleSetCantidad(e)}}
           >
-          </TextField>
-            <Button type="submit"> Confirmar </Button>
-            <Button onClick={() => setOpen(false)}> Volver </Button>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <TextField
+                margin="normal"
+                type="number"
+                required
+                id="cantidad"
+                label={cantidad}
+                value={cantidad}
+                name="cantidad"
+                sx={{
+                  width: 100,
+                }}
+                onChange={(e) => {
+                  handleSetCantidad(e);
+                }}
+              ></TextField>
+              <Button type="submit" variant="contained" color="ambar3">
+                {" "}
+                Confirmar{" "}
+              </Button>
+              <Button
+                onClick={() => setOpen(false)}
+                variant="contained"
+                color="ambar3"
+              >
+                {" "}
+                Volver{" "}
+              </Button>
+            </Box>
           </form>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
