@@ -17,14 +17,22 @@ router.post('/', async (req, res) => {
             payment_method: id,
             confirm: true,
         })
-
-        await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, {state: 'processing'}) 
+        try {
+            await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, {state: 'processing'}) 
+            
+        } catch (error) {
+            console.log(error)
+        }
 
         res.send({message: "success"});
         
     } catch (error) {
-
-        await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, {state: 'cancelled'})
+        try {
+            await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, {state: 'cancelled'})
+            
+        } catch (error) {
+            console.log(error)
+        }
 
         res.send({message: error.raw.message}); 
     }
