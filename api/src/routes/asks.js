@@ -122,19 +122,19 @@ router.get("/user", async (req, res, next) => {
   try {
     if (userId) {
       const products = await Product.findAll({
-        include :[
+        include: [
           {
-            model: Ask ,
-            where:{
-              userId
+            model: Ask,
+            where: {
+              userId,
             },
-            include:[{
-              model: Answer
-            }
-            ]
-          }
-
-        ]
+            include: [
+              {
+                model: Answer,
+              },
+            ],
+          },
+        ],
         // where: {
         //   userId,
         // },
@@ -145,13 +145,12 @@ router.get("/user", async (req, res, next) => {
         //   },
         //   {
         //     model: Product,
-           
+
         //   },
         // ],
       });
-      res.status(200).send(products)
+      res.status(200).send(products);
     }
-
   } catch (error) {
     next(error);
   }
@@ -170,5 +169,29 @@ router.get("/user", async (req, res, next) => {
 //         attributes: ["id", "content"]
 //       }
 //     })
+
+router.get("/allUser", async (req, res, next) => {
+  try {
+    
+      const products = await Product.findAll({
+        include :[
+          {
+            model: Ask,
+            include:[{
+              model: Answer
+            }
+            ]
+          }
+
+        ]
+       
+      });
+      res.status(200).send(products)
+    
+
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

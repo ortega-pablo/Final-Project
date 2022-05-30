@@ -1,13 +1,16 @@
 import { Box, Container, Typography } from "@mui/material";
-import React from "react";
-import { useSelector } from "react-redux";
-import { NotFound } from "../NotFound/NotFound";
-import AdminMenuLarge from "./AdminMenuLarge";
-import AdminMenuMobile from "./AdminMenuMobile";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../../redux/actions";
+import { NotFound } from "../../NotFound/NotFound";
+import AdminMenuLarge from "../AdminMenuLarge";
+import AdminMenuMobile from "../AdminMenuMobile";
+import GetAllUsersToAdmin from "../UserPanel/GetAllUsersToAdmin";
 
-function Clients() {
-  const userStatus = useSelector((state) => state.userStatus);
-  return userStatus === "admin" ? (
+function UsersPanel() {
+  const userStatus = useSelector((state) => state.userStatus)
+
+  return (userStatus === "admin" || userStatus === "superAdmin") ? (
     <Box
       maxWidth="vp"
       sx={{
@@ -44,7 +47,7 @@ function Clients() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Panel de usuarios</Typography>
+          <GetAllUsersToAdmin user={userStatus}  />
           
         </Container>
       </Container>
@@ -54,4 +57,4 @@ function Clients() {
   );
 }
 
-export default Clients;
+export default UsersPanel;

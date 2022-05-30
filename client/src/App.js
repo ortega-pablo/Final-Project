@@ -27,10 +27,12 @@ import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 import { CheckOutForm } from "./components/StripeComponent/CheckOutForm";
-import Clients from "./components/AdminPanel/Clients";
+import UsersPanel from "./components/AdminPanel/UserPanel/UsersPanel.jsx";
 import Orders from "./components/AdminPanel/Orders";
 import { Perfil } from "./components/PerfilUser/Perfil";
 import CartView from "./components/Cart/CartView";
+import { AskPanel } from "./components/AdminPanel/AskPanel";
+import { VerHilo } from "./components/AdminPanel/VerHilo";
 import CartModal from "./components/Cart/CartModal";
 
 
@@ -69,11 +71,16 @@ function App() {
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
 
-            <Route path="/clients" element={<Clients/>}/>
+            <Route path="/usersPanel" element={<UsersPanel/>}/>
             <Route path="/orders" element={<Orders/>}/>
+            <Route path="/askPanel" element={<AskPanel/>}/>
+
 
             <Route path="/cart" element={<CartView/>}/>
               
+            <Route path="/prueba1" element={<Perfil/>}/> 
+            {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
+
             <Route path="/prueba" element={<CartModal/>}/>
 
           </Routes>

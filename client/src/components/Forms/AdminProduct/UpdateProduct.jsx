@@ -172,12 +172,9 @@ console.log(productToUpdate)
       },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
-     console.log("no se envia el formulario?")
       await dispatch(putProduct(idUpdate,values))
       await dispatch(getProducts())
    
-      console.log(values)
 
     },
   });
@@ -493,7 +490,7 @@ console.log(productToUpdate)
         </TabPanel>
         
       </Paper>
-<Button type="button" onClick={(e)=> setUpdating(false)} >Cancelar edición</Button>
+<Button type="button" onClick={(e)=> setUpdating(false)} >Finalizar edición</Button>
     
 
       <hr />
