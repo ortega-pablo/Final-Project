@@ -1,18 +1,15 @@
 import {
   IconButton,
-  Table,
   TableCell,
   TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  addItemToCart,
+  clearCart,
   deleteFromCart,
-  getCartForChild,
 } from "../../../redux/actions";
 import ModalToRow from "./ModalToRow";
 import Swal from "sweetalert2";
@@ -37,6 +34,7 @@ const DetailRow = (props) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteFromCart(row.id, cartId));
+        dispatch(clearCart())
         setRender(!render);
         Swal.fire({
           title: "Borrado",
