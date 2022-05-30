@@ -4,21 +4,23 @@ const router = Router();
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
 const stripe = new Stripe(KEY_STRIPE);
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
+const { google } = require("googleapis");
 const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
-const { orderCreated } = require("./sendEmail")
 
 
 
-let transporter = nodemailer.createTransport({
-  host: "smtp.outlook.com",
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: "exmine.store@hotmail.com", // generated ethereal user
-    pass: "exmine123", // generated ethereal password
-  },
-});
+
+// let transporter = nodemailer.createTransport({
+//   host: "smtp.ethereal.com",
+//   port: 587,
+//   secure: false, // true for 465, false for other ports
+//   auth: {
+//     user: "jude.lebsack83@ethereal.email", // generated ethereal user
+//     pass: "KChgb6Jfcw5EbpCYHp", // generated ethereal password
+//   },
+// });
 
 
 
@@ -26,7 +28,6 @@ router.post("/review", async (req, res, next) => {
   const { rating, review, orderId } = req.body;
   const { userId, productId } = req.query;
   try {
-
 
     const product = await Product.findOne({
       where: {
@@ -66,6 +67,27 @@ router.post('/', async (req, res, next) => {
   const { id, amount, total, state, address, email } = req.body;
 
   try {
+
+    const oAuth2Client = new google.auth.OAuth2(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      REDIRECT_URI
+    );
+
+    oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+    const accessToken = await oAuth2Client.getAccessToken();
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          type: "OAuth2",
+          user: "exmine.hardware@gmail.com",
+          clientId: CLIENT_ID,
+          clientSecret: CLIENT_SECRET,
+          refreshToken: REFRESH_TOKEN,
+          accessToken: accessToken,
+        },
+      });
 
     // const payment = await stripe.paymentIntents.create({
     //   amount: amount,
@@ -126,8 +148,26 @@ router.post('/', async (req, res, next) => {
       newOrder.setUser(userId);
       newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
 
+      
+      var outputHTML = "";
+      outputHTML += "<table style=\"mso-table-lspace:0pt; mso-table-rspace:0pt; border-collapse:collapse;border-spacing:0px;width:500px\" class=\"cke_show_border\" cellspacing=\"1\" cellpadding=\"1\" border=\"0\" align=\"left\" role=\"presentation\">"
 
-      //    // Adding nodemailer when the order is created 
+    
+      for(var i = 0; i < findCart.products.length; i++){
+
+        outputHTML += "<tr style=\"border-collapse:collapse\">";
+
+        outputHTML += `<td style=\"padding:5px 10px 5px 0; Margin:0\" width=\"80%\" align=\"left\"> <p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:\'open sans\', \'helvetica neue\', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px\">${findCart.products[i].name}</p></td>
+
+
+        <td style =\"padding:5px 0;Margin:0\" width=\"20%\" align=\"left\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:\'open sans\', \'helvetica neue\', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px\">$${findCart.products[i].price}</p></td>`
+
+        outputHTML += "</tr>"
+        }
+
+        outputHTML += "</table>"
+        
+         
       let info = await transporter.sendMail({
         from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
         to: [findUser.email], // list of receivers
@@ -328,39 +368,10 @@ router.post('/', async (req, res, next) => {
       
         <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
       
-        
-        <table id="output_div" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
-      
+        ${outputHTML} 
              
-      
-              <script>
-      
-                      var outputHTML = "";
-                      outputHTML += "<table>"
-      
-                      for(var i = 0; i < newOrder.products.length; i++){
-      
-                              outputHTML += "<tr style=\"border-collapse:collapse\">";
-      
-                              outputHTML += <td style=\"padding:5px 10px 5px 0; Margin:0\" width=\"80%\" align=\"left\"> <p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:\'open sans\', \'helvetica neue\', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px\">${newOrder[i].name}</p></td>
-
-
-
-          <td style =\"padding:5px 0;Margin:0\" width=\"20%\" align=\"left\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:\'open sans\', \'helvetica neue\', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px\">${newOrder[i].price}</p></td>
-      
-                      outputHTML += "</tr>"
-                      outputHTML += "</table>"
-                      }
-
-                      document.getElementById("output_div").innerHTML = outputHTML;
-      
-       
-      
-              </script >
-      
-        </table ></td >
-      
-      
+        
+        </td >
         </tr > 
         </table ></td >
         </tr >
