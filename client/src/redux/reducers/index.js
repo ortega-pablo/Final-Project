@@ -61,7 +61,13 @@ import {
   GET_CART_FOR_CHILD,
   GET_ALL_ORDER_ONE_USER,
   GET_USER_ASK_FOR_ALL_PRODUCT,
+  GET_ALL_USERS,
+  DELETE_USER,
+  DELETE_ADMIN,
+  UPDATE_USER,
+  UPDATE_ADMIN,
   SET_AMOUNT,
+  CLEAR_CART,
 } from "../actions";
 
 const initialState = {
@@ -75,23 +81,22 @@ const initialState = {
   subCategories: [],
   discounts: [],
   userStatus: null,
-  shippingData:{},
+  shippingData: {},
   allImages: [],
-  getDetailOneProduct : [],
+  getDetailOneProduct: [],
   cart: {},
-  getDetailOneUser : [],
+  getDetailOneUser: [],
   allAsk: [],
   userAskOneProduc: [],
-  allOrderOneUser:[],
-  userAskAllProducs:[]
+  allOrderOneUser: [],
+  userAskAllProducs: [],
+  allUsers: [],
 };
 
-// funcion para que el carrito se guarde siempre 
-// localStorage.getItem("cart") ? 
+// funcion para que el carrito se guarde siempre
+// localStorage.getItem("cart") ?
 // initialState.cart = JSON.parse(localStorage.getItem("cart"))
 // : initialState.cart = []
-
-
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -107,8 +112,7 @@ const rootReducer = (state = initialState, action) => {
 
       productFixed[0].asks.sort((aA, aB) => {
         return aA.id - aB.id;
-      }
-      )
+      });
 
       return {
         ...state,
@@ -171,11 +175,11 @@ const rootReducer = (state = initialState, action) => {
       };
     }
 
-    case CLEAR_FILTERS:{
-      return{
+    case CLEAR_FILTERS: {
+      return {
         ...state,
-        products: state.productsAux
-      }
+        products: state.productsAux,
+      };
     }
 
     case POST_PRODUCT: {
@@ -243,13 +247,13 @@ const rootReducer = (state = initialState, action) => {
       };
     case POST_NEW_ASK: {
       return {
-        ...state
+        ...state,
       };
     }
-    case POST_NEW_ANSWER:{
+    case POST_NEW_ANSWER: {
       return {
-        ...state
-      }
+        ...state,
+      };
     }
 
     case DELETE_PRODUCT:
@@ -403,139 +407,170 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_SPECIFICATION:
       return {
         ...state,
-        products: newArray
-    }
+        products: newArray,
+      };
     case VERIFY_TOKEN:
-    return{
+      return {
         ...state,
-        userStatus: action.payload.msg
+        userStatus: action.payload.msg,
       };
     case GET_USER_ID_BY_TOKEN: {
       return {
-        ...state
-      }
+        ...state,
+      };
     }
 
-      case POST_ADD_IMAGE :
-        return {
-          ...state
-        }
+    case POST_ADD_IMAGE:
+      return {
+        ...state,
+      };
 
-        case DELETE_IMAGE_TO_PRODUCT: {
-          return {
-            ...state,
-          };
-        }
-        case PUT_NAME_SPECIFICATION: {
-          const inedex7 = state.allSpecifications.findIndex((d) => d.id == action.payload.id );
-          const newArray7 = [...state.allSpecifications];
-          newArray7[inedex7] = action.payload;
-    
-          return {
-            ...state,
-            categories: newArray7,
-          };
-        }
-    
-        case PUT_NAME_SUBCATEGORY: {
-          const inedex8 = state.subCategories.findIndex((s) => s.id == action.payload.id );
-          const newArray8 = [...state.subCategories];
-          newArray8[inedex8] = action.payload;
-    
-          return {
-            ...state,
-            categories: newArray8,
-          };
-        }
+    case DELETE_IMAGE_TO_PRODUCT: {
+      return {
+        ...state,
+      };
+    }
+    case PUT_NAME_SPECIFICATION: {
+      const inedex7 = state.allSpecifications.findIndex(
+        (d) => d.id == action.payload.id
+      );
+      const newArray7 = [...state.allSpecifications];
+      newArray7[inedex7] = action.payload;
 
-        case NEW_PAY:{
-          return{
-            ...state
-          }
-        }
+      return {
+        ...state,
+        categories: newArray7,
+      };
+    }
 
-        case SET_SHIPPING_DATA: {
-          return{
-            ...state,
-            shippingData: action.payload
-          }
-        }
-    
-        case GET_IMAGES: {
-          return {
-            ...state,
-            allImages: action.payload,
-          };
-        }
+    case PUT_NAME_SUBCATEGORY: {
+      const inedex8 = state.subCategories.findIndex(
+        (s) => s.id == action.payload.id
+      );
+      const newArray8 = [...state.subCategories];
+      newArray8[inedex8] = action.payload;
 
-        case GET_DETAIL_ONE_PRODUCT:
-          return {
-            ...state,
-            getDetailOneProduct: action.payload,
-           
-          };
+      return {
+        ...state,
+        categories: newArray8,
+      };
+    }
 
-        case GET_CART_BY_ID:
-          return {
-            ...state,
-            cart: action.payload
-          }
+    case NEW_PAY: {
+      return {
+        ...state,
+      };
+    }
 
-        case ADD_TO_CART:
-          return {
-            ...state,
-          }
+    case SET_SHIPPING_DATA: {
+      return {
+        ...state,
+        shippingData: action.payload,
+      };
+    }
 
-          case GET_ONE_USER:
-            console.log("reducer",state.getDetailOneUser)
+    case GET_IMAGES: {
+      return {
+        ...state,
+        allImages: action.payload,
+      };
+    }
+
+    case GET_DETAIL_ONE_PRODUCT:
+      return {
+        ...state,
+        getDetailOneProduct: action.payload,
+      };
+
+    case GET_CART_BY_ID:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+
+    case ADD_TO_CART:
+      return {
+        ...state,
+      };
+
+    case GET_ONE_USER:
+      console.log("reducer", state.getDetailOneUser);
       return {
         ...state,
         getDetailOneUser: action.payload,
-        
       };
 
-      case GET_ALL_ASK:
-  return {
-    ...state,
-    allAsk: action.payload,
-    
-  };
-  case GET_USER_ASK_FOR_ONE_PRODUCT:
+    case GET_ALL_ASK:
       return {
-      ...state,
-      userAskOneProduc: action.payload,
-      
-    };
-  case DELETE_FROM_CART:
-    return{
-      ...state,
-    }
-  case GET_CART_FOR_CHILD:
-    return{
-      ...state,
-      cart: action.payload,
-    }
-  case SET_AMOUNT:
-    return{
-      ...state,
-    }
-  
+        ...state,
+        allAsk: action.payload,
+      };
+    case GET_USER_ASK_FOR_ONE_PRODUCT:
+      return {
+        ...state,
+        userAskOneProduc: action.payload,
+      };
+    case DELETE_FROM_CART:
+      return {
+        ...state,
+      };
+    case GET_CART_FOR_CHILD:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+    case SET_AMOUNT:
+      return {
+        ...state,
+      };
+    case CLEAR_CART:
+      return{
+        ...state,
+        cart: []
+      }
 
-case GET_USER_ASK_FOR_ALL_PRODUCT:
-  return {
-  ...state,
-  userAskAllProducs: action.payload,
-  
-};
-
-
+    case GET_USER_ASK_FOR_ALL_PRODUCT:
+      return {
+        ...state,
+        userAskAllProducs: action.payload,
+      };
 
     case GET_ALL_ORDER_ONE_USER:
       return {
         ...state,
         allOrderOneUser: action.payload,
-       
       };
+
+    case GET_ALL_USERS: {
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+    }
+
+    case DELETE_USER: {
+      return {
+        ...state,
+      };
+    }
+
+    case DELETE_ADMIN: {
+      return {
+        ...state,
+      };
+    }
+
+    case UPDATE_USER: {
+      return {
+        ...state,
+      };
+    }
+
+    case UPDATE_ADMIN: {
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }

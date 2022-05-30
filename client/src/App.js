@@ -27,7 +27,7 @@ import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 import { CheckOutForm } from "./components/StripeComponent/CheckOutForm";
-import Clients from "./components/AdminPanel/Clients";
+import UsersPanel from "./components/AdminPanel/UserPanel/UsersPanel.jsx";
 import Orders from "./components/AdminPanel/Orders";
 import { Perfil } from "./components/PerfilUser/Perfil";
 import CartView from "./components/Cart/CartView";
@@ -69,7 +69,7 @@ function App() {
             <Route path="/createDiscount" element={<CreateDiscount/>}/>
 
 
-            <Route path="/clients" element={<Clients/>}/>
+            <Route path="/usersPanel" element={<UsersPanel/>}/>
             <Route path="/orders" element={<Orders/>}/>
 
             <Route path="/cart" element={<CartView/>}/>

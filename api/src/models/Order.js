@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
     },
     state: {
       type: DataTypes.ENUM,
-      values: ["created", "processing", "cancelled", "completed"],
+      values: ["created", "processing", "shipped", "cancelled", "completed"],
       defaultValue: "created",
       allowNull: false,
     },

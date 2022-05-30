@@ -11,7 +11,7 @@ import AllStock from './AllStock'
 function AdminStock() {
   const userStatus = useSelector((state) => state.userStatus);
     return (
-      userStatus === 'admin' ?
+      userStatus === "admin" || userStatus === "superAdmin" ?
         <Box
           maxWidth="vp"
           sx={{

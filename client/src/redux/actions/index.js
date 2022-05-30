@@ -63,6 +63,7 @@ export const GET_USERS = "GET_USERS";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const GET_CART_FOR_CHILD ="GET_CART_FOR_CHILD";
 export const SET_AMOUNT = "SET_AMOUNT";
+export const CLEAR_CART = "CLEAR_CART"
 
 
 
@@ -75,8 +76,11 @@ export const GET_USER_ASK_FOR_ONE_PRODUCT = "GET_USER_ASK_FOR_ONE_PRODUCT";
 export const GET_ALL_ORDER = "GET_ALL_ORDER";
 export const GET_ALL_ORDER_ONE_USER = "GET_ALL_ORDER_ONE_USER";
 export const GET_USER_ASK_FOR_ALL_PRODUCT = "GET_USER_ASK_FOR_ALL_PRODUCT";
-
-
+export const GET_ALL_USERS ="GET_ALL_USERS";
+export const DELETE_USER ="DELETE_USER";
+export const DELETE_ADMIN ="DELETE_ADMIN";
+export const UPDATE_USER ="UPDATE_USER";
+export const UPDATE_ADMIN ="UPDATE_ADMIN";
 
 
 
@@ -905,6 +909,14 @@ export const setCartAmount = (id, amount) => {
   }
 }
 
+export const clearCart = () => {
+  return async(dispatch) => {
+    return dispatch({
+      type: CLEAR_CART
+    })
+  }
+}
+
 export function getDetailOneUsers( id) {
   return async function(dispatch) {
    
@@ -975,4 +987,105 @@ export const getAllOrdersOneUser = (idUser) => {
   };
 };
 
+export const getAllUsers = () => {
 
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/users`);
+    return dispatch({
+      type: GET_ALL_USERS,
+      payload: response.data,
+    });
+  };
+};
+
+export function deleteUser({userId , token}) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  return async function (dispatch) {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      
+      await axios.delete(`http://localhost:3001/users/deleteUser?adminId=${responseId.data.idUser}&userId=${userId}`);
+      return dispatch({
+        type: DELETE_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export function deleteAdmin({adminId , token}) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  return async function (dispatch) {
+    try {
+  
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      
+      await axios.delete(`http://localhost:3001/users/deleteAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`);
+      return dispatch({
+        type: DELETE_ADMIN,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export function editUser({userId , token, payload}) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  return async function (dispatch) {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      
+      await axios.put(`http://localhost:3001/users/editUser?userId=${userId}&adminId=${responseId.data.idUser}`,payload);
+      return dispatch({
+        type: UPDATE_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export function editAdmin({adminId , token, payload}) {
+  console.log("Este es el user ID:", adminId)
+  console.log("Este es el token:", token)
+  console.log("Este es el payload", payload)
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  return async function (dispatch) {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      
+      await axios.put(`http://localhost:3001/users/editAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`,payload);
+      return dispatch({
+        type: UPDATE_ADMIN,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
