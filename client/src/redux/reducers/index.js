@@ -62,6 +62,8 @@ import {
   GET_ALL_ORDER_ONE_USER,
   GET_USER_ASK_FOR_ALL_PRODUCT,
   SET_AMOUNT,
+  POST_NEW_DIRECTION,
+  GET_ALL_DIRECTIONS
 } from "../actions";
 
 const initialState = {
@@ -83,7 +85,8 @@ const initialState = {
   allAsk: [],
   userAskOneProduc: [],
   allOrderOneUser:[],
-  userAskAllProducs:[]
+  userAskAllProducs:[],
+  allDirections:[]
 };
 
 // funcion para que el carrito se guarde siempre 
@@ -536,6 +539,25 @@ case GET_USER_ASK_FOR_ALL_PRODUCT:
         allOrderOneUser: action.payload,
        
       };
+
+  case POST_NEW_DIRECTION: {
+    return {
+      ...state
+    }
+  }
+  case GET_ALL_DIRECTIONS:{
+    
+    let fixedAllDirections = [];
+    action.payload.forEach(d => fixedAllDirections.push(d));
+
+    fixedAllDirections.forEach((d, i) => d.id2 = i);
+
+
+    return {
+      ...state,
+      allDirections: fixedAllDirections
+    }
+  }
     default:
       return state;
   }

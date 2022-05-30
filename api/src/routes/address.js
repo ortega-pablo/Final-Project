@@ -7,12 +7,14 @@ router.post("/:userId", async (req, res, next) => {
 
     const {userId} = req.params
     const {
-        addressLine1,
-        addressLine2,
-        postalCode,
-        country,
-        telephone,
-        mobile
+        FirstName,
+        LastName,
+        Country,
+        Address1,
+        City,
+        EmailAddress,
+        PostCode,
+        Mobile
     } = req.body
 
     const findUser = await User.findOne({
@@ -25,12 +27,14 @@ router.post("/:userId", async (req, res, next) => {
         if(userId && findUser){
          
             const newAddress = await Address.create({
-                addressLine1,
-                addressLine2,
-                postalCode,
-                country,
-                telephone,
-                mobile
+                FirstName,
+                LastName,
+                Country,
+                Address1,
+                City,
+                EmailAddress,
+                PostCode,
+                Mobile
             })
 
             findUser.addAddress(newAddress)
@@ -57,9 +61,6 @@ router.get("/:userId", async (req, res, next) => {
             const getAddress = await Address.findAll({
                 where: {
                     userId
-                },
-                include: {
-                    model: User
                 }
             })
 
