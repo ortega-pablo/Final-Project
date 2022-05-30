@@ -78,7 +78,7 @@ function App() {
 
             <Route path="/cart" element={<CartView/>}/>
               
-            <Route path="/prueba1" element={<Perfil/>}/> 
+            <Route path="/userProfile" element={<Perfil/>}/> 
             {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
 
             <Route path="/prueba" element={<CartModal/>}/>

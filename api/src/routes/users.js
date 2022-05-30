@@ -545,13 +545,22 @@ router.put("/resetPasswordWithOld", async (req, res, next) => {
 router.put("/updateDatesUser/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const { userName, firstName, lastName, phone } = req.body;
+    const { currentPassword, userName, firstName, lastName, phone } = req.body;
     const findUser = await User.findOne({
       where: {
         id: userId,
       },
     });
-    if (findUser) {
+    if (findUser && !findUser.loginWithGoogle) {
+      const passwordCorrect =
+      findUser === null
+        ? false
+        : await bcrypt.compare(currentPassword, findUser.dataValues.password);
+    if (!passwordCorrect) {
+      return res.status(400).json({
+        error: "invalid user or password",
+      });
+    }
       await User.update(
         {
           userName,
@@ -566,7 +575,25 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
         }
       );
       res.status(200).send("user updated successfully!");
-    } else {
+    } else if(findUser && findUser.loginWithGoogle){
+      await User.update(
+        {
+          userName,
+          firstName,
+          lastName,
+          phone,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      res.status(200).send("user updated successfully!");
+    }
+    
+    
+    else {
       res.send("user not found");
     }
   } catch (error) {
@@ -591,6 +618,7 @@ router.post("/google-login", async (req, res) => {
       userName: name,
       firstName: given_name,
       lastName: family_name,
+      loginWithGoogle: true,
     },
   });
   const userforToken = {
@@ -606,5 +634,36 @@ router.post("/google-login", async (req, res) => {
     token: token2,
   });
 });
+
+
+router.delete("/autoDeleteUser", async (req, res, next) => {
+  const {  userId } = req.query;
+  try {
+    const findUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+   
+
+    if (findUser) {
+      const findUser = await User.destroy({
+        where: {
+          id: userId,
+        },
+      });
+
+      findUser
+        ? res.status(200).send("User deleted successfully!")
+        : res.send("User not found");
+    } else {
+      res.send("User not authorized");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 module.exports = router;
