@@ -45,17 +45,17 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
-    newPassword: yup
+      currentPassword: yup
       .string("Ingrese la descripción")
-       .min(8, 'Password should be of minimum 8 characters length')
-      .required("La nueva contraseña es requerida"),
-    oldPassword: yup
-      .string("Ingrese la descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
-      .required("La actual contraseña es requerida para modificar tu perfil"),
-      passwordConfirmation: yup.string()
-    .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
-    .required("Confirma la nueva contraseña")
+      
+      .required("La actual contraseña es requerida para hacer cambios en tu perfil"),
+    // oldPassword: yup
+    //   .string("Ingrese la descripción")
+    //   // .min(8, 'Password should be of minimum 8 characters length')
+    //   .required("La actual contraseña es requerida para modificar tu perfil"),
+    //   passwordConfirmation: yup.string()
+    // .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
+    // .required("Confirma la nueva contraseña")
 
   });
 
@@ -69,12 +69,17 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
       lastName: user?.lastName,
       // addresses: user.addresses,
       phone: user?.phone,
-      newPassword: "",
-      oldPassword: "",
-      passwordConfirmation:""
+      // newPassword: "",
+      currentPassword: "",
+      // passwordConfirmation:""
     },
     validationSchema: validationSchema, 
     onSubmit: async (values, { resetForm }) => {
+
+
+
+
+      
       Swal.fire({
         title: `¿Está seguro de modificar a ${user.userName}?`,
         // text: "Esta acción no se puede deshacer!",
@@ -86,13 +91,17 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
         confirmButtonText: "Si, modificar!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await dispatch(editUserForUser(idToken, values));
-          setRender(values)
-          Swal.fire("Modificado!");
+         const newData = await dispatch(editUserForUser(idToken, values));
+         if(newData !== undefined){
+           setRender(values)
+           Swal.fire("Modificado!");
+         
+        }else {
+          Swal.fire("La password es incorrecta!")
         }
-      } 
+      } })
 
-      )
+      
       
     //  await dispatch(editUserForUser(idToken, values));
     //  setRender(values)
@@ -179,18 +188,18 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
               label="Actual Contraseña *"
               variant="outlined"
               type="password"
-              name="oldPassword"
-              value={formik.values.oldPassword}
+              name="currentPassword"
+              value={formik.values.currentPassword}
               onChange={formik.handleChange}
               error={
-                formik.touched.oldPassword && Boolean(formik.errors.oldPassword)
+                formik.touched.currentPassword && Boolean(formik.errors.currentPassword)
               }
               helperText={
-                formik.touched.oldPassword && formik.errors.oldPassword
+                formik.touched.currentPassword && formik.errors.currentPassword
               }
             />
 
-            <TextField
+            {/* <TextField
               id="outlined-basic"
               label="Nueva Contraseña *"
               variant="outlined"
@@ -204,9 +213,8 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
               helperText={
                 formik.touched.newPassword && formik.errors.newPassword
               }
-              
-            />
-        <TextField
+                /> */}
+        {/* <TextField
            
             required
             autoComplete="off"
@@ -218,7 +226,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
             onChange={formik.handleChange}
             error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
             helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
-            />
+            /> */}
             <Button type="submit">Modificar</Button>
           </Box>
         </div>

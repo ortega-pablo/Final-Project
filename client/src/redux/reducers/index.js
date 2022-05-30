@@ -73,6 +73,7 @@ import {
   SET_AMOUNT,
   UPDATE_USER_FOR_USER,
   CLEAR_CART,
+  UPDATE_PASSWORD_FOR_USER
 } from "../actions";
 
 const initialState = {
@@ -604,6 +605,11 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case UPDATE_USER_FOR_USER: {
+      return {
+        ...state,
+      };
+    }
+    case UPDATE_PASSWORD_FOR_USER: {
       return {
         ...state,
       };

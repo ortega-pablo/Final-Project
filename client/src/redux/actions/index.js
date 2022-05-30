@@ -87,6 +87,7 @@ export const DELETE_ADMIN ="DELETE_ADMIN";
 export const UPDATE_USER ="UPDATE_USER";
 export const UPDATE_ADMIN ="UPDATE_ADMIN";
 export const UPDATE_USER_FOR_USER ="UPDATE_USER_FOR_USER";
+export const UPDATE_PASSWORD_FOR_USER ="UPDATE_PASSWORD_FOR_USER";
 
 
 
@@ -1127,7 +1128,6 @@ export function editAdmin({adminId , token, payload}) {
 
 
 export function editUserForUser( token , payload) {
-  console.log(payload)
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   }
@@ -1139,9 +1139,31 @@ export function editUserForUser( token , payload) {
         config
       );
       
-      await axios.put(`http://localhost:3001/users/resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
+      await axios.put(`http://localhost:3001/users/updateDatesUser/${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_USER_FOR_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export function editPasswordForUser( token , payload) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  return async function (dispatch) {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      
+      await axios.put(`http://localhost:3001/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
+      return dispatch({
+        type: UPDATE_PASSWORD_FOR_USER,
       });
     } catch (error) {
       console.log(error);

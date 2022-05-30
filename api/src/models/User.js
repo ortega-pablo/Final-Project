@@ -33,5 +33,10 @@ module.exports = (sequelize) => {
       defaultValue: "user",
       allowNull: true,
     },
+    loginWithGoogle: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: true,
+    },
   });
 };
