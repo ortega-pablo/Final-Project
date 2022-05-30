@@ -2,26 +2,34 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("address", {
-    addressLine1: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    addressLine2: {
-      type: DataTypes.TEXT,
-    },
-    postalCode: {
+    FirstName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    country: {
+    LastName: {
+      type: DataTypes.STRING,
+    },
+    Country: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    telephone: {
+    Address1: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    mobile: {
+    City: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    EmailAddress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    PostCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    Mobile: {
       type: DataTypes.STRING,
       allowNull: false,
     },

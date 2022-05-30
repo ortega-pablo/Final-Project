@@ -20,6 +20,7 @@ export const POST_CREATE_USER = "POST_CREATE_USER";
 export const POST_LOGIN_USER = "POST_LOGIN_USER";
 export const POST_ADD_SUB_CATEGORY_TO_PRODUCT =
   "POST_ADD_SUB_CATEGORY_TO_PRODUCT";
+export const POST_NEW_DIRECTION = "POST_NEW_DIRECTION";
 export const POST_ADD_SUB_CATEGORY = "POST_ADD_SUB_CATEGORY";
 export const POST_ADD_QUANTITY = "POST_ADD_QUANTITY";
 export const POST_ADD_NEW_SPECIFICATION = "POST_ADD_NEW_SPECIFICATION";
@@ -70,7 +71,7 @@ export const CLEAR_CART = "CLEAR_CART"
 
 
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
-
+export const GET_ALL_DIRECTIONS = "GET_ALL_DIRECTIONS";
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_ALL_ASK = "GET_ALL_ASK";
@@ -87,6 +88,7 @@ export const DELETE_ADMIN ="DELETE_ADMIN";
 export const UPDATE_USER ="UPDATE_USER";
 export const UPDATE_ADMIN ="UPDATE_ADMIN";
 export const UPDATE_USER_FOR_USER ="UPDATE_USER_FOR_USER";
+export const UPDATE_PASSWORD_FOR_USER ="UPDATE_PASSWORD_FOR_USER";
 
 
 
@@ -993,6 +995,33 @@ export const getAllOrdersOneUser = (idUser) => {
   };
 };
 
+export const getAllDirections = (idUser) => {
+  return async (dispatch) => {
+    try {
+      let response = await axios(`http://localhost:3001/users/address/${idUser}`)
+      return dispatch({
+        type: GET_ALL_DIRECTIONS,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+}
+
+export const postNewDirection = (idUser, payload) => {
+return async (dispatch) => {
+  try {
+    await axios.post(`http://localhost:3001/users/address/${idUser}`, payload)    
+  } catch (error) {
+    console.log(error)
+  }
+  return dispatch({
+    type: POST_NEW_DIRECTION
+  })
+}
+}
 export const getAllAsksAllProducts = () => {
   return async (dispatch) => {
     let response = await axios(`http://localhost:3001/asks/allUser`);
@@ -1127,7 +1156,6 @@ export function editAdmin({adminId , token, payload}) {
 
 
 export function editUserForUser( token , payload) {
-  console.log(payload)
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   }
@@ -1139,9 +1167,31 @@ export function editUserForUser( token , payload) {
         config
       );
       
-      await axios.put(`http://localhost:3001/users/resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
+      await axios.put(`http://localhost:3001/users/updateDatesUser/${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_USER_FOR_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export function editPasswordForUser( token , payload) {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  return async function (dispatch) {
+    try {
+      let responseId = await axios.get(
+        "http://localhost:3001/users/userId",
+        config
+      );
+      
+      await axios.put(`http://localhost:3001/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
+      return dispatch({
+        type: UPDATE_PASSWORD_FOR_USER,
       });
     } catch (error) {
       console.log(error);
