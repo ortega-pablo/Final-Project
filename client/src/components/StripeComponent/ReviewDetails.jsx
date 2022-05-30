@@ -1,11 +1,17 @@
 import { ImageListItem, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
-import {useSelector} from 'react-redux'
+import React, { useEffect } from 'react';
+import {useSelector, useDispatch} from 'react-redux'
+import { getCartById } from '../../redux/actions';
 
 
 export const ReviewDetails = () => {
+    const dispatch = useDispatch()
+    const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
     const cart = useSelector(state => state.cart);
+    useEffect(() => {
+        dispatch(getCartById(idToken))
+    },[dispatch])
     let dollarUSLocale = Intl.NumberFormat('en-US');
     return (
         <Box>
@@ -35,10 +41,6 @@ export const ReviewDetails = () => {
                     </ListItem>
                 ))}
                 <ListItem>
-                {/* <ListItemText
-                            sx={{margin:"5px"}}
-                            primary={`Total:$${dollarUSLocale.format(cart.amount/100)}`}
-                        /> */}
                         <Typography variant='subtitle1'>
                             {`Total: $${dollarUSLocale.format(cart.amount/100)}`}
                         </Typography>
