@@ -71,6 +71,8 @@ import {
   UPDATE_USER,
   UPDATE_ADMIN,
   SET_AMOUNT,
+  POST_NEW_DIRECTION,
+  GET_ALL_DIRECTIONS,
   UPDATE_USER_FOR_USER,
   CLEAR_CART,
 } from "../actions";
@@ -95,6 +97,7 @@ const initialState = {
   userAskOneProduc: [],
   allOrderOneUser:[],
   userAskAllProducs:[],
+  allDirections:[],
   allAsksAllProducts:[],
   getAllUsers: [],
   getAsksOneUserOnePruduct:[],
@@ -608,6 +611,25 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     }
+
+    case POST_NEW_DIRECTION: {
+      return {
+        ...state
+      }
+    }
+  case GET_ALL_DIRECTIONS:{
+    
+    let fixedAllDirections = [];
+    action.payload.forEach(d => fixedAllDirections.push(d));
+
+    fixedAllDirections.forEach((d, i) => d.id2 = i);
+
+
+    return {
+      ...state,
+      allDirections: fixedAllDirections
+    }
+  }
     default:
       return state;
   }

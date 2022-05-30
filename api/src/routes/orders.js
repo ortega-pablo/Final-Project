@@ -74,7 +74,7 @@ router.post('/', async (req, res, next) => {
     //   payment_method: id,
     //   confirm: true,
     // })
-
+ 
     // Aqui se agrega todo de la orden is payment fue exitoso
 
     if (true) {
@@ -82,7 +82,7 @@ router.post('/', async (req, res, next) => {
       const findUser = await User.findOne({
         where: {
           id: userId
-        }, include: {
+        }, include: { 
           model: Address,
           where: {
             id: addressId
@@ -113,16 +113,14 @@ router.post('/', async (req, res, next) => {
 
 
       const newOrder = await Order.create({
-        total,
+        total: findCart.amount,
         state,
-        address,
-        email,
         quantity: findCart.amount
       });
 
       const oneAddress = findUser.addresses[0]
 
-      oneAddress.addOrder(newOrder)
+      oneAddress.addOrder(newOrder);
       newOrder.setUser(userId);
       newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
 

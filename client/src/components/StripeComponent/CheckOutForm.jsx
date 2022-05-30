@@ -19,36 +19,12 @@ const FormCheck = () => {
     const Form = () => activeStep === 0 ? <AdressForm nexStep={nexStep} backStep={backStep}></AdressForm> : <PaymentDetails backStep={backStep}></PaymentDetails>
 
     //--------Hasta aca el codigo pertenece al stepper.--------
-    const stripe = useStripe();
-    const elements = useElements();
-    const dispatch = useDispatch();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
-            type: 'card',
-            card: elements.getElement(CardElement)
-        })
-        console.log(paymentMethod);
-        if(!error){
-            const id = paymentMethod.id;
-            const response = await dispatch(postNewPaymentMethod({id: id, amount: 10000}));
-            console.log(response)
-        }else{
-            console.log(error); 
-        }
-        elements.getElement(CardElement).clear();
-    }
     return(
         <Box sx={{ margin: "30px", backgroundColor: "red", display:"flex", justifyContent: "center", alignItems: "center"}}>
         <Paper sx={{ width: "600px", height:"600px" }}>
             <Typography component='h1' variant='h4'>
                 Checkout
             </Typography>
-            <form onSubmit={handleSubmit}>
-               
-            <CardElement />
-            <button type="submit" >Submit</button>
-            </form>
             <Stepper activeStep={activeStep}>
                 {steps.map(s => (
                     <Step sx={{color:"black"}} key={s}>
