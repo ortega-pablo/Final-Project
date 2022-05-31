@@ -2,6 +2,7 @@ import {
     Button,
    
     TextField,
+    Typography,
 
   } from "@mui/material";
   import { Box } from "@mui/system";
@@ -124,11 +125,12 @@ export const UploadData = () => {
   return (
       <>
         <>
-      <div>EditarPerfil</div>
+      <Typography sx={{mt:"15px", mb:"15px"}} variant="h3"> Edita tu perfil</Typography>
 
       {
         <div>
           <Box
+            sx={{display:"flex"}}
             component="form"
             noValidate
             autoComplete="off"

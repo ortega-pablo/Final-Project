@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
@@ -83,7 +83,7 @@ export const UploadPasswUser = () => {
 
   return (
     <>
-      <div>Editar Contraseña</div>
+<Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" > Edita tu contraseña</Typography>
 
       {
         <div>

@@ -29,7 +29,8 @@ const GetMyData = () => {
 
   return (
       <>
-         
+         <Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" >Tu perfil</Typography>
+
       <TableRow sx={{ width: "100%" }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
          

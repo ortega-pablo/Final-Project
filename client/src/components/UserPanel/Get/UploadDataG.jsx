@@ -125,6 +125,10 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
   
     return (
       <>
+
+<Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" > Edita tu perfil</Typography>
+
+
         {
           <div>
             <Box
@@ -187,7 +191,7 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
               focused
               autoComplete="off"
                 id="outlined-basic"
-                label="Telefono *"
+                label="Telefono "
                 variant="outlined"
                 name="phone"
                 value={formik.values.phone}
