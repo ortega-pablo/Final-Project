@@ -12,15 +12,15 @@ const nodemailer = require("nodemailer");
 // const processingHTML = require("./orderProcessing")
 
 
-// let transporter = nodemailer.createTransport({
-//   host: "smtp.ethereal.com",
-//   port: 587,
-//   secure: false, // true for 465, false for other ports
-//   auth: {
-//     user: "jude.lebsack83@ethereal.email", // generated ethereal user
-//     pass: "KChgb6Jfcw5EbpCYHp", // generated ethereal password
-//   },
-// });
+let transporter = nodemailer.createTransport({
+  host: "smtp.hotmail.com",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: "samueltribulon@hotmail", // generated ethereal user
+    pass: "samusamusamu123", // generated ethereal password
+  },
+});
 
 
 
@@ -68,26 +68,26 @@ router.post('/', async (req, res, next) => {
 
   try {
 
-    const oAuth2Client = new google.auth.OAuth2(
-      CLIENT_ID,
-      CLIENT_SECRET,
-      REDIRECT_URI
-    );
+    // const oAuth2Client = new google.auth.OAuth2(
+    //   CLIENT_ID,
+    //   CLIENT_SECRET,
+    //   REDIRECT_URI
+    // ); 
 
-    oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+    // oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-    const accessToken = await oAuth2Client.getAccessToken();
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          type: "OAuth2",
-          user: "exmine.hardware@gmail.com",
-          clientId: CLIENT_ID,
-          clientSecret: CLIENT_SECRET,
-          refreshToken: REFRESH_TOKEN,
-          accessToken: accessToken,
-        },
-      });
+    // const accessToken = await oAuth2Client.getAccessToken();
+      // const transporter = nodemailer.createTransport({
+      //   service: "gmail",
+      //   auth: {
+      //     type: "OAuth2",
+      //     user: "exmine.hardware@gmail.com",
+      //     clientId: CLIENT_ID,
+      //     clientSecret: CLIENT_SECRET,
+      //     refreshToken: REFRESH_TOKEN,
+      //     accessToken: accessToken,
+      //   },
+      // });
 
     // const payment = await stripe.paymentIntents.create({
     //   amount: amount,
@@ -139,8 +139,8 @@ router.post('/', async (req, res, next) => {
         state,
         quantity: findCart.amount
       });
-
-      const oneAddress = findUser.addresses[0]
+ 
+      const oneAddress = findUser.addresses[0] 
 
       oneAddress.addOrder(newOrder);
       newOrder.setUser(userId);
@@ -167,8 +167,8 @@ router.post('/', async (req, res, next) => {
         
          
       let info = await transporter.sendMail({
-        from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
-        to: [findUser.email], // list of receivers
+        from: '"Exmine Store" <samueltribulon@hotmail>', // sender address
+        to: [findUser.email], // list of receivers 
         subject: "Confirmacion de Pedido", // Subject line
         text: "", // plain text body
         html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -473,10 +473,10 @@ router.post('/', async (req, res, next) => {
         </html >`
       });
 
-      await findCart.setProducts([]);
-      await findCart.update({
-        amount: 0
-      });
+      // await findCart.setProducts([]);
+      // await findCart.update({
+      //   amount: 0
+      // });
 
       return res.send(newOrder)
       // return res.send("Order created successfully!")

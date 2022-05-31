@@ -9,6 +9,8 @@ const stripe = new Stripe(KEY_STRIPE);
 
 router.post('/', async (req, res) => {
     const {id, amount, userId, addressId} = req.body;
+    console.log(addressId);
+    console.log(userId)
     try {
         const payment = await stripe.paymentIntents.create({
             amount: amount,
@@ -35,7 +37,7 @@ router.post('/', async (req, res) => {
         }
 
         res.send({message: error.raw.message}); 
-    }
+    } 
 })
 
 module.exports = router;
