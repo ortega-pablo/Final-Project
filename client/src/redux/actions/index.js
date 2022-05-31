@@ -766,14 +766,15 @@ export function putNameSpecification(idS, payload) {
   };
 }
 
-export const postNewPaymentMethod = (payload) => {
+export const postNewPaymentMethod = (payload, addressId, userId) => {
   console.log(payload);
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `http://localhost:3001/checkOut`,
+        `http://localhost:3001/checkOut?userId=${userId}&addressId=${addressId}`,
         payload
       );
+      console.log("response despues del post", response)
       return response.data;
     } catch (error) {
       console.log(error);
