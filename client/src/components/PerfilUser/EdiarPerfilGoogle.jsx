@@ -28,23 +28,23 @@ import {
         //   NameRepetido.map((name) => name),
         //   "Ya existe un producto con éste nombre"
         // )
-        .required("El nombre es requerido"),
+        .required("Por favor ingrese un nombre"),
   
       firstName: yup
-        .string("Ingrese la descripción")
+        .string("Ingrese una descripción")
         // .notOneOf(
         //   skuRepetido.map((sku) => sku),
         //   "Ya existe un producto con éste codigo sku"
         // )
-        .required("La descripción es requerida"),
+        .required("Por favor ingrese una descripción"),
       lastName: yup
-        .string("Ingrese la descripción")
-        .required("La descripción es requerida"),
+        .string("Ingrese una descripción")
+        .required("Por favor ingrese una descripción"),
   
       phone: yup
-        .string("Ingrese la descripción")
+        .string("Ingrese una descripción")
         // .min(8, 'Password should be of minimum 8 characters length')
-        .required("La descripción es requerida"),
+        .required("Por favor ingrese una descripción"),
         // currentPassword: yup
         // .string("Ingrese la descripción")
         

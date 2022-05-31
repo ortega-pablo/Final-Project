@@ -305,7 +305,7 @@ export default function AdminMenuLarge() {
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Clientes" />
+            <ListItemText primary="Usuarios" />
           </ListItemButton>
 
           <Divider variant="middle" />

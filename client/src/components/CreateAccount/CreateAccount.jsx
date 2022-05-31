@@ -39,14 +39,14 @@ const validationSchema = yup.object({
   email: yup
     .string()
     .email()
-    .required("Email is required"),
+    .required("Por favor ingrese un email"),
 
   password: yup
     .string()
-    .required("Password is required")
-    .min(6, "Password is too short - should be 6 chars minimum"),
+    .required("Por favor ingrese una contraseña")
+    .min(6, "La contraseña debe contener mínimo 6 caracteres"),
   passwordConfirmation: yup.string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .oneOf([yup.ref('password'), null], 'debe coincidir con la contraseña')
 });
 
 export const CreateAccount = () => {
@@ -73,14 +73,14 @@ export const CreateAccount = () => {
           confirmButtonColor: '#B6893E',
           icon: 'error',
           title: 'Oops...',
-          text: 'Esta direccion de correo ya esta registrada'
+          text: 'Esta direccion de correo ya está registrada'
         })
         setErrorValidate(true);
       } else {
         Swal.fire({
           background: '#DFDCD3',
           icon: 'success',
-          title: 'Creado con exito',
+          title: 'Creado con éxito',
           showConfirmButton: true,
           confirmButtonColor: '#B6893E',
           timer: 1500

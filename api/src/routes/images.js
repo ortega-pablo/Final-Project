@@ -22,7 +22,7 @@ router.post("/uploadProduct", upload.array("image"), async (req, res, next)=>{
 
     urls.map( async (el) =>  {
 
-      return await axios.post(`http://localhost:3001/products/addImage?urlFile=${el.url}&productId=${productId}`)
+      return await axios.post(`/products/addImage?urlFile=${el.url}&productId=${productId}`)
     })
 
     res.status(200).send({

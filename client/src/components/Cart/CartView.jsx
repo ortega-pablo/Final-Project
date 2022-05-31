@@ -45,7 +45,7 @@ const CartView = () => {
     Swal.fire({
       background: "#DFDCD3",
       icon: "success",
-      title: `total amount: ${amountToCents}`,
+      title: `Monto total: ${totalAmount}`,
       showConfirmButton: false,
       timer: 1500,
     });
