@@ -14,17 +14,19 @@ const orderRoute = require("./orders")
 const checkOut = require("./checkOut");
 const addressRoute = require("./address")
 const sendEmail = require("./sendEmail")
+const axios = require ("axios")
 
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-
 const router = Router();
+
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+axios.defaults.baseURL = process.env.HOST
 
 router.use("/products", producstRoute)
 router.use("/categories" , categoriesRoute)
@@ -41,7 +43,6 @@ router.use("/orders", orderRoute)
 router.use("/checkOut", checkOut);
 router.use("/users/address", addressRoute)
 router.use("/sendEmail", sendEmail);
-
 
 
 module.exports = router;

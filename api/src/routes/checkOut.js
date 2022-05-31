@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
             confirm: true,
         })
         try {
-            await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, {state: 'processing'}) 
+            await axios.post(`/orders?userId=${userId}&addressId=${addressId}`, {state: 'processing'}) 
             
         } catch (error) {
             console.log(error)
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
         
     } catch (error) {
         try {
-            await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, {state: 'cancelled'})
+            await axios.post(`/orders?userId=${userId}&addressId=${addressId}`, {state: 'cancelled'})
             
         } catch (error) {
             console.log(error)
