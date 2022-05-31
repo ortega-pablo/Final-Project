@@ -1,3 +1,4 @@
+
 import {
   Box,
   Button,
@@ -44,7 +45,7 @@ const AdministrateCategoriesToAdmin = () => {
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
       .notOneOf(
-        allCategories.map((c) => c.name),
+        allCategories.map((c) => c?.name),
         "Ya existe esa  categoría"
       )
       .required("El nombre es requerido"),
@@ -123,7 +124,7 @@ const AdministrateCategoriesToAdmin = () => {
             onSubmit={formik.handleSubmit}
             sx={{ p: 3, m: 1, borderRadius: "5px" }}
           >
-            <Typography> Editando a: {categoryToUpdate.name}</Typography>
+            <Typography> Editando a: {categoryToUpdate?.name}</Typography>
             <TextField
               id="outlined-basic"
               label="Nuevo valor del nombre"

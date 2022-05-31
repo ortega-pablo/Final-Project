@@ -373,6 +373,13 @@ function AdminMenuMobile({
               <ListItemText primary="Preguntas" />
             </ListItemButton>
           </List>
+          <ListItemButton component="a" href="/banner" sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Imagenes del banner" />
+          </ListItemButton>
+          
         </Paper>
       </Collapse>
     </HiddensmUp>

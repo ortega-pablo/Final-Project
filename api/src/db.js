@@ -6,13 +6,13 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 // const sequelize = new Sequelize(
 //   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`,
-  // {
-  //   logging: false, // set to console.log to see the raw SQL queries
-  //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  //   define: {
-  //     freezeTableName: true,
-  //   }
-  // }
+// {
+//   logging: false, // set to console.log to see the raw SQL queries
+//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+//   define: {
+//     freezeTableName: true,
+//   }
+// }
 // );
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -45,7 +45,7 @@ let sequelize =
           native: false, // lets Sequelize know we can use pg-native for ~30% more speed
           define: {
             freezeTableName: true,
-          }
+          },
         }
       );
 const basename = path.basename(__filename);
@@ -95,75 +95,74 @@ const {
 } = sequelize.models;
 
 // Aca vendrian las relaciones
-Product.belongsToMany(Discount, { through: "discount_products"});
-Discount.belongsToMany(Product, { through: "discount_products"});
+Product.belongsToMany(Discount, { through: "discount_products" });
+Discount.belongsToMany(Product, { through: "discount_products" });
 
 Product.hasMany(Review);
-Review.belongsTo(Product)
+Review.belongsTo(Product);
 
-User.hasMany(Review)
-Review.belongsTo(User)
+User.hasMany(Review);
+Review.belongsTo(User);
 
-Product.belongsToMany(Specification, { through: ProductSpecification});
-Specification.belongsToMany(Product, { through: ProductSpecification});
+Product.belongsToMany(Specification, { through: ProductSpecification });
+Specification.belongsToMany(Product, { through: ProductSpecification });
 
-Product.belongsToMany(Order, { through: "orderItems"});
-Order.belongsToMany(Product, { through: "orderItems"});
+Product.belongsToMany(Order, { through: "orderItems" });
+Order.belongsToMany(Product, { through: "orderItems" });
 
-Product.belongsToMany(Image, { through: "productImage"});
-Image.belongsToMany(Product, { through: "productImage"});
+Product.belongsToMany(Image, { through: "productImage" });
+Image.belongsToMany(Product, { through: "productImage" });
 
 Order.hasMany(Ask);
-Ask.belongsTo(Order)
+Ask.belongsTo(Order);
 
 Product.hasMany(Ask);
-Ask.belongsTo(Product)
+Ask.belongsTo(Product);
 
-Ask.hasOne(Answer)
-Answer.belongsTo(Ask)
+Ask.hasOne(Answer);
+Answer.belongsTo(Ask);
 
-User.hasMany(Ask)
-Ask.belongsTo(User)
+User.hasMany(Ask);
+Ask.belongsTo(User);
 
-User.hasMany(Answer)
-Answer.belongsTo(User)
+User.hasMany(Answer);
+Answer.belongsTo(User);
 
-Product.belongsToMany(Category, { through: "product-category"});
-Category.belongsToMany(Product, { through: "product-category"});
+Product.belongsToMany(Category, { through: "product-category" });
+Category.belongsToMany(Product, { through: "product-category" });
 
-Product.belongsToMany(SubCategory, { through: "product-subCategory"});
-SubCategory.belongsToMany(Product, { through: "product-subCategory"});
+Product.belongsToMany(SubCategory, { through: "product-subCategory" });
+SubCategory.belongsToMany(Product, { through: "product-subCategory" });
 
-Category.belongsToMany(SubCategory, { through: "sub_Categories"});
-SubCategory.belongsToMany(Category, { through: "sub_Categories"});
+Category.belongsToMany(SubCategory, { through: "sub_Categories" });
+SubCategory.belongsToMany(Category, { through: "sub_Categories" });
 
-Product.belongsToMany(SubCategory, { through: "product-subCategory"});
-SubCategory.belongsToMany(Product, { through: "product-subCategory"});
+Product.belongsToMany(SubCategory, { through: "product-subCategory" });
+SubCategory.belongsToMany(Product, { through: "product-subCategory" });
 
-Product.hasOne(ProductInventory)
-ProductInventory.belongsTo(Product)
+Product.hasOne(ProductInventory);
+ProductInventory.belongsTo(Product);
 
-ShoppingCart.belongsToMany(Product, { through: Quantity});
-Product.belongsToMany(ShoppingCart, { through: Quantity});
+ShoppingCart.belongsToMany(Product, { through: Quantity });
+Product.belongsToMany(ShoppingCart, { through: Quantity });
 
 // ShoppingCart.belongsToMany(Quantity, {through: ShoppingCart});
 // Quantity.belongsToMany(ShoppingCart, {through: ShoppingCart});
 
-User.hasMany(Order)
-Order.belongsTo(User)
+User.hasMany(Order);
+Order.belongsTo(User);
 
-User.hasOne(ShoppingCart)
-ShoppingCart.belongsTo(User)
+User.hasOne(ShoppingCart);
+ShoppingCart.belongsTo(User);
 
-User.hasMany(Address)
-Address.belongsTo(User)
+User.hasMany(Address);
+Address.belongsTo(User);
 
-User.belongsToMany(Payment, { through: "user-payment"})
-Payment.belongsToMany(User, { through: "user-payment"})
+User.belongsToMany(Payment, { through: "user-payment" });
+Payment.belongsToMany(User, { through: "user-payment" });
 
-Order.belongsTo(Address, { as: 'order_address', foreignKey: 'orderId' });
-Address.hasMany(Order, { foreignKey: 'orderId' });
-
+Order.belongsTo(Address, { as: "order_address", foreignKey: "orderId" });
+Address.hasMany(Order, { foreignKey: "orderId" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

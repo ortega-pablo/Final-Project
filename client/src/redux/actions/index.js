@@ -89,6 +89,12 @@ export const GET_ASKS_ONE_USER_ONE_PRODUCT = "GET_ASKS_ONE_USER_ONE_PRODUCT";
 export const CLEAR_ASKS_ONE_USER_ONE_PRODUCT = "CLEAR_ASKS_ONE_USER_ONE_PRODUCT";
 export const UPDATE_USER_FOR_USER ="UPDATE_USER_FOR_USER";
 export const UPDATE_PASSWORD_FOR_USER ="UPDATE_PASSWORD_FOR_USER";
+export const GET_BANNER ="GET_BANNER";
+export const POST_BANNER ="POST_BANNER";
+
+export const DELETE_BANNER ="DELETE_BANNER";
+
+
 
 
 
@@ -766,14 +772,15 @@ export function putNameSpecification(idS, payload) {
   };
 }
 
-export const postNewPaymentMethod = (payload) => {
+export const postNewPaymentMethod = (payload, addressId, userId) => {
   console.log(payload);
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `/checkOut`,
+        `/checkOut?userId=${userId}&addressId=${addressId}`,
         payload
       );
+      console.log("response despues del post", response)
       return response.data;
     } catch (error) {
       console.log(error);
@@ -1247,6 +1254,47 @@ export function editPasswordForUser( token , payload) {
       await axios.put(`/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_PASSWORD_FOR_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+
+export const postAddImageToBanner = ( payload) => {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(
+        `/images/uploadBanner`, payload
+      ); 
+          console.log(payload)
+      return json;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getImageBanner = () => {
+  return async (dispatch) => {
+    let response = await axios(`/images/uploadBanner`);
+    return dispatch({
+      type: GET_BANNER,
+      payload: response.data,
+    });
+  };
+};
+
+
+export function deleteImageToBanner(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/images/bannerImage?imageId=${id}`);
+
+      return dispatch({
+        type: DELETE_BANNER,
+        payload: id,
       });
     } catch (error) {
       console.log(error);
