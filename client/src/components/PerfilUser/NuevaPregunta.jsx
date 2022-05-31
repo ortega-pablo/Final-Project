@@ -12,8 +12,8 @@ import * as yup from 'yup';
 
 const validationSchema = yup.object({
     content: yup
-      .string('Realiza una pregunta...')
-      .required('No puedes mandar el campo vacio.'),
+      .string('Realizar una pregunta')
+      .required('Este campo no se puede enviar vacío'),
   });
   
   
@@ -69,7 +69,7 @@ export const NuevaPregunta = ({idProduc}) => {
                 required
                 fullWidth
                 id="content"
-                label="Escribi tu pregunta..."
+                label="Escribe tu pregunta"
                 name="content"
                 value={formik.values.content}
                 onChange={formik.handleChange}

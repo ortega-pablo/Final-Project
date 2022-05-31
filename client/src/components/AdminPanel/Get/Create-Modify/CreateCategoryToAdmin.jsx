@@ -36,9 +36,9 @@ const CreateCategoryToAdmin = () => {
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
-      .notOneOf( allCategories.map( c=> c.name)  ,"Ya existe esa  categoría")
+      .notOneOf( allCategories.map( c=> c.name)  ,"La categoría ya existe")
       .required(
-        "El nombre es requerido"
+        "Por favor ingrese el nombre"
       ),
 
     description: yup.string("Ingrese el nombre de la nueva categoria"),

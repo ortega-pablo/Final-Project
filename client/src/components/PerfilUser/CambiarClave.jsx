@@ -15,17 +15,17 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
   const dispatch = useDispatch();
   const validationSchema = yup.object({
     newPassword: yup
-      .string("Ingrese la descripción")
-      .min(8, "Password should be of minimum 8 characters length")
-      .required("La nueva contraseña es requerida"),
+      .string("Ingrese una descripción")
+      .min(8, "La contraseña debe tenes un mínimo de 8 caracteres")
+      .required("Por favor ingrese la nueva contraseña"),
     oldPassword: yup
-      .string("Ingrese la descripción")
+      .string("Ingrese una descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
-      .required("La actual contraseña es requerida para cambiar la misma"),
+      .required("Por favor ingrese la contraseña actual para cambiar la misma"),
     passwordConfirmation: yup
       .string()
-      .oneOf([yup.ref("newPassword"), null], "Passwords must match")
-      .required("Confirma la nueva contraseña"),
+      .oneOf([yup.ref("newPassword"), null], "La contraseña debe coincidir")
+      .required("Por favor confirma la nueva contraseña"),
   });
 
   const formik = useFormik({
@@ -51,9 +51,22 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
           const newData = await dispatch(editPasswordForUser(idToken, values));
           if (newData !== undefined) {
             setRender(values);
-            Swal.fire("Contraseña modificada!");
-          } else {
-            Swal.fire("La actual contraseña es incorrecta!");
+            Swal.fire({
+              background: "#DFDCD3",
+          icon: "success",
+          title: "Agregado",
+          showConfirmButton: false,
+          text: "La contraseña ha sido modificada!",
+          timer: 1500
+          })
+        }else {
+            Swal.fire({
+              background: "#DFDCD3",
+          confirmButtonColor: "#B6893E",
+          icon: "error",
+          title: "Oops...",
+          text: "La contraseña actual es incorrecta!"
+          })
           }
         }
       });
@@ -78,7 +91,7 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
           >
             <TextField
               id="outlined-basic"
-              label="Actual Contraseña *"
+              label="Contraseña actual *"
               variant="outlined"
               name="oldPassword"
               type="password"

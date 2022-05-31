@@ -87,10 +87,10 @@ const [creating, setCreating] = useState(false)
       />
    
       <Button type="submit" sx={{m:3}} variant='contained' color="ambar3">Crear nueva categoria</Button>
-{ formik.values  &&
+{/* { formik.values  &&
 
   <Button type="click" onClick={e=> formik.resetForm({values:""})} sx={{m:3}} variant='contained' color="ambar3">Cancelar creación</Button>
-}
+} */}
     </Box>
 
     </>
