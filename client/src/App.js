@@ -34,6 +34,21 @@ import CartView from "./components/Cart/CartView";
 import { AskPanel } from "./components/AdminPanel/AskPanel";
 import { VerHilo } from "./components/AdminPanel/VerHilo";
 import CartModal from "./components/Cart/CartModal";
+import { Banner } from "./components/AdminPanel/Banner";
+import AdminBanner from "./components/AdminPanel/AdminBanner";
+import GetMyDate from "./components/UserPanel/Get/GetMyDate";
+import GetMyData from "./components/UserPanel/Get/GetMyDate";
+import UserPanel from "./components/UserPanel/UserPanel";
+import { UploadData } from "./components/UserPanel/Get/UploadData";
+import { UploadPasswUser } from "./components/UserPanel/Get/UploadPasswUser";
+import { UploadDataG } from "./components/UserPanel/Get/UploadDataG";
+import { UploadPasswUserG } from "./components/UserPanel/Get/UploadPasswUserG";
+import { MisPreguntas } from "./components/UserPanel/Get/Questions/MisPreguntas";
+import QuestionPanel from "./components/UserPanel/QuestionPanel";
+import UserUploadPasw from "./components/UserPanel/UserUploadPasw";
+import UserUploadPaswG from "./components/UserPanel/UserUploadPaswG";
+import UserUploadData from "./components/UserPanel/UserUploadData";
+import UserUpdateDataG from "./components/UserPanel/UserUpdateDataG";
 
 
 function App() {
@@ -74,11 +89,23 @@ function App() {
             <Route path="/usersPanel" element={<UsersPanel/>}/>
             <Route path="/orders" element={<Orders/>}/>
             <Route path="/askPanel" element={<AskPanel/>}/>
+            <Route path="/banner" element={<AdminBanner/>}/>
 
 
             <Route path="/cart" element={<CartView/>}/>
               
-            <Route path="/userProfile" element={<Perfil/>}/> 
+            <Route path="/userProfile" element={<UserPanel/>}/>
+            {/* <Route path="/userProfile" element={<Perfil/>}/>  */}
+            <Route path="/myData" element={<UserPanel/>}/>
+            <Route path="/updateUser" element={<UserUploadData/>}/>
+            <Route path="/updateUserG" element={<UserUpdateDataG/>}/>
+            <Route path="/updatePasswUser" element={<UserUploadPasw/>}/>
+            <Route path="/updatePasswUserG" element={<UserUploadPaswG/>}/>
+            <Route path="/allQuestions" element={<QuestionPanel/>}/>
+
+
+
+
             {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
 
             <Route path="/prueba" element={<CartModal/>}/>

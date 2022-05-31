@@ -12,14 +12,26 @@ import {
   } from "@mui/material";
   import { Box } from "@mui/system";
   import { useFormik } from "formik";
-  import React, { useState } from "react";
-  import { useDispatch } from "react-redux";
+  import React, { useEffect, useState } from "react";
+  import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
   import Swal from "sweetalert2";
   import * as yup from "yup";
-  import { editUser, editUserForUser } from "../../redux/actions";
+import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../redux/actions";
   
-  export const EditarPerfilGoogle = ({ user, idToken, render, setRender }) => {
+  export const UploadDataG = () => {
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
+    const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
+    const [render, setRender] = useState(0);
+    useEffect(() => {
+      dispatch(getUserIdByToken(idToken))
+        .then((r) => r)
+        .then((r) => dispatch(getDetailOneUsers(r)));
+      }, [render]);
+      
+    const user = useSelector((state) => state.getDetailOneUser);
     const validationSchema = yup.object({
       userName: yup
         .string("Ingrese el nombre de la nueva categoria")
@@ -95,6 +107,7 @@ import {
            if(newData !== undefined){
              setRender(values)
              Swal.fire("Modificado!");
+             navigate(`/myData`)
            
           }
         //   else {
@@ -112,8 +125,10 @@ import {
   
     return (
       <>
-        <div>EditarPerfil</div>
-  <h2>Momentaneamente no se pueden  hacer cambios en en los datos de cuentas google </h2>
+
+<Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" > Edita tu perfil</Typography>
+
+
         {
           <div>
             <Box
@@ -176,7 +191,7 @@ import {
               focused
               autoComplete="off"
                 id="outlined-basic"
-                label="Telefono *"
+                label="Telefono "
                 variant="outlined"
                 name="phone"
                 value={formik.values.phone}
