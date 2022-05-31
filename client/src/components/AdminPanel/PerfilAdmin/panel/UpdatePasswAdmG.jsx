@@ -1,30 +1,18 @@
 import { Box, Container, CircularProgress } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
-import { getDetailOneUsers, getUserIdByToken } from "../../redux/actions";
-import GetMyData from "./Get/GetMyDate";
-import { UploadPasswUserG } from "./Get/UploadPasswUserG";
-import UserMenuLarge from "./UserMenuLarge";
+import UserMenuLarge from "../../../UserPanel/UserMenuLarge";
+import AdminMenuLarge from "../../AdminMenuLarge";
+import { UpdatePassAdminG } from "../UpdatePassAdminG";
 
-function UserUploadPaswG() {
-  const dispatch = useDispatch();
-  const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
-  const [render, setRender] = useState(0);
-  useEffect(() => {
-    dispatch(getUserIdByToken(idToken))
-      .then((r) => r)
-      .then((r) => dispatch(getDetailOneUsers(r)));
-  }, [render]);
 
-  const user = useSelector((state) => state.getDetailOneUser);
-
+function UpdatePasswAdmG() {
   const userStatus = useSelector((state) => state.userStatus);
-
   const navigate = useNavigate();
 
-  return userStatus === "user" ? (
+  return userStatus === "admin" || userStatus === "superAdmin"    ? (
     <Box
       maxWidth="vp"
       sx={{
@@ -36,6 +24,8 @@ function UserUploadPaswG() {
         justifyContent: "space-between",
       }}
     >
+
+        
       {/* <AdminMenuMobile /> */}
 
       <Container
@@ -49,7 +39,7 @@ function UserUploadPaswG() {
           padding: 0,
         }}
       >
-        <UserMenuLarge />
+       <AdminMenuLarge />
 
         <Container
           sx={{
@@ -61,7 +51,7 @@ function UserUploadPaswG() {
             alignItems: "center",
           }}
         >
-          <UploadPasswUserG />
+          <UpdatePassAdminG/>
         </Container>
       </Container>
     </Box>
@@ -87,4 +77,4 @@ function UserUploadPaswG() {
   );
 }
 
-export default UserUploadPaswG;
+export default UpdatePasswAdmG;
