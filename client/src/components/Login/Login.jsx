@@ -86,7 +86,7 @@ export const Login = () => {
 
   const handleLoginGoogle = async (googleData) => {
 
-    const res = await fetch(`http://localhost:3001/users/google-login`, {
+    const res = await fetch(`/users/google-login`, {
       method: 'POST',
       body: JSON.stringify({
         token: googleData.tokenId

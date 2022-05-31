@@ -110,7 +110,7 @@ const initialState = {
   getAllUsers: [],
   getAsksOneUserOnePruduct: [],
   allUsers: [],
-  allImagesBanner: []
+  allImagesBanner: [],
   filteredUsers: [],
 };
 
