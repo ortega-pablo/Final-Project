@@ -126,7 +126,7 @@ router.put("/removeProduct", async (req, res, next) => {
                 }
             })
 
-            if(findCart.amount !==0 && findProduct){
+            if(findCart && findProduct){
 
                 console.log(findCart.products.length)
                 findCart.products.length === 0 ? res.send("No products in cart") :
@@ -169,7 +169,7 @@ router.put("/removeProduct", async (req, res, next) => {
                 }
             })
 
-            if(findCart.amount !==0 && findProduct){
+            if(findCart && findProduct){
 
                 console.log(findCart.products.length)
 
