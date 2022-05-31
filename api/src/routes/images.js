@@ -22,7 +22,7 @@ router.post("/uploadProduct", upload.array("image"), async (req, res, next)=>{
 
     urls.map( async (el) =>  {
 
-      return await axios.post(`http://localhost:3001/products/addImage?urlFile=${el.url}&productId=${productId}`)
+      return await axios.post(`/products/addImage?urlFile=${el.url}&productId=${productId}`)
     })
 
     res.status(200).send({
@@ -161,6 +161,37 @@ router.delete("/", async (req, res, next) => {
   }
 })
 
+
+router.delete("/bannerImage", async (req, res, next) => {
+
+  const { imageId} = req.query;
+
+  try {
+    const findImage = await BannerImages.findOne({  
+      where: {
+        id: imageId
+      }
+    })
+
+
+    if(findImage){
+
+      await BannerImages.destroy({
+        where: {
+            id: imageId
+        }
+      })
+        
+      res.status(200).send("Image deleted successfully!") 
+
+    } else {
+      return res.send("Image not found")
+    }
+  
+  } catch(error){
+    next(error)
+  }
+})
 
 
 module.exports = router;

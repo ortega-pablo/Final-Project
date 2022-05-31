@@ -603,6 +603,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
 
 router.post("/google-login", async (req, res) => {
   const { token } = req.body;
+  console.log("este es el token de back",token)
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID_GOOGLE,

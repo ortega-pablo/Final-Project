@@ -25,18 +25,9 @@ import { BoxGeneral } from "../../personalizadTheme";
 import AllReviews from "./AllReviews";
 import Swal from "sweetalert2";
 import CartModal from "../Cart/CartModal";
+import RatingProduct from "./RatingProduct";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 
 export const Detail = () => {
   const dispatch = useDispatch();
@@ -60,9 +51,7 @@ export const Detail = () => {
     dispatch(getCartById(token));
   }, [dispatch]);
 
-  const [openModal, setOpenModal] = React.useState(false);
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  
 
   let promedy = 0;
   productDetail[0]?.reviews?.forEach((r) => {
@@ -75,7 +64,9 @@ export const Detail = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "ambar1.main",
+        alignItems:"center",
+        textAlign:"center",
+        backgroundColor:"ambar1.main",
       }}
     >
       <Paper component="div" sx={{ maxWidth: "1100px", mt: "2%", mb: "2%" }}>
@@ -150,54 +141,10 @@ export const Detail = () => {
                 sx={{ fontSize: "18px", color: "ambar5.main" }}
               />
             </Divider>
-
-            {productDetail[0].reviews.length < 5 ? (
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
-                <ListItem>
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={0}
-                    precision={0.5}
-                    readOnly
-                  />
-                </ListItem>
-                <ListItemText primary="Este producto no tiene suficientes reseñas para ser mostradas" />
-              </List>
-            ) : (
-              <>
-                <Rating
-                  name="half-rating-read"
-                  defaultValue={promedy}
-                  precision={0.5}
-                  readOnly
-                />
-                <Button onClick={handleOpenModal}>Ver todas las Reviews</Button>
-                <Modal
-                  open={openModal}
-                  onClose={handleCloseModal}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      <AllReviews reviews={productDetail[0].reviews} />
-                    </Typography>
-                  </Box>
-                </Modal>
-              </>
-            )}
+              <Box 
+              sx={{ display:"flex", flexDirection:"column", alignItems:"center"}}>
+            <RatingProduct productDetail={productDetail[0]} />
+              </Box>
 
             <Divider textAlign="left" sx={{ mt: "2%", mb: "2%" }}>
               <Chip

@@ -80,6 +80,9 @@ import {
   UPDATE_USER_FOR_USER,
   CLEAR_CART,
   UPDATE_PASSWORD_FOR_USER,
+  POST_BANNER,
+  GET_BANNER,
+  DELETE_BANNER
 } from "../actions";
 
 const initialState = {
@@ -107,6 +110,7 @@ const initialState = {
   getAllUsers: [],
   getAsksOneUserOnePruduct: [],
   allUsers: [],
+  allImagesBanner: [],
   filteredUsers: [],
 };
 
@@ -725,6 +729,29 @@ const rootReducer = (state = initialState, action) => {
         allDirections: fixedAllDirections,
       };
     }
+
+  case POST_BANNER: {
+    return {
+      ...state,
+    };
+  }
+
+
+  case GET_BANNER: {
+    return {
+      ...state,
+      allImagesBanner: action.payload,
+    };
+  }
+
+
+  case DELETE_BANNER: {
+    return {
+      ...state,
+    };
+  }
+
+
     default:
       return state;
   }

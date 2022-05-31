@@ -454,7 +454,7 @@ router.post('/', async (req, res, next) => {
 
         // console.log(payment)
         // try {
-        //     await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`, payload) 
+        //     await axios.post(`/orders?userId=${userId}&addressId=${addressId}`, payload) 
 
         // } catch (error) {
         //     console.log(error)
@@ -464,7 +464,7 @@ router.post('/', async (req, res, next) => {
 
     } catch (error) {
         // try {
-        //     await axios.post(`http://localhost:3001/orders?userId=${userId}&addressId=${addressId}`)
+        //     await axios.post(`/orders?userId=${userId}&addressId=${addressId}`)
 
         // } catch (error) {
         //     console.log(error)

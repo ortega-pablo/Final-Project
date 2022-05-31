@@ -1,31 +1,44 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import * as yup from "yup";
-import {
-  editPasswordForUser,
-  editUser,
-  editUserForUser,
-} from "../../redux/actions";
+import { editPasswordForUser, getDetailOneUsers, getUserIdByToken } from "../../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
-export const CambiarClave = ({ user, idToken, render, setRender }) => {
+
+export const UploadPasswUser = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+    const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
+    const [render, setRender] = useState(0);
+    useEffect(() => {
+      dispatch(getUserIdByToken(idToken))
+        .then((r) => r)
+        .then((r) => dispatch(getDetailOneUsers(r)));
+      }, [render]);
+      
+
+
+
+
+
   const validationSchema = yup.object({
     newPassword: yup
-      .string("Ingrese una descripción")
-      .min(8, "La contraseña debe tenes un mínimo de 8 caracteres")
-      .required("Por favor ingrese la nueva contraseña"),
+      .string("Ingrese la descripción")
+      .min(8, "Password should be of minimum 8 characters length")
+      .required("La nueva contraseña es requerida"),
     oldPassword: yup
-      .string("Ingrese una descripción")
+      .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
-      .required("Por favor ingrese la contraseña actual para cambiar la misma"),
+      .required("La actual contraseña es requerida para cambiar la misma"),
     passwordConfirmation: yup
       .string()
-      .oneOf([yup.ref("newPassword"), null], "La contraseña debe coincidir")
-      .required("Por favor confirma la nueva contraseña"),
+      .oneOf([yup.ref("newPassword"), null], "Passwords must match")
+      .required("Confirma la nueva contraseña"),
   });
 
   const formik = useFormik({
@@ -51,22 +64,13 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
           const newData = await dispatch(editPasswordForUser(idToken, values));
           if (newData !== undefined) {
             setRender(values);
-            Swal.fire({
-              background: "#DFDCD3",
-          icon: "success",
-          title: "Agregado",
-          showConfirmButton: false,
-          text: "La contraseña ha sido modificada!",
-          timer: 1500
-          })
-        }else {
-            Swal.fire({
-              background: "#DFDCD3",
-          confirmButtonColor: "#B6893E",
-          icon: "error",
-          title: "Oops...",
-          text: "La contraseña actual es incorrecta!"
-          })
+            Swal.fire("Contraseña modificada!");
+            navigate(`/myData`)
+            resetForm({values:""})
+          } else {
+            Swal.fire("La actual contraseña es incorrecta!");
+
+            resetForm({values:""})
           }
         }
       });
@@ -79,7 +83,7 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
 
   return (
     <>
-      <div>Editar Contraseña</div>
+<Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" > Edita tu contraseña</Typography>
 
       {
         <div>
@@ -91,7 +95,7 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
           >
             <TextField
               id="outlined-basic"
-              label="Contraseña actual *"
+              label="Actual Contraseña *"
               variant="outlined"
               name="oldPassword"
               type="password"

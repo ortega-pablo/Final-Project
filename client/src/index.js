@@ -9,6 +9,11 @@ import { ThemeProvider } from "@mui/material/styles";
 import {theme} from "./personalizadTheme"
 
 
+//todeploy 
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

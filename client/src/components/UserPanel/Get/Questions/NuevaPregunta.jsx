@@ -3,17 +3,16 @@ import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAsksForAllProductsOneUser, getProducts, getUserIdByToken, postNewAsk } from '../../redux/actions';
-import { AnswerComponent } from '../Detail/AnswerComponent';
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import * as yup from 'yup';
+import { getAsksForAllProductsOneUser, getUserIdByToken, postNewAsk } from '../../../../redux/actions';
 
 
 
 const validationSchema = yup.object({
     content: yup
-      .string('Realizar una pregunta')
-      .required('Este campo no se puede enviar vacío'),
+      .string('Realiza una pregunta...')
+      .required('No puedes mandar el campo vacio.'),
   });
   
   
@@ -69,7 +68,7 @@ export const NuevaPregunta = ({idProduc}) => {
                 required
                 fullWidth
                 id="content"
-                label="Escribe tu pregunta"
+                label="Escribi tu pregunta..."
                 name="content"
                 value={formik.values.content}
                 onChange={formik.handleChange}

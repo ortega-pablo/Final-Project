@@ -1,9 +1,13 @@
+
 import {
   Box,
   Button,
   Paper,
+  Table,
+  TableBody,
   TableCell,
   TableContainer,
+  TableHead,
   TableRow,
   TextField,
   Typography,
@@ -41,7 +45,7 @@ const AdministrateCategoriesToAdmin = () => {
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
       .notOneOf(
-        allCategories.map((c) => c.name),
+        allCategories.map((c) => c?.name),
         "Ya existe esa  categoría"
       )
       .required("El nombre es requerido"),
@@ -74,9 +78,22 @@ const AdministrateCategoriesToAdmin = () => {
   //------funciones para eliminar categoria
   async function handleDeleteCat(e) {
     e.preventDefault();
-    console.log(e.target.value);
-    await dispatch(deleteCategory(e.target.value));
-    await dispatch(getCategories());
+    Swal.fire({
+      title: "¿Está seguro de eliminar esta categoría?",
+      text: "Esta acción no se puede deshacer!",
+      icon: "warning",
+      background: "#DFDCD3",
+      showCancelButton: true,
+      confirmButtonColor: "#B6893E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, elimnar!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await dispatch(deleteCategory(e.target.value));
+        await dispatch(getCategories());
+        Swal.fire("Eliminada!", "Esta categoría ha sido eliminada.", "success");
+      }
+    });
   }
 
   //------ funciones para editar
@@ -88,61 +105,26 @@ const AdministrateCategoriesToAdmin = () => {
   }
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
     >
-      <Typography sx={{ mb: 5 }}>
-        Categorias existentes: {allCategories.length}{" "}
-      </Typography>
-      {allCategories?.map((c) => {
-        return (
-          <TableContainer
-            component={Paper}
-            align="center"
-            sx={{ width: "100%" }}
-          >
-            <TableRow>
-              <TableCell>{c.name}</TableCell>
-              <TableCell>{c.description}</TableCell>
-              <TableCell>
-                <Button
-                  value={c.id}
-                  onClick={(e) => handleUpdateCat(e)}
-                  name="delete"
-                  startIcon={<EditIcon />}
-                  variant="contained"
-                  color="ambar3"
-                  sx={{ mr: 1 }}
-                >
-                  Editar
-                </Button>
-                <Button
-                  value={c.id}
-                  onClick={(e) => handleDeleteCat(e)}
-                  name="delete"
-                  startIcon={<DeleteIcon />}
-                  variant="contained"
-                  color="ambar3"
-                >
-                  Eliminar
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableContainer>
-        );
-      })}
-
       {updating && (
         <>
           <Box
             component="form"
             noValidate
             autoComplete="off"
+            backgroundColor="background.paper"
             // onChange={(e) => handleInput(e)}
             //  onSubmit={(e) => handleSubmit(e)}
             onSubmit={formik.handleSubmit}
-            sx={{ m: 1 }}
+            sx={{ p: 3, m: 1, borderRadius: "5px" }}
           >
-            <Typography> Editando a: {categoryToUpdate.name}</Typography>
+            <Typography> Editando a: {categoryToUpdate?.name}</Typography>
             <TextField
               id="outlined-basic"
               label="Nuevo valor del nombre"
@@ -173,6 +155,7 @@ const AdministrateCategoriesToAdmin = () => {
               type="submit"
               variant="contained"
               color="ambar3"
+              size="small"
               sx={{ ml: 1, mr: 1 }}
             >
               Confirmar edición
@@ -184,6 +167,7 @@ const AdministrateCategoriesToAdmin = () => {
                 onClick={(e) => setUpdating(false)}
                 variant="contained"
                 color="ambar3"
+                size="small"
               >
                 Cancelar edición
               </Button>
@@ -191,6 +175,60 @@ const AdministrateCategoriesToAdmin = () => {
           </Box>
         </>
       )}
+      <Typography variant="h6" color="ambar5.main">
+        Categorias existentes: {allCategories.length}{" "}
+      </Typography>
+      <TableContainer component={Paper} align="center" sx={{ width: "100%" }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography>Nombre</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>Descripción</Typography>
+              </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          {allCategories?.map((c) => {
+            return (
+              <TableRow>
+                <TableCell>{c.name}</TableCell>
+                <TableCell>{c.description}</TableCell>
+                <TableCell sx={{ width: "10%" }}>
+                  <Button
+                    value={c.id}
+                    onClick={(e) => handleUpdateCat(e)}
+                    name="delete"
+                    startIcon={<EditIcon />}
+                    variant="contained"
+                    color="ambar3"
+                    size="small"
+                    sx={{ mr: 1 }}
+                  >
+                    Editar
+                  </Button>
+                </TableCell>
+                <TableCell sx={{ width: "10%" }}>
+                  <Button
+                    value={c.id}
+                    onClick={(e) => handleDeleteCat(e)}
+                    name="delete"
+                    startIcon={<DeleteIcon />}
+                    variant="contained"
+                    color="ambar3"
+                    size="small"
+                  >
+                    Eliminar
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </Table>
+      </TableContainer>
 
       <UpadateSubCat allSubCategories={allSubCategories} />
     </Box>

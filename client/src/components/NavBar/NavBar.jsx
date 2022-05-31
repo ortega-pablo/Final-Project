@@ -341,7 +341,7 @@ export const NavBar = (props) => {
           </Typography>
           <form
             onSubmit={(e) => {
-              navigate(`/home/${name}`);
+              navigate(`/${name}`);
             }}
           >
             <Search>
