@@ -49,6 +49,15 @@ import UserUploadPasw from "./components/UserPanel/UserUploadPasw";
 import UserUploadPaswG from "./components/UserPanel/UserUploadPaswG";
 import UserUploadData from "./components/UserPanel/UserUploadData";
 import UserUpdateDataG from "./components/UserPanel/UserUpdateDataG";
+import MyDataAdmin from "./components/AdminPanel/PerfilAdmin/MyDataAdmin";
+import { UpdataDataAdminG } from "./components/AdminPanel/PerfilAdmin/UpdataDataAdminG";
+import UpdatePasswAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdatePasswAdm";
+import UpdatePasswAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdatePasswAdmG";
+import UpdateDataAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdm";
+import MyDataAdm from "./components/AdminPanel/PerfilAdmin/panel/MyDataAdm";
+
+
+
 
 
 function App() {
@@ -103,8 +112,11 @@ function App() {
             <Route path="/updatePasswUserG" element={<UserUploadPaswG/>}/>
             <Route path="/allQuestions" element={<QuestionPanel/>}/>
 
-
-
+            <Route path="/myDataAdm" element={< MyDataAdm/>}/>
+            <Route path="/updateAdmin" element={<UpdateDataAdm/>}/>
+            <Route path="/updateAdminG" element={<UpdataDataAdminG/>}/>
+            <Route path="/updatePasswAdmin" element={<UpdatePasswAdm/>}/>
+            <Route path="/updatePasswAdminG" element={<UpdatePasswAdmG/>}/>
 
             {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
 
