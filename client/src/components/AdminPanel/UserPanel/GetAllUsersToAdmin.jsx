@@ -1,3 +1,6 @@
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import RowGetUsers from "./RowGetUsers";
 import {
   Box,
   TableCell,
@@ -8,21 +11,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../../redux/actions";
 
-import RowGetUsers from "./RowGetUsers";
-
-function GetAllUsersToAdmin({user}) {
-
+function GetAllUsersToAdmin({user, render, setRender}) {
   const dispatch = useDispatch();
-  const allUsers = useSelector((state) => state.allUsers);
-  const [render,setRender] = useState("")
-  
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [render]);
+
+  const allUsers = useSelector((state) => state.filteredUsers );
 
 
   console.log(`Samu se está comiendo ${render} pijas! y le encanta!`);
