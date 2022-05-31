@@ -232,7 +232,7 @@ function RowGetUsers({ row, user, setRender , render }) {
             <Button
               size="small"
               value={row.id}
-              onClick={(e)=>handleChangeAdminToUser(e)}
+              onClick={(e)=>handleChangeUserToAdmin(e)}
               name="delete"
             >
               Cambiar rol
