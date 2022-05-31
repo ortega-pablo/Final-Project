@@ -57,7 +57,7 @@ export const Perfil = () => {
         />
       ) : (
         <h3>
-          Las cuentas logeadas con Google no pueden cambiar de contraseña.
+          Las cuentas que inician sesión con Google no pueden cambiar de contraseña.
         </h3>
       )}
 

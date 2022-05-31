@@ -6,8 +6,13 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import image1 from "../../media/1.png"
 import image2 from "../../media/2.png"
 import image3 from "../../media/3.png"
+import { getImageBanner } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
+
+
 
 const images = [
   {
@@ -25,9 +30,19 @@ const images = [
 ];
 
 function SwipeableTextMobileStepper() {
+  const dispatch = useDispatch();
+  const banner = useSelector( state => state.allImagesBanner)
+
+  React.useEffect(() => {
+    dispatch(getImageBanner())
+ 
+   }, [ ]);
+ 
+
+
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = banner.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -50,7 +65,7 @@ function SwipeableTextMobileStepper() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
+        {banner.map((step, index) => (
           <div key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
@@ -61,7 +76,7 @@ function SwipeableTextMobileStepper() {
                   width: '100%',
                   paddingTop: "2rem"
                 }}
-                src={step.imgPath}
+                src={step.urlImage}
                 alt={step.label}
               />
             ) : null}

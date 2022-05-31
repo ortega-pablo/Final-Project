@@ -1,121 +1,136 @@
 import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import { useFormik } from "formik";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
-import * as yup from "yup";
-import { editUser, editUserForUser } from "../../redux/actions";
+    Button,
+   
+    TextField,
+    Typography,
 
-export const EditarPerfil = ({ user, idToken, render, setRender }) => {
-  const dispatch = useDispatch();
-  const validationSchema = yup.object({
-    userName: yup
-      .string("Ingrese el nombre de la nueva categoria")
+  } from "@mui/material";
+  import { Box } from "@mui/system";
+  import { useFormik } from "formik";
+  import React, { useEffect, useState } from "react";
+  import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+  import Swal from "sweetalert2";
+  import * as yup from "yup";
+import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../redux/actions";
 
-      // .notOneOf(
-      //   NameRepetido.map((name) => name),
-      //   "Ya existe un producto con éste nombre"
-      // )
-      .required("Por favor ingrese un nombre"),
+  
 
-    firstName: yup
-      .string("Ingrese una descripción")
-      // .notOneOf(
-      //   skuRepetido.map((sku) => sku),
-      //   "Ya existe un producto con éste codigo sku"
-      // )
-      .required("Por favor ingrese una descripción"),
-    lastName: yup
-      .string("Ingrese una descripción")
-      .required("Por favor ingrese una descripción"),
+export const UploadData = () => {
+    const navigate = useNavigate();
 
-    phone: yup
-      .string("Ingrese una descripción")
-      // .min(8, 'Password should be of minimum 8 characters length')
-      .required("Por favor ingrese una descripción"),
-      currentPassword: yup
-      .string("Ingrese una descripción")
+    const dispatch = useDispatch();
+    const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
+    const [render, setRender] = useState(0);
+    useEffect(() => {
+      dispatch(getUserIdByToken(idToken))
+        .then((r) => r)
+        .then((r) => dispatch(getDetailOneUsers(r)));
+      }, [render]);
       
-      .required("Por favor ingrese la contraseña actual para hacer cambios en su perfil"),
-    // oldPassword: yup
-    //   .string("Ingrese la descripción")
-    //   // .min(8, 'Password should be of minimum 8 characters length')
-    //   .required("La actual contraseña es requerida para modificar tu perfil"),
-    //   passwordConfirmation: yup.string()
-    // .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
-    // .required("Confirma la nueva contraseña")
+    const user = useSelector((state) => state.getDetailOneUser);
 
-  });
+    const validationSchema = yup.object({
+      userName: yup
+        .string("Ingrese el nombre de la nueva categoria")
+  
+        // .notOneOf(
+        //   NameRepetido.map((name) => name),
+        //   "Ya existe un producto con éste nombre"
+        // )
+        .required("El nombre es requerido"),
+  
+      firstName: yup
+        .string("Ingrese la descripción")
+        // .notOneOf(
+        //   skuRepetido.map((sku) => sku),
+        //   "Ya existe un producto con éste codigo sku"
+        // )
+        .required("La descripción es requerida"),
+      lastName: yup
+        .string("Ingrese la descripción")
+        .required("La descripción es requerida"),
+  
+      phone: yup
+        .string("Ingrese la descripción")
+        // .min(8, 'Password should be of minimum 8 characters length')
+        .required("La descripción es requerida"),
+        currentPassword: yup
+        .string("Ingrese la descripción")
+        
+        .required("La actual contraseña es requerida para hacer cambios en tu perfil"),
+      // oldPassword: yup
+      //   .string("Ingrese la descripción")
+      //   // .min(8, 'Password should be of minimum 8 characters length')
+      //   .required("La actual contraseña es requerida para modificar tu perfil"),
+      //   passwordConfirmation: yup.string()
+      // .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
+      // .required("Confirma la nueva contraseña")
+  
+    });
+  
+  
+  
+    const formik = useFormik({
+      enableReinitialize:true ,
+      initialValues: {
+        userName: user?.userName,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        // addresses: user.addresses,
+        phone: user?.phone,
+        // newPassword: "",
+        currentPassword: "",
+        // passwordConfirmation:""
+      },
+      validationSchema: validationSchema, 
+      onSubmit: async (values, { resetForm }) => {
+  
+  
+  
+  
+        
+        Swal.fire({
+          title: `¿Está seguro de modificar a ${user.userName}?`,
+          // text: "Esta acción no se puede deshacer!",
+          icon: "warning",
+          background: "#DFDCD3",
+          showCancelButton: true,
+          confirmButtonColor: "#B6893E",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, modificar!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+           const newData = await dispatch(editUserForUser(idToken, values));
+           if(newData !== undefined){
+             setRender(values)
+             Swal.fire("Modificado!");
+             navigate(`/myData`)
+             
+           
+          }else {
+            Swal.fire("La password es incorrecta!")
+          }
+        } })
+  
+        
+        
+      //  await dispatch(editUserForUser(idToken, values));
+      //  setRender(values)
+      //   resetForm({ values: "" });
+      },
+    });
 
-
-
-  const formik = useFormik({
-    enableReinitialize:true ,
-    initialValues: {
-      userName: user?.userName,
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      // addresses: user.addresses,
-      phone: user?.phone,
-      // newPassword: "",
-      currentPassword: "",
-      // passwordConfirmation:""
-    },
-    validationSchema: validationSchema, 
-    onSubmit: async (values, { resetForm }) => {
-
-
-
-
-      
-      Swal.fire({
-        title: `¿Está seguro de modificar a ${user.userName}?`,
-        // text: "Esta acción no se puede deshacer!",
-        icon: "warning",
-        background: "#DFDCD3",
-        showCancelButton: true,
-        confirmButtonColor: "#B6893E",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, modificar!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-         const newData = await dispatch(editUserForUser(idToken, values));
-         if(newData !== undefined){
-           setRender(values)
-           Swal.fire("Modificado!");
-         
-        }else {
-          Swal.fire("La contraseña es incorrecta!")
-        }
-      } })
-
-      
-      
-    //  await dispatch(editUserForUser(idToken, values));
-    //  setRender(values)
-    //   resetForm({ values: "" });
-    },
-  });
 
   return (
-    <>
-      <div>EditarPerfil</div>
+      <>
+        <>
+      <Typography sx={{mt:"15px", mb:"15px"}} variant="h3"> Edita tu perfil</Typography>
 
       {
         <div>
           <Box
+            sx={{display:"flex"}}
             component="form"
             noValidate
             autoComplete="off"
@@ -185,7 +200,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
             <TextField
             autoComplete="off"
               id="outlined-basic"
-              label="Contraseña actual *"
+              label="Actual Contraseña *"
               variant="outlined"
               type="password"
               name="currentPassword"
@@ -232,5 +247,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
         </div>
       }
     </>
-  );
-};
+      </>
+    
+  )
+}

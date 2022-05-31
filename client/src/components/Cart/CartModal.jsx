@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FormControl, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, clearCart, getCartById } from "../../redux/actions";
+import { addItemToCart, clearCart, getCartById, getProducts } from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -43,7 +43,7 @@ export default function CartModal({
         confirmButtonColor: "#B6893E",
         icon: "error",
         title: "Oops...",
-        text: "La cantidad no puede ser menor a 0",
+        text: "La cantidad no puede ser 0 o menor que 0",
       }).then(() => {
         setOpen(true);
       });
@@ -90,7 +90,7 @@ export default function CartModal({
           confirmButtonColor: "#B6893E",
           icon: "error",
           title: "Oops...",
-          text: "Stock insuficiente para la cantidad que seleccionaste",
+          text: "Stock insuficiente para la cantidad seleccionada",
         }).then(() => {
           setOpen(true);
         });
@@ -101,13 +101,13 @@ export default function CartModal({
     e.preventDefault();
     Swal.fire({
       title: "Logeate",
-      text: "Debes estar logeado para ver tu carrito",
+      text: "Por favor, inicia sesión para ver tu carrito",
       icon: "warning",
       background: "#DFDCD3",
       showCancelButton: true,
       confirmButtonColor: "#B6893E",
       cancelButtonColor: "#d33",
-      confirmButtonText: "ok, ir al login",
+      confirmButtonText: "Iniciar sesión",
       cancelButtonText: "cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -118,10 +118,27 @@ export default function CartModal({
 
   return (
     <Box sx ={{textAlign:'center'}}>
+      {stock === 0 ? 
+      <>
+      <Button color="ambar3" variant="contained" disabled >
+      Agregar al Carrito
+      <ShoppingCartIcon/>
+    </Button>
+    <Typography color="ambar3.main" >Producto sin stock</Typography>
+    </>:
+      stock > 0 && stock <=5 ?
+      <>
+      <Button color="ambar3" variant="contained" >
+      Agregar al Carrito
+      <ShoppingCartIcon/>
+    </Button>
+    <Typography color="ambar3.main" >Ultimas unidades!</Typography>
+    </>:
       <Button color="ambar3" variant="contained" onClick={userStatus !== null ? handleOpen : handleAlert}>
         Agregar al Carrito
         <ShoppingCartIcon/>
       </Button>
+    }
       <Modal
         open={open}
         onClose={handleClose}

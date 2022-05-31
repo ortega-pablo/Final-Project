@@ -12,7 +12,7 @@ export const AskPanel = () => {
   
     return (
       
-        userStatus === "admin" ?
+        userStatus === "admin" || userStatus === "superAdmin"  ?
         <Box
           maxWidth="vp"
           sx={{

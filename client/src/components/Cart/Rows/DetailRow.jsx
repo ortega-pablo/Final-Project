@@ -23,14 +23,14 @@ const DetailRow = (props) => {
   const handleDelete = (e) => {
     e.preventDefault();
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer!",
       icon: "warning",
       background: "#DFDCD3",
       showCancelButton: true,
       confirmButtonColor: "#B6893E",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Si, Borrar!",
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteFromCart(row.id, cartId));
