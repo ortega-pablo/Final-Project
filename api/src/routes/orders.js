@@ -9,19 +9,6 @@ const { google } = require("googleapis");
 const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
 
-// const processingHTML = require("./orderProcessing")
-
-
-// let transporter = nodemailer.createTransport({
-//   host: "smtp.hotmail.com",
-//   port: 587,
-//   secure: false, // true for 465, false for other ports
-//   auth: {
-//     user: "jude.lebsack83@ethereal.email", // generated ethereal user
-//     pass: "KChgb6Jfcw5EbpCYHp", // generated ethereal password
-//   },
-// });
-
 
 
 router.post("/review", async (req, res, next) => {
@@ -68,36 +55,6 @@ router.post('/', async (req, res, next) => {
 
   try {
 
-    // const oAuth2Client = new google.auth.OAuth2(
-    //   CLIENT_ID,
-    //   CLIENT_SECRET,
-    //   REDIRECT_URI
-    // );
-
-    // oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-    // const accessToken = await oAuth2Client.getAccessToken();
-    //   const transporter = nodemailer.createTransport({
-    //     service: "gmail",
-    //     auth: {
-    //       type: "OAuth2",
-    //       user: "exmine.hardware@gmail.com",
-    //       clientId: CLIENT_ID,
-    //       clientSecret: CLIENT_SECRET,
-    //       refreshToken: REFRESH_TOKEN,
-    //       accessToken: accessToken,
-    //     },
-    //   });
-
-    // const payment = await stripe.paymentIntents.create({
-    //   amount: amount,
-    //   currency: "USD", 
-    //   description:"",
-    //   payment_method: id,
-    //   confirm: true,
-    // })
- 
-    // Aqui se agrega todo de la orden is payment fue exitoso
 
     if (true) {
 
@@ -911,7 +868,7 @@ router.put("/admin", async (req, res, next) => {
             <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
             <tr style="border-collapse:collapse">
             <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${getOrder.total}</h4></td>
+            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(getOrder.total)}</h4></td>
             </tr>
             </table></td>
             </tr>
@@ -929,7 +886,7 @@ router.put("/admin", async (req, res, next) => {
             <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Dirección de envio:</h4></td>
             </tr>
             <tr style="border-collapse:collapse">
-            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.order_address.addressLine1}, ${getOrder.order_address.addressLine2}, ${getOrder.order_address.postalCode}, ${getOrder.order_address.telephone}</p></td>
+            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.Address1}, ${getOrder.City}, ${getOrder.PostCode}, ${getOrder.Country}, ${getOrder.Mobile}</p></td>
             </tr>
             </table></td>
             </tr>
@@ -1238,7 +1195,7 @@ router.put("/admin", async (req, res, next) => {
             <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
             <tr style="border-collapse:collapse">
             <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${getOrder.total}</h4></td>
+            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(getOrder.total)}</h4></td>
             </tr>
             </table></td>
             </tr>
@@ -1256,7 +1213,7 @@ router.put("/admin", async (req, res, next) => {
             <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Dirección de envio:</h4></td>
             </tr>
             <tr style="border-collapse:collapse">
-            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.order_address.addressLine1}, ${getOrder.order_address.addressLine2}, ${getOrder.order_address.postalCode}, ${getOrder.order_address.telephone}</p></td>
+            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.Address1}, ${getOrder.City}, ${getOrder.PostCode}, ${getOrder.Country}, ${getOrder.Mobile}</p></td>
             </tr>
             </table></td>
             </tr>
@@ -1526,7 +1483,7 @@ router.put("/admin", async (req, res, next) => {
             <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
             <tr style="border-collapse:collapse">
             <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${getOrder.total}</h4></td>
+            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(getOrder.total)}</h4></td>
             </tr>
             </table></td>
             </tr>
@@ -1544,7 +1501,7 @@ router.put("/admin", async (req, res, next) => {
             <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Dirección de envio:</h4></td>
             </tr>
             <tr style="border-collapse:collapse">
-            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.order_address.addressLine1}, ${getOrder.order_address.addressLine2}, ${getOrder.order_address.postalCode}, ${getOrder.order_address.telephone}</p></td>
+            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.Address1}, ${getOrder.City}, ${getOrder.PostCode}, ${getOrder.Country}, ${getOrder.Mobile}</p></td>
             </tr>
             </table></td>
             </tr>
@@ -1814,7 +1771,7 @@ router.put("/admin", async (req, res, next) => {
             <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
             <tr style="border-collapse:collapse">
             <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${getOrder.total}</h4></td>
+            <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(getOrder.total)}</h4></td>
             </tr>
             </table></td>
             </tr>
@@ -1832,7 +1789,7 @@ router.put("/admin", async (req, res, next) => {
             <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Dirección de envio:</h4></td>
             </tr>
             <tr style="border-collapse:collapse">
-            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.order_address.addressLine1}, ${getOrder.order_address.addressLine2}, ${getOrder.order_address.postalCode}, ${getOrder.order_address.telephone}</p></td>
+            <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${getOrder.Address1}, ${getOrder.City}, ${getOrder.PostCode}, ${getOrder.Country}, ${getOrder.Mobile}</p></td>
             </tr>
             </table></td>
             </tr>
