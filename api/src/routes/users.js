@@ -499,6 +499,7 @@ router.put("/resetPasswordWithoutOld/:userId", async (req, res, next) => {
   }
 });
 /* RESET PASSWORD USER WITH THE OLD PASSWORD */
+
 router.put("/resetPasswordWithOld", async (req, res, next) => {
   try {
     const { userId } = req.query;
