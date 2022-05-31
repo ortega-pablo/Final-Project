@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FormControl, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, getCartById } from "../../redux/actions";
+import { addItemToCart, clearCart, getCartById } from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -33,12 +33,24 @@ export default function CartModal({
     setCantidad(e.target.value);
   };
 
-  const handleSubmitCart = (e) => {
+  const handleSubmitCart = async (e) => {
     e.preventDefault();
     let busqueda = cartProducts?.find((p) => p.id === id);
-    if (cantidad <= stock) {
-      if (!busqueda) {
-        dispatch(addItemToCart(id, token, cantidad));
+    if(cantidad <= 0){
+      setOpen(false);
+      Swal.fire({
+        background: "#DFDCD3",
+        confirmButtonColor: "#B6893E",
+        icon: "error",
+        title: "Oops...",
+        text: "La cantidad no puede ser menor a 0",
+      }).then(() => {
+        setOpen(true);
+      });
+    }
+    else if (cantidad <= stock) {
+      if (!busqueda) {        
+        await dispatch(addItemToCart(id, token, cantidad));
         dispatch(getCartById(token));
         Swal.fire({
           background: "#DFDCD3",
@@ -48,6 +60,7 @@ export default function CartModal({
           timer: 1500,
         });
         setOpen(false);
+        dispatch(clearCart())
       } else {
         Swal.fire({
           background: "#DFDCD3",

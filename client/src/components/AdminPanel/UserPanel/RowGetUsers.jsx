@@ -1,34 +1,29 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
-  Box,
+  adminToUser,
+  deleteAdmin,
+  deleteUser,
+  userToAdmin,
+} from "../../../redux/actions";
+import {
   TableRow,
   TableCell,
   IconButton,
   Collapse,
   Table,
   TableBody,
-  TableHead,
-  TableContainer,
-  Paper,
   Typography,
   Button,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteAdmin,
-  deleteUser,
-  editAdmin,
-  editUser,
-  getAllUsers,
-} from "../../../redux/actions";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import MailIcon from "@mui/icons-material/Mail";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
-import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
 import UserEditButton from "./UserEditButton";
 import AdminEditButton from "./AdminEditButton";
+import Swal from "sweetalert2";
+
 
 function RowGetUsers({ row, user, setRender , render }) {
   const token = JSON.parse(window.localStorage.getItem("token"))?.token;
@@ -78,10 +73,54 @@ function RowGetUsers({ row, user, setRender , render }) {
       }
     });
   }
-
-  async function handleChangeRole(e) {
+  
+  async function handleChangeUserToAdmin(e) {
     e.preventDefault();
-    /* dispatch(editUser({ userId: row.id, token })); */
+    Swal.fire({
+      title: "¿Está seguro de cambiar el rol de este usuario?",
+      text: "El rol cambiará de usuario a administrador",
+      icon: "warning",
+      background: "#DFDCD3",
+      showCancelButton: true,
+      confirmButtonColor: "#B6893E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, cambiar!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await dispatch(userToAdmin(e.target.value,token));
+        console.log("SI HICE EL DISPATCH DEl HANDLE")
+        setRender(e.target.value);
+        Swal.fire(
+          "Cambiado!",
+          "El usuario ahora es administrador.",
+          "success"
+        );
+      }
+    });
+  }
+  
+  async function handleChangeAdminToUser(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de cambiar el rol de este administrador?",
+      text: "El rol cambiará de administrador a usuario",
+      icon: "warning",
+      background: "#DFDCD3",
+      showCancelButton: true,
+      confirmButtonColor: "#B6893E",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, cambiar!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await dispatch(adminToUser(e.target.value,token));
+        setRender(e.target.value);
+        Swal.fire(
+          "Cambiado!",
+          "El administrador ahora es usuario.",
+          "success"
+        );
+      }
+    });
   }
 
   return (
@@ -177,14 +216,26 @@ function RowGetUsers({ row, user, setRender , render }) {
         </TableCell>
 
         {user === "superAdmin" ? (
+          row.role === "admin" ?
           <TableCell>
             <Button
               size="small"
               value={row.id}
-              onClick={(e) => handleChangeRole(e)}
+              onClick={(e)=>handleChangeAdminToUser(e)}
               name="delete"
             >
-              Rol
+              Cambiar rol
+            </Button>
+          </TableCell>
+          :
+          <TableCell>
+            <Button
+              size="small"
+              value={row.id}
+              onClick={(e)=>handleChangeAdminToUser(e)}
+              name="delete"
+            >
+              Cambiar rol
             </Button>
           </TableCell>
         ) : (
@@ -207,7 +258,6 @@ function RowGetUsers({ row, user, setRender , render }) {
                       justifyContent: "left",
                     }}
                   >
-                    <MailIcon />
                     <Typography variant="h6">Nombre:</Typography>
                   </TableCell>
                   <TableCell
@@ -229,7 +279,6 @@ function RowGetUsers({ row, user, setRender , render }) {
                       justifyContent: "left",
                     }}
                   >
-                    <MailIcon />
                     <Typography variant="h6">Apellido:</Typography>
                   </TableCell>
                   <TableCell

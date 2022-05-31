@@ -1,15 +1,18 @@
-import { Box, CircularProgress, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container } from '@mui/material';
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { CreateDiscout } from '../Forms/adminDiscounts/CreateDiscout'
-import { NotFound } from '../NotFound/NotFound'
-import AdminMenuLarge from './AdminMenuLarge'
-import AdminMenuMobile from './AdminMenuMobile'
+import { useSelector } from 'react-redux';
+import { NotFound } from '../NotFound/NotFound';
+import AdminMenuLarge from './AdminMenuLarge';
+import AdminMenuMobile from './AdminMenuMobile';
+import Bienvenida from './Bienvenida';
+import { Preguntas } from './Preguntas';
 
-function CreateDiscount() {
-  const userStatus = useSelector((state) => state.userStatus);
+export const AskPanel = () => {
+    const userStatus = useSelector((state) => state.userStatus);
+  
     return (
-      userStatus === "admin" || userStatus === "superAdmin" ?
+      
+        userStatus === "admin" ?
         <Box
           maxWidth="vp"
           sx={{
@@ -22,7 +25,7 @@ function CreateDiscount() {
           }}
         >
           <AdminMenuMobile />
-    
+  
           <Container
             maxWidth="vp"
             sx={{
@@ -35,7 +38,7 @@ function CreateDiscount() {
             }}
           >
             <AdminMenuLarge />
-    
+  
             <Container
               sx={{
                 display: "flex",
@@ -46,8 +49,9 @@ function CreateDiscount() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Acá se Crea un descuento</Typography>
-              <CreateDiscout/>
+  
+              <Preguntas/>
+              
             </Container>
           </Container>
         </Box>
@@ -70,7 +74,6 @@ function CreateDiscount() {
           }}
         /> 
         </Box>
-      )
+      
+    );
 }
-
-export default CreateDiscount
