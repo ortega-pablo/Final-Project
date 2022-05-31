@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import GoogleLogin from 'react-google-login';
 import { gapi } from "gapi-script";
+import axios from "axios"
 
 const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
 
@@ -86,17 +87,9 @@ export const Login = () => {
 
   const handleLoginGoogle = async (googleData) => {
 
-    const res = await fetch(`/users/google-login`, {
-      method: 'POST',
-      body: JSON.stringify({
-        token: googleData.tokenId
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    const data = await res.json();
+    const res = await axios.post("/users/google-login",{token: googleData.tokenId} )
+      
+    const data = await res.data;
     console.log("RPTA BACK", data)
     window.localStorage.setItem("token", JSON.stringify(data)); 
     const ls = JSON.parse(localStorage.getItem("token"))

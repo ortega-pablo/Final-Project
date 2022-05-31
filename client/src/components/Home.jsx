@@ -188,6 +188,8 @@ export const Home = () => {
             {products.length > 0 ? (
               actualPage.map((prod, index) => {
                 return (
+                  prod.productInventory.quantity === 0 ?
+                  <></>:
                   <Grid
                     sx={{
                       m: "20px", width:"235px", justifyContent:"stretch"

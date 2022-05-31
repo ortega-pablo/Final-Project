@@ -28,27 +28,27 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
       //   NameRepetido.map((name) => name),
       //   "Ya existe un producto con éste nombre"
       // )
-      .required("El nombre es requerido"),
+      .required("Por favor ingrese un nombre"),
 
     firstName: yup
-      .string("Ingrese la descripción")
+      .string("Ingrese una descripción")
       // .notOneOf(
       //   skuRepetido.map((sku) => sku),
       //   "Ya existe un producto con éste codigo sku"
       // )
-      .required("La descripción es requerida"),
+      .required("Por favor ingrese una descripción"),
     lastName: yup
-      .string("Ingrese la descripción")
-      .required("La descripción es requerida"),
+      .string("Ingrese una descripción")
+      .required("Por favor ingrese una descripción"),
 
     phone: yup
-      .string("Ingrese la descripción")
+      .string("Ingrese una descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
-      .required("La descripción es requerida"),
+      .required("Por favor ingrese una descripción"),
       currentPassword: yup
-      .string("Ingrese la descripción")
+      .string("Ingrese una descripción")
       
-      .required("La actual contraseña es requerida para hacer cambios en tu perfil"),
+      .required("Por favor ingrese la contraseña actual para hacer cambios en su perfil"),
     // oldPassword: yup
     //   .string("Ingrese la descripción")
     //   // .min(8, 'Password should be of minimum 8 characters length')
@@ -97,7 +97,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
            Swal.fire("Modificado!");
          
         }else {
-          Swal.fire("La password es incorrecta!")
+          Swal.fire("La contraseña es incorrecta!")
         }
       } })
 
@@ -185,7 +185,7 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
             <TextField
             autoComplete="off"
               id="outlined-basic"
-              label="Actual Contraseña *"
+              label="Contraseña actual *"
               variant="outlined"
               type="password"
               name="currentPassword"

@@ -45,5 +45,4 @@ router.use("/users/address", addressRoute)
 router.use("/sendEmail", sendEmail);
 
 
-
 module.exports = router;
