@@ -37,7 +37,7 @@ export default function ModalToRow({
         confirmButtonColor: "#B6893E",
         icon: "error",
         title: "Oops...",
-        text: "La cantidad no puede ser menor a 0",
+        text: "La cantidad no puede ser 0 o menor que 0",
       }).then(() => {
         setOpen(true);
       });
@@ -60,7 +60,7 @@ export default function ModalToRow({
         confirmButtonColor: "#B6893E",
         icon: "error",
         title: "Oops...",
-        text: "Stock insuficiente para la cantidad que seleccionaste",
+        text: "Stock insuficiente para la cantidad seleccionada",
       }).then(() => {
         setOpen(true);
       });

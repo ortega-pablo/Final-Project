@@ -120,23 +120,23 @@ export default function CartModal({
     <Box sx ={{textAlign:'center'}}>
       {stock === 0 ? 
       <>
-      <Button color="ambar3" variant="contained" disabled >
+      <Button color="ambar3" variant="contained" size="small" disabled >
       Agregar al Carrito
-      <ShoppingCartIcon/>
+      <ShoppingCartIcon size="small" />
     </Button>
     <Typography color="ambar3.main" >Producto sin stock</Typography>
     </>:
       stock > 0 && stock <=5 ?
       <>
-      <Button color="ambar3" variant="contained" onClick={userStatus !== null ? handleOpen : handleAlert}>
+      <Button color="ambar3" variant="contained" size="small" onClick={userStatus !== null ? handleOpen : handleAlert}>
       Agregar al Carrito
-      <ShoppingCartIcon/>
+      <ShoppingCartIcon size="small" />
     </Button>
     <Typography color="ambar3.main" >Ultimas unidades!</Typography>
     </>:
-      <Button color="ambar3" variant="contained" onClick={userStatus !== null ? handleOpen : handleAlert}>
+      <Button color="ambar3" variant="contained" size="small" onClick={userStatus !== null ? handleOpen : handleAlert}>
         Agregar al Carrito
-        <ShoppingCartIcon/>
+        <ShoppingCartIcon size="small" />
       </Button>
     }
       <Modal
@@ -193,7 +193,7 @@ export default function CartModal({
                 }}
               />
 
-              <Button type="submit" variant="contained" color="ambar3">
+              <Button type="submit" variant="contained" color="ambar3" size="small">
                 {" "}
                 Agregar{" "}
               </Button>
@@ -201,6 +201,7 @@ export default function CartModal({
                 onClick={() => setOpen(false)}
                 variant="contained"
                 color="ambar3"
+                size="small"
               >
                 {" "}
                 Cancelar{" "}

@@ -631,6 +631,10 @@ router.post("/google-login", async (req, res) => {
     username: user.dataValues.username,
     token: token2,
   });
+
+  const addShoppingCart = await ShoppingCart.create({});
+
+    addShoppingCart.setUser(user);
 });
 
 
