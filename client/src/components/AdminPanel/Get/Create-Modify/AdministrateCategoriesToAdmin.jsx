@@ -41,7 +41,7 @@ const AdministrateCategoriesToAdmin = () => {
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
       .notOneOf(
-        allCategories.map((c) => c.name),
+        allCategories.map((c) => c?.name),
         "Ya existe esa  categoría"
       )
       .required("El nombre es requerido"),
@@ -101,8 +101,8 @@ const AdministrateCategoriesToAdmin = () => {
             sx={{ width: "100%" }}
           >
             <TableRow>
-              <TableCell>{c.name}</TableCell>
-              <TableCell>{c.description}</TableCell>
+              <TableCell>{c?.name}</TableCell>
+              <TableCell>{c?.description}</TableCell>
               <TableCell>
                 <Button
                   value={c.id}
@@ -142,7 +142,7 @@ const AdministrateCategoriesToAdmin = () => {
             onSubmit={formik.handleSubmit}
             sx={{ m: 1 }}
           >
-            <Typography> Editando a: {categoryToUpdate.name}</Typography>
+            <Typography> Editando a: {categoryToUpdate?.name}</Typography>
             <TextField
               id="outlined-basic"
               label="Nuevo valor del nombre"

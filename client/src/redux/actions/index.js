@@ -89,6 +89,12 @@ export const UPDATE_USER ="UPDATE_USER";
 export const UPDATE_ADMIN ="UPDATE_ADMIN";
 export const UPDATE_USER_FOR_USER ="UPDATE_USER_FOR_USER";
 export const UPDATE_PASSWORD_FOR_USER ="UPDATE_PASSWORD_FOR_USER";
+export const GET_BANNER ="GET_BANNER";
+export const POST_BANNER ="POST_BANNER";
+
+export const DELETE_BANNER ="DELETE_BANNER";
+
+
 
 
 
@@ -1198,3 +1204,44 @@ export function editPasswordForUser( token , payload) {
     }
   };
 };
+
+
+export const postAddImageToBanner = ( payload) => {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(
+        `http://localhost:3001/images/uploadBanner`, payload
+      ); 
+          console.log(payload)
+      return json;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export const getImageBanner = () => {
+  return async (dispatch) => {
+    let response = await axios(`http://localhost:3001/images/uploadBanner`);
+    return dispatch({
+      type: GET_BANNER,
+      payload: response.data,
+    });
+  };
+};
+
+
+export function deleteImageToBanner(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`http://localhost:3001/images/bannerImage?imageId=${id}`);
+
+      return dispatch({
+        type: DELETE_BANNER,
+        payload: id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
