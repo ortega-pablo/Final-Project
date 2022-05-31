@@ -128,7 +128,7 @@ export default function CartModal({
     </>:
       stock > 0 && stock <=5 ?
       <>
-      <Button color="ambar3" variant="contained" >
+      <Button color="ambar3" variant="contained" onClick={userStatus !== null ? handleOpen : handleAlert}>
       Agregar al Carrito
       <ShoppingCartIcon/>
     </Button>
