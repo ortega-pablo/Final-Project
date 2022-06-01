@@ -17,6 +17,8 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
     value: yup
 
       .string("Ingrese el nombre de la nueva categoria")
+      .max(100, "La cantidad maxima de caracteres es 100")
+
       //  .notOneOf(allCategories.map( p=> p.name), "Ya existe esa categoría" )
       .required("El nombre es requerido"),
   });
