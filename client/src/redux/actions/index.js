@@ -93,7 +93,7 @@ export const GET_BANNER ="GET_BANNER";
 export const POST_BANNER ="POST_BANNER";
 
 export const DELETE_BANNER ="DELETE_BANNER";
-
+export const PREPARE_ORDER = "PREPARE_ORDER";
 
 
 
@@ -847,6 +847,7 @@ export const getCartById = (token) => {
       let response = await axios(
         `/shoppingCart?userId=${responseId.data.idUser}`
       );
+      console.log(response.data)
       return dispatch({
         type: GET_CART_BY_ID,
         payload: response.data,
@@ -1300,4 +1301,13 @@ export function deleteImageToBanner(id) {
       console.log(error);
     }
   };
+}
+
+export function preparateOrder(payload) {
+  return async function(dispatch){
+    return dispatch({
+      type: PREPARE_ORDER,
+      payload
+    })
+  }
 }

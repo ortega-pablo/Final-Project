@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address, OrderProducts } = require("../db");
 const router = Router();
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
@@ -105,7 +105,7 @@ router.post('/', async (req, res, next) => {
 
       oneAddress.addOrder(newOrder);
       newOrder.setUser(userId);
-      newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
+      /* newOrder.addProducts(findCart.products); */ // O un findAll.length porque la neta esta cabron
 
       
       var outputHTML = "";
@@ -466,23 +466,9 @@ router.get("/", async (req, res, next) => {
         },
         include: [
           {
-            model: Product,
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: []
-            },
-            include: {
-              model: Image,
-              attributes: ["urlFile"],
-              through: {
-                attributes: []
-              }
-            },
+            model: OrderProducts,
+            atributes:["productName", "price", "quantity", "productId", "productImage"],
           },
-          {
-            model: Address,
-            as: "order_address"
-          }
         ]
       })
 
@@ -496,18 +482,8 @@ router.get("/", async (req, res, next) => {
         },
         include: [
           {
-            model: Product,
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: []
-            },
-            include: {
-              model: Image,
-              attributes: ["urlFile"],
-              through: {
-                attributes: []
-              }
-            }
+            model: OrderProducts,
+            atributes:["productName", "price", "quantity", "productId", "productImage"],
           },
         {
           model: Address,
@@ -523,18 +499,9 @@ router.get("/", async (req, res, next) => {
 
       const getAllOrders = await Order.findAll({
         include: {
-          model: Product,
-          attributes: ["id", "name", "price"],
-          through: {
-            attributes: []
-          },
-          include: {
-            model: Image,
-            attributes: ["urlFile"],
-            through: {
-              attributes: []
-            }
-          }
+          
+            model: OrderProducts,
+            atributes:["productName", "price", "quantity", "productId", "productImage"],
         }
       })
 

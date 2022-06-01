@@ -401,7 +401,7 @@ router.put("/editAdmin", async (req, res, next) => {
 
 router.put("/changeUserToAdmin/:userId", [cors(), verifyToken], async (req, res, next) => {
     const { userId } = req.params;
-    console.log("EMPECE A EJECUTAR LA RUTA")
+  
     try {
       if (req.role === "superAdmin") {
         const findUser = await User.findOne({
@@ -409,7 +409,7 @@ router.put("/changeUserToAdmin/:userId", [cors(), verifyToken], async (req, res,
             id: userId,
           },
         });
-        console.log("EL ROL ES:", findUser)
+      
         if (findUser && findUser.dataValues.role === "user") {
           await User.update(
             {
@@ -604,7 +604,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
 
 router.post("/google-login", async (req, res) => {
   const { token } = req.body;
-  console.log("este es el token de back",token)
+
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID_GOOGLE,

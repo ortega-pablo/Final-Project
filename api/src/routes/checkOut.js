@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address, OrderProducts} = require("../db");
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
 const axios = require("axios")
@@ -49,7 +49,8 @@ router.post('/', async (req, res, next) => {
         City,
         EmailAddress,
         PostCode,
-        Mobile
+        Mobile,
+        orderProducts,
     } = req.body;
 
     let dollarUSLocale = Intl.NumberFormat('en-US');
@@ -71,10 +72,6 @@ router.post('/', async (req, res, next) => {
                 model: Address
             }
         });
-
-        console.log(findUser)
-
-
 
         const findCart = await ShoppingCart.findOne({
             where: {
@@ -100,8 +97,8 @@ router.post('/', async (req, res, next) => {
 
 
         const newOrder = await Order.create({
-            total: findCart.amount,
-            quantity: findCart.amount,
+            total: 10,
+            quantity: 10,
             FirstName,
             LastName,
             Country,
@@ -112,16 +109,23 @@ router.post('/', async (req, res, next) => {
             Mobile
         });
 
-
-
-
-
-        // const oneAddress = findUser.addresses[0]
-        // oneAddress.addOrder(newOrder);
-
         newOrder.setUser(userId);
-        newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
-        newOrder.addShoppingCart(findCart);
+
+        for (let i = 0; i < orderProducts.length; i++) {
+
+            let newOrderProduct = await OrderProducts.create({
+                
+                productName: orderProducts[i].productName,
+                price: orderProducts[i].price,
+                quantity: orderProducts[i].quantity,
+                productId: orderProducts[i].productId,
+                productImage: orderProducts[i].productImage,
+
+            })
+            console.log("este es el newOrderProduct", newOrderProduct)
+            newOrder.addOrderProduct(newOrderProduct)
+
+        }
 
 
         var outputHTML = "";
@@ -450,10 +454,10 @@ router.post('/', async (req, res, next) => {
           </html >`
         });
 
-        // await findCart.setProducts([]);
-        // await findCart.update({
-        //   amount: 0
-        // });
+        await findCart.setProducts([]);
+        await findCart.update({
+          amount: 0
+        });
 
         return res.send(newOrder)
 
