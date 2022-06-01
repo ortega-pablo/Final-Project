@@ -13,6 +13,7 @@ export const PaymentDetails = () => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const address = useSelector(state => state.shippingData);
+  const orderProducts = useSelector(state => state.prepareOrder);
   const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +36,8 @@ export const PaymentDetails = () => {
         City: address.City,
         EmailAddress: address.EmailAddress,
         PostCode: address.PostCode,
-        Mobile: address.Mobile
+        Mobile: address.Mobile,
+        orderProducts: orderProducts,
       }, address.id, user));
       console.log("Esto es el response de tu hermana", response)
     } else {

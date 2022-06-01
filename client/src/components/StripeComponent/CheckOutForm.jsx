@@ -3,7 +3,7 @@ import { Elements, CardElement, useStripe, useElements} from "@stripe/react-stri
 import {loadStripe} from '@stripe/stripe-js';
 import { Box, Button, Paper, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { postNewPaymentMethod } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AdressForm } from "./AdressForm";
 import { PaymentDetails } from "./PaymentDetails";
 
@@ -41,6 +41,7 @@ const FormCheck = () => {
 
 
 export const CheckOutForm = () => {
+    const orderProducts = useSelector(state => state.prepareOrder);
     return(
         <Elements stripe = {stripePromise}>
             <FormCheck></FormCheck>

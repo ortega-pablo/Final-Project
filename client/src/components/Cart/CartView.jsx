@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import DetailRow from "./Rows/DetailRow";
-import { clearCart, getCartById, setCartAmount } from "../../redux/actions";
+import { clearCart, getCartById, preparateOrder, setCartAmount } from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -38,10 +38,21 @@ const CartView = () => {
     totalAmount += p.price * p.Quantity.total;
   });
 
+  let preOrder =[]
+  cart.products?.forEach((p)=>
+  preOrder.push({
+    productName: p.name,
+    quantity: p.Quantity.total,
+    price: p.price ,
+    productId: p.id ,
+    productImage: p.images && p.images[0].urlFile,
+  }))
+
   const handleConfirmAndSetAmount = (e) => {
     e.preventDefault();
     const amountToCents = totalAmount * 100;
     dispatch(setCartAmount(cart.id, amountToCents));
+    dispatch(preparateOrder(preOrder));
     Swal.fire({
       background: "#DFDCD3",
       icon: "success",
@@ -49,6 +60,7 @@ const CartView = () => {
       showConfirmButton: false,
       timer: 1500,
     });
+
     navigate("/checkout");
   };
 
