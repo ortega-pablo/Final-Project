@@ -64,8 +64,7 @@ router.get("/:userId", async (req, res, next) => {
                 }
             })
 
-            console.log(getAddress)
-
+            
             getAddress ? res.send(getAddress) :
             res.send("User not found")
         } else {

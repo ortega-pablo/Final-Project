@@ -112,6 +112,8 @@ router.post('/', async (req, res, next) => {
         }
       });
 
+      console.log(findUser)
+
 
 
       const findCart = await ShoppingCart.findOne({
@@ -132,6 +134,8 @@ router.post('/', async (req, res, next) => {
           }
         }
       });
+
+      console.log(findCart)
 
 
       const newOrder = await Order.create({

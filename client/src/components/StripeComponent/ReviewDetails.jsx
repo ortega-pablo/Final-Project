@@ -32,7 +32,7 @@ export const ReviewDetails = () => {
                             secondary={"x" + p.Quantity.total}
                         />
                         <ListItemText
-                            sx={{margin:"5px", border:"2px solid black"}}
+                            sx={{margin:"5px"}}
                             primary={`Sub total: $${dollarUSLocale.format(p.price * p.Quantity.total)}`}
                         />
                         {/* <Typography variant='body2'>
@@ -41,7 +41,7 @@ export const ReviewDetails = () => {
                     </ListItem>
                 ))}
                 <ListItem>
-                        <Typography variant='subtitle1'>
+                        <Typography variant='subtitle2'>
                             {`Total: $${dollarUSLocale.format(cart.amount/100)}`}
                         </Typography>
                 </ListItem>

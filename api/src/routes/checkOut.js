@@ -94,6 +94,7 @@ router.post('/', async (req, res, next) => {
         });
 
 
+
         const newOrder = await Order.create({
             total: findCart.amount,
             quantity: findCart.amount,
@@ -106,6 +107,8 @@ router.post('/', async (req, res, next) => {
             PostCode,
             Mobile
         });
+
+
 
 
 
@@ -137,7 +140,7 @@ router.post('/', async (req, res, next) => {
 
         let info = await transporter.sendMail({
           from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
-          to: [findUser.email], // list of receivers
+          to: [findUser.email, EmailAddress], // list of receivers
           subject: "Confirmacion de Pedido", // Subject line
           text: "", // plain text body
           html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -274,7 +277,7 @@ router.post('/', async (req, res, next) => {
           <td align="center" style="Margin:0;padding-top:25px;padding-bottom:25px;padding-left:35px;padding-right:35px;font-size:0px"><img src="https://vitddo.stripocdn.email/content/guids/CABINET_4652c0ad302f6bcc2eca28be33a41235/images/eo_circle_green_checkmarksvg.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="120"></td>
           </tr>
           <tr style="border-collapse:collapse">
-          <td align="center" style="padding:0;Margin:0;padding-bottom:10px"><h2 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#333333">Hola ${findUser.firstName}, gracias&nbsp;por tu orden!</h2></td>
+          <td align="center" style="padding:0;Margin:0;padding-bottom:10px"><h2 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#333333">Hola ${FirstName}, gracias&nbsp;por tu orden!</h2></td>
           </tr>
           </table></td>
           </tr>
@@ -355,7 +358,7 @@ router.post('/', async (req, res, next) => {
           <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
           <tr style="border-collapse:collapse">
           <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-          <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(newOrder.total)}</h4></td>
+          <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(newOrder.total / 100)}</h4></td>
           </tr>
           </table></td>
           </tr>
@@ -373,7 +376,7 @@ router.post('/', async (req, res, next) => {
           <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Dirección de envio:</h4></td>
           </tr>
           <tr style="border-collapse:collapse">
-          <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${findUser.addresses[0].addressLine1}, ${findUser.addresses[0].addressLine2}, ${findUser.addresses[0].postalCode}, ${findUser.addresses[0].telephone}</p></td>
+          <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${Address1}, ${City}, ${PostCode}, ${Country}, ${Mobile}</p></td>
           </tr>
           </table></td>
           </tr>
