@@ -12,6 +12,7 @@ import { getAsksForAllProductsOneUser, getUserIdByToken, postNewAsk } from '../.
 const validationSchema = yup.object({
     content: yup
       .string('Realiza una pregunta...')
+      .max(500, "El máximo de caracteres es de 500")
       .required('No puedes mandar el campo vacio.'),
   });
   

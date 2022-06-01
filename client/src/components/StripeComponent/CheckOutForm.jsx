@@ -3,7 +3,7 @@ import { Elements, CardElement, useStripe, useElements} from "@stripe/react-stri
 import {loadStripe} from '@stripe/stripe-js';
 import { Box, Button, Paper, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { postNewPaymentMethod } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AdressForm } from "./AdressForm";
 import { PaymentDetails } from "./PaymentDetails";
 
@@ -21,17 +21,19 @@ const FormCheck = () => {
     //--------Hasta aca el codigo pertenece al stepper.--------
     return(
         <Box sx={{ margin: "30px", backgroundColor: "red", display:"flex", justifyContent: "center", alignItems: "center"}}>
-        <Paper sx={{ width: "600px", height:"600px" }}>
-            <Typography component='h1' variant='h4'>
-                Checkout
+        <Paper sx={{ width: "600px", minHeight:"600px", padding: "15px", margin:"10px" }}>
+            <Typography component='h1' variant='h4' sx={{textAlign:"center"}}>
+                Verificación
             </Typography>
-            <Stepper activeStep={activeStep}>
+            <Box disablePadding sx={{width: "100%", display: "flex", justifyContent: "center"}}>
+            <Stepper activeStep={activeStep} disablePadding sx={{mt:"5px", width: "500px"} }>
                 {steps.map(s => (
-                    <Step sx={{color:"black"}} key={s}>
-                        <StepLabel >{s}</StepLabel>
+                    <Step  key={s}>
+                        <StepLabel  >{s}</StepLabel>
                     </Step>
                 ))}
             </Stepper>
+            </Box>
             <Form ></Form>       
         </Paper>
         </Box>
@@ -41,6 +43,7 @@ const FormCheck = () => {
 
 
 export const CheckOutForm = () => {
+    const orderProducts = useSelector(state => state.prepareOrder);
     return(
         <Elements stripe = {stripePromise}>
             <FormCheck></FormCheck>

@@ -13,32 +13,37 @@ export const AddressInfo = () => {
                 Datos comprador:
             </Typography>
             <List disablePadding>
-            <ListItem disablePadding>
+            <ListItem disablePadding >
                     <ListItemText
+                        sx={{pr:"16px", pl:"16px"}}
                         disablePadding
                         primary={`Nombre completo: ${shippingData.FirstName} ${shippingData.LastName}.`}
                     />
                 </ListItem>
                 <ListItem disablePadding>
                     <ListItemText
+                        sx={{pr:"16px", pl:"16px"}}
                         disablePadding
                         primary={`Direccion: ${shippingData.Address1}, ${shippingData.City}, ${shippingData.Country}.`}
                     />
                 </ListItem>
                 <ListItem disablePadding>
                     <ListItemText
+                        sx={{pr:"16px", pl:"16px"}}
                         disablePadding
                         primary={`CP: ${shippingData.PostCode}.`}
                     />
                 </ListItem>
                 <ListItem disablePadding>
                     <ListItemText
+                        sx={{pr:"16px", pl:"16px"}}
                         disablePadding
                         primary={`Número de teléfono: ${shippingData.Mobile}.`}
                     />
                 </ListItem>
                 <ListItem disablePadding>
                     <ListItemText
+                        sx={{pr:"16px", pl:"16px"}}
                         disablePadding
                         primary={`Correo electrónico: ${shippingData.EmailAddress}.`}
                     />

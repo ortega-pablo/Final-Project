@@ -25,8 +25,9 @@ export const AdmininAllStock = () => {
       .number("El stock es numerico")
       .typeError("El stock deber ser numerico")
       .required(
-        "El stock es requerido si es que lo deseas agregar.Luego tambien lo podrás hacer desde el panel de administrador"
+        "El stock es requerido si es que lo deseas agregar.Luego tambien lo podrás modificar en cualquier momento"
       )
+      .max(100000, "100000 es el valor maximo")
       .positive("El stock debe ser positivo"),
   });
   const formik = useFormik({
@@ -35,7 +36,7 @@ export const AdmininAllStock = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       Swal.fire({
         background: '#DFDCD3',
         icon: 'success',

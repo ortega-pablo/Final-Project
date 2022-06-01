@@ -85,21 +85,14 @@ export const MisPreguntas = () => {
               // let elapsed = fechaEnd.getTime() - fechaStart.getTime()
               // // console.log(elapsed)
               // console.log(Date.now())
-
-              {
-                var day1 = new Date(preg.createdAt);
-                var day2 = new Date();
+           
+                let day1 = new Date(preg.createdAt);
+                let day2 = new Date();
                 console.log(day1)
                 console.log(day2)
-                var difference = day2.getTime()-day1.getTime();
+                let difference = day2.getTime()-day1.getTime();
               console.log(difference)
-
-
-
-              }
-
-
-
+   
 
               return (
                 <>

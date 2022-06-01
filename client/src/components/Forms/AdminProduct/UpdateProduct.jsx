@@ -86,41 +86,51 @@ console.log(productToUpdate)
   const NameRepetido = nameRepetido.map((p) => p.name);
   
   const SkuRepetido = nameRepetido.map((p) => p.sku);
-  console.log(SkuRepetido)
-  console.log(idUpdate)
+  
 
   const validationSchema = yup.object({
     
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
-     
+      .max(60, "El maximo de caracteres es 60")
       .notOneOf(productosExistentes.filter( p => p.id !=idUpdate ), "Ya existe un producto con éste nombre" )
       .required("El nombre es requerido"),
     
       sku: yup
       .string("Ingrese la descripción")
+      .max(20,"el codifo no puede tener mas de 20 caracteres")
     .notOneOf(nameRepetido.map(sku=>sku), "Ya existe un producto con éste codigo sku" )
       .required("La descripción es requerida"),
       brand: yup
       .string("Ingrese la descripción")
+      .max(40, "El maximo de caracteres es 40")
+
       .required("La descripción es requerida"),
     price: yup
       .number("El precio es numerico.")
+      .max(1000000, "El precio maximo es de $1000000")
+
       .typeError("El precio deber ser numerico")
       .positive("El precio debe ser positivo")
       // .string()
       .required("La descripción es requerida"),
     description: yup
       .string("Ingrese la descripción")
+      .max(1000, "El maximo de caracteres es 1000")
+
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     warranty: yup
       .string("Ingrese la descripción")
+      .max(200, "El maximo de caracteres es 200")
+
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     netWeight: yup
       .number("El peso neto debe ser numerico")
       .typeError("El peso neto deber ser numerico")
+      .max(200000, "El peso maximo es de 200000 gr")
+
       .positive("El peso neto debe ser positivo")
       //  .string()
       // .min(8, 'Password should be of minimum 8 characters length')
@@ -129,6 +139,8 @@ console.log(productToUpdate)
     grossWeight: yup
       .number("El peso bruto es numerico")
       .typeError("El peso bruto deber ser numerico")
+      .max(200000, "El peso maximo es de 200000 gr")
+
       .positive("El peso bruto debe ser positivo")
       // .string()
       // .min(8, 'Password should be of minimum 8 characters length')
@@ -138,16 +150,21 @@ console.log(productToUpdate)
     //   // .min(8, 'Password should be of minimum 8 characters length')
     //   .required("La descripción es requerida"),
     keyWords: yup
-    .string("Ingrese la descripción."),
+    .string("Ingrese la descripción.")
+    .max(200, "El maximo de caracteres es 200"),
     
     productDimensions: yup
     .string("Ingrese la descripcións")
+    .max(200, "El maximo de caracteres es 200")
     .required("La dimensión es requerida"),
     packageDimensions : yup
     .string("Ingrese la descripciónd")
+    .max(200, "El maximo de caracteres es 200")
+
     .required("La dimensión es requerida"),
     thumbnail :yup
-    .string("Ingrese la descripciónf"),
+    .string("Ingrese la descripciónf")
+    .max(200, "El maximo de caracteres es 200") ,
 
 
 
@@ -228,6 +245,7 @@ console.log(productToUpdate)
         <hr />
         <h3>Paso 1: </h3>
       <Box
+        sx={{display:"grid" , gridTemplateColumns:"1fr 1fr", gap:"10px" }}
         component="form"
         noValidate
         autoComplete="off"
@@ -398,9 +416,9 @@ console.log(productToUpdate)
         /> */}
 
         <Button type="submit">Editar</Button>
+        <h4>(*) elementos obligatorios</h4>
       </Box>
         </TabPanel>
-        <h4>(*) elementos obligatorios</h4>
 
         <TabPanel value={value} index={1}>
      <h3>Paso 5: Modificar descuento</h3>
@@ -430,7 +448,7 @@ console.log(productToUpdate)
 
       <AddSubCategoty allCategories={allCategories} />
 
-      <hr />
+    
         </TabPanel>
 
         <TabPanel value={value} index={4}>
@@ -440,9 +458,9 @@ console.log(productToUpdate)
         idUpdate={idUpdate}/>
        
 
-      <UpdateSpecification
-       newProduct={productToUpdate}/>
+     <Box sx={{}}>
 
+     
 
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
@@ -453,6 +471,7 @@ console.log(productToUpdate)
         value={specifications}
         onChange={handleChangeSpecification}
         label="Age"
+        sx={{ml:0 , mt:2, mb:2}}
       >
         <MenuItem value="">
           <em>None</em>
@@ -466,8 +485,8 @@ console.log(productToUpdate)
        newProdId={idUpdate}
        specifications={specifications}
        />
-     
-<hr />
+     </Box>
+
 
       {/* <UpdateSpecif
          idUpdate={idUpdate}
@@ -476,7 +495,7 @@ console.log(productToUpdate)
           newProdId={newProdId}
           specifications={specifications}/> */}
 
-          <hr />
+       
 
       <AddSpecification/>
            

@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 const validationSchema = yup.object({
   content: yup
     .string('Realiza una pregunta...')
+    .max(500, "El maximo de caracteres es 500")
     .required('No puedes mandar el campo vacio.'),
 });
 

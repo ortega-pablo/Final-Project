@@ -4,6 +4,9 @@ import {useForm, FormProvider} from 'react-hook-form';
 import { AddressInput } from './AddressInput';
 import { getUserIdByToken, setShippingData, postNewDirection, getAllDirections} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {useNavigate} from 'react-router-dom';
 
 export const AdressForm =   ({nexStep, backStep}) => {
     const [open, setOpen] = useState(false);
@@ -13,6 +16,7 @@ export const AdressForm =   ({nexStep, backStep}) => {
     const directions = useSelector(state => state.allDirections);
     const [currentDirection, setCurrentDirection] = useState(0);
     const [direction, setDirecion] = useState(null);
+    const navigate = useNavigate();
 
     useEffect( () => {
         dispatch(getUserIdByToken(idToken))
@@ -20,8 +24,8 @@ export const AdressForm =   ({nexStep, backStep}) => {
     }, [dispatch])
     // const directions = 
     return (
-        <>
-            <Typography>
+        <Box sx={{display:"flex", flexDirection:"column", minHeight: "100%"}}>
+            <Typography variant='h6'>
                 Direccion de envio
             </Typography>
             <FormControl>
@@ -37,7 +41,10 @@ export const AdressForm =   ({nexStep, backStep}) => {
                 </RadioGroup>
             </FormControl>
             <Divider></Divider>
-            <Button onClick={() => setOpen(!open)} >Nueva dirección</Button>
+            <Box>
+            <Button  color='ambar3' size='small' onClick={() => setOpen(!open)} sx={{mt: 2}}  endIcon={open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>} >{open ? "Cancelar" : "Nueva dirección"  }</Button>
+            {/* {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>} */}
+            </Box>
             <Collapse in={open}>
             <FormProvider {...methods}>
                 <Box component="form" onSubmit={methods.handleSubmit(async data => {
@@ -89,17 +96,22 @@ export const AdressForm =   ({nexStep, backStep}) => {
                          />
                     </Grid>
                     <Box component='div' sx={{display:"flex", justifyContent:"space-between", mt:"1rem"}}>
-                    <Button variant='contained' sx={{color: "black"}}>
-                        Back
+                    <Button 
+                    variant='contained' 
+                    color='ambar3' 
+                    size='small'
+                    onClick={() => navigate('/cart')}
+                    >
+                        Volver al carrito
                     </Button>
-                    <Button type='submit' variant='contained' sx={{color: "black"}}>
-                        Next
+                    <Button type='submit' variant='contained' color='ambar3' size='small'>
+                        Siguiente
                     </Button>
                     </Box>
                 </Box>
             </FormProvider>
             </Collapse>
-           {!open && <Box component="form" onSubmit={async (e) => {
+           {!open && <Box sx={{display:"flex", flexDirecion:"column", justifyContent: "center"}} component="form" onSubmit={async (e) => {
                e.preventDefault()
                console.log(directions)
                console.log(currentDirection)
@@ -107,18 +119,23 @@ export const AdressForm =   ({nexStep, backStep}) => {
                await dispatch(setShippingData(direction));
                nexStep()
            }}>
-                            <Box component='div' sx={{display:"flex", justifyContent:"space-between", mt:"1rem"}}>
-                                <Button variant='contained' sx={{color: "black"}}>
-                                    Back
+                            <Box component='div' sx={{display:"flex", justifyContent:"space-between", mt:"1rem", width:"100%", bottom: 0}}>
+                                <Button 
+                                variant='contained' 
+                                color='ambar3' 
+                                size='small'
+                                onClick={() => navigate('/cart')}
+                                >
+                                    Volver al carrito
                                 </Button>
-                                <Button type='submit' variant='contained' sx={{color: "black"}}>
-                                    Next
+                                <Button type='submit' variant='contained' color='ambar3' size='small'>
+                                    Siguiente
                                 </Button>
                             </Box>
                     </Box> 
             }
 
-        </>
+        </Box>
     );
 }
  

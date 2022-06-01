@@ -31,6 +31,9 @@ export const VerHilo = ({ user, prod, preg }) => {
                                   </TableHead>
                                   <TableBody>
                                     {pregunta.map((p) => {
+
+
+
                                       return (
                                         <TableRow>
                                           <TableCell>

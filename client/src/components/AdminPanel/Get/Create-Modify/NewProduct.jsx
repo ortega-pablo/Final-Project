@@ -38,6 +38,8 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import Swal from "sweetalert2";
+
 
 ////////////////////////////////////
 function TabPanel(props) {
@@ -100,7 +102,7 @@ export function NewProduct() {
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
-
+      .max(60, "El maximo de caracteres es 60")
       .notOneOf(
         NameRepetido.map((name) => name),
         "Ya existe un producto con éste nombre"
@@ -109,6 +111,7 @@ export function NewProduct() {
 
     sku: yup
       .string("Ingrese la descripción")
+      .max(20,"el codifo no puede tener mas de 20 caracteres")
       .notOneOf(
         skuRepetido.map((sku) => sku),
         "Ya existe un producto con éste codigo sku"
@@ -116,31 +119,37 @@ export function NewProduct() {
       .required("La descripción es requerida"),
     brand: yup
       .string("Ingrese la descripción")
+      .max(40, "El maximo de caracteres es 40")
       .required("La descripción es requerida"),
     price: yup
       .number("El precio es numerico.")
       .typeError("El precio deber ser numerico")
       .positive("El precio debe ser positivo")
+      .max(1000000, "El precio maximo es de $1000000")
       // .string()
       .required("La descripción es requerida"),
     description: yup
       .string("Ingrese la descripción")
+      .max(1000, "El maximo de caracteres es 1000")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     warranty: yup
       .string("Ingrese la descripción")
+      .max(200, "El maximo de caracteres es 200")
+
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     netWeight: yup
       .number("El peso neto debe ser numerico")
+      .max(200000, "El peso maximo es de 200000 gr")
       .typeError("El peso neto deber ser numerico")
       .positive("El peso neto debe ser positivo")
-      //  .string()
-      // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
 
     grossWeight: yup
       .number("El peso bruto es numerico")
+      .max(200000, "El peso maximo es de 200000 gr")
+
       .typeError("El peso bruto deber ser numerico")
       .positive("El peso bruto debe ser positivo")
       // .string()
@@ -150,15 +159,19 @@ export function NewProduct() {
     //   .string("Ingrese la descripción")
     //   // .min(8, 'Password should be of minimum 8 characters length')
     //   .required("La descripción es requerida"),
-    keyWords: yup.string("Ingrese la descripción."),
+    keyWords: yup.string("Ingrese la descripción.")
+    .max(200, "El maximo de caracteres es 200")    ,
 
     productDimensions: yup
       .string("Ingrese la descripcións")
+      .max(200, "El maximo de caracteres es 200")
       .required("La dimensión es requerida"),
     packageDimensions: yup
       .string("Ingrese la descripciónd")
+      .max(200, "El maximo de caracteres es 200")
       .required("La dimensión es requerida"),
-    thumbnail: yup.string("Ingrese la descripciónf"),
+    thumbnail: yup.string("Ingrese la descripciónf")
+    .max(200, "El maximo de caracteres es 200")    ,
   });
 
   const formik = useFormik({
@@ -178,13 +191,37 @@ export function NewProduct() {
       // image: "",
     },
     validationSchema: validationSchema,
+    
     onSubmit: async (values, { resetForm }) => {
-      const newProd = await dispatch(postProduct(values));
-      await setNewProdId(newProd.data.id);
-      await dispatch(getProducts());
-      resetForm({ values: "" });
+
+      Swal.fire({
+        title: `¿Está seguro de crear a ${values.name}?`,
+        // text: "Esta acción no se puede deshacer!",
+        icon: "warning",
+        background: "#DFDCD3",
+        showCancelButton: true,
+        confirmButtonColor: "#B6893E",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, crear!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+
+
+          const newProd = await dispatch(postProduct(values));
+          await setNewProdId(newProd.data.id);
+          await dispatch(getProducts());
+          resetForm({ values: "" });
+
+    
+      } })
+
     },
   });
+
+
+
+
+
 
   const handleChangeSubCat = (e) => {
     e.preventDefault();
@@ -260,7 +297,14 @@ export function NewProduct() {
 
   return (
     <>
+
+
+    
       <Paper sx={{ width: "100%" }}>
+          {  newProduct &&
+
+<Typography sx={{   backgroundColor:"rgba(182, 137, 62, 0.7)", display:"inline-block", borderRadius:"5px", padding:"3px 6px" , fontWeight:"400"}} variant="h6" color="ambar5"> Nuevo Producto: {newProduct.name} </Typography>
+}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -276,6 +320,10 @@ export function NewProduct() {
             <Tab label="Especificaciones" {...a11yProps(4)} />
             <Tab label="Imagen" {...a11yProps(5)} />
           </Tabs>
+          
+
+
+
         </Box>
         <TabPanel value={value} index={0}>
           <Box
@@ -489,6 +537,9 @@ export function NewProduct() {
           helperText={formik.touched.image && formik.errors.image}
         /> */}
             <Box sx={{ display: "flex", fexDirection:"row", justifyContent:"space-between", marginLeft:"3%", marginRight:"3%" }} >
+
+       
+
 
             <Typography variant="h6" color="ambar5"> (*) elementos obligatorios</Typography>
 
