@@ -83,10 +83,25 @@ await dispatch(getProducts())
   }
   return (
     <Box>
+<Typography sx={{ m: "5px" }} variant="h5">
+        Selecciona las imagenes para tu producto
+      </Typography>
+
+
+
       <Box sx={{ display:"", alignItems:"center", justifyContent:"center"}}>
-      <form onSubmit={ e=> handleSubmit(e)}>
+      <form   style={{ display: "flex", flexDirection: "column", gap: "10px" }} onSubmit={ e=> handleSubmit(e)}>
         <div>
           <input
+          style={{
+            border: "1px solid #ccc",
+            display: "inline-block",
+            padding: "6px 12px",
+            cursor: "pointer",
+            textShadow: "1px 1px #fff",
+            fontWeight: "700",
+            fontSize: "16px",
+          }}
             onChange={(e) => handleImage(e)}
             name="image"
            // accept="image/*"
@@ -103,12 +118,12 @@ await dispatch(getProducts())
       </form>
       </Box>
       <Box>
-        { newProduct.images &&
+        { newProduct?.images &&
           <ImageList sx={{ width: 400 }}>
             <ImageListItem key="Subheader" cols={2}>
               <ListSubheader component="div">{newProduct?.name}</ListSubheader>
             </ImageListItem>
-            {newProduct.images.map((i) => (
+            {newProduct?.images.map((i) => (
               <ImageListItem key={i.img}>
                 <img
                   src={i.urlFile}

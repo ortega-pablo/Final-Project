@@ -124,7 +124,7 @@ export function UseFormControl() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
 
       const newProd = await dispatch(postProduct(values));
       await setNewProdId(newProd.data.id);

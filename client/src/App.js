@@ -104,7 +104,6 @@ function App() {
             <Route path="/cart" element={<CartView/>}/>
               
             <Route path="/userProfile" element={<UserPanel/>}/>
-            {/* <Route path="/userProfile" element={<Perfil/>}/>  */}
             <Route path="/myData" element={<UserPanel/>}/>
             <Route path="/updateUser" element={<UserUploadData/>}/>
             <Route path="/updateUserG" element={<UserUpdateDataG/>}/>

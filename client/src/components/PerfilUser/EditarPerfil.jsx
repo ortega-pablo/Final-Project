@@ -14,12 +14,14 @@ import { Box } from "@mui/system";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import { editUser, editUserForUser } from "../../redux/actions";
 
 export const EditarPerfil = ({ user, idToken, render, setRender }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const validationSchema = yup.object({
     userName: yup
       .string("Ingrese el nombre de la nueva categoria")
@@ -95,7 +97,8 @@ export const EditarPerfil = ({ user, idToken, render, setRender }) => {
          if(newData !== undefined){
            setRender(values)
            Swal.fire("Modificado!");
-         
+           navigate(`/myData`)
+
         }else {
           Swal.fire("La contraseña es incorrecta!")
         }

@@ -38,6 +38,8 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import Swal from "sweetalert2";
+
 
 ////////////////////////////////////
 function TabPanel(props) {
@@ -128,7 +130,7 @@ export function NewProduct() {
       .required("La descripción es requerida"),
     description: yup
       .string("Ingrese la descripción")
-      .max(200, "El maximo de caracteres es 200")
+      .max(1000, "El maximo de caracteres es 1000")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     warranty: yup
@@ -189,13 +191,37 @@ export function NewProduct() {
       // image: "",
     },
     validationSchema: validationSchema,
+    
     onSubmit: async (values, { resetForm }) => {
-      const newProd = await dispatch(postProduct(values));
-      await setNewProdId(newProd.data.id);
-      await dispatch(getProducts());
-      resetForm({ values: "" });
+
+      Swal.fire({
+        title: `¿Está seguro de crear a ${values.name}?`,
+        // text: "Esta acción no se puede deshacer!",
+        icon: "warning",
+        background: "#DFDCD3",
+        showCancelButton: true,
+        confirmButtonColor: "#B6893E",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, crear!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+
+
+          const newProd = await dispatch(postProduct(values));
+          await setNewProdId(newProd.data.id);
+          await dispatch(getProducts());
+          resetForm({ values: "" });
+
+    
+      } })
+
     },
   });
+
+
+
+
+
 
   const handleChangeSubCat = (e) => {
     e.preventDefault();
@@ -271,7 +297,14 @@ export function NewProduct() {
 
   return (
     <>
+
+
+    
       <Paper sx={{ width: "100%" }}>
+          {  newProduct &&
+
+<Typography sx={{   backgroundColor:"rgba(182, 137, 62, 0.7)", display:"inline-block", borderRadius:"5px", padding:"3px 6px" , fontWeight:"400"}} variant="h6" color="ambar5"> Nuevo Producto: {newProduct.name} </Typography>
+}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -287,6 +320,10 @@ export function NewProduct() {
             <Tab label="Especificaciones" {...a11yProps(4)} />
             <Tab label="Imagen" {...a11yProps(5)} />
           </Tabs>
+          
+
+
+
         </Box>
         <TabPanel value={value} index={0}>
           <Box
@@ -500,6 +537,9 @@ export function NewProduct() {
           helperText={formik.touched.image && formik.errors.image}
         /> */}
             <Box sx={{ display: "flex", fexDirection:"row", justifyContent:"space-between", marginLeft:"3%", marginRight:"3%" }} >
+
+       
+
 
             <Typography variant="h6" color="ambar5"> (*) elementos obligatorios</Typography>
 
