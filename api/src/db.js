@@ -92,6 +92,7 @@ const {
   Image,
   Review,
   Quantity,
+  OrderProducts,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -107,8 +108,9 @@ Review.belongsTo(User);
 Product.belongsToMany(Specification, { through: ProductSpecification });
 Specification.belongsToMany(Product, { through: ProductSpecification });
 
-Product.belongsToMany(Order, { through: "orderItems" });
-Order.belongsToMany(Product, { through: "orderItems" });
+OrderProducts.belongsToMany(Order, { through: "orderItems" });
+Order.belongsToMany(OrderProducts, { through: "orderItems" });
+
 
 Product.belongsToMany(Image, { through: "productImage" });
 Image.belongsToMany(Product, { through: "productImage" });
