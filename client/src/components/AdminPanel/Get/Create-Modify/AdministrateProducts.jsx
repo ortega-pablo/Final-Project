@@ -22,6 +22,8 @@ export const AdministrateProduct = () => {
   const allProducts = useSelector((state) => state.products);
   const [updating, setUpdating] = useState(false);
 
+
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -38,7 +40,7 @@ export const AdministrateProduct = () => {
   //------------esditando producto
   async function handleEditProduct(e) {
     e.preventDefault();
-
+    window.scrollTo(0, 0)
     await setIdUpdate(e.target.value);
     await setUpdating(true);
   }
@@ -101,9 +103,8 @@ export const AdministrateProduct = () => {
                   { !updating ? 
                   (
                     <Button
-                    
-                      // variant="contained"
-                      // color="ambar4"
+                   
+                     
                       size="small"
                       value={product.id}
                       onClick={(e) => handleEditProduct(e)}

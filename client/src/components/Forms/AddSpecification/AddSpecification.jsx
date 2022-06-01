@@ -54,12 +54,13 @@ export const AddSpecification = () => {
   });
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", m:3 }}>
+    <Box sx={{ display: "flex", alignItems: "center", mt:2, mb:2 }}>
       <InputLabel id="demo-simple-select-standard-label">
-        Agregar especicación:
+        Crear nueva especicación:
       </InputLabel>
 
       <Box
+      
         component="form"
         noValidate
         autoComplete="off"
@@ -78,8 +79,8 @@ export const AddSpecification = () => {
           sx={{ml:3, mr:3}}
         />
 
-        <Button type="submit"variant="contained" color="ambar4" >
-          Agregar nueva Especificación
+        <Button sx={{mt:1}}  type="submit"variant="contained" color="ambar4" >
+          Crear
         </Button>
       </Box>
     </Box>

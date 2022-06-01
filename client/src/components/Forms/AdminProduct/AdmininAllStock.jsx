@@ -36,7 +36,7 @@ export const AdmininAllStock = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       Swal.fire({
         background: '#DFDCD3',
         icon: 'success',

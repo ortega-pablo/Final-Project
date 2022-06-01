@@ -32,7 +32,7 @@ export const AddDiscountToProduct = ({newProdId, newProduct}) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
 
       //   await dispatch(postAddQuantity(newProdId, values));
       //   await dispatch(getProducts())

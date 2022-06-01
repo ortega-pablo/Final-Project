@@ -5,7 +5,7 @@ export const UpdateSpecification = () => {
   return (
 
     <>
-    <div>UpdateSpecification</div>
+    
    
 
     </>

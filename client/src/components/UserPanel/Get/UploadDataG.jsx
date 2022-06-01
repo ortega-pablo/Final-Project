@@ -35,6 +35,8 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
     const validationSchema = yup.object({
       userName: yup
         .string("Ingrese el nombre de la nueva categoria")
+        .max(30, "El maximo de caracteres es 30")
+
   
         // .notOneOf(
         //   NameRepetido.map((name) => name),
@@ -44,6 +46,8 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
   
       firstName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .notOneOf(
         //   skuRepetido.map((sku) => sku),
         //   "Ya existe un producto con éste codigo sku"
@@ -51,10 +55,14 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
         .required("La descripción es requerida"),
       lastName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         .required("La descripción es requerida"),
   
       phone: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .min(8, 'Password should be of minimum 8 characters length')
         .required("La descripción es requerida"),
         // currentPassword: yup

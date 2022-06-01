@@ -33,6 +33,8 @@ export const UploadData = () => {
     const validationSchema = yup.object({
       userName: yup
         .string("Ingrese el nombre de la nueva categoria")
+        .max(30, "El maximo de caracteres es 30")
+
   
         // .notOneOf(
         //   NameRepetido.map((name) => name),
@@ -42,6 +44,8 @@ export const UploadData = () => {
   
       firstName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .notOneOf(
         //   skuRepetido.map((sku) => sku),
         //   "Ya existe un producto con éste codigo sku"
@@ -49,14 +53,20 @@ export const UploadData = () => {
         .required("La descripción es requerida"),
       lastName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         .required("La descripción es requerida"),
   
       phone: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .min(8, 'Password should be of minimum 8 characters length')
         .required("La descripción es requerida"),
         currentPassword: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         
         .required("La actual contraseña es requerida para hacer cambios en tu perfil"),
       // oldPassword: yup
