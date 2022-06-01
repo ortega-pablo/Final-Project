@@ -61,7 +61,7 @@ export function UseFormControl() {
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
-
+      .max(20, "La longintud maxima es de 20 caracteres")
       .notOneOf(
         NameRepetido.map((name) => name),
         "Ya existe un producto con éste nombre"
@@ -70,6 +70,7 @@ export function UseFormControl() {
 
     sku: yup
       .string("Ingrese la descripción")
+      .max(20, "La longintud maxima es de 20 caracteres")
       .notOneOf(
         skuRepetido.map((sku) => sku),
         "Ya existe un producto con éste codigo sku"
@@ -77,23 +78,28 @@ export function UseFormControl() {
       .required("La descripción es requerida"),
     brand: yup
       .string("Ingrese la descripción")
+      .max(20, "La longintud maxima es de 20 caracteres")
       .required("La descripción es requerida"),
     price: yup
       .number("El precio es numerico.")
+      .max(10, "La longintud maxima es de 10 caracteres")
       .typeError("El precio deber ser numerico")
       .positive("El precio debe ser positivo")
       // .string()
       .required("La descripción es requerida"),
     description: yup
       .string("Ingrese la descripción")
+      .max(50, "La longintud maxima es de 20 caracteres")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     warranty: yup
       .string("Ingrese la descripción")
+      .max(30, "La longintud maxima es de 30 caracteres")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
     netWeight: yup
       .number("El peso neto debe ser numerico")
+      .max(10, "La longintud maxima es de 10 caracteres")
       .typeError("El peso neto deber ser numerico")
       .positive("El peso neto debe ser positivo")
       //  .string()
@@ -102,6 +108,7 @@ export function UseFormControl() {
 
     grossWeight: yup
       .number("El peso bruto es numerico")
+      .max(10, "La longintud maxima es de 10 caracteres")
       .typeError("El peso bruto deber ser numerico")
       .positive("El peso bruto debe ser positivo")
       // .string()
@@ -112,16 +119,21 @@ export function UseFormControl() {
     //   // .min(8, 'Password should be of minimum 8 characters length')
     //   .required("La descripción es requerida"),
     keyWords: yup
-    .string("Ingrese la descripción."),
+    .string("Ingrese la descripción.")
+    .max(10, "La longintud maxima es de 10 caracteres"),
     
     productDimensions: yup
     .string("Ingrese la descripcións")
+    .max(20, "La longintud maxima es de 20 caracteres")
     .required("La dimensión es requerida"),
     packageDimensions : yup
     .string("Ingrese la descripciónd")
+    .max(20, "La longintud maxima es de 20 caracteres")
+
     .required("La dimensión es requerida"),
     thumbnail :yup
-    .string("Ingrese la descripciónf"),
+    .string("Ingrese la descripciónf")
+    .max(20, "La longintud maxima es de 20 caracteres"),
 
 
 

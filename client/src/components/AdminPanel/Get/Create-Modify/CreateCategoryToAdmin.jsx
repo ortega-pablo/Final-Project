@@ -36,6 +36,7 @@ const CreateCategoryToAdmin = () => {
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
+      .max(200, "El maximo de caracteres es 200")  
       .notOneOf( allCategories.map( c=> c.name)  ,"La categoría ya existe")
       .required(
         "Por favor ingrese el nombre"
