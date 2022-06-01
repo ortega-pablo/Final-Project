@@ -29,6 +29,7 @@ export const AddSubCategoty = ({ allCategories }) => {
   const validationSchema = yup.object({
     name: yup
       .string("Ingrese el nombre de la nueva categoria")
+      .max(50, "La cantidad maxima de caracteres para el nombre de una sub categoría es 50")
       .required("El nombre es requerido")
       .notOneOf(
        comprobacionName.map((p) => p)  ,
@@ -38,6 +39,8 @@ export const AddSubCategoty = ({ allCategories }) => {
 
     description: yup
       .string("Ingrese la descripción")
+      .max(100, "La cantidad maxima de caracteres es 100")
+
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
      

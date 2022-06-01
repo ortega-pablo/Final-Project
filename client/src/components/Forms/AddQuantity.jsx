@@ -19,6 +19,7 @@ const products = useSelector((state) => state.products);
 const validationSchema = yup.object({
     quantity: yup
     .number("El stock es numerico").typeError("El stock deber ser numerico")
+    .max(100000, "100000 es el valor maximo")
     .required("El stock es requerido si es que lo deseas agregar.Luego tambien lo podrás hacer desde el panel de administrador").positive("El stock debe ser positivo"),
     
     
@@ -33,7 +34,6 @@ const validationSchema = yup.object({
     },
     validationSchema: validationSchema,
     onSubmit: async (values, {resetForm}) => {
-      alert(JSON.stringify(values, null, 2));
     
       // await dispatch(postAddQuantity(newProdId, values));// DEBEMOS USAR LA PUT
       await dispatch(putQuantity(newProdId, values));
