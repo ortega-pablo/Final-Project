@@ -515,7 +515,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_ONE_USER:
-      console.log("reducer", state.getDetailOneUser);
       return {
         ...state,
         getDetailOneUser: action.payload,
