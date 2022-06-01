@@ -160,8 +160,7 @@ router.post("/addSpecification", async (req, res, next) => {
       },
     });
  
-    console.log(product)
-    console.log(specification)
+
     
     product.addSpecification(specification , {through:{value:value}})
 
