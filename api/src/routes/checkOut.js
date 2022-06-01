@@ -81,7 +81,7 @@ router.post('/', async (req, res, next) => {
             include: {
                 model: Product,
                 through: {
-                    attributes: []
+                    attributes: ["total"]
                 },
                 include: {
                     model: Image,
@@ -92,6 +92,8 @@ router.post('/', async (req, res, next) => {
                 }
             }
         });
+
+        console.log("Este es el carrito", findCart)
 
 
 
@@ -140,7 +142,7 @@ router.post('/', async (req, res, next) => {
 
         let info = await transporter.sendMail({
           from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
-          to: [findUser.email, EmailAddress], // list of receivers
+          to: [findUser.email, newOrder.EmailAddress], // list of receivers
           subject: "Confirmacion de Pedido", // Subject line
           text: "", // plain text body
           html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -376,7 +378,7 @@ router.post('/', async (req, res, next) => {
           <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Dirección de envio:</h4></td>
           </tr>
           <tr style="border-collapse:collapse">
-          <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${Address1}, ${City}, ${PostCode}, ${Country}, ${Mobile}</p></td>
+          <td align="left" style="padding:0;Margin:0;padding-bottom:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">${newOrder.Address1}, ${newOrder.City}, ${newOrder.PostCode}, ${newOrder.Country}, ${newOrder.Mobile}</p></td>
           </tr>
           </table></td>
           </tr>
@@ -445,35 +447,14 @@ router.post('/', async (req, res, next) => {
           </html >`
         });
 
-        // await findCart.setProducts([]);
-        // await findCart.update({
-        //   amount: 0
-        // });
+        await findCart.setProducts([]);
+        await findCart.update({
+          amount: 0
+        });
 
         return res.send(newOrder)
-        // return res.send("Order created successfully!")
-
-
-
-        // console.log(payment)
-        // try {
-        //     await axios.post(`/orders?userId=${userId}&addressId=${addressId}`, payload) 
-
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
-        // res.send({message: "success"});
 
     } catch (error) {
-        // try {
-        //     await axios.post(`/orders?userId=${userId}&addressId=${addressId}`)
-
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
-        // res.send({message: error.raw.message}); 
         res.send(error)
     }
 })

@@ -37,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
 export const Home = () => {
   const dispatch = useDispatch();
 
-  const products = useSelector((state) => state.products);
+  let products = useSelector((state) => state.products);
+  console.log(products)
+  products=products.filter(p=>p.productInventory.quantity)
 
   const categories = useSelector((state) => state.categories);
 
