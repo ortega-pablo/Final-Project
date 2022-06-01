@@ -22,6 +22,7 @@ import { Box } from "@mui/system";
 const validationSchemaForAnswer = yup.object({
     content: yup
     .string('Escribe tu respuesta...')
+    .max(500, "El maximo de caracteres es 500")
     .required('No puedes mandar el campo vacio.')
   })
 

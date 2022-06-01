@@ -77,6 +77,10 @@ const productInfo = async function (id) {
               },
             ],
           },
+          {
+            model: User,
+            attributes: ["id", "userName"],
+          }
         ]
       },
       {

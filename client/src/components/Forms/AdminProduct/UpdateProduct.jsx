@@ -86,8 +86,7 @@ console.log(productToUpdate)
   const NameRepetido = nameRepetido.map((p) => p.name);
   
   const SkuRepetido = nameRepetido.map((p) => p.sku);
-  console.log(SkuRepetido)
-  console.log(idUpdate)
+  
 
   const validationSchema = yup.object({
     
@@ -117,7 +116,7 @@ console.log(productToUpdate)
       .required("La descripción es requerida"),
     description: yup
       .string("Ingrese la descripción")
-      .max(200, "El maximo de caracteres es 200")
+      .max(1000, "El maximo de caracteres es 1000")
 
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La descripción es requerida"),
@@ -246,6 +245,7 @@ console.log(productToUpdate)
         <hr />
         <h3>Paso 1: </h3>
       <Box
+        sx={{display:"grid" , gridTemplateColumns:"1fr 1fr", gap:"10px" }}
         component="form"
         noValidate
         autoComplete="off"
@@ -416,9 +416,9 @@ console.log(productToUpdate)
         /> */}
 
         <Button type="submit">Editar</Button>
+        <h4>(*) elementos obligatorios</h4>
       </Box>
         </TabPanel>
-        <h4>(*) elementos obligatorios</h4>
 
         <TabPanel value={value} index={1}>
      <h3>Paso 5: Modificar descuento</h3>
@@ -448,7 +448,7 @@ console.log(productToUpdate)
 
       <AddSubCategoty allCategories={allCategories} />
 
-      <hr />
+    
         </TabPanel>
 
         <TabPanel value={value} index={4}>
@@ -458,9 +458,9 @@ console.log(productToUpdate)
         idUpdate={idUpdate}/>
        
 
-      <UpdateSpecification
-       newProduct={productToUpdate}/>
+     <Box sx={{}}>
 
+     
 
       <InputLabel id="demo-simple-select-standard-label">
         Especificación
@@ -471,6 +471,7 @@ console.log(productToUpdate)
         value={specifications}
         onChange={handleChangeSpecification}
         label="Age"
+        sx={{ml:0 , mt:2, mb:2}}
       >
         <MenuItem value="">
           <em>None</em>
@@ -484,8 +485,8 @@ console.log(productToUpdate)
        newProdId={idUpdate}
        specifications={specifications}
        />
-     
-<hr />
+     </Box>
+
 
       {/* <UpdateSpecif
          idUpdate={idUpdate}
@@ -494,7 +495,7 @@ console.log(productToUpdate)
           newProdId={newProdId}
           specifications={specifications}/> */}
 
-          <hr />
+       
 
       <AddSpecification/>
            

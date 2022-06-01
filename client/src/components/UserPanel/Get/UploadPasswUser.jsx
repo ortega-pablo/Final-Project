@@ -30,14 +30,17 @@ export const UploadPasswUser = () => {
     newPassword: yup
       .string("Ingrese la descripción")
       .min(8, "Password should be of minimum 8 characters length")
+      .max(50, "El maximo de caracteres es 50")
       .required("La nueva contraseña es requerida"),
     oldPassword: yup
       .string("Ingrese la descripción")
       // .min(8, 'Password should be of minimum 8 characters length')
+      .max(50, "El maximo de caracteres es 50")
       .required("La actual contraseña es requerida para cambiar la misma"),
     passwordConfirmation: yup
       .string()
       .oneOf([yup.ref("newPassword"), null], "Passwords must match")
+      .max(50, "El maximo de caracteres es 50")
       .required("Confirma la nueva contraseña"),
   });
 
