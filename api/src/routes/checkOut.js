@@ -50,7 +50,6 @@ router.post('/', async (req, res, next) => {
         EmailAddress,
         PostCode,
         Mobile,
-        orderProducts,
     } = req.body;
 
     let dollarUSLocale = Intl.NumberFormat('en-US');
@@ -92,7 +91,7 @@ router.post('/', async (req, res, next) => {
             } 
         });
 
-        console.log("Este es el carrito", findCart.products[0].Quantity);
+        console.log("Este es el carrito", findCart.products);
 
 
 
@@ -111,15 +110,15 @@ router.post('/', async (req, res, next) => {
 
         newOrder.setUser(userId);
 
-        for (let i = 0; i < orderProducts.length; i++) {
+        for (let i = 0; i < findCart.products.length; i++) {
 
             let newOrderProduct = await OrderProducts.create({
                 
-                productName: orderProducts[i].productName,
-                price: orderProducts[i].price,
-                quantity: orderProducts[i].quantity,
-                productId: orderProducts[i].productId,
-                productImage: orderProducts[i].productImage,
+                productName: findCart.products[i].dataValues.name,
+                price: findCart.products[i].dataValues.price,
+                quantity: findCart.products[i].dataValues.Quantity.total,
+                productId: findCart.products[i].dataValues.id,
+                productImage: findCart.products[i].dataValues.images[0].urlFile,
 
             })
             console.log("este es el newOrderProduct", newOrderProduct)

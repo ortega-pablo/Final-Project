@@ -83,7 +83,6 @@ import {
   POST_BANNER,
   GET_BANNER,
   DELETE_BANNER,
-  PREPARE_ORDER,
 } from "../actions";
 
 const initialState = {
@@ -113,7 +112,6 @@ const initialState = {
   allUsers: [],
   allImagesBanner: [],
   filteredUsers: [],
-  prepareOrder: [],
 };
 
 // funcion para que el carrito se guarde siempre
@@ -753,12 +751,6 @@ const rootReducer = (state = initialState, action) => {
     };
   }
 
-  case PREPARE_ORDER: {
-    return {
-      ...state, 
-      prepareOrder: action.payload,
-    }
-  }
 
     default:
       return state;

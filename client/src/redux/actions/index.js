@@ -93,7 +93,6 @@ export const GET_BANNER ="GET_BANNER";
 export const POST_BANNER ="POST_BANNER";
 
 export const DELETE_BANNER ="DELETE_BANNER";
-export const PREPARE_ORDER = "PREPARE_ORDER";
 
 
 
@@ -1303,11 +1302,3 @@ export function deleteImageToBanner(id) {
   };
 }
 
-export function preparateOrder(payload) {
-  return async function(dispatch){
-    return dispatch({
-      type: PREPARE_ORDER,
-      payload
-    })
-  }
-}
