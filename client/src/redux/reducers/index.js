@@ -82,7 +82,7 @@ import {
   UPDATE_PASSWORD_FOR_USER,
   POST_BANNER,
   GET_BANNER,
-  DELETE_BANNER
+  DELETE_BANNER,
 } from "../actions";
 
 const initialState = {

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address, OrderProducts} = require("../db");
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
 const axios = require("axios")
@@ -49,7 +49,7 @@ router.post('/', async (req, res, next) => {
         City,
         EmailAddress,
         PostCode,
-        Mobile
+        Mobile,
     } = req.body;
 
     let dollarUSLocale = Intl.NumberFormat('en-US');
@@ -72,8 +72,6 @@ router.post('/', async (req, res, next) => {
             }
         });
 
-
-
         const findCart = await ShoppingCart.findOne({
             where: {
                 userId
@@ -81,7 +79,7 @@ router.post('/', async (req, res, next) => {
             include: {
                 model: Product,
                 through: {
-                    attributes: []
+                    attributes: ["total"]
                 },
                 include: {
                     model: Image,
@@ -90,13 +88,16 @@ router.post('/', async (req, res, next) => {
                         attributes: []
                     }
                 }
-            }
+            } 
         });
+
+        console.log("Este es el carrito", findCart.products);
+
 
 
         const newOrder = await Order.create({
-            total: findCart.amount,
-            quantity: findCart.amount,
+            total: 10,
+            quantity: 10,
             FirstName,
             LastName,
             Country,
@@ -107,13 +108,23 @@ router.post('/', async (req, res, next) => {
             Mobile
         });
 
-
-
-        // const oneAddress = findUser.addresses[0]
-        // oneAddress.addOrder(newOrder);
-
         newOrder.setUser(userId);
-        newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
+
+        for (let i = 0; i < findCart.products.length; i++) {
+
+            let newOrderProduct = await OrderProducts.create({
+                
+                productName: findCart.products[i].dataValues.name,
+                price: findCart.products[i].dataValues.price,
+                quantity: findCart.products[i].dataValues.Quantity.total,
+                productId: findCart.products[i].dataValues.id,
+                productImage: findCart.products[i].dataValues.images[0].urlFile,
+
+            })
+            console.log("este es el newOrderProduct", newOrderProduct)
+            newOrder.addOrderProduct(newOrderProduct)
+
+        }
 
 
         var outputHTML = "";
@@ -160,7 +171,7 @@ router.post('/', async (req, res, next) => {
           </style>
           <![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]--><!--[if gte mso 9]>
           <xml>
-          <o:OfficeDocumentSettings>
+          <o:OfficeDocumentSettings> 
           <o:AllowPNG></o:AllowPNG>
           <o:PixelsPerInch>96</o:PixelsPerInch>
           </o:OfficeDocumentSettings>
@@ -274,7 +285,7 @@ router.post('/', async (req, res, next) => {
           <td align="center" style="Margin:0;padding-top:25px;padding-bottom:25px;padding-left:35px;padding-right:35px;font-size:0px"><img src="https://vitddo.stripocdn.email/content/guids/CABINET_4652c0ad302f6bcc2eca28be33a41235/images/eo_circle_green_checkmarksvg.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="120"></td>
           </tr>
           <tr style="border-collapse:collapse">
-          <td align="center" style="padding:0;Margin:0;padding-bottom:10px"><h2 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#333333">Hola ${findUser.firstName}, gracias&nbsp;por tu orden!</h2></td>
+          <td align="center" style="padding:0;Margin:0;padding-bottom:10px"><h2 style="Margin:0;line-height:34px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:28px;font-style:normal;font-weight:bold;color:#333333">Hola ${FirstName}, gracias&nbsp;por tu orden!</h2></td>
           </tr>
           </table></td>
           </tr>
@@ -355,7 +366,7 @@ router.post('/', async (req, res, next) => {
           <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation">
           <tr style="border-collapse:collapse">
           <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">TOTAL</h4></td>
-          <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(newOrder.total)}</h4></td>
+          <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">${dollarUSLocale.format(newOrder.total / 100)}</h4></td>
           </tr>
           </table></td>
           </tr>

@@ -128,7 +128,7 @@ router.put("/removeProduct", async (req, res, next) => {
 
             if(findCart && findProduct){
 
-                console.log(findCart.products.length)
+     
                 findCart.products.length === 0 ? res.send("No products in cart") :
 
                 await findProduct.removeShoppingCart(findCart) 
@@ -171,7 +171,7 @@ router.put("/removeProduct", async (req, res, next) => {
 
             if(findCart && findProduct){
 
-                console.log(findCart.products.length)
+   
 
                 findCart.products.length === 0  ? res.send("No products in cart") :
 
@@ -208,7 +208,7 @@ router.get("/", async (req, res, next) => {
                 
             })
 
-            console.log(findUser)
+
 
             const cartOfUser = await ShoppingCart.findOne({
                 where: {
@@ -223,6 +223,9 @@ router.get("/", async (req, res, next) => {
                         {
                             model: ProductInventory,
                             attributes: ["quantity"]
+                        },
+                        {
+                            model: Image,
                         }
                     ]
                     // {

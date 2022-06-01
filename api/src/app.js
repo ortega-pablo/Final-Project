@@ -23,7 +23,7 @@ server.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization"
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  next();
+  next(); 
 });
 
 server.use("/", routes);
