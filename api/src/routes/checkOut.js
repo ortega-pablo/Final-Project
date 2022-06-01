@@ -72,6 +72,8 @@ router.post('/', async (req, res, next) => {
             }
         });
 
+        console.log(findUser)
+
 
 
         const findCart = await ShoppingCart.findOne({
@@ -90,10 +92,10 @@ router.post('/', async (req, res, next) => {
                         attributes: []
                     }
                 }
-            }
+            } 
         });
 
-        console.log("Este es el carrito", findCart)
+        console.log("Este es el carrito", findCart.products[0].Quantity);
 
 
 
@@ -119,6 +121,7 @@ router.post('/', async (req, res, next) => {
 
         newOrder.setUser(userId);
         newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
+        newOrder.addShoppingCart(findCart);
 
 
         var outputHTML = "";
@@ -165,7 +168,7 @@ router.post('/', async (req, res, next) => {
           </style>
           <![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]--><!--[if gte mso 9]>
           <xml>
-          <o:OfficeDocumentSettings>
+          <o:OfficeDocumentSettings> 
           <o:AllowPNG></o:AllowPNG>
           <o:PixelsPerInch>96</o:PixelsPerInch>
           </o:OfficeDocumentSettings>
@@ -447,10 +450,10 @@ router.post('/', async (req, res, next) => {
           </html >`
         });
 
-        await findCart.setProducts([]);
-        await findCart.update({
-          amount: 0
-        });
+        // await findCart.setProducts([]);
+        // await findCart.update({
+        //   amount: 0
+        // });
 
         return res.send(newOrder)
 

@@ -114,10 +114,10 @@ Product.belongsToMany(Image, { through: "productImage" });
 Image.belongsToMany(Product, { through: "productImage" });
 
 Order.hasMany(Ask);
-Ask.belongsTo(Order);
+Ask.belongsTo(Order); 
 
 Product.hasMany(Ask);
-Ask.belongsTo(Product);
+Ask.belongsTo(Product); 
 
 Ask.hasOne(Answer);
 Answer.belongsTo(Ask);
@@ -161,8 +161,13 @@ Address.belongsTo(User);
 User.belongsToMany(Payment, { through: "user-payment" });
 Payment.belongsToMany(User, { through: "user-payment" });
 
+ShoppingCart.hasMany(Order);
+Order.belongsTo(ShoppingCart);
+
 Order.belongsTo(Address, { as: "order_address", foreignKey: "orderId" });
 Address.hasMany(Order, { foreignKey: "orderId" });
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
