@@ -25,6 +25,8 @@ export const AddSpecification = () => {
     name: yup
       .string("Ingrese el nombre de la nueva especificacion")
       .required("El nombre es requerido")
+      .max(100, "La cantidad maxima de caracteres es 100")
+
       .notOneOf(
         allSpecif.map((p) => p),
         "Ya existe una especificación con ese nombre"

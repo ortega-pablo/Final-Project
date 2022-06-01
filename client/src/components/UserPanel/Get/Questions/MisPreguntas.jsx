@@ -85,38 +85,33 @@ export const MisPreguntas = () => {
               // let elapsed = fechaEnd.getTime() - fechaStart.getTime()
               // // console.log(elapsed)
               // console.log(Date.now())
-{
-  function difference(date1, date2) {  
-    const date1utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
-    const date2utc = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
-     const day = 1000*60*60;
-     console.log(date2utc)
-    return(date2utc - date1utc)/day
-
-
-  }
-  
-  var date1 = new Date(),
-        date2 = new Date(preg.createdAt),
-        time_difference = difference(date1,date2)
-        console.log(time_difference)
-        console.log(date1)
-        console.log(date2)
-
-}
-
-
-
-
+           
+                let day1 = new Date(preg.createdAt);
+                let day2 = new Date();
+                console.log(day1)
+                console.log(day2)
+                let difference = day2.getTime()-day1.getTime();
+              console.log(difference)
+   
 
               return (
                 <>
                   <Typography component="h3" variant="h5">
                     Pregunta: {preg?.content}
                   </Typography>
-                  <Typography component="h4" variant="h6">
-                    Hace {time_difference * -1} dias
-                  </Typography>
+
+                      {difference < 3.54e+6 ?    
+                   <Typography component="h6" variant="h6">
+                    Hace {  Math.round(difference / 60000)   } minutos
+                  </Typography> :   (  difference >= 3.54e+6 && difference < 8.64e+7  )   ?
+                   <Typography component="h6" variant="h6">
+                    Hace {  Math.round(difference / 3.6e+6)   } horas
+                  </Typography> :  
+                   <Typography component="h6" variant="h6">
+                   Hace {  Math.round(difference / 8.64e+7)   } dias
+                 </Typography>
+                    }
+
                   <ListItem>
                     <ListItemAvatar>
                       <SubdirectoryArrowRightIcon />

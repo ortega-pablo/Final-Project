@@ -22,7 +22,7 @@ export const AdminDiscount = () => {
   const [idUpdate, setIdUdate] = useState("");
   useEffect(()=>{
     dispatch(getAllDiscount())
-  },[dispatch])
+  },[state])
 
   async function changeState(e) {
     // e.preventDefault()
@@ -47,7 +47,9 @@ export const AdminDiscount = () => {
    async function handleDeleteDiscount(e){
      e.preventDefault()
        await dispatch(deleteDiscount(e.target.value))
-       await dispatch(getAllDiscount())
+      //  await dispatch(getAllDiscount())
+      window.location.reload()
+       setState(e.target.value)
    }
 
   return (

@@ -18,11 +18,14 @@ const [creating, setCreating] = useState(false)
      
       .string("Ingrese el nombre de la nueva categoria")
       .notOneOf(allCategories.map( p=> p.name), "Ya existe esa categoría" )
+      .max(50, "La cantidad máxima de caracteres para una categoráa es 50")
       .required("El nombre es requerido"),
      
      
     description: yup
       .string("Ingrese la descripción")
+      .max(100, "La cantidad máxima de caracteres es 100")
+
       .required("La descripción es requerida"),
   });
   

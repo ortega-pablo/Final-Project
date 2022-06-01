@@ -15,6 +15,7 @@ export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
       .required(
         "El stock es requerido si es que lo deseas agregar.Luego tambien lo podrás hacer desde el panel de administrador"
       )
+      .max(100000, "100000 es el valor maximo")
       .positive("El stock debe ser positivo"),
   });
 
