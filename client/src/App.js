@@ -9,7 +9,7 @@ import { Login } from "./components/Login/Login";
 import { CreateAccount } from "./components/CreateAccount/CreateAccount";
 import { ForgotPassword } from "./components/Login/ForgotPassword";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
-
+import ResetPassword from "./components/Login/ResetPassword";
 import AllCategories from "./components/AdminPanel/AllCategories";
 import AllProducts from "./components/AdminPanel/AllProducts";
 import AllDiscounts from "./components/AdminPanel/AllDiscounts";
@@ -69,6 +69,7 @@ function App() {
         <Route path="order/:id" element={<OrderDetails />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login/reset/:TokenE" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createaccount" element={<CreateAccount />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />

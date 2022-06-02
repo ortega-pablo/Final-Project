@@ -1,9 +1,11 @@
 import { Paper, TextField, Typography, Button } from "@mui/material";
 import React from "react";
 import * as yup from "yup";
-
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Footer } from "../Footer/Footer";
+import { postForgotPasswordSendEmail } from "../../redux/actions";
+import Swal from 'sweetalert2';
 
 const validationSchema = yup.object({
   email: yup
@@ -12,14 +14,35 @@ const validationSchema = yup.object({
     .required("Email is required"),
 });
 export const ForgotPassword = () => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: ""
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
+      const result= await dispatch(postForgotPasswordSendEmail(values));
+      if(result !== undefined){
+        Swal.fire({
+          background: '#DFDCD3',
+          icon: 'success',
+          title: 'Revisa la bandeja de entrada de tu correo',
+          showConfirmButton: true,
+          confirmButtonColor: '#B6893E',
+          timer: 1500
+        })
+      }
+      else{
+        Swal.fire({
+          background: '#DFDCD3',
+          confirmButtonColor: '#B6893E',
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ha ocurrido un problema verifique bien sus Datos'
+        })
+      }
+
     },
   });
   return (
@@ -57,6 +80,8 @@ export const ForgotPassword = () => {
         />
         <Button
           type="submit"
+          fullWidth
+          color="ambar3"
           variant="contained"
           sx={{ mt: 3, maxWidth: '20%', alignContent:'center' }}
         > Enviar</Button>

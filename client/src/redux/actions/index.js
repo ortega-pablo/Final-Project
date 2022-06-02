@@ -64,7 +64,7 @@ export const GET_USERS = "GET_USERS";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const GET_CART_FOR_CHILD = "GET_CART_FOR_CHILD";
 export const SET_AMOUNT = "SET_AMOUNT";
-export const CLEAR_CART = "CLEAR_CART"
+export const CLEAR_CART = "CLEAR_CART";
 export const GET_USER_ID_BY_TOKEN = "GET_USER_ID_BY_TOKEN";
 export const GET_ALL_DIRECTIONS = "GET_ALL_DIRECTIONS";
 export const GET_DETAIL_ONE_PRODUCT = "GET_DETAIL_ONE_PRODUCT";
@@ -86,24 +86,20 @@ export const CHANGE_ROLE_USER = "CHANGE_ROLE_USER";
 export const CHANGE_ROLE_ADMIN = "CHANGE_ROLE_ADMIN";
 export const GET_ALL_ASK_ALL_PRODUCTS = "GET_ALL_ASK_ALL_PRODUCTS";
 export const GET_ASKS_ONE_USER_ONE_PRODUCT = "GET_ASKS_ONE_USER_ONE_PRODUCT";
-export const CLEAR_ASKS_ONE_USER_ONE_PRODUCT = "CLEAR_ASKS_ONE_USER_ONE_PRODUCT";
-export const UPDATE_USER_FOR_USER ="UPDATE_USER_FOR_USER";
-export const UPDATE_PASSWORD_FOR_USER ="UPDATE_PASSWORD_FOR_USER";
-export const GET_BANNER ="GET_BANNER";
-export const POST_BANNER ="POST_BANNER";
+export const CLEAR_ASKS_ONE_USER_ONE_PRODUCT =
+  "CLEAR_ASKS_ONE_USER_ONE_PRODUCT";
+export const UPDATE_USER_FOR_USER = "UPDATE_USER_FOR_USER";
+export const UPDATE_PASSWORD_FOR_USER = "UPDATE_PASSWORD_FOR_USER";
+export const GET_BANNER = "GET_BANNER";
+export const POST_BANNER = "POST_BANNER";
 
-export const DELETE_BANNER ="DELETE_BANNER";
+export const DELETE_BANNER = "DELETE_BANNER";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
-
-
-
-
 
 export const getProducts = (name) => {
   return async (dispatch) => {
     let response;
-    if (name === undefined)
-      response = await axios(`/products`);
+    if (name === undefined) response = await axios(`/products`);
     else {
       response = await axios(`/products?name=${name}`);
     }
@@ -155,10 +151,7 @@ export const postNewAnswer = (payload, askId, userId) => {
   return async function (dispatch) {
     try {
       console.log(payload);
-      await axios.post(
-        `/answers?userId=${userId}&askId=${askId}`,
-        payload
-      );
+      await axios.post(`/answers?userId=${userId}&askId=${askId}`, payload);
     } catch (error) {
       console.log(error);
     }
@@ -229,10 +222,7 @@ export const postAddCaterory = (payload) => {
 export const postAddSubCategory = (idC, payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(
-        `/categories?categoryId=${idC}`,
-        payload
-      );
+      let json = await axios.post(`/categories?categoryId=${idC}`, payload);
 
       return json;
     } catch (error) {
@@ -244,10 +234,7 @@ export const postAddSubCategory = (idC, payload) => {
 export const postAddQuantity = (idP, payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(
-        `/inventory?productId=${idP}`,
-        payload
-      );
+      let json = await axios.post(`/inventory?productId=${idP}`, payload);
 
       return json;
     } catch (error) {
@@ -259,10 +246,7 @@ export const postAddQuantity = (idP, payload) => {
 export const postAddNewSpecification = (payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(
-        `/specifications`,
-        payload
-      );
+      let json = await axios.post(`/specifications`, payload);
 
       return json;
     } catch (error) {
@@ -341,10 +325,7 @@ export const filterPerSubCategory = (subCategory) => {
 export const postRegisterUser = (payload) => {
   return async (dispatch) => {
     try {
-      let response = await axios.post(
-        "/users/create",
-        payload
-      );
+      let response = await axios.post("/users/create", payload);
       await axios.post("/sendEmail/welcome", payload);
       return response;
     } catch (error) {
@@ -358,10 +339,7 @@ export const postLoginUser = (payload) => {
   console.log(payload);
   return async (dispatch) => {
     try {
-      let response = await axios.post(
-        "/users/login",
-        payload
-      );
+      let response = await axios.post("/users/login", payload);
       console.log(response);
       return response.data;
     } catch (error) {
@@ -406,10 +384,7 @@ export function deleteProduct(id) {
 export function putProduct(id, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(
-        `/products?productId=${id}`,
-        payload
-      );
+      await axios.put(`/products?productId=${id}`, payload);
 
       return dispatch({
         type: PUT_PRODUCT,
@@ -449,9 +424,7 @@ export function putQuantity(id, payload) {
 export function putCategoryToProduct(idP, idC) {
   return async function (dispatch) {
     try {
-      await axios.put(
-        `/products?productId=${idP}&categoryId=${idC}`
-      );
+      await axios.put(`/products?productId=${idP}&categoryId=${idC}`);
       return dispatch({
         type: PUT_CATEGORY_TO_PRODUCT,
       });
@@ -465,9 +438,7 @@ export function putSubCategoryToProduct(idP, idSc) {
   console.log("desero borrar", idP, idSc);
   return async function (dispatch) {
     try {
-      await axios.put(
-        `/products?productId=${idP}&subCategoryId=${idSc}`
-      );
+      await axios.put(`/products?productId=${idP}&subCategoryId=${idSc}`);
       console.log("quiero eliminar las sub desde redux");
       console.log(idP);
       console.log(idSc);
@@ -512,10 +483,7 @@ export function putCategory(idC, payload) {
 export function putSubCategory(idSc, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(
-        `/categories/subcategories/${idSc}`,
-        payload
-      );
+      await axios.put(`/categories/subcategories/${idSc}`, payload);
 
       return dispatch({
         type: PUT_SUB_CATEGORY,
@@ -528,9 +496,7 @@ export function putSubCategory(idSc, payload) {
 
 export const getSubCategories = () => {
   return async (dispatch) => {
-    let response = await axios(
-      "/categories/subcategories"
-    );
+    let response = await axios("/categories/subcategories");
     return dispatch({
       type: GET_SUB_CATEGORIES,
       payload: response.data,
@@ -541,9 +507,7 @@ export const getSubCategories = () => {
 export function deleteSubCategory(idSc) {
   return async function (dispatch) {
     try {
-      await axios.delete(
-        `/categories/subcategories/${idSc}`
-      );
+      await axios.delete(`/categories/subcategories/${idSc}`);
       console.log("eliminando sub categoria");
 
       return dispatch({
@@ -569,10 +533,7 @@ export const getAllDiscount = () => {
 export function putRemoveOneDiscuntToProduct(idP, idD, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(
-        `/products?productId=${idP}&discountId=${idD}`,
-        payload
-      );
+      await axios.put(`/products?productId=${idP}&discountId=${idD}`, payload);
 
       return dispatch({
         type: DELETE_ONE_DISCOUNT_TO_A_PRODUCT,
@@ -614,10 +575,7 @@ export const verifyToken = (token) => {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      let response = await axios.get(
-        "/users/verifyToken",
-        config
-      );
+      let response = await axios.get("/users/verifyToken", config);
       return dispatch({
         type: VERIFY_TOKEN,
         payload: response.data,
@@ -634,10 +592,7 @@ export const getUserIdByToken = (token) => {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      let response = await axios.get(
-        "/users/userId",
-        config
-      );
+      let response = await axios.get("/users/userId", config);
       return response.data.idUser;
     } catch (error) {
       console.log("id no encontrado");
@@ -698,9 +653,7 @@ export function putRemoveOneSpecificationOneProduct(idP, idS, payload) {
 
 export const getImages = () => {
   return async (dispatch) => {
-    let response = await axios(
-      "/categories/subcategories"
-    );
+    let response = await axios("/categories/subcategories");
     return dispatch({
       type: GET_SUB_CATEGORIES,
       payload: response.data,
@@ -742,9 +695,7 @@ export function deleteSpecification(idS) {
 export function deleteImageToProduct(idP, idI) {
   return async function (dispatch) {
     try {
-      await axios.delete(
-        `/images?productId=${idP}&imageId=${idI}`
-      );
+      await axios.delete(`/images?productId=${idP}&imageId=${idI}`);
 
       return dispatch({
         type: DELETE_IMAGE_TO_PRODUCT,
@@ -780,7 +731,7 @@ export const postNewPaymentMethod = (payload, addressId, userId) => {
         `/checkOut?userId=${userId}&addressId=${addressId}`,
         payload
       );
-      console.log("response despues del post", response)
+      console.log("response despues del post", response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -800,10 +751,7 @@ export const setShippingData = (payload) => {
 export function putNameSubcategoria(idS, payload) {
   return async function (dispatch) {
     try {
-      await axios.put(
-        `/categories/subcategories/${idS}`,
-        payload
-      );
+      await axios.put(`/categories/subcategories/${idS}`, payload);
 
       return dispatch({
         type: PUT_NAME_SUBCATEGORY,
@@ -840,14 +788,11 @@ export const getCartById = (token) => {
   };
   return async (dispatch) => {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
-      );
+      let responseId = await axios.get("/users/userId", config);
       let response = await axios(
         `/shoppingCart?userId=${responseId.data.idUser}`
       );
-      console.log(response.data)
+      console.log(response.data);
       return dispatch({
         type: GET_CART_BY_ID,
         payload: response.data,
@@ -860,9 +805,7 @@ export const getCartById = (token) => {
 export const getCartForChild = (id) => {
   return async (dispatch) => {
     try {
-      let response = await axios(
-        `/shoppingCart?userId=${id}`
-      );
+      let response = await axios(`/shoppingCart?userId=${id}`);
       return dispatch({
         type: GET_CART_FOR_CHILD,
         payload: response.data,
@@ -879,10 +822,7 @@ export const addItemToCart = (productId, token, cantidad) => {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
-      );
+      let responseId = await axios.get("/users/userId", config);
       await axios.put(
         `/shoppingCart/addProduct?userId=${responseId.data.idUser}&productId=${productId}`,
         { quantity: cantidad }
@@ -914,10 +854,7 @@ export const deleteFromCart = (productId, userId) => {
 export const setCartAmount = (id, amount) => {
   return async (dispatch) => {
     try {
-      await axios.put(
-        `/shoppingCart/addAmount?userId=${id}`,
-        { amount }
-      );
+      await axios.put(`/shoppingCart/addAmount?userId=${id}`, { amount });
       return dispatch({
         type: SET_AMOUNT,
       });
@@ -928,17 +865,17 @@ export const setCartAmount = (id, amount) => {
 };
 
 export const clearCart = () => {
-  return async(dispatch) => {
+  return async (dispatch) => {
     return dispatch({
-      type: CLEAR_CART
-    })
-  }
-}
+      type: CLEAR_CART,
+    });
+  };
+};
 
-export function getDetailOneUsers( id) {
-  return async function(dispatch) {
+export function getDetailOneUsers(id) {
+  return async function (dispatch) {
     try {
-      const response = await axios(`/users/${id}`)
+      const response = await axios(`/users/${id}`);
       return dispatch({
         type: GET_ONE_USER,
         payload: response.data,
@@ -961,9 +898,7 @@ export const getAllAsk = () => {
 
 export const getAsksForOneProducts = (idUser, idProduct) => {
   return async (dispatch) => {
-    let response = await axios(
-      `/asks?userId=${idUser}&productId=${idProduct}`
-    );
+    let response = await axios(`/asks?userId=${idUser}&productId=${idProduct}`);
     return dispatch({
       type: GET_USER_ASK_FOR_ONE_PRODUCT,
       payload: response.data,
@@ -973,9 +908,7 @@ export const getAsksForOneProducts = (idUser, idProduct) => {
 
 export const getAsksForAllProductsOneUser = (idUser) => {
   return async (dispatch) => {
-    let response = await axios(
-      `/asks/user?userId=${idUser}`
-    );
+    let response = await axios(`/asks/user?userId=${idUser}`);
     return dispatch({
       type: GET_USER_ASK_FOR_ALL_PRODUCT,
       payload: response.data,
@@ -1006,30 +939,29 @@ export const getAllOrdersOneUser = (idUser) => {
 export const getAllDirections = (idUser) => {
   return async (dispatch) => {
     try {
-      let response = await axios(`/users/address/${idUser}`)
+      let response = await axios(`/users/address/${idUser}`);
       return dispatch({
         type: GET_ALL_DIRECTIONS,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-  }
-}
+  };
+};
 
 export const postNewDirection = (idUser, payload) => {
-return async (dispatch) => {
-  try {
-    await axios.post(`/users/address/${idUser}`, payload)    
-  } catch (error) {
-    console.log(error)
-  }
-  return dispatch({
-    type: POST_NEW_DIRECTION
-  })
-}
-}
+  return async (dispatch) => {
+    try {
+      await axios.post(`/users/address/${idUser}`, payload);
+    } catch (error) {
+      console.log(error);
+    }
+    return dispatch({
+      type: POST_NEW_DIRECTION,
+    });
+  };
+};
 export const getAllAsksAllProducts = () => {
   return async (dispatch) => {
     let response = await axios(`/asks/allUser`);
@@ -1059,24 +991,20 @@ export const getAsksOneUserOneProduct = (userId, productId) => {
     });
   };
 };
-export function clearAsksOneUserOneProduct (){
+export function clearAsksOneUserOneProduct() {
   return {
-      type: CLEAR_ASKS_ONE_USER_ONE_PRODUCT
-  }
-  
+    type: CLEAR_ASKS_ONE_USER_ONE_PRODUCT,
+  };
 }
 
-export function deleteUser({userId , token}) {
+export function deleteUser({ userId, token }) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
   return async function (dispatch) {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
-      );
+      let responseId = await axios.get("/users/userId", config);
 
       await axios.delete(
         `/users/deleteUser?adminId=${responseId.data.idUser}&userId=${userId}`
@@ -1097,10 +1025,7 @@ export function deleteAdmin({ adminId, token }) {
 
   return async function (dispatch) {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
-      );
+      let responseId = await axios.get("/users/userId", config);
 
       await axios.delete(
         `/users/deleteAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`
@@ -1121,10 +1046,7 @@ export function editUser({ userId, token, payload }) {
 
   return async function (dispatch) {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
-      );
+      let responseId = await axios.get("/users/userId", config);
 
       await axios.put(
         `/users/editUser?userId=${userId}&adminId=${responseId.data.idUser}`,
@@ -1146,10 +1068,7 @@ export function editAdmin({ adminId, token, payload }) {
 
   return async function (dispatch) {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
-      );
+      let responseId = await axios.get("/users/userId", config);
 
       await axios.put(
         `/users/editAdmin?adminId=${adminId}&superAdminId=${responseId.data.idUser}`,
@@ -1196,7 +1115,7 @@ export function userToAdmin(userId, token) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      await axios.put(`/users/changeUserToAdmin/${userId}`,null,config);
+      await axios.put(`/users/changeUserToAdmin/${userId}`, null, config);
       return dispatch({
         type: CHANGE_ROLE_USER,
       });
@@ -1206,17 +1125,17 @@ export function userToAdmin(userId, token) {
   };
 }
 
-export function editUserForUser( token , payload) {
+export function editUserForUser(token, payload) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  }
+  };
   return async function (dispatch) {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
+      let responseId = await axios.get("/users/userId", config);
+      await axios.put(
+        `/users/updateDatesUser/${responseId.data.idUser}`,
+        payload
       );
-      await axios.put(`/users/updateDatesUser/${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_USER_FOR_USER,
       });
@@ -1232,7 +1151,7 @@ export function adminToUser(userId, token) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      await axios.put(`/users/changeAdminToUser/${userId}`,null,config);
+      await axios.put(`/users/changeAdminToUser/${userId}`, null, config);
       return dispatch({
         type: CHANGE_ROLE_ADMIN,
       });
@@ -1242,17 +1161,17 @@ export function adminToUser(userId, token) {
   };
 }
 
-export function editPasswordForUser( token , payload) {
+export function editPasswordForUser(token, payload) {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  }
+  };
   return async function (dispatch) {
     try {
-      let responseId = await axios.get(
-        "/users/userId",
-        config
+      let responseId = await axios.get("/users/userId", config);
+      await axios.put(
+        `/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,
+        payload
       );
-      await axios.put(`/users//resetPasswordWithOld?userId=${responseId.data.idUser}`,payload);
       return dispatch({
         type: UPDATE_PASSWORD_FOR_USER,
       });
@@ -1260,22 +1179,19 @@ export function editPasswordForUser( token , payload) {
       console.log(error);
     }
   };
-};
+}
 
-
-export const postAddImageToBanner = ( payload) => {
+export const postAddImageToBanner = (payload) => {
   return async function (dispatch) {
     try {
-      let json = await axios.post(
-        `/images/uploadBanner`, payload
-      ); 
-          console.log(payload)
+      let json = await axios.post(`/images/uploadBanner`, payload);
+      console.log(payload);
       return json;
     } catch (error) {
       console.log(error);
     }
   };
-}
+};
 
 export const getImageBanner = () => {
   return async (dispatch) => {
@@ -1286,7 +1202,6 @@ export const getImageBanner = () => {
     });
   };
 };
-
 
 export function deleteImageToBanner(id) {
   return async function (dispatch) {
@@ -1304,16 +1219,46 @@ export function deleteImageToBanner(id) {
 }
 
 export const getOrderById = (id) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-      let response = await axios.get(`http://localhost:3001/orders?orderId=${id}`);
+      let response = await axios.get(
+        `http://localhost:3001/orders?orderId=${id}`
+      );
       return dispatch({
         type: GET_ORDER_BY_ID,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  } 
-}
+  };
+};
 
+export const postForgotPasswordSendEmail = (payload) => {
+  return async (dispatch) => {
+    try {
+      let response = await axios.post("users/passwordResetWithEmail", payload);
+      return response;
+    } catch (error) {
+      console.log("hubo un error");
+      console.log(error);
+    }
+  };
+};
+
+export const postResetPassword = (payload, token) => {
+  return async (dispatch) => {
+    const obj = {
+      ...payload,
+      resetToken: token,
+    };
+    console.log(obj);
+    try {
+      let response = await axios.post("users/ResetPassword", obj);
+      return response.data;
+    } catch (error) {
+      console.log("hubo un error");
+      console.log(error);
+    }
+  };
+};
