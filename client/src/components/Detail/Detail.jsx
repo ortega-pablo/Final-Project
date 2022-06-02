@@ -96,7 +96,7 @@ export const Detail = () => {
                 width: "100%",
               }}
             />
-
+<Typography variant="h6" sx={{m:1}}>Precio: ${productDetail[0]?.price}</Typography>
             <CartModal
               token={token}
               id={productDetail[0].id}
@@ -105,6 +105,8 @@ export const Detail = () => {
               userStatus={userStatus}
               name={productDetail[0].name}
               stock={productDetail[0].productInventory.quantity}
+              price={productDetail[0].price}
+
             />
 
             <Divider textAlign="left">
