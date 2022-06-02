@@ -1306,7 +1306,7 @@ export function deleteImageToBanner(id) {
 export const getOrderById = (id) => {
   return async dispatch => {
     try {
-      let response = await axios.get(`http://localhost:3001/orders?orderId=${id}`);
+      let response = await axios.get(`/orders?orderId=${id}`);
       return dispatch({
         type: GET_ORDER_BY_ID,
         payload: response.data
