@@ -31,8 +31,6 @@ function ResetPassword() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-        console.log(values)
-        console.log(Token.TokenE)
       const result = await dispatch(postResetPassword(values,Token.TokenE));
       if (result?.data?.error) {
         Swal.fire({

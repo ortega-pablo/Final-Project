@@ -1269,14 +1269,12 @@ router.put("/passwordReset", async (req, res) => {
 
 router.post("/passwordResetWithEmail", async (req, res) => {
   const { email } = req.body;
-  console.log("this is my email: ", email);
   try {
     const findUser = await User.findOne({
       where: {
         email: email,
       },
     });
-    console.log("ENTRE ?:", findUser);
     if (findUser) {
       const userforToken = {
         email: findUser.dataValues.email,
@@ -1285,7 +1283,6 @@ router.post("/passwordResetWithEmail", async (req, res) => {
       const tokenUser = jwt.sign(userforToken, KEY_WORD_JWT);
 
       const linkUser = `http://localhost:3000/login/reset/${tokenUser}`;
-      console.log("This is my token: ", tokenUser);
       const oAuth2Client = new google.auth.OAuth2(
         CLIENT_ID,
         CLIENT_SECRET,
@@ -1550,8 +1547,7 @@ router.post("/passwordResetWithEmail", async (req, res) => {
         </body>
         </html>`,
       });
-      console.log("ENTRE HASTA AQUI ");
-      console.log("MY INFO: ", info);
+
       res.send(`Revise su bandeja de entrada en: ${findUser.email}`);
     } else {
       res.status(401).send("El usuario no está registrado");
@@ -1572,7 +1568,6 @@ router.post("/ResetPassword", async (req, res) => {
     }
     const decoded = jwt.verify(resetToken, process.env.KEY_WORD_JWT);
     const user = await User.findOne({ where: { email: decoded.email } });
-    // console.log(user)
     if (!user) {
       return res
         .status(409)

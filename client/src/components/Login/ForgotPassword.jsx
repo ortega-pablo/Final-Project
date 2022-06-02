@@ -21,7 +21,6 @@ export const ForgotPassword = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // alert(JSON.stringify(values, null, 2));
       const result= await dispatch(postForgotPasswordSendEmail(values));
       if(result !== undefined){
         Swal.fire({
