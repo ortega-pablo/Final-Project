@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 
 const DetailRow = (props) => {
   const dispatch = useDispatch();
-  const { row, cartId, token, setRender, render } = props;
+  const { row, cartId, token, setRender, render, userId } = props;
   const [cantidad, setCantidad] = useState(row.Quantity.total);
 
   const total = row.price * row.Quantity.total;
@@ -33,7 +33,7 @@ const DetailRow = (props) => {
       confirmButtonText: "Si, Borrar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteFromCart(row.id, cartId));
+        dispatch(deleteFromCart(row.id, userId));
         dispatch(clearCart())
         setRender(!render);
         Swal.fire({

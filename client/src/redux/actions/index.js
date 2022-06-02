@@ -95,6 +95,7 @@ export const POST_BANNER = "POST_BANNER";
 
 export const DELETE_BANNER = "DELETE_BANNER";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const PUT_INVENTORY_AFTER_ORDER = "PUT_INVENTORY_AFTER_ORDER";
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -350,6 +351,7 @@ export const postLoginUser = (payload) => {
 };
 
 export const filterPerPrice = (range) => {
+  console.log("El range es:",range)
   return async (dispatch) => {
     return dispatch({
       type: FILTER_PER_PRICE,
@@ -852,6 +854,7 @@ export const deleteFromCart = (productId, userId) => {
 };
 
 export const setCartAmount = (id, amount) => {
+  console.log("este es el amount",amount)
   return async (dispatch) => {
     try {
       await axios.put(`/shoppingCart/addAmount?userId=${id}`, { amount });
@@ -1232,6 +1235,21 @@ export const getOrderById = (id) => {
   };
 };
 
+export function putQuantityAfterOrder(productId,quantity) {
+  return async function (dispatch) {
+    try {
+      console.log("ESTE ES EL PRODUCT ID",productId)
+      console.log("ESTE ES EL QUANTITY",quantity)
+        await axios.put(`/inventory?productId=${productId}&quantity=${quantity}` );
+
+      return dispatch({
+        type: PUT_INVENTORY_AFTER_ORDER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export const postForgotPasswordSendEmail = (payload) => {
   return async (dispatch) => {
     try {

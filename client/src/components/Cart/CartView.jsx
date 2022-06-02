@@ -42,13 +42,13 @@ const CartView = () => {
   const handleConfirmAndSetAmount = (e) => {
     e.preventDefault();
     const amountToCents = totalAmount * 100;
-    dispatch(setCartAmount(cart.id, amountToCents));
+    dispatch(setCartAmount(cart.userId, amountToCents));
     Swal.fire({
       background: "#2f2e2b",
       icon: "success",
       title: `Monto total: ${totalAmount}`,
       showConfirmButton: false,
-      timer: 1500,
+      timer: 2000,
     });
 
     navigate("/checkout");
@@ -88,6 +88,7 @@ const CartView = () => {
                       cartId={cart.id}
                       setRender={setRender}
                       render={render}
+                      userId={cart.userId}
                     />
                   );
                 })}
@@ -100,6 +101,15 @@ const CartView = () => {
                   </TableCell>
                   <TableCell sx={{ border: "none" }}/>
                   <TableCell sx={{ border: "none" }} align='ri'>
+                    {totalAmount === 0 ?
+                    <Button
+                    variant="contained"
+                    color="ambar3"
+                    disabled
+                  >
+                    Confirmar
+                  </Button>
+                  :
                     <Button
                       onClick={(e) => handleConfirmAndSetAmount(e)}
                       variant="contained"
@@ -108,6 +118,7 @@ const CartView = () => {
                     >
                       Confirmar
                     </Button>
+                    }
                   </TableCell>
                   
                 </TableRow>

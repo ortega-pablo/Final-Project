@@ -80,7 +80,7 @@ export const NavBar = (props) => {
     dispatch(verifyToken(ls?.token));
     dispatch(getCartById(ls?.token));
     return (() => dispatch(clearCart()))
-  }, []);
+  }, [dispatch]);
 
   const handleChangeForName = (e) => {
     setName(e.target.value);
