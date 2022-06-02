@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address, Quantity } = require("../db");
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
 const axios = require("axios")
@@ -81,22 +81,26 @@ router.post('/', async (req, res, next) => {
             include: {
                 model: Product,
                 through: {
-                    attributes: []
+                    attributes: ["total"]
                 },
-                include: {
-                    model: Image,
+                include: [
+                    {
+                        
+                     model: Image,
                     attributes: ["urlFile"],
                     through: {
                         attributes: []
                     }
-                }
+                        
+                    }
+                ]
             }
         });
 
 
         const newOrder = await Order.create({
             total: findCart.amount,
-            quantity: findCart.amount,
+            quantity: findCart.products.length,
             FirstName,
             LastName,
             Country,
@@ -108,7 +112,7 @@ router.post('/', async (req, res, next) => {
         });
 
 
-
+        console.log(findCart)
         // const oneAddress = findUser.addresses[0]
         // oneAddress.addOrder(newOrder);
 
@@ -450,6 +454,24 @@ router.post('/', async (req, res, next) => {
         return res.send(newOrder)
 
     } catch (error) {
+        // console.log(error.raw.message)
+
+        // const newOrder = await Order.create({
+        //     total: findCart.amount,
+        //     quantity: findCart.amount,
+        //     FirstName,
+        //     LastName,
+        //     Country,
+        //     Address1,
+        //     City,
+        //     EmailAddress,
+        //     PostCode,
+        //     Mobile
+        // });
+
+        // newOrder.setUser(userId);
+        // newOrder.addProducts(findCart.products);
+
         res.send(error)
     }
 })

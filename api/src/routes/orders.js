@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address, Quantity } = require("../db");
 const router = Router();
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
@@ -463,17 +463,15 @@ router.get("/", async (req, res, next) => {
         include: [
           {
             model: Product,
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: []
-            },
-            include: {
+            include: [
+              {
               model: Image,
               attributes: ["urlFile"],
               through: {
                 attributes: []
               }
             },
+          ]
           },
           {
             model: Address,
