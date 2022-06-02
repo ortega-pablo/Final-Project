@@ -604,9 +604,9 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
 
 const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
 
-router.post("/google-login", async (req, res) => {
+router.post("/google-login", async (req, res, next) => {
   const { token } = req.body;
-
+try {
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID_GOOGLE,
@@ -637,6 +637,9 @@ router.post("/google-login", async (req, res) => {
   const addShoppingCart = await ShoppingCart.create({});
 
     addShoppingCart.setUser(user);
+} catch (error) {
+  next(error)
+}
 });
 
 
