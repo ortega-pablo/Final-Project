@@ -372,6 +372,7 @@ export const postLoginUser = (payload) => {
 };
 
 export const filterPerPrice = (range) => {
+  console.log("El range es:",range)
   return async (dispatch) => {
     return dispatch({
       type: FILTER_PER_PRICE,

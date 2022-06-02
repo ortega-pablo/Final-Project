@@ -24,6 +24,8 @@ function validate(value) {
   if (isNaN(value.Hasta)) errors.Hasta = "Por favor ingrese un número.";
   if (value.Desde > value.Hasta) errors.Desde = "Este valor debe ser un mínimo";
   if (value.Hasta < value.Desde) errors.Hasta = "Este valor debe ser un maximo";
+  if (value.Hasta == value.Desde) errors.Hasta = "Debe existir un rango entre los valores";
+  if (value.Hasta == value.Desde) errors.Desde = "Debe existir un rango entre los valores";
   if (value.Desde < 0) errors.Desde = "El valor debe ser mayor o igual a 0";
   if (value.Hasta < 0) errors.Hasta = "El valor debe ser mayor o igual a 0";
   return errors;
@@ -68,11 +70,10 @@ function Category({
     Desde: null,
     Hasta: null,
   });
-
   const handleChange = (e) => {
     setValue({
       ...value,
-      [e.target.name]: e.target.value,
+      [e.target.name]: Number(e.target.value),
     });
     setErrors(
       validate({
