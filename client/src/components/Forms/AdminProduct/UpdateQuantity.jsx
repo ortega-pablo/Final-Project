@@ -25,7 +25,7 @@ export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, {resetForm}) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       await dispatch(putQuantity(idUpdate, values));
       await dispatch(getProducts())
       await dispatch(getInventary())

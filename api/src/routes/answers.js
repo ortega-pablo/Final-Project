@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
         ]
       })
 
-      console.log(getUser.answer)
+
       let userArray = [];
       userArray.push(getUser)
 
@@ -77,7 +77,7 @@ router.get("/", async (req, res) => {
         }
       })
 
-    console.log(userSimplified)
+
       if(getUser.asks.length === 0){
         return res.send("No answers found for this user")
 

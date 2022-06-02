@@ -33,7 +33,7 @@ console.log(NameRepetido)
         },
         validationSchema: validationSchema,
         onSubmit: async (values, {resetForm}) => {
-          alert(JSON.stringify(values, null, 2));
+          // alert(JSON.stringify(values, null, 2));
           await dispatch(putNameSpecification( idSpecif ,values))
           await dispatch(getAllSpecifications())   
           setUploading(false)

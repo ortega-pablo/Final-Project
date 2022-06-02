@@ -98,7 +98,6 @@ export const DELETE_BANNER ="DELETE_BANNER";
 
 
 
-
 export const getProducts = (name) => {
   return async (dispatch) => {
     let response;
@@ -847,6 +846,7 @@ export const getCartById = (token) => {
       let response = await axios(
         `/shoppingCart?userId=${responseId.data.idUser}`
       );
+      console.log(response.data)
       return dispatch({
         type: GET_CART_BY_ID,
         payload: response.data,
@@ -1301,3 +1301,4 @@ export function deleteImageToBanner(id) {
     }
   };
 }
+

@@ -31,7 +31,7 @@ export const TableSpecific = ({ productToUpdate, idUpdate }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values , {resetForm}) => {
-      alert(JSON.stringify(values, null, 1));
+      // alert(JSON.stringify(values, null, 1));
       await dispatch(putValueSpecificationOneProduct(idUpdate,idSpec ,values));
       await dispatch(getProducts())
       setUpdating(false)
@@ -73,6 +73,8 @@ export const TableSpecific = ({ productToUpdate, idUpdate }) => {
               <TableCell>{s.ProductSpecification.value}</TableCell>
 
               <Button
+              sx={{m:1}}
+              variant="contained" color="ambar4"
                 value={s.id}
                 onClick={(e) => handleUpdateValueSpect(e)}
                 // name="delete"
@@ -82,6 +84,8 @@ export const TableSpecific = ({ productToUpdate, idUpdate }) => {
               </Button>
 
               <Button
+              
+              variant="contained" color="ambar4"
                 value={s.id}
                 onClick={(e) => handleDeleteSpecToProduct(e)}
                 // name="delete"

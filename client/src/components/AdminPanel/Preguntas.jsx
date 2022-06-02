@@ -82,6 +82,10 @@ export const Preguntas = () => {
             return (
               prod.asks.find((a) => a.answer === null) && (
                 <>
+                
+
+                <Box>  </Box>
+                 
                   <Link underline="none" href={`/detail/${prod?.id}`}>
                     <Typography component="h1" variant="h5">
                       {prod.name}
@@ -139,6 +143,8 @@ export const Preguntas = () => {
 
                       
                             <Button onClick={handleOpen}> Ver historial entre este usuario y producto</Button>
+                            
+                             
 <Modal
   open={open}
   onClose={handleClose}
@@ -180,7 +186,7 @@ export const Preguntas = () => {
         </>
       }
 
-      <InputLabel id="demo-simple-select-standard-label">
+      <InputLabel  id="demo-simple-select-standard-label">
         Seleccione un usuario
       </InputLabel>
       <Select
@@ -196,7 +202,7 @@ export const Preguntas = () => {
         {allUsers?.map((u, i) => {
           return (
             <MenuItem key={i} value={u.id}>
-              {u?.userName}
+            Id: {u.id} - {u?.userName}
             </MenuItem>
           );
         })}

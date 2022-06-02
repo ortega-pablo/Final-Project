@@ -9,6 +9,7 @@ const {
   Address,
   Product,
   Order,
+  OrderProducts,
 } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
@@ -186,7 +187,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
-
+  console.log(userId);
   try {
     if (userId) {
       const findById = await User.findOne({
@@ -214,7 +215,7 @@ router.get("/:userId", async (req, res) => {
           {
             model: Order,
             include: {
-              model: Product,
+              model: OrderProducts,
             },
           },
           {
@@ -229,6 +230,7 @@ router.get("/:userId", async (req, res) => {
           },
         ],
       });
+      console.log(findById);
 
       return res.send(findById);
     } else {
@@ -404,7 +406,7 @@ router.put(
   [cors(), verifyToken],
   async (req, res, next) => {
     const { userId } = req.params;
-    console.log("EMPECE A EJECUTAR LA RUTA");
+
     try {
       if (req.role === "superAdmin") {
         const findUser = await User.findOne({
@@ -412,7 +414,7 @@ router.put(
             id: userId,
           },
         });
-        console.log("EL ROL ES:", findUser);
+
         if (findUser && findUser.dataValues.role === "user") {
           await User.update(
             {
@@ -607,7 +609,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
 router.post("/google-login", async (req, res, next) => {
   try {
     const { token } = req.body;
-    console.log("este es el token de back", token);
+
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.CLIENT_ID_GOOGLE,
@@ -639,8 +641,8 @@ router.post("/google-login", async (req, res, next) => {
 
     addShoppingCart.setUser(user);
   } catch (error) {
-    console.log(error);
     next(error);
+    console.log(error);
   }
 });
 

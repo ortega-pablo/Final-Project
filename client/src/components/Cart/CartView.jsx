@@ -17,7 +17,7 @@ import {
 import DetailRow from "./Rows/DetailRow";
 import { clearCart, getCartById, setCartAmount } from "../../redux/actions";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CartResume } from "./CartResume";
 
@@ -38,17 +38,19 @@ const CartView = () => {
     totalAmount += p.price * p.Quantity.total;
   });
 
+
   const handleConfirmAndSetAmount = (e) => {
     e.preventDefault();
     const amountToCents = totalAmount * 100;
     dispatch(setCartAmount(cart.id, amountToCents));
     Swal.fire({
-      background: "#DFDCD3",
+      background: "#2f2e2b",
       icon: "success",
       title: `Monto total: ${totalAmount}`,
       showConfirmButton: false,
       timer: 1500,
     });
+
     navigate("/checkout");
   };
 

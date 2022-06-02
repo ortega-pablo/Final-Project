@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Product, User, Review, Order, ShoppingCart, Image, Address } = require("../db");
+const { Product, User, Review, Order, ShoppingCart, Image, Address, OrderProducts } = require("../db");
 const router = Router();
 const Stripe = require("stripe");
 const { KEY_STRIPE } = process.env
@@ -69,6 +69,8 @@ router.post('/', async (req, res, next) => {
         }
       });
 
+      console.log(findUser)
+
 
 
       const findCart = await ShoppingCart.findOne({
@@ -90,18 +92,20 @@ router.post('/', async (req, res, next) => {
         }
       });
 
+      console.log(findCart)
+
 
       const newOrder = await Order.create({
         total: findCart.amount,
         state,
         quantity: findCart.amount
       });
-
-      const oneAddress = findUser.addresses[0]
+ 
+      const oneAddress = findUser.addresses[0] 
 
       oneAddress.addOrder(newOrder);
       newOrder.setUser(userId);
-      newOrder.addProducts(findCart.products); // O un findAll.length porque la neta esta cabron
+      /* newOrder.addProducts(findCart.products); */ // O un findAll.length porque la neta esta cabron
 
       
       var outputHTML = "";
@@ -124,8 +128,8 @@ router.post('/', async (req, res, next) => {
         
          
       let info = await transporter.sendMail({
-        from: '"Exmine Store" <exmine.store@hotmail.com>', // sender address
-        to: [findUser.email], // list of receivers
+        from: '"Exmine Store" <samueltribulon@hotmail>', // sender address
+        to: [findUser.email], // list of receivers 
         subject: "Confirmacion de Pedido", // Subject line
         text: "", // plain text body
         html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -430,10 +434,10 @@ router.post('/', async (req, res, next) => {
         </html >`
       });
 
-      await findCart.setProducts([]);
-      await findCart.update({
-        amount: 0
-      });
+      // await findCart.setProducts([]);
+      // await findCart.update({
+      //   amount: 0
+      // });
 
       return res.send(newOrder)
       // return res.send("Order created successfully!")
@@ -462,23 +466,9 @@ router.get("/", async (req, res, next) => {
         },
         include: [
           {
-            model: Product,
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: []
-            },
-            include: {
-              model: Image,
-              attributes: ["urlFile"],
-              through: {
-                attributes: []
-              }
-            },
+            model: OrderProducts,
+            atributes:["productName", "price", "quantity", "productId", "productImage"],
           },
-          {
-            model: Address,
-            as: "order_address"
-          }
         ]
       })
 
@@ -492,18 +482,8 @@ router.get("/", async (req, res, next) => {
         },
         include: [
           {
-            model: Product,
-            attributes: ["id", "name", "price"],
-            through: {
-              attributes: []
-            },
-            include: {
-              model: Image,
-              attributes: ["urlFile"],
-              through: {
-                attributes: []
-              }
-            }
+            model: OrderProducts,
+            atributes:["productName", "price", "quantity", "productId", "productImage"],
           },
         {
           model: Address,
@@ -519,18 +499,9 @@ router.get("/", async (req, res, next) => {
 
       const getAllOrders = await Order.findAll({
         include: {
-          model: Product,
-          attributes: ["id", "name", "price"],
-          through: {
-            attributes: []
-          },
-          include: {
-            model: Image,
-            attributes: ["urlFile"],
-            through: {
-              attributes: []
-            }
-          }
+          
+            model: OrderProducts,
+            atributes:["productName", "price", "quantity", "productId", "productImage"],
         }
       })
 

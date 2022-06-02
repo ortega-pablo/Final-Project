@@ -30,13 +30,19 @@ export const UpdatePassAdmin = () => {
     newPassword: yup
       .string("Ingrese la descripción")
       .min(8, "Password should be of minimum 8 characters length")
+      .max(50, "El maximo de caracteres es 50")
+
       .required("La nueva contraseña es requerida"),
     oldPassword: yup
       .string("Ingrese la descripción")
+      .max(50, "El maximo de caracteres es 50")
+
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("La actual contraseña es requerida para cambiar la misma"),
     passwordConfirmation: yup
       .string()
+      .max(50, "El maximo de caracteres es 50")
+
       .oneOf([yup.ref("newPassword"), null], "Passwords must match")
       .required("Confirma la nueva contraseña"),
   });
@@ -65,7 +71,7 @@ export const UpdatePassAdmin = () => {
           if (newData !== undefined) {
             setRender(values);
             Swal.fire("Contraseña modificada!");
-            navigate(`/myData`)
+            navigate(`/myDataAdm`)
             resetForm({values:""})
           } else {
             Swal.fire("La actual contraseña es incorrecta!");

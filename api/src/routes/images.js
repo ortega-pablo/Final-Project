@@ -139,7 +139,7 @@ router.delete("/", async (req, res, next) => {
       ]
     })
 
-    console.log(findProduct)
+
 
     if(findProduct){
 

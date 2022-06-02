@@ -17,13 +17,16 @@ export const CambiarClave = ({ user, idToken, render, setRender }) => {
     newPassword: yup
       .string("Ingrese una descripción")
       .min(8, "La contraseña debe tenes un mínimo de 8 caracteres")
+      .max(50, "El maximo de caracteres es 50")
       .required("Por favor ingrese la nueva contraseña"),
     oldPassword: yup
       .string("Ingrese una descripción")
+      .max(50, "El maximo de caracteres es 50")
       // .min(8, 'Password should be of minimum 8 characters length')
       .required("Por favor ingrese la contraseña actual para cambiar la misma"),
     passwordConfirmation: yup
       .string()
+      .max(50, "El maximo de caracteres es 50")
       .oneOf([yup.ref("newPassword"), null], "La contraseña debe coincidir")
       .required("Por favor confirma la nueva contraseña"),
   });

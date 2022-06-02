@@ -27,10 +27,35 @@ import CreateProduct from "./components/AdminPanel/CreateProduct";
 import CreateDiscount from "./components/AdminPanel/CreateDiscount";
 import CreateSpecification from "./components/AdminPanel/CreateSpecification";
 import { CheckOutForm } from "./components/StripeComponent/CheckOutForm";
-import Clients from "./components/AdminPanel/Clients";
+import UsersPanel from "./components/AdminPanel/UserPanel/UsersPanel.jsx";
 import Orders from "./components/AdminPanel/Orders";
 import { Perfil } from "./components/PerfilUser/Perfil";
 import CartView from "./components/Cart/CartView";
+import { AskPanel } from "./components/AdminPanel/AskPanel";
+import { VerHilo } from "./components/AdminPanel/VerHilo";
+import CartModal from "./components/Cart/CartModal";
+import { Banner } from "./components/AdminPanel/Banner";
+import AdminBanner from "./components/AdminPanel/AdminBanner";
+import GetMyDate from "./components/UserPanel/Get/GetMyDate";
+import GetMyData from "./components/UserPanel/Get/GetMyDate";
+import UserPanel from "./components/UserPanel/UserPanel";
+import { UploadData } from "./components/UserPanel/Get/UploadData";
+import { UploadPasswUser } from "./components/UserPanel/Get/UploadPasswUser";
+import { UploadDataG } from "./components/UserPanel/Get/UploadDataG";
+import { UploadPasswUserG } from "./components/UserPanel/Get/UploadPasswUserG";
+import { MisPreguntas } from "./components/UserPanel/Get/Questions/MisPreguntas";
+import QuestionPanel from "./components/UserPanel/QuestionPanel";
+import UserUploadPasw from "./components/UserPanel/UserUploadPasw";
+import UserUploadPaswG from "./components/UserPanel/UserUploadPaswG";
+import UserUploadData from "./components/UserPanel/UserUploadData";
+import UserUpdateDataG from "./components/UserPanel/UserUpdateDataG";
+import MyDataAdmin from "./components/AdminPanel/PerfilAdmin/MyDataAdmin";
+import { UpdataDataAdminG } from "./components/AdminPanel/PerfilAdmin/UpdataDataAdminG";
+import UpdatePasswAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdatePasswAdm";
+import UpdatePasswAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdatePasswAdmG";
+import UpdateDataAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdm";
+import MyDataAdm from "./components/AdminPanel/PerfilAdmin/panel/MyDataAdm";
+import UpdateDataAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdmG";
 
 function App() {
   return (
@@ -38,8 +63,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route exact path="/home/:name" element={<Home />} />
+        <Route exact path="/:name" element={<Home />} />
         <Route exact path="/checkout" element={<CheckOutForm />} />
+        {/* <Route path="order/:id" element={<OrderDetails />} /> */}
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
@@ -65,12 +91,30 @@ function App() {
         <Route path="/createSpecification" element={<CreateSpecification />} />
         <Route path="/createDiscount" element={<CreateDiscount />} />
 
-        <Route path="/clients" element={<Clients />} />
+        <Route path="/usersPanel" element={<UsersPanel />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/askPanel" element={<AskPanel />} />
+        <Route path="/banner" element={<AdminBanner />} />
 
         <Route path="/cart" element={<CartView />} />
 
-        <Route path="/prueba" element={<Perfil />} />
+        <Route path="/userProfile" element={<UserPanel />} />
+        <Route path="/myData" element={<UserPanel />} />
+        <Route path="/updateUser" element={<UserUploadData />} />
+        <Route path="/updateUserG" element={<UserUpdateDataG />} />
+        <Route path="/updatePasswUser" element={<UserUploadPasw />} />
+        <Route path="/updatePasswUserG" element={<UserUploadPaswG />} />
+        <Route path="/allQuestions" element={<QuestionPanel />} />
+
+        <Route path="/myDataAdm" element={<MyDataAdm />} />
+        <Route path="/updateAdmin" element={<UpdateDataAdm />} />
+        <Route path="/updateAdminG" element={<UpdateDataAdmG />} />
+        <Route path="/updatePasswAdmin" element={<UpdatePasswAdm />} />
+        <Route path="/updatePasswAdminG" element={<UpdatePasswAdmG />} />
+
+        {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
+
+        <Route path="/prueba" element={<CartModal />} />
       </Routes>
       <Footer />
     </BrowserRouter>
