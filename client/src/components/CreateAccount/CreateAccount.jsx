@@ -67,6 +67,7 @@ export const CreateAccount = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const result = await dispatch(postRegisterUser(values));
+      console.log("El resultado es: ", result)
       if (result?.data?.error) {
         Swal.fire({
           background: '#DFDCD3',
