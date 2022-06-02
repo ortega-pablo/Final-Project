@@ -83,6 +83,7 @@ import {
   POST_BANNER,
   GET_BANNER,
   DELETE_BANNER,
+  GET_ORDER_BY_ID
 } from "../actions";
 
 const initialState = {
@@ -112,6 +113,7 @@ const initialState = {
   allUsers: [],
   allImagesBanner: [],
   filteredUsers: [],
+  currentOrder: {}
 };
 
 // funcion para que el carrito se guarde siempre
@@ -749,6 +751,12 @@ const rootReducer = (state = initialState, action) => {
     return {
       ...state,
     };
+  }
+  case GET_ORDER_BY_ID: {
+    return{
+      ...state,
+      currentOrder: action.payload
+    }
   }
 
 

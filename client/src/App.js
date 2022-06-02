@@ -55,6 +55,7 @@ import UpdatePasswAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdatePass
 import UpdatePasswAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdatePasswAdmG";
 import UpdateDataAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdm";
 import MyDataAdm from "./components/AdminPanel/PerfilAdmin/panel/MyDataAdm";
+import { OrderDetails } from "./components/OrderDetails";
 
 
 
@@ -69,6 +70,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route exact path="/:name" element={<Home />} />
             <Route exact path ="/checkout" element={<CheckOutForm/>} />
+            <Route path="order/:id" element={<OrderDetails/>} />
             <Route path="/detail/:id" element={<Detail/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/login" element={<Login/>}/>
