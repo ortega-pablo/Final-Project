@@ -22,6 +22,7 @@ import { HiddenxsDown } from "../../personalizadTheme";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailOneUsers, getUserIdByToken } from "../../redux/actions";
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 export default function UserMenuLarge() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function UserMenuLarge() {
   const [open3, setOpen3] = React.useState(false);
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
+  const [open6, setOpen6] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -59,6 +61,10 @@ export default function UserMenuLarge() {
 
   const handleClick5 = () => {
     setOpen5(!open5);
+  };
+
+  const handleClick6 = () => {
+    setOpen6(!open6);
   };
   
   return (
@@ -146,7 +152,7 @@ export default function UserMenuLarge() {
 
           <ListItemButton onClick={handleClick}>
             <ListItemIcon>
-              <ShoppingBasketIcon />
+              <QuestionMarkIcon />
             </ListItemIcon>
             <ListItemText primary="Preguntas" />
             {open ? <ExpandLess /> : <ExpandMore />}
@@ -191,6 +197,30 @@ export default function UserMenuLarge() {
           </Collapse>
 
           <Divider variant="middle" />
+
+          <ListItemButton onClick={handleClick6}>
+            <ListItemIcon>
+              <ShoppingBasketIcon />
+            </ListItemIcon>
+            <ListItemText primary="Ordenes" />
+            {open6 ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={open6} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <Divider variant="middle" />
+
+              <ListItemButton component="a" href="/allQuestions" sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <ClearAllIcon />
+                </ListItemIcon>
+                <ListItemText primary="Todas mis ordenes" />
+              </ListItemButton>
+
+              <Divider variant="middle" />
+            </List>
+          </Collapse>
+
+          
 
           {/* <ListItemButton onClick={handleClick5}>
             <ListItemIcon>
