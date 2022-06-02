@@ -1,8 +1,12 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 
 export const UploadPasswUserG = () => {
   return (
-    <Typography sx={{mt:"15px" , mb:"15px"}} variant="h4" >Las cuentas creadas con Google no pueden sufrir cambios de contraseña desde nuestra plataforma</Typography>
+    <Box sx={{ display:"flex" ,mt:"25%" , width:"100%", justifyContent:"center", textAlign: "center" }}>
+      <Typography 
+      variant="h3"
+      color="ambar5.main" >Las cuentas creadas con Google no pueden sufrir cambios de contraseña desde nuestra plataforma</Typography>
+    </Box>
   )
 }

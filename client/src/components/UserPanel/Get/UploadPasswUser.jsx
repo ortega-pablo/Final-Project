@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Paper, Table, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
@@ -55,7 +55,6 @@ export const UploadPasswUser = () => {
     onSubmit: async (values, { resetForm }) => {
       Swal.fire({
         title: `¿Está seguro de modificar tu contraseña?`,
-        // text: "Esta acción no se puede deshacer!",
         icon: "warning",
         background: "#DFDCD3",
         showCancelButton: true,
@@ -77,78 +76,94 @@ export const UploadPasswUser = () => {
           }
         }
       });
-
-      //  await dispatch(editUserForUser(idToken, values));
-      //  setRender(values)
-      //   resetForm({ values: "" });
     },
   });
 
   return (
     <>
-<Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" > Edita tu contraseña</Typography>
 
-      {
-        <div>
-          <Box
-            component="form"
+<Box
+        sx={{ mt: 5, width: "100%"}}
+        component="form"
             noValidate
             autoComplete="off"
             onSubmit={formik.handleSubmit}
-          >
-            <TextField
-              id="outlined-basic"
-              label="Actual Contraseña *"
-              variant="outlined"
-              name="oldPassword"
-              type="password"
-              value={formik.values.oldPassword}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.oldPassword && Boolean(formik.errors.oldPassword)
-              }
-              helperText={
-                formik.touched.oldPassword && formik.errors.oldPassword
-              }
-            />
+      >
+        <Typography
+          sx={{ mt: "2%", mb: "2%", textAlign: "center" }}
+          variant="h3"
+          color="ambar5.main"
+        >
+          Cambiar contraseña
+        </Typography>
+        <TableContainer component={Paper} align="center" >
+          <Table aria-label="collapsible table" sx={{ display:"flex", flexDirection:"column", alignItems:"center", pl:3  }}>
+            <TableRow  sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                id="outlined-basic"
+                label="Actual Contraseña *"
+                variant="outlined"
+                name="oldPassword"
+                type="password"
+                value={formik.values.oldPassword}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.oldPassword && Boolean(formik.errors.oldPassword)
+                }
+                helperText={
+                  formik.touched.oldPassword && formik.errors.oldPassword
+                }
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
 
-            <TextField
-              id="outlined-basic"
-              label="Nueva Contraseña *"
-              variant="outlined"
-              name="newPassword"
-              type="password"
-              value={formik.values.newPassword}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.newPassword && Boolean(formik.errors.newPassword)
-              }
-              helperText={
-                formik.touched.newPassword && formik.errors.newPassword
-              }
-            />
-            <TextField
-              required
-              autoComplete="off"
-              id="password"
-              label="Confirmar Contraseña"
-              name="passwordConfirmation"
-              type="password"
-              value={formik.values.passwordConfirmation}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.passwordConfirmation &&
-                Boolean(formik.errors.passwordConfirmation)
-              }
-              helperText={
-                formik.touched.passwordConfirmation &&
-                formik.errors.passwordConfirmation
-              }
-            />
-            <Button type="submit">Modificar contraseña</Button>
-          </Box>
-        </div>
-      }
+            <TableRow sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                id="outlined-basic"
+                label="Nueva Contraseña *"
+                variant="outlined"
+                name="newPassword"
+                type="password"
+                value={formik.values.newPassword}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.newPassword && Boolean(formik.errors.newPassword)
+                }
+                helperText={
+                  formik.touched.newPassword && formik.errors.newPassword
+                }
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
+
+            <TableRow sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                 required
+                 autoComplete="off"
+                 id="password"
+                 label="Confirmar Contraseña"
+                 name="passwordConfirmation"
+                 type="password"
+                 value={formik.values.passwordConfirmation}
+                 onChange={formik.handleChange}
+                 error={
+                   formik.touched.passwordConfirmation &&
+                   Boolean(formik.errors.passwordConfirmation)
+                 }
+                 helperText={
+                   formik.touched.passwordConfirmation &&
+                   formik.errors.passwordConfirmation
+                 }
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
+
+            <TableRow sx={{ mb: 3, mt: 3, width: "98%" }}>
+              <Button type="submit" variant="contained" color="ambar3" sx={{ width: "98%" }}>Edita tu contraseña</Button>
+            </TableRow>
+          </Table>
+        </TableContainer>
+      </Box>
     </>
   );
 };
