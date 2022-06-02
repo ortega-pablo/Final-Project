@@ -23,7 +23,7 @@ export const ReviewDetails = () => {
                     <ListItem key={p.name} sx={{display:"flex", justifyContent: "space-around"}}>
                         <ImageListItem sx={{width: "90px", heigth: "90px"}}>
                             <img 
-                            src={p.images[0].urlFile}
+                            src={p.images[0]?.urlFile} alt="hola"
                             />
                         </ImageListItem>
                         <ListItemText

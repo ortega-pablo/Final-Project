@@ -18,6 +18,7 @@ export default function CartModal({
   userStatus,
   name,
   stock,
+  price
 }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -162,14 +163,14 @@ export default function CartModal({
           <Typography variant="h6">{name}</Typography>
 
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {description}
+           Precio: ${price}
           </Typography>
           <form
             onSubmit={(e) => {
               handleSubmitCart(e);
             }}
           >
-            <Typography>stock: {stock}</Typography>
+            <Typography>Stock: {stock}</Typography>
             <Box
               sx={{
                 display: "flex",
