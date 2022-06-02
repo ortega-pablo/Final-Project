@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { getOrderById } from "../redux/actions";
+import { getCartById, getOrderById } from "../redux/actions";
 import {useNavigate} from "react-router-dom"
 
 
@@ -20,9 +20,11 @@ export const OrderDetails = () => {
     let dollarUSLocale = Intl.NumberFormat('en-US');
     const currentOrder = useSelector(state => state.currentOrder);
     const navigate = useNavigate();
+    const token = JSON.parse(window.localStorage.getItem("token"))?.token;
 
     useEffect(()=> {
         dispatch(getOrderById(id));
+        dispatch(getCartById(token));
     }, [dispatch])
 
   return (

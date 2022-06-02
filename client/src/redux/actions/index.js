@@ -913,6 +913,7 @@ export const deleteFromCart = (productId, userId) => {
 };
 
 export const setCartAmount = (id, amount) => {
+  console.log("este es el amount",amount)
   return async (dispatch) => {
     try {
       await axios.put(
