@@ -20,8 +20,8 @@ const FormCheck = () => {
 
     //--------Hasta aca el codigo pertenece al stepper.--------
     return(
-        <Box sx={{ margin: "30px", backgroundColor: "red", display:"flex", justifyContent: "center", alignItems: "center"}}>
-        <Paper sx={{ width: "600px", minHeight:"600px", padding: "15px", margin:"10px" }}>
+        <Box sx={{ margin: "30px", display:"flex", justifyContent: "center", alignItems: "center"}}>
+        <Paper sx={{ width: "700px", minHeight:"600px", padding: "15px", margin:"10px" }}>
             <Typography component='h1' variant='h4' sx={{textAlign:"center"}}>
                 Verificación
             </Typography>
