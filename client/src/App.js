@@ -56,7 +56,9 @@ import UpdatePasswAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdatePas
 import UpdateDataAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdm";
 import MyDataAdm from "./components/AdminPanel/PerfilAdmin/panel/MyDataAdm";
 import { OrderDetails } from "./components/OrderDetails";
+import { OrderDetailForUserPanel } from "./components/OrderDetailForUserPanel";
 import UpdateDataAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdmG";
+import OrdersUserPanel from "./components/UserPanel/OrdersUserPanel";
 
 function App() {
   return (
@@ -67,7 +69,12 @@ function App() {
         <Route exact path="/:name" element={<Home />} />
         <Route exact path="/checkout" element={<CheckOutForm />} />
         <Route path="order/:id" element={<OrderDetails />} />
+        <Route path="/myOrders" element={<OrdersUserPanel />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route
+          path={`/orderForUserPanel/:id`}
+          element={<OrderDetailForUserPanel></OrderDetailForUserPanel>}
+        />
         <Route path="/about" element={<About />} />
         <Route path="/login/reset/:TokenE" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
@@ -113,10 +120,6 @@ function App() {
         <Route path="/updateAdminG" element={<UpdateDataAdmG />} />
         <Route path="/updatePasswAdmin" element={<UpdatePasswAdm />} />
         <Route path="/updatePasswAdminG" element={<UpdatePasswAdmG />} />
-
-        {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
-
-        <Route path="/prueba" element={<CartModal />} />
       </Routes>
       <Footer />
     </BrowserRouter>

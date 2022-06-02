@@ -1282,7 +1282,7 @@ router.post("/passwordResetWithEmail", async (req, res) => {
 
       const tokenUser = jwt.sign(userforToken, KEY_WORD_JWT);
 
-      const linkUser = `http://localhost:3000/login/reset/${tokenUser}`;
+      const linkUser = `https://final-project-beryl.vercel.app/login/reset/${tokenUser}`;
       const oAuth2Client = new google.auth.OAuth2(
         CLIENT_ID,
         CLIENT_SECRET,
