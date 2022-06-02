@@ -88,8 +88,8 @@ function RowGetUsers({ row, user, setRender , render }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await dispatch(userToAdmin(e.target.value,token));
-        console.log("SI HICE EL DISPATCH DEl HANDLE")
         setRender(e.target.value);
+        window.location.reload()
         Swal.fire(
           "Cambiado!",
           "El usuario ahora es administrador.",
@@ -114,6 +114,7 @@ function RowGetUsers({ row, user, setRender , render }) {
       if (result.isConfirmed) {
         await dispatch(adminToUser(e.target.value,token));
         setRender(e.target.value);
+        window.location.reload()
         Swal.fire(
           "Cambiado!",
           "El administrador ahora es usuario.",

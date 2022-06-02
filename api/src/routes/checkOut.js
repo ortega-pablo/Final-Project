@@ -509,11 +509,11 @@ router.post('/', async (req, res, next) => {
             
             let newOrderProduct = await OrderProducts.create({
                 
-                productName: findCart.products[i].dataValues.name,
-                price: findCart.products[i].dataValues.price,
-                quantity: findCart.products[i].dataValues.Quantity.total,
-                productId: findCart.products[i].dataValues.id,
-                productImage: findCart.products[i].dataValues.images[0].urlFile,
+                productName: findCart.products[i]?.dataValues.name,
+                price: findCart.products[i]?.dataValues.price,
+                quantity: findCart.products[i]?.dataValues.Quantity.total,
+                productId: findCart.products[i]?.dataValues.id,
+                productImage: findCart.products[i].dataValues.images[0]?.urlFile,
                 
             })
             newOrder.addOrderProduct(newOrderProduct)

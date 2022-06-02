@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { getCartById, getOrderById } from "../redux/actions";
+import { getCartById, getOrderById, putQuantityAfterOrder } from "../redux/actions";
 import {useNavigate} from "react-router-dom"
 
 
@@ -26,6 +26,11 @@ export const OrderDetails = () => {
         dispatch(getOrderById(id));
         dispatch(getCartById(token));
     }, [dispatch])
+
+    const handleClick = (e)=>{
+       
+        navigate("/")
+    }
 
   return (
     <Box
@@ -109,9 +114,7 @@ export const OrderDetails = () => {
                      variant='contained' 
                      color='ambar3' 
                      size='small'
-                     onClick={
-                        () => navigate("/")
-                    }
+                     onClick={(e)=>handleClick()}
                      >Volver a la tienda</Button>
                       : 
                     <Button

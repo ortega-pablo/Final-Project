@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ReviewDetails } from './ReviewDetails';
 import { AddressInfo } from './AddressInfo'
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { getUserIdByToken, postNewPaymentMethod } from '../../redux/actions';
+import { getUserIdByToken, postNewPaymentMethod, putQuantityAfterOrder } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -42,7 +42,9 @@ export const PaymentDetails = ({backStep}) => {
   const cart = useSelector(state => state.cart);
   const address = useSelector(state => state.shippingData);
   const orderProducts = useSelector(state => state.prepareOrder);
+  const currentOrder = useSelector(state => state.currentOrder);
   const idToken = JSON.parse(window.localStorage.getItem("token"))?.token;
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -51,8 +53,8 @@ export const PaymentDetails = ({backStep}) => {
     })
     setLoading(true);
     if (!error) {
+  
       const id = paymentMethod.id;
-      console.log("Tu hermana tiene payment methodId", id)
       const user = await dispatch(getUserIdByToken(idToken))
       const response = await dispatch(postNewPaymentMethod({
         id: id,
@@ -67,8 +69,13 @@ export const PaymentDetails = ({backStep}) => {
         Mobile: address.Mobile,
         orderProducts: orderProducts,
       }, address.id, user));
-      console.log("Esto es el response de tu hermana", response)
+      /* await dispatch() */
       if(response.paymentState === "success"){
+
+        cart?.products.map(async (prod) => {
+          await dispatch(putQuantityAfterOrder(prod.id, prod.Quantity.total))
+        })
+
         Swal.fire({
           background: "#2f2e2b",
           icon: "success",

@@ -94,6 +94,7 @@ export const POST_BANNER ="POST_BANNER";
 
 export const DELETE_BANNER ="DELETE_BANNER";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const PUT_INVENTORY_AFTER_ORDER = "PUT_INVENTORY_AFTER_ORDER";
 
 
 
@@ -1319,3 +1320,18 @@ export const getOrderById = (id) => {
   } 
 }
 
+export function putQuantityAfterOrder(productId,quantity) {
+  return async function (dispatch) {
+    try {
+      console.log("ESTE ES EL PRODUCT ID",productId)
+      console.log("ESTE ES EL QUANTITY",quantity)
+        await axios.put(`/inventory?productId=${productId}&quantity=${quantity}` );
+
+      return dispatch({
+        type: PUT_INVENTORY_AFTER_ORDER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
