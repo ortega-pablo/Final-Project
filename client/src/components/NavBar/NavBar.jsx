@@ -317,15 +317,6 @@ export const NavBar = (props) => {
           <Typography
             variant="h6"
             noWrap
-            component="div"
-            color="ambar1.main"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            LOGO
-          </Typography>
-          <Typography
-            variant="h6"
-            noWrap
             component="a"
             href="/"
             sx={{
