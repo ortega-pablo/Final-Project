@@ -9,6 +9,7 @@ import { Box, Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CARD_ELEMENTS_OPTIONS = {
   iconStyle: "solid",
@@ -67,9 +68,29 @@ export const PaymentDetails = ({backStep}) => {
         orderProducts: orderProducts,
       }, address.id, user));
       console.log("Esto es el response de tu hermana", response)
-    } else {
-      console.log(error);
+      if(response.paymentState === "success"){
+        Swal.fire({
+          background: "#2f2e2b",
+          icon: "success",
+          title: `Pago exitoso`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      navigate(`/order/${response.id}`)
+    }else{
+      Swal.fire({
+        background: "#2f2e2b",
+        icon: "error",
+        title: `Hubo inconvenientes con el pago`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate(`/order/${response.id}`)
     }
+  }
+  else {
+   console.log(error);
+ }
     elements.getElement(CardElement).clear();
     setLoading(false);
     // navigate("/order");

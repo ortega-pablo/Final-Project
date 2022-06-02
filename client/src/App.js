@@ -55,10 +55,12 @@ import UpdatePasswAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdatePass
 import UpdatePasswAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdatePasswAdmG";
 import UpdateDataAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdm";
 import MyDataAdm from "./components/AdminPanel/PerfilAdmin/panel/MyDataAdm";
+import { OrderDetails } from "./components/OrderDetails";
 import UpdateDataAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdmG";
 
 function App() {
   return (
+<<<<<<< HEAD
     <BrowserRouter>
       <NavBar />
       <Routes>
@@ -117,6 +119,70 @@ function App() {
         <Route path="/prueba" element={<CartModal />} />
       </Routes>
       <Footer />
+=======
+    
+    <BrowserRouter >
+        <NavBar/>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route exact path="/:name" element={<Home />} />
+            <Route exact path ="/checkout" element={<CheckOutForm/>} />
+            <Route path="order/:id" element={<OrderDetails/>} />
+            <Route path="/detail/:id" element={<Detail/>}/>
+            <Route path="/about" element={<About/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/createaccount" element={<CreateAccount/>}/>
+            <Route path="/forgotpassword" element ={<ForgotPassword/>}/>
+            <Route path="*" element={<NotFound/>}/>
+            <Route path="/adminPanel" element={<AdminPanel/>}/>
+
+            <Route path="/allCategories" element={<AllCategories/>}/>
+            <Route path="/allProducts" element={<AllProducts/>}/>
+            <Route path="/allSpecifications" element={<AllSpecifications/>}/>
+            <Route path="/allDiscounts" element={<AllDiscounts/>}/>
+            <Route path="/allStock" element={<AllStock/>}/>
+
+            <Route path="/adminCategories" element={<AdminCategories/>}/>
+            <Route path="/adminProducts" element={<AdminProducts/>}/>
+            <Route path="/adminSpecifications" element={<AdminSpecifications/>}/>
+            <Route path="/adminDiscounts" element={<AdminDiscounts/>}/>
+            <Route path="/adminStock" element={<AdminStock/>}/>
+
+            <Route path="/createCategory" element={<CreateCategory/>}/>
+            <Route path="/createProduct" element={<CreateProduct/>}/>
+            <Route path="/createSpecification" element={<CreateSpecification/>}/>
+            <Route path="/createDiscount" element={<CreateDiscount/>}/>
+
+
+            <Route path="/usersPanel" element={<UsersPanel/>}/>
+            <Route path="/orders" element={<Orders/>}/>
+            <Route path="/askPanel" element={<AskPanel/>}/>
+            <Route path="/banner" element={<AdminBanner/>}/>
+
+
+            <Route path="/cart" element={<CartView/>}/>
+              
+            <Route path="/userProfile" element={<UserPanel/>}/>
+            <Route path="/myData" element={<UserPanel/>}/>
+            <Route path="/updateUser" element={<UserUploadData/>}/>
+            <Route path="/updateUserG" element={<UserUpdateDataG/>}/>
+            <Route path="/updatePasswUser" element={<UserUploadPasw/>}/>
+            <Route path="/updatePasswUserG" element={<UserUploadPaswG/>}/>
+            <Route path="/allQuestions" element={<QuestionPanel/>}/>
+
+            <Route path="/myDataAdm" element={< MyDataAdm/>}/>
+            <Route path="/updateAdmin" element={<UpdateDataAdm/>}/>
+            <Route path="/updateAdminG" element={<UpdateDataAdmG/>}/>
+            <Route path="/updatePasswAdmin" element={<UpdatePasswAdm/>}/>
+            <Route path="/updatePasswAdminG" element={<UpdatePasswAdmG/>}/>
+
+            {/* <Route path="askPanel/prueba2/:user/:prod/:preg" element={<VerHilo/>}/> */}
+
+            <Route path="/prueba" element={<CartModal/>}/>
+
+          </Routes>
+        <Footer/>
+>>>>>>> be358765326bac880143ea15bedcb5861f473750
     </BrowserRouter>
   );
 }
