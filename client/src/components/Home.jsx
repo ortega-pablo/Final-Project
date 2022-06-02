@@ -5,7 +5,9 @@ import {
   getProducts,
   filterPerCategory,
   filterPerSubCategory,
-  filterPerPrice
+  filterPerPrice,
+  getCartById,
+  getUserIdByToken
 } from "../redux/actions";
 import SwipeableTextMobileStepper from "./Carousel/SwipeableTextMobileStepper";
 import { Paginationxd } from "./Pagination/Pagination";
@@ -53,7 +55,6 @@ export const Home = () => {
   } else {
     console.log('visitor')
   }
-
   const {name} = useParams();
   
   console.log(name);
