@@ -34,7 +34,7 @@ export default function UserMenuLarge() {
   }, [render]);
 
   const user = useSelector((state) => state.getDetailOneUser);
-
+  console.log(user)
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
@@ -60,7 +60,7 @@ export default function UserMenuLarge() {
   const handleClick5 = () => {
     setOpen5(!open5);
   };
-
+  
   return (
     <HiddenxsDown sx={{ borderRadius: "10px" }}>
       <Paper sx={{ height: "100%", display: "flex" }}>
@@ -95,6 +95,7 @@ export default function UserMenuLarge() {
               <Divider variant="middle" />
 
               {!user.loginWithGoogle ? (
+                
                 <ListItemButton component="a" href="/updateUser" sx={{ pl: 4 }}>
                   <ListItemIcon>
                     <ModeEditIcon />

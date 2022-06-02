@@ -1,6 +1,14 @@
 import {
     Button,
    
+    Paper,
+   
+    Table,
+   
+    TableContainer,
+   
+    TableRow,
+   
     TextField,
     Typography,
 
@@ -33,6 +41,7 @@ export const UpdataDataAdmin = () => {
     const validationSchema = yup.object({
       userName: yup
         .string("Ingrese el nombre de la nueva categoria")
+        .max(30, "El maximo de caracteres es 30")
   
         // .notOneOf(
         //   NameRepetido.map((name) => name),
@@ -42,6 +51,8 @@ export const UpdataDataAdmin = () => {
   
       firstName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .notOneOf(
         //   skuRepetido.map((sku) => sku),
         //   "Ya existe un producto con éste codigo sku"
@@ -49,14 +60,20 @@ export const UpdataDataAdmin = () => {
         .required("La descripción es requerida"),
       lastName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         .required("La descripción es requerida"),
   
       phone: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .min(8, 'Password should be of minimum 8 characters length')
         .required("La descripción es requerida"),
         currentPassword: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         
         .required("La actual contraseña es requerida para hacer cambios en tu perfil"),
       // oldPassword: yup
@@ -105,7 +122,7 @@ export const UpdataDataAdmin = () => {
            if(newData !== undefined){
              setRender(values)
              Swal.fire("Modificado!");
-             navigate(`/myData`)
+             navigate(`/myDataAdm`)
              
            
           }else {
@@ -124,130 +141,112 @@ export const UpdataDataAdmin = () => {
 
   return (
       <>
-        <>
-      <Typography sx={{mt:"15px", mb:"15px"}} variant="h3"> Edita tu perfil</Typography>
-
-      {
-        <div>
-          <Box
-            sx={{display:"flex"}}
+      <Box
+        sx={{ mt: 5, width: "100%"}}
             component="form"
             noValidate
             autoComplete="off"
             // onChange={(e) => handleInput(e)}
             //  onSubmit={(e) => handleSubmit(e)}
             onSubmit={formik.handleSubmit}
-          >
-            <TextField
-            focused
-              id="outlined-basic"
-              label="Nombre de usuario *"
-              variant="outlined"
-              name="userName"
-              value={formik.values.userName}
-              onChange={formik.handleChange}
-              error={formik.touched.userName && Boolean(formik.errors.userName)}
-              helperText={formik.touched.userName && formik.errors.userName}
-            />
-            <TextField
-              focused
-              id="outlined-basic"
-              label="Nombre *"
-              variant="outlined"
-              name="firstName"
-              value={formik.values.firstName}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.firstName && Boolean(formik.errors.firstName)
-              }
-              helperText={formik.touched.firstName && formik.errors.firstName}
-            />
-            <TextField
-            focused
-              id="outlined-basic"
-              label="Apellido *"
-              variant="outlined"
-              name="lastName"
-              value={formik.values.lastName}
-              onChange={formik.handleChange}
-              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-              helperText={formik.touched.lastName && formik.errors.lastName}
-            />
+      >
+        <Typography
+          sx={{ mt: "2%", mb: "2%", textAlign: "center" }}
+          variant="h3"
+          color="ambar5.main"
+        >
+          Editar tus datos
+        </Typography>
+        <TableContainer component={Paper} align="center" >
+          <Table aria-label="collapsible table" sx={{ display:"flex", flexDirection:"column", alignItems:"center", pl:3  }}>
+            <TableRow  sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                focused
+                id="outlined-basic"
+                label="Nombre de usuario *"
+                variant="outlined"
+                name="userName"
+                value={formik.values.userName}
+                onChange={formik.handleChange}
+                error={formik.touched.userName && Boolean(formik.errors.userName)}
+                helperText={formik.touched.userName && formik.errors.userName}
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
 
-            {/* <TextField
-              id="outlined-basic"
-              label="Domicilio *"
-              variant="outlined"
-              name="addresses"
-              value={formik.values.addresses}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.addresses && Boolean(formik.errors.addresses)
-              }
-              helperText={formik.touched.addresses && formik.errors.addresses}
-            /> */}
-            <TextField
-            focused
-              id="outlined-basic"
-              label="Telefono *"
-              variant="outlined"
-              name="phone"
-              value={formik.values.phone}
-              onChange={formik.handleChange}
-              error={formik.touched.phone && Boolean(formik.errors.phone)}
-              helperText={formik.touched.phone && formik.errors.phone}
-            />
-            <TextField
-            autoComplete="off"
-              id="outlined-basic"
-              label="Actual Contraseña *"
-              variant="outlined"
-              type="password"
-              name="currentPassword"
-              value={formik.values.currentPassword}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.currentPassword && Boolean(formik.errors.currentPassword)
-              }
-              helperText={
-                formik.touched.currentPassword && formik.errors.currentPassword
-              }
-            />
+            <TableRow sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                focused
+                id="outlined-basic"
+                label="Nombre *"
+                variant="outlined"
+                name="firstName"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
 
-            {/* <TextField
-              id="outlined-basic"
-              label="Nueva Contraseña *"
-              variant="outlined"
-              name="newPassword"
-              type="password"
-              value={formik.values.newPassword}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.newPassword && Boolean(formik.errors.newPassword)
-              }
-              helperText={
-                formik.touched.newPassword && formik.errors.newPassword
-              }
-                /> */}
-        {/* <TextField
-           
-            required
-            autoComplete="off"
-            id="password"
-            label="Confirmar Contraseña"
-            name="passwordConfirmation"
-            type="password"
-            value={formik.values.passwordConfirmation}
-            onChange={formik.handleChange}
-            error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
-            helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
-            /> */}
-            <Button type="submit">Modificar</Button>
-          </Box>
-        </div>
-      }
-    </>
+            <TableRow sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                focused
+                id="outlined-basic"
+                label="Apellido *"
+                variant="outlined"
+                name="lastName"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName}
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
+
+            <TableRow sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                focused
+                id="outlined-basic"
+                label="Telefono *"
+                variant="outlined"
+                name="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
+                helperText={formik.touched.phone && formik.errors.phone}
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
+
+            <TableRow sx={{ mt: 3, width: "98%" }}>
+              <TextField
+                autoComplete="off"
+                id="outlined-basic"
+                label="Actual Contraseña *"
+                variant="outlined"
+                type="password"
+                name="currentPassword"
+                value={formik.values.currentPassword}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.currentPassword && Boolean(formik.errors.currentPassword)
+                }
+                helperText={
+                  formik.touched.currentPassword && formik.errors.currentPassword
+                }
+                sx={{ width: "98%" }}
+              />
+            </TableRow>
+
+            <TableRow sx={{ mb: 3, mt: 3, width: "98%" }}>
+              <Button type="submit" variant="contained" color="ambar3" sx={{ width: "98%" }}>Modificar</Button>
+            </TableRow>
+          </Table>
+        </TableContainer>
+      </Box>
       </>
-    
   )
 }

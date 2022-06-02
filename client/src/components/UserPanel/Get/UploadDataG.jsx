@@ -35,6 +35,8 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
     const validationSchema = yup.object({
       userName: yup
         .string("Ingrese el nombre de la nueva categoria")
+        .max(30, "El maximo de caracteres es 30")
+
   
         // .notOneOf(
         //   NameRepetido.map((name) => name),
@@ -44,6 +46,8 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
   
       firstName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .notOneOf(
         //   skuRepetido.map((sku) => sku),
         //   "Ya existe un producto con éste codigo sku"
@@ -51,10 +55,14 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
         .required("La descripción es requerida"),
       lastName: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         .required("La descripción es requerida"),
   
       phone: yup
         .string("Ingrese la descripción")
+        .max(30, "El maximo de caracteres es 30")
+
         // .min(8, 'Password should be of minimum 8 characters length')
         .required("La descripción es requerida"),
         // currentPassword: yup
@@ -110,37 +118,35 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
              navigate(`/myData`)
            
           }
-        //   else {
-        //     Swal.fire("La password es incorrecta!")
-        //   }
+ 
         } })
   
-        
-        
-      //  await dispatch(editUserForUser(idToken, values));
-      //  setRender(values)
-      //   resetForm({ values: "" });
+
       },
     });
   
     return (
       <>
 
-<Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" > Edita tu perfil</Typography>
-
-
-        {
-          <div>
-            <Box
-              component="form"
+<Box
+        sx={{ mt: 5, width: "100%"}}
+        component="form"
               noValidate
               autoComplete="off"
-              // onChange={(e) => handleInput(e)}
-              //  onSubmit={(e) => handleSubmit(e)}
               onSubmit={formik.handleSubmit}
-            >
+      >
+        <Typography
+          sx={{ mt: "2%", mb: "2%", textAlign: "center" }}
+          variant="h3"
+          color="ambar5.main"
+        >
+          Editar tus datos
+        </Typography>
+        <TableContainer component={Paper} align="center" >
+          <Table aria-label="collapsible table" sx={{ display:"flex", flexDirection:"column", alignItems:"center", pl:3  }}>
+            <TableRow  sx={{ mt: 3, width: "98%" }}>
               <TextField
-              focused
+                focused
                 id="outlined-basic"
                 label="Nombre de usuario *"
                 variant="outlined"
@@ -149,7 +155,11 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
                 onChange={formik.handleChange}
                 error={formik.touched.userName && Boolean(formik.errors.userName)}
                 helperText={formik.touched.userName && formik.errors.userName}
+                sx={{ width: "98%" }}
               />
+            </TableRow>
+
+            <TableRow sx={{ mt: 3, width: "98%" }}>
               <TextField
                 focused
                 id="outlined-basic"
@@ -162,9 +172,13 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
                   formik.touched.firstName && Boolean(formik.errors.firstName)
                 }
                 helperText={formik.touched.firstName && formik.errors.firstName}
+                sx={{ width: "98%" }}
               />
+            </TableRow>
+
+            <TableRow sx={{ mt: 3, width: "98%" }}>
               <TextField
-              focused
+                focused
                 id="outlined-basic"
                 label="Apellido *"
                 variant="outlined"
@@ -173,81 +187,32 @@ import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../r
                 onChange={formik.handleChange}
                 error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                 helperText={formik.touched.lastName && formik.errors.lastName}
+                sx={{ width: "98%" }}
               />
-  
-              {/* <TextField
-                id="outlined-basic"
-                label="Domicilio *"
-                variant="outlined"
-                name="addresses"
-                value={formik.values.addresses}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.addresses && Boolean(formik.errors.addresses)
-                }
-                helperText={formik.touched.addresses && formik.errors.addresses}
-              /> */}
+            </TableRow>
+
+            <TableRow sx={{ mt: 3, width: "98%" }}>
               <TextField
-              focused
-              autoComplete="off"
-                id="outlined-basic"
-                label="Telefono "
-                variant="outlined"
-                name="phone"
-                value={formik.values.phone}
-                onChange={formik.handleChange}
-                error={formik.touched.phone && Boolean(formik.errors.phone)}
-                helperText={formik.touched.phone && formik.errors.phone}
+                focused
+                autoComplete="off"
+                  id="outlined-basic"
+                  label="Telefono "
+                  variant="outlined"
+                  name="phone"
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
+                  helperText={formik.touched.phone && formik.errors.phone}
+                sx={{ width: "98%" }}
               />
-              {/* <TextField
-              autoComplete="off"
-                id="outlined-basic"
-                label="Actual Contraseña *"
-                variant="outlined"
-                type="password"
-                name="currentPassword"
-                value={formik.values.currentPassword}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.currentPassword && Boolean(formik.errors.currentPassword)
-                }
-                helperText={
-                  formik.touched.currentPassword && formik.errors.currentPassword
-                }
-              /> */}
-  
-              {/* <TextField
-                id="outlined-basic"
-                label="Nueva Contraseña *"
-                variant="outlined"
-                name="newPassword"
-                type="password"
-                value={formik.values.newPassword}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.newPassword && Boolean(formik.errors.newPassword)
-                }
-                helperText={
-                  formik.touched.newPassword && formik.errors.newPassword
-                }
-                  /> */}
-          {/* <TextField
-             
-              required
-              autoComplete="off"
-              id="password"
-              label="Confirmar Contraseña"
-              name="passwordConfirmation"
-              type="password"
-              value={formik.values.passwordConfirmation}
-              onChange={formik.handleChange}
-              error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
-              helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
-              /> */}
-              <Button type="submit">Modificar</Button>
-            </Box>
-          </div>
-        }
+            </TableRow>
+
+            <TableRow sx={{ mb: 3, mt: 3, width: "98%" }}>
+              <Button type="submit" variant="contained" color="ambar3" sx={{ width: "98%" }}>Modificar</Button>
+            </TableRow>
+          </Table>
+        </TableContainer>
+      </Box>
       </>
     );
   };

@@ -1,6 +1,7 @@
 import {
   Button,
   InputLabel,
+  Link,
   MenuItem,
   Modal,
   Paper,
@@ -16,7 +17,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import {
   getAllAsksAllProducts,
   getAllUsers,
@@ -68,18 +69,24 @@ export const Preguntas = () => {
 
   return (
     <>
-      <div>Preguntas</div>
-      {/* <Button onClick={() => setSinResponder(!sinResponder)}>
-        Mostrar preguntas sin respoder
-      </Button> */}
+  <Typography component="h1" variant="h3">Preguntas por responder </Typography>     
 
       {
         <>
           {allAsks?.map((prod) => {
+
+
+
+
+
             return (
               prod.asks.find((a) => a.answer === null) && (
                 <>
-                  <Link to={`/detail/${prod?.id}`}>
+                
+
+                <Box>  </Box>
+                 
+                  <Link underline="none" href={`/detail/${prod?.id}`}>
                     <Typography component="h1" variant="h5">
                       {prod.name}
                     </Typography>
@@ -90,16 +97,31 @@ export const Preguntas = () => {
                     console.log(userPreg);
                     const p = allAsks.filter((pro) => pro.id === prod.id);
                     const r = p[0].asks.filter((q) => q.userId === preg.userId);
-                    // const r = p?.filter( s=> s?.userId=== preg.userId)
-                    console.log(p);
-                    console.log(r);
+                    
+                    let day1 = new Date(preg.createdAt);
+                    let day2 = new Date();
+                    console.log(day1)
+                    console.log(day2)
+                    let difference = day2.getTime()-day1.getTime();
+                  console.log(difference)
 
                     return (
                       !preg.answer && (
                         <>
-                          {/* <Link
-                            to={`prueba2/${preg?.userId}/${prod?.id}/${preg?.id}`}
-                          > */}
+                          {difference < 3.54e+6 ?    
+                   <Typography component="h6" variant="h6">
+                    Hace {  Math.round(difference / 60000)   } minutos
+                  </Typography> :   (  difference >= 3.54e+6 && difference < 8.64e+7  )   ?
+                   <Typography component="h6" variant="h6">
+                    Hace {  Math.round(difference / 3.6e+6)   } horas
+                  </Typography> :  
+                   <Typography component="h6" variant="h6">
+                   Hace {  Math.round(difference / 8.64e+7)   } dias
+                 </Typography>
+                    }
+
+
+
                           <Typography>
                             <b>{userPreg?.userName}</b> ha preguntado:{" "}
                           </Typography>
@@ -119,18 +141,10 @@ export const Preguntas = () => {
                           )}
                           <hr />
 
-                          {/* <Link
-                          
-                            to={`prueba2/${preg?.userId}/${prod?.id}/${preg?.id}`}
-                            variant="contained"
-                            color="ambar3"
-                            >
-                          
-                            <Button>
-                              Ver historial entre este usuario y producto
-                            </Button>
-                            </Link> */}
+                      
                             <Button onClick={handleOpen}> Ver historial entre este usuario y producto</Button>
+                            
+                             
 <Modal
   open={open}
   onClose={handleClose}
@@ -172,7 +186,7 @@ export const Preguntas = () => {
         </>
       }
 
-      <InputLabel id="demo-simple-select-standard-label">
+      <InputLabel  id="demo-simple-select-standard-label">
         Seleccione un usuario
       </InputLabel>
       <Select
@@ -188,7 +202,7 @@ export const Preguntas = () => {
         {allUsers?.map((u, i) => {
           return (
             <MenuItem key={i} value={u.id}>
-              {u?.userName}
+            Id: {u.id} - {u?.userName}
             </MenuItem>
           );
         })}
@@ -219,7 +233,7 @@ export const Preguntas = () => {
                         {p?.asks?.map((pr) => {
                           return (
                             <>
-                              <Typography> {pr.content}</Typography>
+                              <Typography> - {pr.content}</Typography>
                             </>
                           );
                         })}
@@ -229,7 +243,7 @@ export const Preguntas = () => {
                           console.log(pr);
                           return (
                             <>
-                              <Typography> {pr?.answer?.content}</Typography>
+                              <Typography> - {pr?.answer?.content}</Typography>
                             </>
                           );
                         })}

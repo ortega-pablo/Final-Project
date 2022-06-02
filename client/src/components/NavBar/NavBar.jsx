@@ -163,7 +163,7 @@ export const NavBar = (props) => {
           </>
         ) : userStatus === "admin" || userStatus === "superAdmin" ? (
           <>
-            <Link sx={{ textDecoration: "none" }} href="/adminProfile">
+            <Link sx={{ textDecoration: "none" }} href="/myDataAdm">
               <MenuItem onClick={handleMenuProfileClose}>
                 <Typography variant="body1" color="ambar5.main">
                   Perfil
@@ -314,15 +314,6 @@ export const NavBar = (props) => {
         }}
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            color="ambar1.main"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            LOGO
-          </Typography>
           <Typography
             variant="h6"
             noWrap

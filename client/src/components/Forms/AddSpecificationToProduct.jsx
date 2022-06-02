@@ -17,6 +17,8 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
     value: yup
 
       .string("Ingrese el nombre de la nueva categoria")
+      .max(100, "La cantidad maxima de caracteres es 100")
+
       //  .notOneOf(allCategories.map( p=> p.name), "Ya existe esa categoría" )
       .required("El nombre es requerido"),
   });
@@ -27,7 +29,7 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       await dispatch(
         postAddSpecificationToProduct(newProdId, specifications, values)
       );
@@ -56,7 +58,7 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
           label="Valor de la especificación"
           variant="outlined"
           name="value"
-          sx={{ml:3, mr:3}}
+          sx={{ml:0, mr:3}}
           // helperText={leyendaErrorName2}
           // error={errorName2}
           value={formik.values.value}

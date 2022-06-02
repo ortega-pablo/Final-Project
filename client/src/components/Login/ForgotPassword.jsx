@@ -19,7 +19,7 @@ export const ForgotPassword = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
     },
   });
   return (

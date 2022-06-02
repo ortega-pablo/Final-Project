@@ -82,7 +82,7 @@ import {
   UPDATE_PASSWORD_FOR_USER,
   POST_BANNER,
   GET_BANNER,
-  DELETE_BANNER
+  DELETE_BANNER,
 } from "../actions";
 
 const initialState = {
@@ -515,7 +515,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_ONE_USER:
-      console.log("reducer", state.getDetailOneUser);
       return {
         ...state,
         getDetailOneUser: action.payload,

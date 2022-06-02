@@ -176,17 +176,17 @@ function SwipeableFilters({
             <Divider variant="middle" />
             <ListItemButton
               onClick={() => {
-                handleClickSubmitPerPrice({ Desde: 0, Hasta: 1000 });
+                handleClickSubmitPerPrice({ Desde: 0, Hasta: 999 });
               }}
             >
-              <ListItemText primary={"Hasta $1.000"} />
+              <ListItemText primary={"Hasta $999"} />
             </ListItemButton>
             <ListItemButton
               onClick={() => {
-                handleClickSubmitPerPrice({ Desde: 1000, Hasta: 2000 });
+                handleClickSubmitPerPrice({ Desde: 1000, Hasta: 1999 });
               }}
             >
-              <ListItemText primary={"$1.000 - $2.000"} />
+              <ListItemText primary={"$1.000 - $1.999"} />
             </ListItemButton>
             <ListItemButton
               onClick={() => {

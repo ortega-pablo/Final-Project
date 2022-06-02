@@ -13,6 +13,8 @@ import * as yup from 'yup';
 const validationSchema = yup.object({
     content: yup
       .string('Realizar una pregunta')
+      .max(500, "El máximo de caracteres es de 500")
+
       .required('Este campo no se puede enviar vacío'),
   });
   

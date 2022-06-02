@@ -14,12 +14,15 @@ import {
   import { useFormik } from "formik";
   import React, { useState } from "react";
   import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
   import Swal from "sweetalert2";
   import * as yup from "yup";
   import { editUser, editUserForUser } from "../../redux/actions";
   
   export const EditarPerfilGoogle = ({ user, idToken, render, setRender }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const validationSchema = yup.object({
       userName: yup
         .string("Ingrese el nombre de la nueva categoria")
@@ -95,7 +98,7 @@ import {
            if(newData !== undefined){
              setRender(values)
              Swal.fire("Modificado!");
-           
+             navigate(`/myData`)
           }
         //   else {
         //     Swal.fire("La password es incorrecta!")
@@ -113,7 +116,6 @@ import {
     return (
       <>
         <div>EditarPerfil</div>
-  <h2>Momentaneamente no se pueden  hacer cambios en en los datos de cuentas google </h2>
         {
           <div>
             <Box
