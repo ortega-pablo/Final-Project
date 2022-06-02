@@ -9,6 +9,7 @@ const {
   Address,
   Product,
   Order,
+  OrderProducts
 } = require("../db");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
@@ -186,7 +187,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
-
+console.log(userId)
   try {
     if (userId) {
       const findById = await User.findOne({
@@ -214,7 +215,7 @@ router.get("/:userId", async (req, res) => {
           {
             model: Order,
             include: {
-              model: Product,
+              model: OrderProducts,
             },
           },
           {
@@ -229,6 +230,7 @@ router.get("/:userId", async (req, res) => {
           },
         ],
       });
+      console.log(findById)
 
       return res.send(findById);
     } else {
@@ -602,9 +604,9 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
 
 const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
 
-router.post("/google-login", async (req, res) => {
+router.post("/google-login", async (req, res, next) => {
   const { token } = req.body;
-
+try {
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID_GOOGLE,
@@ -635,6 +637,9 @@ router.post("/google-login", async (req, res) => {
   const addShoppingCart = await ShoppingCart.create({});
 
     addShoppingCart.setUser(user);
+} catch (error) {
+  next(error)
+}
 });
 
 

@@ -56,6 +56,7 @@ import UpdatePasswAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdatePas
 import UpdateDataAdm from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdm";
 import MyDataAdm from "./components/AdminPanel/PerfilAdmin/panel/MyDataAdm";
 import { OrderDetails } from "./components/OrderDetails";
+import UpdateDataAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdmG";
 
 
 
@@ -115,7 +116,7 @@ function App() {
 
             <Route path="/myDataAdm" element={< MyDataAdm/>}/>
             <Route path="/updateAdmin" element={<UpdateDataAdm/>}/>
-            <Route path="/updateAdminG" element={<UpdataDataAdminG/>}/>
+            <Route path="/updateAdminG" element={<UpdateDataAdmG/>}/>
             <Route path="/updatePasswAdmin" element={<UpdatePasswAdm/>}/>
             <Route path="/updatePasswAdminG" element={<UpdatePasswAdmG/>}/>
 
