@@ -399,9 +399,12 @@ router.put("/editAdmin", async (req, res, next) => {
   }
 });
 
-router.put("/changeUserToAdmin/:userId", [cors(), verifyToken], async (req, res, next) => {
+router.put(
+  "/changeUserToAdmin/:userId",
+  [cors(), verifyToken],
+  async (req, res, next) => {
     const { userId } = req.params;
-    console.log("EMPECE A EJECUTAR LA RUTA")
+    console.log("EMPECE A EJECUTAR LA RUTA");
     try {
       if (req.role === "superAdmin") {
         const findUser = await User.findOne({
@@ -409,7 +412,7 @@ router.put("/changeUserToAdmin/:userId", [cors(), verifyToken], async (req, res,
             id: userId,
           },
         });
-        console.log("EL ROL ES:", findUser)
+        console.log("EL ROL ES:", findUser);
         if (findUser && findUser.dataValues.role === "user") {
           await User.update(
             {
@@ -434,7 +437,10 @@ router.put("/changeUserToAdmin/:userId", [cors(), verifyToken], async (req, res,
   }
 );
 
-router.put("/changeAdminToUser/:userId",[cors(), verifyToken],async (req, res, next) => {
+router.put(
+  "/changeAdminToUser/:userId",
+  [cors(), verifyToken],
+  async (req, res, next) => {
     const { userId } = req.params;
     try {
       if (req.role === "superAdmin") {
@@ -499,7 +505,6 @@ router.put("/resetPasswordWithoutOld/:userId", async (req, res, next) => {
   }
 });
 /* RESET PASSWORD USER WITH THE OLD PASSWORD */
-
 router.put("/resetPasswordWithOld", async (req, res, next) => {
   try {
     const { userId } = req.query;
@@ -550,14 +555,14 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
     });
     if (findUser && !findUser.loginWithGoogle) {
       const passwordCorrect =
-      findUser === null
-        ? false
-        : await bcrypt.compare(currentPassword, findUser.dataValues.password);
-    if (!passwordCorrect) {
-      return res.status(400).json({
-        error: "invalid user or password",
-      });
-    }
+        findUser === null
+          ? false
+          : await bcrypt.compare(currentPassword, findUser.dataValues.password);
+      if (!passwordCorrect) {
+        return res.status(400).json({
+          error: "invalid user or password",
+        });
+      }
       await User.update(
         {
           userName,
@@ -572,7 +577,7 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
         }
       );
       res.status(200).send("user updated successfully!");
-    } else if(findUser && findUser.loginWithGoogle){
+    } else if (findUser && findUser.loginWithGoogle) {
       await User.update(
         {
           userName,
@@ -587,10 +592,7 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
         }
       );
       res.status(200).send("user updated successfully!");
-    }
-    
-    
-    else {
+    } else {
       res.send("user not found");
     }
   } catch (error) {
@@ -602,51 +604,54 @@ router.put("/updateDatesUser/:userId", async (req, res, next) => {
 
 const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE);
 
-router.post("/google-login", async (req, res) => {
-  const { token } = req.body;
-  console.log("este es el token de back",token)
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID_GOOGLE,
-  });
-  const { name, email, given_name, family_name } = ticket.getPayload();
-  const [user, created] = await User.findOrCreate({
-    where: { email: email },
-    defaults: {
-      userName: name,
-      firstName: given_name,
-      lastName: family_name,
-      loginWithGoogle: true,
-    },
-  });
-  const userforToken = {
-    id: user.dataValues.id,
-    username: user.dataValues.username,
-    rol: user.dataValues.rol,
-  };
+router.post("/google-login", async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    console.log("este es el token de back", token);
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID_GOOGLE,
+    });
+    const { name, email, given_name, family_name } = ticket.getPayload();
+    const [user, created] = await User.findOrCreate({
+      where: { email: email },
+      defaults: {
+        userName: name,
+        firstName: given_name,
+        lastName: family_name,
+        loginWithGoogle: true,
+      },
+    });
+    const userforToken = {
+      id: user.dataValues.id,
+      username: user.dataValues.username,
+      rol: user.dataValues.rol,
+    };
 
-  const token2 = jwt.sign(userforToken, KEY_WORD_JWT);
-  res.status(200).send({
-    firstName: user.dataValues.firstName,
-    username: user.dataValues.username,
-    token: token2,
-  });
+    const token2 = jwt.sign(userforToken, KEY_WORD_JWT);
+    res.status(200).send({
+      firstName: user.dataValues.firstName,
+      username: user.dataValues.username,
+      token: token2,
+    });
 
-  const addShoppingCart = await ShoppingCart.create({});
+    const addShoppingCart = await ShoppingCart.create({});
 
     addShoppingCart.setUser(user);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
-
 router.delete("/autoDeleteUser", async (req, res, next) => {
-  const {  userId } = req.query;
+  const { userId } = req.query;
   try {
     const findUser = await User.findOne({
       where: {
         id: userId,
       },
     });
-   
 
     if (findUser) {
       const findUser = await User.destroy({
@@ -665,7 +670,5 @@ router.delete("/autoDeleteUser", async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 module.exports = router;
