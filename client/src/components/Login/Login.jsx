@@ -17,8 +17,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import GoogleLogin from 'react-google-login';
 import { gapi } from "gapi-script";
-import axios from "axios"
-
+import axios from "axios";
 const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
 
 
