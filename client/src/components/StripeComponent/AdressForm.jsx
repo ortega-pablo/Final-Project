@@ -28,18 +28,19 @@ export const AdressForm =   ({nexStep, backStep}) => {
             <Typography variant='h6'>
                 Direccion de envio
             </Typography>
-            <FormControl>
-                <FormLabel >Direcciones</FormLabel>
-                <RadioGroup 
-                onChange={async (e)=> {
-                    setCurrentDirection(e.target.value);
-                }}  
-                value={currentDirection} >
-                    {directions?.map(d => (
-                        <FormControlLabel value={d.id2} control={<Radio></Radio>} label={`${d.Country}, ${d.Address1}, ${d.City} - ${d.FirstName} ${d.LastName}`} />
-                    ))}
-                </RadioGroup>
-            </FormControl>
+            {directions ? 
+                <FormControl>
+                    <FormLabel >Direcciones</FormLabel>
+                    <RadioGroup 
+                    onChange={async (e)=> {
+                        setCurrentDirection(e.target.value);
+                    }}  
+                    value={currentDirection} >
+                        {directions?.map(d => (
+                            <FormControlLabel value={d.id2} control={<Radio></Radio>} label={`${d.Country}, ${d.Address1}, ${d.City} - ${d.FirstName} ${d.LastName}`} />
+                        ))}
+                    </RadioGroup>
+            </FormControl> : <></>} 
             <Divider></Divider>
             <Box>
             <Button  color='ambar3' size='small' onClick={() => setOpen(!open)} sx={{mt: 2}}  endIcon={open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>} >{open ? "Cancelar" : "Nueva dirección"  }</Button>
@@ -113,8 +114,6 @@ export const AdressForm =   ({nexStep, backStep}) => {
             </Collapse>
            {!open && <Box sx={{display:"flex", flexDirecion:"column", justifyContent: "center"}} component="form" onSubmit={async (e) => {
                e.preventDefault()
-               console.log(directions)
-               console.log(currentDirection)
                let direction = directions[currentDirection];
                await dispatch(setShippingData(direction));
                nexStep()
@@ -128,7 +127,7 @@ export const AdressForm =   ({nexStep, backStep}) => {
                                 >
                                     Volver al carrito
                                 </Button>
-                                <Button type='submit' variant='contained' color='ambar3' size='small'>
+                                <Button disabled={!directions.length} type='submit' variant='contained' color='ambar3' size='small'>
                                     Siguiente
                                 </Button>
                             </Box>
