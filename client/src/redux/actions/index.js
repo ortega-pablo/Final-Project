@@ -93,6 +93,7 @@ export const GET_BANNER ="GET_BANNER";
 export const POST_BANNER ="POST_BANNER";
 
 export const DELETE_BANNER ="DELETE_BANNER";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 
 
 
@@ -1300,5 +1301,19 @@ export function deleteImageToBanner(id) {
       console.log(error);
     }
   };
+}
+
+export const getOrderById = (id) => {
+  return async dispatch => {
+    try {
+      let response = await axios.get(`http://localhost:3001/orders?orderId=${id}`);
+      return dispatch({
+        type: GET_ORDER_BY_ID,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  } 
 }
 
