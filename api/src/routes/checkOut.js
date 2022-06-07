@@ -81,14 +81,18 @@ router.post('/', async (req, res, next) => {
                 through: {
                     attributes: ["total"]
                 },
-                include: {
-                    model: Image,
+                include: [
+                    {
+                        
+                     model: Image,
                     attributes: ["urlFile"],
                     through: {
                         attributes: []
                     }
-                }
-            } 
+                        
+                    }
+                ]
+            }
         });
 
         console.log("Este es el carrito", findCart.products);
