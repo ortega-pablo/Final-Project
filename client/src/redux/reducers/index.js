@@ -83,7 +83,8 @@ import {
   POST_BANNER,
   GET_BANNER,
   DELETE_BANNER,
-  GET_ORDER_BY_ID
+  GET_ORDER_BY_ID,
+  PUT_INVENTORY_AFTER_ORDER
 } from "../actions";
 
 const initialState = {
@@ -758,6 +759,11 @@ const rootReducer = (state = initialState, action) => {
     }
   }
 
+  case PUT_INVENTORY_AFTER_ORDER: {
+    return{
+      ...state,
+    }
+  }
 
     default:
       return state;

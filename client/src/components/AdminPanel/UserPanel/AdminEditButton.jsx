@@ -36,6 +36,7 @@ const validationSchema = yup.object({
 
   phone: yup
     .string()
+    .max(10, "Too Long!")
     .required("Phone number is required"),
 
 });
@@ -112,7 +113,7 @@ function AdminEditButton({user , token , setRender, render}) {
             
             <TextField
               margin="normal"
-              required
+             /*  required */
               fullWidth
               id="userName"
               label="Nombre de usuario"
@@ -125,7 +126,7 @@ function AdminEditButton({user , token , setRender, render}) {
 
             <TextField
               margin="normal"
-              required
+            /*   required */
               fullWidth
               id="firstName"
               label="Nombre"
@@ -140,7 +141,7 @@ function AdminEditButton({user , token , setRender, render}) {
 
             <TextField
               margin="normal"
-              required
+           /*    required */
               fullWidth
               id="lastName"
               label="Apellido"
@@ -153,7 +154,7 @@ function AdminEditButton({user , token , setRender, render}) {
 
             <TextField
               margin="normal"
-              required
+        /*       required */
               fullWidth
               id="phone"
               label="Teléfono"

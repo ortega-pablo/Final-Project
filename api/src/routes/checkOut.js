@@ -81,14 +81,18 @@ router.post('/', async (req, res, next) => {
                 through: {
                     attributes: ["total"]
                 },
-                include: {
-                    model: Image,
+                include: [
+                    {
+                        
+                     model: Image,
                     attributes: ["urlFile"],
                     through: {
                         attributes: []
                     }
-                }
-            } 
+                        
+                    }
+                ]
+            }
         });
 
         console.log("Este es el carrito", findCart.products);
@@ -397,7 +401,7 @@ router.post('/', async (req, res, next) => {
           <td align="left" style="padding:0;Margin:0;padding-bottom:15px"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Fecha programada de entrega:</h4></td>
           </tr>
           <tr style="border-collapse:collapse">
-          <td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">January 1st, 2016</p></td>
+          <td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">Junio 2, 2022</p></td>
           </tr>
           </table></td>
           </tr>
@@ -509,11 +513,11 @@ router.post('/', async (req, res, next) => {
             
             let newOrderProduct = await OrderProducts.create({
                 
-                productName: findCart.products[i].dataValues.name,
-                price: findCart.products[i].dataValues.price,
-                quantity: findCart.products[i].dataValues.Quantity.total,
-                productId: findCart.products[i].dataValues.id,
-                productImage: findCart.products[i].dataValues.images[0].urlFile,
+                productName: findCart.products[i]?.dataValues.name,
+                price: findCart.products[i]?.dataValues.price,
+                quantity: findCart.products[i]?.dataValues.Quantity.total,
+                productId: findCart.products[i]?.dataValues.id,
+                productImage: findCart.products[i].dataValues.images[0]?.urlFile,
                 
             })
             newOrder.addOrderProduct(newOrderProduct)

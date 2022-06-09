@@ -113,6 +113,7 @@ export default function CartModal({
     }).then((result) => {
       if (result.isConfirmed) {
         navigate("/login");
+        window.location.reload()
       }
     });
   };

@@ -6,7 +6,7 @@ import AdminMenuMobile from "../AdminMenuMobile";
 import GetAllUsersToAdmin from "../UserPanel/GetAllUsersToAdmin";
 import UsersFilters from "./UsersFilters";
 import { NotFound } from "../../NotFound/NotFound";
-import { Box, Container } from "@mui/material";
+import { Box, CircularProgress, Container } from "@mui/material";
 
 function UsersPanel() {
   const userStatus = useSelector((state) => state.userStatus)
@@ -62,7 +62,12 @@ function UsersPanel() {
       </Container>
     </Box>
   ) : (
-    <NotFound />
+    <CircularProgress
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              />
   );
 }
 
