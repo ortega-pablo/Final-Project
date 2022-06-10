@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDiscount, postDiscount } from "../../../redux/actions";
 import Swal from 'sweetalert2';
+import { TypographyMenu } from "../../../personalizadTheme";
 export const CreateDiscout = () => {
   const dispatch = useDispatch();
   const allDiscounts = useSelector((state) => state.discounts)
@@ -71,7 +72,7 @@ export const CreateDiscout = () => {
         // onChange={(e) => handleInput(e)}
         //  onSubmit={(e) => handleSubmit(e)}
         onSubmit={formik.handleSubmit}
-        sx={{mt:3}}
+        sx={{m:3}}
       >
         <TextField
           id="outlined-basic"
@@ -147,7 +148,7 @@ export const CreateDiscout = () => {
           }
           label="Activo"
         /> */}
-        <Button  type="submit" variant="contained" color="ambar3">Confirmar creación</Button>
+        <Button  type="submit" variant="contained" color="darkGrey" size="small"> <TypographyMenu>Confirmar</TypographyMenu></Button>
       </Box>
 
   );

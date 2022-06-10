@@ -47,7 +47,7 @@ function AdminCategories() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá se administran las categorías</Typography>
+          <Typography variant="h2">Administración de categorías</Typography>
           <AdministrateCategoriesToAdmin/>
 
         </Container>

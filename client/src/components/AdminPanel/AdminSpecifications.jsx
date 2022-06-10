@@ -46,7 +46,7 @@ function AdminSpecifications() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Acá se administran las especificaciones</Typography>
+              <Typography variant="h2">Administración de especificaciones</Typography>
               <AdminSpecif/>
             </Container>
           </Container>

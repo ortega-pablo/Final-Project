@@ -14,6 +14,7 @@ import { editAdmin, editUser, getAllUsers, postRegisterUser } from "../../../red
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 const validationSchema = yup.object({
   userName: yup
@@ -85,7 +86,7 @@ function AdminEditButton({user , token , setRender, render}) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Editar</Button>
+      <Button onClick={handleOpen} variant="contained" size="small" color="darkGrey"> <TypographyMenu>Editar</TypographyMenu> </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -168,22 +169,22 @@ function AdminEditButton({user , token , setRender, render}) {
             <Button
               type="submit"
               fullWidth
-              color="ambar3"
+              color="darkGrey"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               disabled={!formik.dirty}
             >
-              Modificar usuario
+             <TypographyMenu>Modificar usuario</TypographyMenu> 
             </Button>
 
             {<Button
               onClick={handleClose}
               fullWidth
-              color="ambar3"
+              color="darkGrey"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              cancelar
+              <TypographyMenu>Cancelar</TypographyMenu>
             </Button>}
           </form>
         </Box>

@@ -5,9 +5,11 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { TypographyMenu } from "../../../personalizadTheme";
 import {
   deleteSpecification,
   getAllSpecifications,
@@ -37,38 +39,7 @@ export const AdminSpecif = () => {
   }
 
   return (
-    <Box  >
-      {allSpecication?.map((s) => {
-        return (
-          <TableContainer component={Paper} align="center" >
-            <TableRow>
-              <TableCell>
-                {/* <ListItemAvatar>
-      <SubdirectoryArrowRightIcon />
-    </ListItemAvatar>   */}
-                <b>Especificación: </b>
-              </TableCell>
-              <TableCell>{s?.name}</TableCell>
-              <TableCell>{s?.ProductSpecification?.value}</TableCell>
-
-              <Button
-                value={s.id}
-                onClick={(e) => handleDeleteSpeci(e)}
-                // name="delete"
-                // startIcon={<EditIcon />}
-              >
-                Eliminar
-              </Button>
-              <Button
-        value={s.id}
-       onClick={(e) => handleUploadName(e)}
-         >
-          Editar
-        </Button>
-            </TableRow>
-          </TableContainer>
-        );
-      })}
+    <Box  sx={{width:"100%"}}>
       {   uploading &&
         <UploadNameSpecifi
         uploading={uploading}
@@ -78,6 +49,42 @@ export const AdminSpecif = () => {
         />
 
         }
+      <TableContainer component={Paper} align="center" >
+      {allSpecication?.map((s) => {
+        return (
+            <TableRow>
+              <TableCell>
+                <Typography color="darkGrey.main">Especificación: </Typography>
+              </TableCell>
+              <TableCell>{s?.name}</TableCell>
+              <TableCell>{s?.ProductSpecification?.value}</TableCell>
+              <TableCell>
+              <Button
+                value={s.id}
+                onClick={(e) => handleDeleteSpeci(e)}
+                variant="contained"
+                color="darkGrey"
+                size="small"
+                >
+               <TypographyMenu>Eliminar</TypographyMenu>  
+              </Button>
+              </TableCell>
+              <TableCell>
+              <Button
+        value={s.id}
+       onClick={(e) => handleUploadName(e)}
+       variant="contained"
+                color="darkGrey"
+                size="small"
+         >
+          <TypographyMenu>Editar</TypographyMenu>
+        </Button>
+              </TableCell>
+            </TableRow>
+        );
+      })}
+      </TableContainer>
+      
     </Box>
   );
 };

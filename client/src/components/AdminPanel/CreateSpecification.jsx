@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { AddSpecification } from '../Forms/AddSpecification/AddSpecification'
@@ -46,8 +46,11 @@ function CreateSpecification() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Crear especificación</Typography>
+              <Typography variant="h2" color="darkgrey.main">Crear especificación</Typography>
+              <Paper sx={{p:2, mt:3}}>
               <AddSpecification/>
+              </Paper>
+
             </Container>
           </Container>
         </Box>

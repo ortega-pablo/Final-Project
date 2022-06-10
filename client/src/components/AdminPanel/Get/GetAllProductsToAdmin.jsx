@@ -66,7 +66,7 @@ function Row(props) {
                       textAlign: "left",
                     }}
                   >
-                    <Typography variant="h6">Marca: </Typography>
+                    <Typography variant="h6" color="darkGrey.main">Marca: </Typography>
                   </TableCell>
                   <TableCell
                     sx={{
@@ -79,7 +79,7 @@ function Row(props) {
 
                 <TableRow sx={{ height: "100%" }}>
                   <TableCell sx={{ width: "30%" }}>
-                    <Typography variant="h6">Descripcion: </Typography>
+                    <Typography variant="h6" color="darkGrey.main">Descripcion: </Typography>
                   </TableCell>
                   <TableCell
                     sx={{
@@ -100,7 +100,7 @@ function Row(props) {
 
                 <TableRow>
                   <TableCell sx={{ width: "30%" }}>
-                    <Typography variant="h6">
+                    <Typography variant="h6" color="darkGrey.main">
                       Dimensiones del producto:
                     </Typography>
                   </TableCell>
@@ -111,7 +111,7 @@ function Row(props) {
 
                 <TableRow>
                   <TableCell sx={{ width: "30%" }}>
-                    <Typography variant="h6">
+                    <Typography variant="h6" color="darkGrey.main">
                       Dimensiones del paquete:
                     </Typography>
                   </TableCell>
@@ -122,7 +122,7 @@ function Row(props) {
 
                 <TableRow>
                   <TableCell sx={{ width: "30%" }}>
-                    <Typography variant="h6">Peso neto:</Typography>
+                    <Typography variant="h6" color="darkGrey.main">Peso neto:</Typography>
                   </TableCell>
                   <TableCell sx={{ width: "70%" }}>
                     <Typography>{row.netWeight}</Typography>
@@ -131,7 +131,7 @@ function Row(props) {
 
                 <TableRow>
                   <TableCell sx={{ width: "30%" }}>
-                    <Typography variant="h6">Peso bruto:</Typography>
+                    <Typography variant="h6" color="darkGrey.main">Peso bruto:</Typography>
                   </TableCell>
                   <TableCell sx={{ width: "70%" }}>
                     <Typography>{row.grossWeight}</Typography>
@@ -140,7 +140,7 @@ function Row(props) {
 
                 <TableRow>
                   <TableCell sx={{ width: "30%" }}>
-                    <Typography variant="h6">Garantia:</Typography>
+                    <Typography variant="h6" color="darkGrey.main">Garantia:</Typography>
                   </TableCell>
                   <TableCell sx={{ width: "70%" }}>
                     <Typography>{row.warranty}</Typography>
@@ -169,16 +169,16 @@ export default function GetAllProductsToAdmin() {
           <TableHead>
             <TableCell />
             <TableCell>
-              <Typography variant="h5">Nombre</Typography>
+              <Typography variant="h5" color="darkGrey.main" >Nombre</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">Precio</Typography>
+              <Typography variant="h5" color="darkGrey.main" >Precio</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">Stock</Typography>
+              <Typography variant="h5" color="darkGrey.main" >Stock</Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h5">SKU</Typography>
+              <Typography variant="h5" color="darkGrey.main" >SKU</Typography>
             </TableCell>
           </TableHead>
           <TableBody>

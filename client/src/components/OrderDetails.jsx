@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getCartById, getOrderById, putQuantityAfterOrder } from "../redux/actions";
 import {useNavigate} from "react-router-dom"
+import { TypographyMenu } from "../personalizadTheme";
 
 
 
@@ -37,10 +38,10 @@ export const OrderDetails = () => {
     sx={{display:"flex", justifyContent: "center", alignItems: "center", minHeight:"84.1vh"}}
     >
       <Paper component="div" sx={{ width: "700px", minHeight:"600px", padding: "15px", margin:"10px" }}>
-      <Typography component='h1' variant='h3' sx={{textAlign:"center"}}>
+      <Typography component='h1' variant='h3' color="darkGrey.main" sx={{textAlign:"center"}}>
                 Orden N° {currentOrder.id}
         </Typography>
-        <Typography variant='h6'>
+        <Typography variant='h6' color="darkGrey.main">
                 Resumen de compra:
             </Typography>
             <List disablePadding>
@@ -69,7 +70,7 @@ export const OrderDetails = () => {
                 </ListItem>
              </List>
              <Divider></Divider>
-             <Typography variant='h6'>
+             <Typography variant='h6' color="darkGrey.main">
                  Datos del cliente:
             </Typography>
              <Box>
@@ -93,7 +94,7 @@ export const OrderDetails = () => {
                     </Typography>
              </Box>
              <Divider></Divider>
-             <Typography variant='h6'>
+             <Typography variant='h6' color="darkGrey.main">
                  Estado de compra:
             </Typography>
             <Box>
@@ -112,19 +113,19 @@ export const OrderDetails = () => {
                      currentOrder?.paymentState === "success" ? 
                      <Button 
                      variant='contained' 
-                     color='ambar3' 
+                     color='darkGrey' 
                      size='small'
                      onClick={(e)=>handleClick()}
-                     >Volver a la tienda</Button>
+                     > <TypographyMenu>Volver a la tienda</TypographyMenu> </Button>
                       : 
                     <Button
                     variant='contained' 
-                    color='ambar3' 
+                    color='darkGrey' 
                     size='small'
                     onClick={
                         () => navigate("/cart")
                     }
-                    >Intentar nuevamente</Button>
+                    > <TypographyMenu>Intentar nuevamente</TypographyMenu> </Button>
                  }
              </Box>
 

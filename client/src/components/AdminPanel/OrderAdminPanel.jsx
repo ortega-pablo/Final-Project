@@ -1,17 +1,16 @@
-import { Box, CircularProgress, Container, Typography } from "@mui/material";
+import { Box, Container, CircularProgress } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
-import { NotFound } from "../NotFound/NotFound";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import {getAllOrdersOneUser, getUserIdByToken} from "../../redux/actions"
 import AdminMenuLarge from "./AdminMenuLarge";
-import AdminMenuMobile from "./AdminMenuMobile";
-import Bienvenida from "./Bienvenida";
-import GetAllCategoriesToAdmin from "./Get/GetAllCategoriesToAdmin";
+import AllOrders from "./AllOrders";
+function OrderAdminPanel() {
 
-function AllCategories() {
   const userStatus = useSelector((state) => state.userStatus);
 
-  return (
-    userStatus === "admin" || userStatus === "superAdmin" ?
+  return userStatus === "admin" || "superAdmin"  ? (
     <Box
       maxWidth="vp"
       sx={{
@@ -23,7 +22,9 @@ function AllCategories() {
         justifyContent: "space-between",
       }}
     >
-      <AdminMenuMobile />
+
+        
+      {/* <AdminMenuMobile /> */}
 
       <Container
         maxWidth="vp"
@@ -48,32 +49,30 @@ function AllCategories() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" mt={4} color='darkGrey.main' >Categorías</Typography>
-          <GetAllCategoriesToAdmin/>
-
+          <AllOrders></AllOrders>
         </Container>
       </Container>
     </Box>
-    :
+  ) : (
     <Box
-    maxWidth="vp"
-    sx={{
-      gap: 0,
-      display: "flex",
-      flexDirection: "column",
-      margin: 0,
-      width: "100%",
-      justifyContent: "space-between",
-    }}
-  >
-    <CircularProgress
+      maxWidth="vp"
       sx={{
-        alignSelf: 'center',
-        mt: '20%'
+        gap: 0,
+        display: "flex",
+        flexDirection: "column",
+        margin: 0,
+        width: "100%",
+        justifyContent: "space-between",
       }}
-    /> 
+    > 
+      <CircularProgress
+        sx={{
+          alignSelf: "center",
+          mt: "20%",
+        }}
+      />
     </Box>
-  );
-}
+  ); 
+}   
 
-export default AllCategories;
+export default OrderAdminPanel;

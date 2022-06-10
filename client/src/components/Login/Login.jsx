@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 import GoogleLogin from 'react-google-login';
 import { gapi } from "gapi-script";
 import axios from "axios";
+import { TypographyMenu } from "../../personalizadTheme";
 const idClientGoogleLogin = '280929991691-j01v9mb0k5nlg3ob57rgk4hf1qcbrk9a.apps.googleusercontent.com'
 
 
@@ -124,7 +125,7 @@ export const Login = () => {
           alignItems: "center"
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#375CFF" }}>
+        <Avatar sx={{ m: 1, bgcolor: "#BAFF39" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -162,12 +163,12 @@ export const Login = () => {
           />
           <Button
             type="submit"
-            color="ambar3.main"
+            color="darkGrey"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Ingresar
+            <TypographyMenu>Ingresar</TypographyMenu> 
           </Button>
           <Grid sx={{mt:3}}>
             <Grid item xs>

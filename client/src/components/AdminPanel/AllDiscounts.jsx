@@ -46,7 +46,7 @@ function AllDiscounts() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Descuentos</Typography>
+          <Typography variant="h2" color="darkGrey.main">Descuentos</Typography>
           <GetAllDiscountsToAdmin/>
 
         </Container>

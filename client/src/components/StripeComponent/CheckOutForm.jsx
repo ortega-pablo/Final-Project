@@ -71,11 +71,12 @@ const FormCheck = () => {
           <Stepper
             activeStep={activeStep}
             disablePadding
+            
             sx={{ mt: "5px", width: "500px" }}
           >
             {steps.map((s) => (
-              <Step key={s}>
-                <StepLabel>{s}</StepLabel>
+              <Step  key={s}>
+                <StepLabel >{s}</StepLabel>
               </Step>
             ))}
           </Stepper>

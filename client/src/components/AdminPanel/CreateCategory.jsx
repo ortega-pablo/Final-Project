@@ -46,10 +46,10 @@ function CreateCategory() {
                 width: "100%",
                 padding: 0,
                 alignItems: "center",
-                m:3
+             
               }}
             >
-              <Typography variant="h2"  color='ambar5.main' sx={{mb:3}}>Crear nueva categoría</Typography>
+              <Typography variant="h3"  color='darkGrey.main' sx={{m:3}}>Crear nueva categoría</Typography>
               <CreateCategoryToAdmin/>
             </Container>
           </Container>

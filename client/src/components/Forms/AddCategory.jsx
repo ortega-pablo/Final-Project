@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Swal from 'sweetalert2';
+import {TypographyMenu} from "../../personalizadTheme"
 
 export const AddCategory = ({ allCategories }) => {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ const [creating, setCreating] = useState(false)
       noValidate
       autoComplete="off"
       onSubmit={formik.handleSubmit}
+      sx={{display:"flex", justifyContent:"space-around"}}
     >
       <TextField
         id="outlined-basic"
@@ -89,7 +91,7 @@ const [creating, setCreating] = useState(false)
         sx={{m:3}}
       />
    
-      <Button type="submit" sx={{m:3}} variant='contained' color="ambar3">Crear nueva categoria</Button>
+      <Button type="submit" sx={{m:3}} variant='contained' color="darkGrey" size="small" > <TypographyMenu>Crear nueva categoria</TypographyMenu></Button>
 {/* { formik.values  &&
 
   <Button type="click" onClick={e=> formik.resetForm({values:""})} sx={{m:3}} variant='contained' color="ambar3">Cancelar creación</Button>

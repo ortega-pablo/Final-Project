@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { getAllDiscount, postDiscount, putDiscount } from "../../../redux/actions";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 
 
@@ -75,7 +76,6 @@ console.log(NameRepetido)
         //  onSubmit={(e) => handleSubmit(e)}
         onSubmit={formik.handleSubmit}
       >
-        <h3> Creando</h3>
         <TextField
           id="outlined-basic"
           label="Nombre"
@@ -149,8 +149,8 @@ console.log(NameRepetido)
           label="Activo"
         /> */}
         <Box sx={{textAlign:'center'}}>
-        <Button  type="submit" variant='contained' color="ambar3">Confirmar</Button>
-        <Button  type="click" onClick={()=>setUpdating(false)} variant='contained' color="ambar3">Cancelar</Button>
+        <Button  type="submit" variant='contained' color="darkGrey" size="small"> <TypographyMenu>Confirmar</TypographyMenu> </Button>
+        <Button  type="click" onClick={()=>setUpdating(false)} variant='contained' color="darkGrey" size="small"><TypographyMenu>Cancelar</TypographyMenu></Button>
 
         </Box>
 

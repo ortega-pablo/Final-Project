@@ -7,7 +7,7 @@ export const CartResume = ({totalAmount}) => {
     <>
      
         <Paper>
-          <Typography variant='h4' align="center">
+          <Typography variant='h4' color="darkGrey.main" align="center">
             Resumen de la compra
           </Typography>
           <Divider/>

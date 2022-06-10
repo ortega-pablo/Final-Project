@@ -39,6 +39,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../../personalizadTheme";
 
 
 ////////////////////////////////////
@@ -543,7 +544,7 @@ export function NewProduct() {
 
             <Typography variant="h6" color="ambar5"> (*) elementos obligatorios</Typography>
 
-            <Button type="submit" variant="contained" color="ambar4" size="small"><Typography variant="h6" color="ambar5">Crear</Typography></Button>
+            <Button type="submit" variant="contained" color="darkGrey" size="small"><TypographyMenu>Crear</TypographyMenu></Button>
 
             </Box>
           </Box>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {useNavigate} from 'react-router-dom';
+import {TypographyMenu} from "../../personalizadTheme"
 
 export const AdressForm =   ({nexStep, backStep}) => {
     const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ export const AdressForm =   ({nexStep, backStep}) => {
             </FormControl> : <></>} 
             <Divider></Divider>
             <Box>
-            <Button  color='ambar3' size='small' onClick={() => setOpen(!open)} sx={{mt: 2}}  endIcon={open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>} >{open ? "Cancelar" : "Nueva dirección"  }</Button>
+            <Button  color='darkGrey' size='small' onClick={() => setOpen(!open)} sx={{mt: 2}}  endIcon={open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>} >{open ? "Cancelar" : "Nueva dirección"  }</Button>
             {/* {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>} */}
             </Box>
             <Collapse in={open}>
@@ -99,14 +100,14 @@ export const AdressForm =   ({nexStep, backStep}) => {
                     <Box component='div' sx={{display:"flex", justifyContent:"space-between", mt:"1rem"}}>
                     <Button 
                     variant='contained' 
-                    color='ambar3' 
+                    color='darkGrey' 
                     size='small'
                     onClick={() => navigate('/cart')}
                     >
-                        Volver al carrito
+                       <TypographyMenu>Volver al carrito</TypographyMenu> 
                     </Button>
-                    <Button type='submit' variant='contained' color='ambar3' size='small'>
-                        Siguiente
+                    <Button type='submit' variant='contained' color='darkGrey' size='small'>
+                    <TypographyMenu>Siguiente</TypographyMenu> 
                     </Button>
                     </Box>
                 </Box>
@@ -121,14 +122,14 @@ export const AdressForm =   ({nexStep, backStep}) => {
                             <Box component='div' sx={{display:"flex", justifyContent:"space-between", mt:"1rem", width:"100%", bottom: 0}}>
                                 <Button 
                                 variant='contained' 
-                                color='ambar3' 
+                                color='darkGrey' 
                                 size='small'
                                 onClick={() => navigate('/cart')}
                                 >
-                                    Volver al carrito
+                                   <TypographyMenu>Volver al carrito</TypographyMenu> 
                                 </Button>
-                                <Button disabled={!directions.length} type='submit' variant='contained' color='ambar3' size='small'>
-                                    Siguiente
+                                <Button disabled={!directions.length} type='submit' variant='contained' color='darkGrey' size='small'>
+                                <TypographyMenu>Siguiente</TypographyMenu> 
                                 </Button>
                             </Box>
                     </Box> 

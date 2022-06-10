@@ -62,13 +62,15 @@ function ResetPassword() {
     maxWidth="xs"
     sx={{
         maxWidth: "50%",
+        height: "79vh",
         p: 3,
-        mt: 11.5,
-        mb: 11.5,
+       
         textAlign: "center",
         display: "flex",
+        justifyContent:"center",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        
     }}
   >
       <Typography component="h1" variant="h5">

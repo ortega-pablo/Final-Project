@@ -46,7 +46,7 @@ function AllSpecifications() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2" sx={{mt:5}} >Especificaciones</Typography>
+              <Typography variant="h2" sx={{mt:5}} color="darkGrey.main">Especificaciones</Typography>
               <GetAllSpecificationsToAdmin/>
     
             </Container>

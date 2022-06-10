@@ -26,13 +26,13 @@ const GetAllStockToAdmin = () => {
         <Table>
           <TableHead>
             <TableCell>
-              <Typography variant="h5">Nombre</Typography>
+              <Typography variant="h5" color="darkGrey.main">Nombre</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">SKU</Typography>
+              <Typography variant="h5" color="darkGrey.main">SKU</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">Stock</Typography>
+              <Typography variant="h5" color="darkGrey.main">Stock</Typography>
             </TableCell>
           </TableHead>
           <TableBody>

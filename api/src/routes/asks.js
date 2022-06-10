@@ -194,4 +194,35 @@ router.get("/allUser", async (req, res, next) => {
   }
 });
 
+
+router.delete("/", async(req, res) => {
+
+  const {askId} = req.query;
+  try {
+    if(askId){
+
+      const getQuestion = await Ask.findOne({
+        where: {
+          id: askId
+        }
+      })
+      await Ask.destroy({
+        where: {
+          id:askId
+        }
+      })
+
+      res.send("Question deleted successfully!")
+      
+    } else{
+      return res.send("Provide a valid question ID")
+    }
+
+    
+
+  } catch(error){
+    res.send(error)
+  }
+})
+
 module.exports = router;

@@ -22,6 +22,7 @@ import { UpdateSpecification } from "./UpdateSpecification";
 import { TableSpecific } from "./TableSpecific";
 import { AddministrrImage } from "./AddministrrImage";
 import PropTypes from "prop-types";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 
 ////////////////////////////////////
@@ -228,8 +229,7 @@ console.log(productToUpdate)
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
-            variant="fullWidth"
-            
+            variant="fullWidth"    
           >
             <Tab label="Producto" {...a11yProps(0)} />
             <Tab label="Descuentos" {...a11yProps(1)} />
@@ -241,9 +241,9 @@ console.log(productToUpdate)
         </Box>
 
         <TabPanel value={value} index={0}>
-        <h2>Editar Producto</h2>
+        <Typography color="darkGrey.main" variant="h4">Editar Producto</Typography>
         <hr />
-        <h3>Paso 1: </h3>
+        <Typography color="darkGrey.main" variant="h6" sx={{m:2}}>Paso 1:</Typography>
       <Box
         sx={{display:"grid" , gridTemplateColumns:"1fr 1fr", gap:"10px" }}
         component="form"
@@ -402,26 +402,15 @@ console.log(productToUpdate)
           error={formik.touched.thumbnail && Boolean(formik.errors.thumbnail)}
           helperText={formik.touched.thumbnail && formik.errors.thumbnail}
         />
-        {/* <TextField
-          id="outlined-basic"
-          label="Imagenes"
-          variant="outlined"
-          name="image"
-          // helperText={leyendaerrorImage}
-          // error={errorImage}
-          value={formik.values.image}
-          onChange={formik.handleChange}
-          error={formik.touched.image && Boolean(formik.errors.image)}
-          helperText={formik.touched.image && formik.errors.image}
-        /> */}
 
-        <Button type="submit">Editar</Button>
-        <h4>(*) elementos obligatorios</h4>
+        <Button type="submit" variant="contained" color="darkGrey" size="small"> 
+        <TypographyMenu>Editar</TypographyMenu> </Button>
+        <Typography color="darkGrey.main">elementos obligatorios (*)</Typography> 
       </Box>
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-     <h3>Paso 5: Modificar descuento</h3>
+
      <AddDiscountToProduct
      newProdId={idUpdate}
      newProduct={productToUpdate}/>
@@ -430,7 +419,6 @@ console.log(productToUpdate)
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-      <h3>Paso 2: Editar stock</h3>
           
       <UpdateQuantity
        productToUpdate={productToUpdate}
@@ -440,7 +428,6 @@ console.log(productToUpdate)
         </TabPanel>
 
         <TabPanel value={value} index={3}>
-      <h3>Paso 3: Editar categorías y sub categorías</h3>
 
       <UpdateCategoryAndSubca
        productToUpdate={productToUpdate}
@@ -452,7 +439,6 @@ console.log(productToUpdate)
         </TabPanel>
 
         <TabPanel value={value} index={4}>
-      <h3>Paso 4: agregar especificaciones</h3>
         <TableSpecific
         productToUpdate={productToUpdate}
         idUpdate={idUpdate}/>
@@ -463,7 +449,7 @@ console.log(productToUpdate)
      
 
       <InputLabel id="demo-simple-select-standard-label">
-        Especificación
+       <Typography color="darkGrey">Especificación</Typography> 
       </InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
@@ -487,16 +473,6 @@ console.log(productToUpdate)
        />
      </Box>
 
-
-      {/* <UpdateSpecif
-         idUpdate={idUpdate}
-         productToUpdate={productToUpdate}  /> */}
-      {/* <AddSpecificationToProduct
-          newProdId={newProdId}
-          specifications={specifications}/> */}
-
-       
-
       <AddSpecification/>
            
       <hr />
@@ -509,7 +485,8 @@ console.log(productToUpdate)
         </TabPanel>
         
       </Paper>
-<Button type="button" onClick={(e)=> setUpdating(false)} >Finalizar edición</Button>
+<Button type="button" onClick={(e)=> setUpdating(false)} variant="contained" color="darkGrey"sx={{m:2}}>
+ <TypographyMenu>Finalizar edición</TypographyMenu> </Button>
     
 
       <hr />

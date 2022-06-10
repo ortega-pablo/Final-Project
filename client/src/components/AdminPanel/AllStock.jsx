@@ -46,7 +46,7 @@ function AllStock() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Stock</Typography>
+              <Typography variant="h2" color="darkgrey.main">Stock</Typography>
               <GetAllStockToAdmin/>
             </Container>
           </Container>

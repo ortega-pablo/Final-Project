@@ -2,9 +2,10 @@ import React from 'react'
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Box } from '@mui/system';
-import { Button, TextField } from '@mui/material';
+import { Button, Paper, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { getAllSpecifications, putNameSpecification } from '../../../redux/actions';
+import { TypographyMenu } from '../../../personalizadTheme';
 
 export const UploadNameSpecifi = ({uploading,idSpecif, setUploading, allSpecication }) => {
 const dispatch = useDispatch()
@@ -43,14 +44,14 @@ console.log(NameRepetido)
 
   return (
 
-    <>
-    <div>UploadNameSpecifi</div>
-    <>
+<Paper sx={{mb:3}}>
+
      <Box
         component="form"
         noValidate
         autoComplete="off"
         onSubmit={formik.handleSubmit}
+        sx={{p:2, display:"flex", justifyContent:"space-between"}}
       >
         <TextField
           id="outlined-basic"
@@ -65,12 +66,12 @@ console.log(NameRepetido)
         />
         {/* <h3>Stock actual: {newProduct?.productInventory?.quantity} </h3>
         <h3>Stock a modificar: {formik.values.quantity} </h3> */}
-        <Button type="submit">Modificar nombre</Button>
-       <Button onClick={()=>setUploading(false)} type="click">Cancelar edición</Button>
+        <Button type="submit" variant="contained" color="darkGrey" size="small"> <TypographyMenu>Modificar</TypographyMenu> </Button>
+       <Button onClick={()=>setUploading(false)} type="click" variant="contained" color="darkGrey" size="small"><TypographyMenu>Cancelar</TypographyMenu></Button>
 
       </Box>
-    </>
-    </>
+</Paper>
+
 
     
   )

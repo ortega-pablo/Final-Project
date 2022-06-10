@@ -48,7 +48,7 @@ function AdminStock() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Acá se administra el stock</Typography>
+              <Typography variant="h2">Administración de stock</Typography>
               <AdmininAllStock/>
     
             </Container>

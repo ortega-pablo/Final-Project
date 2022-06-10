@@ -14,7 +14,7 @@ import { editUser, getAllUsers, postRegisterUser } from "../../../redux/actions"
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { NavButton } from "../../../personalizadTheme";
+import { NavButton, TypographyMenu } from "../../../personalizadTheme";
 
 const validationSchema = yup.object({
   userName: yup
@@ -85,7 +85,7 @@ function UserEditButton({user , token , setRender, render}) {
 
   return (
     <div>
-      <NavButton size="small" variant="outlined" onClick={handleOpen}>Editar</NavButton>
+      <NavButton size="small" variant="contained" color="darkGrey" onClick={handleOpen}> <TypographyMenu>Editar</TypographyMenu> </NavButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -168,22 +168,22 @@ function UserEditButton({user , token , setRender, render}) {
             <Button
               type="submit"
               fullWidth
-              color="ambar3"
+              color="darkGrey"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               disabled={!formik.dirty}
             >
-              Modificar usuario
+             <TypographyMenu>Modificar usuario</TypographyMenu> 
             </Button>
 
             {<Button
               onClick={handleClose}
               fullWidth
-              color="ambar3"
+              color="darkGrey"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Cancelar
+              <TypographyMenu>Cancelar</TypographyMenu>
             </Button>}
           </form>
         </Box>

@@ -46,7 +46,7 @@ function AdminDiscounts() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2">Acá se administran los descuentos</Typography>
+          <Typography variant="h2" color="darkGrey.main">Administración de descuentos</Typography>
           <AdminDiscount/>
 
         </Container>

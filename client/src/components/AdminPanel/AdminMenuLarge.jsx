@@ -18,10 +18,11 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import SellIcon from "@mui/icons-material/Sell";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import PeopleIcon from "@mui/icons-material/People";
-import { HiddenxsDown } from "../../personalizadTheme";
+import { HiddenxsDown, ListItemButtonMenu } from "../../personalizadTheme";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailOneUsers, getUserIdByToken } from "../../redux/actions";
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export default function AdminMenuLarge() {
 
@@ -45,6 +46,7 @@ export default function AdminMenuLarge() {
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
   const [open6, setOpen6] = React.useState(false);
+  const [open7, setOpen7] = React.useState(false);
 
 
   const handleClick = () => {
@@ -70,31 +72,34 @@ export default function AdminMenuLarge() {
   const handleClick6 = () => {
     setOpen6(!open6);
   };
+  const handleClick7 = () => {
+    setOpen7(!open7);
+  };
   return (
     <HiddenxsDown sx={{ borderRadius: "10px" }}>
       <Paper sx={{ height: "100%", display: "flex" }}>
         <List sx={{ width: 240, alignItems: "center" }}>
-          <ListItemButton component="a" href="/">
+          <ListItemButtonMenu component="a" href="/">
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
-          </ListItemButton>
+          </ListItemButtonMenu>
 
           <Divider variant="middle" />
 
-          <ListItemButton onClick={handleClick3}>
+          <ListItemButtonMenu onClick={handleClick3}>
             <ListItemIcon>
               <CategoryIcon />
             </ListItemIcon>
             <ListItemText primary="Categorías" />
             {open3 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+          </ListItemButtonMenu>
           <Collapse in={open3} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/allCategories"
                 sx={{ pl: 4 }}
@@ -103,11 +108,11 @@ export default function AdminMenuLarge() {
                   <ClearAllIcon />
                 </ListItemIcon>
                 <ListItemText primary="Todas" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/adminCategories"
                 sx={{ pl: 4 }}
@@ -116,11 +121,11 @@ export default function AdminMenuLarge() {
                   <ModeEditIcon />
                 </ListItemIcon>
                 <ListItemText primary="Administrar" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/createCategory"
                 sx={{ pl: 4 }}
@@ -129,33 +134,33 @@ export default function AdminMenuLarge() {
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Crear" />
-              </ListItemButton>
+              </ListItemButtonMenu>
             </List>
           </Collapse>
 
           <Divider variant="middle" />
 
-          <ListItemButton onClick={handleClick}>
+          <ListItemButtonMenu onClick={handleClick}>
             <ListItemIcon>
               <ShoppingBasketIcon />
             </ListItemIcon>
             <ListItemText primary="Productos" />
             {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+          </ListItemButtonMenu>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <Divider variant="middle" />
 
-              <ListItemButton component="a" href="/allProducts" sx={{ pl: 4 }}>
+              <ListItemButtonMenu component="a" href="/allProducts" sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <ClearAllIcon />
                 </ListItemIcon>
                 <ListItemText primary="Todos" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/adminProducts"
                 sx={{ pl: 4 }}
@@ -164,11 +169,11 @@ export default function AdminMenuLarge() {
                   <ModeEditIcon />
                 </ListItemIcon>
                 <ListItemText primary="Administrar" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/createProduct"
                 sx={{ pl: 4 }}
@@ -177,55 +182,55 @@ export default function AdminMenuLarge() {
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Crear" />
-              </ListItemButton>
+              </ListItemButtonMenu>
             </List>
           </Collapse>
 
           <Divider variant="middle" />
 
-          <ListItemButton onClick={handleClick5}>
+          <ListItemButtonMenu onClick={handleClick5}>
             <ListItemIcon>
               <ShoppingBasketIcon />
             </ListItemIcon>
             <ListItemText primary="Stock" />
             {open5 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+          </ListItemButtonMenu>
           <Collapse in={open5} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <Divider variant="middle" />
 
-              <ListItemButton component="a" href="/allStock" sx={{ pl: 4 }}>
+              <ListItemButtonMenu component="a" href="/allStock" sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <ClearAllIcon />
                 </ListItemIcon>
                 <ListItemText primary="Todos" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton component="a" href="/adminStock" sx={{ pl: 4 }}>
+              <ListItemButtonMenu component="a" href="/adminStock" sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <ModeEditIcon />
                 </ListItemIcon>
                 <ListItemText primary="Administrar" />
-              </ListItemButton>
+              </ListItemButtonMenu>
             </List>
           </Collapse>
 
           <Divider variant="middle" />
 
-          <ListItemButton onClick={handleClick4}>
+          <ListItemButtonMenu onClick={handleClick4}>
             <ListItemIcon>
               <ShoppingBasketIcon />
             </ListItemIcon>
             <ListItemText primary="Especificaciones" />
             {open4 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+          </ListItemButtonMenu>
           <Collapse in={open4} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/allSpecifications"
                 sx={{ pl: 4 }}
@@ -234,11 +239,11 @@ export default function AdminMenuLarge() {
                   <ClearAllIcon />
                 </ListItemIcon>
                 <ListItemText primary="Todos" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/adminSpecifications"
                 sx={{ pl: 4 }}
@@ -247,11 +252,11 @@ export default function AdminMenuLarge() {
                   <ModeEditIcon />
                 </ListItemIcon>
                 <ListItemText primary="Administrar" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/createSpecification"
                 sx={{ pl: 4 }}
@@ -260,33 +265,33 @@ export default function AdminMenuLarge() {
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Crear" />
-              </ListItemButton>
+              </ListItemButtonMenu>
             </List>
           </Collapse>
 
           <Divider variant="middle" />
 
-          <ListItemButton onClick={handleClick2}>
+          <ListItemButtonMenu onClick={handleClick2}>
             <ListItemIcon>
               <SellIcon />
             </ListItemIcon>
             <ListItemText primary="Descuentos" />
             {open2 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
+          </ListItemButtonMenu>
           <Collapse in={open2} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <Divider variant="middle" />
 
-              <ListItemButton component="a" href="/allDiscounts" sx={{ pl: 4 }}>
+              <ListItemButtonMenu component="a" href="/allDiscounts" sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <ClearAllIcon />
                 </ListItemIcon>
                 <ListItemText primary="Todos" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/adminDiscounts"
                 sx={{ pl: 4 }}
@@ -295,11 +300,11 @@ export default function AdminMenuLarge() {
                   <ModeEditIcon />
                 </ListItemIcon>
                 <ListItemText primary="Administrar" />
-              </ListItemButton>
+              </ListItemButtonMenu>
 
               <Divider variant="middle" />
 
-              <ListItemButton
+              <ListItemButtonMenu
                 component="a"
                 href="/createDiscount"
                 sx={{ pl: 4 }}
@@ -308,59 +313,59 @@ export default function AdminMenuLarge() {
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Crear" />
-              </ListItemButton>
+              </ListItemButtonMenu>
             </List>
           </Collapse>
 
           <Divider variant="middle" />
 
-          <ListItemButton component="a" href="/orders" sx={{ pl: 4 }}>
+          <ListItemButtonMenu component="a" href="/orders" sx={{ pl: 4 }}>
             <ListItemIcon>
               <AttachMoneyIcon />
             </ListItemIcon>
             <ListItemText primary="Ventas" />
-          </ListItemButton>
+          </ListItemButtonMenu>
 
           <Divider variant="middle" />
 
-          <ListItemButton component="a" href="/usersPanel" sx={{ pl: 4 }}>
+          <ListItemButtonMenu component="a" href="/usersPanel" sx={{ pl: 4 }}>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Usuarios" />
-          </ListItemButton>
+          </ListItemButtonMenu>
 
           <Divider variant="middle" />
 
-          <ListItemButton component="a" href="/askPanel" sx={{ pl: 4 }}>
+          <ListItemButtonMenu component="a" href="/askPanel" sx={{ pl: 4 }}>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Preguntas" />
-          </ListItemButton>
+          </ListItemButtonMenu>
 
           
-          <ListItemButton component="a" href="/banner" sx={{ pl: 4 }}>
+          <ListItemButtonMenu component="a" href="/banner" sx={{ pl: 4 }}>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Imagenes del banner" />
-          </ListItemButton>
+          </ListItemButtonMenu>
 
           <Divider variant="middle" />
 
-<ListItemButton onClick={handleClick6}>
+<ListItemButtonMenu onClick={handleClick6}>
   <ListItemIcon>
     <CategoryIcon />
   </ListItemIcon>
   <ListItemText primary="Mi perfil" />
   {open6 ? <ExpandLess /> : <ExpandMore />}
-</ListItemButton>
+</ListItemButtonMenu>
 <Collapse in={open6} timeout="auto" unmountOnExit>
   <List component="div" disablePadding>
     <Divider variant="middle" />
 
-    <ListItemButton
+    <ListItemButtonMenu
       component="a"
       href="/myDataAdm"
       sx={{ pl: 4 }}
@@ -369,7 +374,7 @@ export default function AdminMenuLarge() {
         <ClearAllIcon />
       </ListItemIcon>
       <ListItemText primary="Mi perfil" />
-    </ListItemButton>
+    </ListItemButtonMenu>
 
     <Divider variant="middle" />
    
@@ -377,7 +382,7 @@ export default function AdminMenuLarge() {
 
     {!user.loginWithGoogle ? 
 
-    <ListItemButton
+    <ListItemButtonMenu
       component="a"
       href="/updateAdmin"
       sx={{ pl: 4 }}
@@ -386,9 +391,9 @@ export default function AdminMenuLarge() {
         <ModeEditIcon />
       </ListItemIcon>
       <ListItemText primary="Modificar datos" />
-    </ListItemButton>
+    </ListItemButtonMenu>
      :
-      <ListItemButton
+      <ListItemButtonMenu
     component="a"
     href="/updateAdminG"
     sx={{ pl: 4 }}
@@ -397,14 +402,14 @@ export default function AdminMenuLarge() {
       <ModeEditIcon />
     </ListItemIcon>
     <ListItemText primary="Modificar datos" />
-  </ListItemButton>
+  </ListItemButtonMenu>
 }
     <Divider variant="middle" />
 
 
     {!user.loginWithGoogle ? (
 
-    <ListItemButton
+    <ListItemButtonMenu
       component="a"
       href="/updatePasswAdmin"
       sx={{ pl: 4 }}
@@ -413,11 +418,11 @@ export default function AdminMenuLarge() {
       <ModeEditIcon />
       </ListItemIcon>
       <ListItemText primary="Modificar contraseña" />
-    </ListItemButton>
+    </ListItemButtonMenu>
 
     ): 
     (
-      <ListItemButton
+      <ListItemButtonMenu
       component="a"
       href="/updatePasswAdminG"
       sx={{ pl: 4 }}
@@ -426,12 +431,40 @@ export default function AdminMenuLarge() {
       <ModeEditIcon />
       </ListItemIcon>
       <ListItemText primary="Modificar contraseña" />
-    </ListItemButton>
+    </ListItemButtonMenu>
     )
   
   }
 
 
+  </List>
+</Collapse>
+<ListItemButtonMenu onClick={handleClick7}>
+  <ListItemIcon>
+    <ListAltIcon />
+  </ListItemIcon>
+  <ListItemText primary="Ordenes" />
+  {open7 ? <ExpandLess /> : <ExpandMore />}
+</ListItemButtonMenu>
+<Collapse in={open7} timeout="auto" unmountOnExit>
+  <List component="div" disablePadding>
+    <Divider variant="middle" />
+
+   
+
+    <ListItemButtonMenu
+      component="a"
+      href="/allOrdersAdmin"
+      sx={{ pl: 4 }}
+    >
+      <ListItemIcon>
+        <ModeEditIcon />
+      </ListItemIcon>
+      <ListItemText primary="Administrar" />
+    </ListItemButtonMenu>
+  
+
+    <Divider variant="middle" />
   </List>
 </Collapse>
 

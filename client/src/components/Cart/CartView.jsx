@@ -20,6 +20,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom"; 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CartResume } from "./CartResume";
+import { TypographyMenu } from "../../personalizadTheme";
 
 const CartView = () => {
   const dispatch = useDispatch();
@@ -66,16 +67,16 @@ const CartView = () => {
             <Table>
               <TableHead>
                 <TableCell>
-                  <Typography variant="h5">Producto</Typography>
+                  <Typography variant="h5" color="darkGrey.main" >Producto</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="h5">Cantidad</Typography>
+                  <Typography variant="h5" color="darkGrey.main" >Cantidad</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="h5">Precio</Typography>
+                  <Typography variant="h5" color="darkGrey.main" >Precio</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="h5">SubTotal</Typography>
+                  <Typography variant="h5" color="darkGrey.main" >SubTotal</Typography>
                 </TableCell>
 
               </TableHead>
@@ -104,19 +105,19 @@ const CartView = () => {
                     {totalAmount === 0 ?
                     <Button
                     variant="contained"
-                    color="ambar3"
+                    color="darkGrey"
                     disabled
                   >
-                    Confirmar
+                    <TypographyMenu>Confirmar</TypographyMenu> 
                   </Button>
                   :
                     <Button
                       onClick={(e) => handleConfirmAndSetAmount(e)}
                       variant="contained"
-                      color="ambar3"
+                      color="darkGrey"
                       
                     >
-                      Confirmar
+                      <TypographyMenu>Confirmar</TypographyMenu>
                     </Button>
                     }
                   </TableCell>
@@ -128,16 +129,16 @@ const CartView = () => {
         </Box>
         <Container sx={{ width: "35%" }}>
           <CartResume totalAmount={totalAmount} />
-          <Container sx={{ mt: 10, textAlign: "center" }}>
+          
             <Button
               variant="contained"
-              color="ambar3"
-              sx={{ alignSelf: "flex-end" }}
+              color="darkGrey"
+              sx={{ display:"flex", alignItems: "right", mt:3 }}
               href='/'
             >
-              Volver
+              <TypographyMenu>Volver</TypographyMenu>
             </Button>
-          </Container>
+          
         </Container>
       </Box>
     </>

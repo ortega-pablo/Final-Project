@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { postNewAnswer, getUserIdByToken, getAllAsksAllProducts } from '../../redux/actions/index'
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import { Box } from "@mui/system";
+import { TypographyMenu } from "../../personalizadTheme";
 
 
 const validationSchemaForAnswer = yup.object({
@@ -45,8 +46,8 @@ export const ResponderPregunta = ({askId}) => {
       })
 
     return (
-            <Box>
-                <Button onClick={() => setOpen(!open)} variant="contained" color="ambar3">Responder</Button>
+            <Box sx={{width:"25%"}}>
+                <Button onClick={() => setOpen(!open)} variant="contained" color="darkGrey"> <TypographyMenu>Responder</TypographyMenu> </Button>
                 <Collapse in={open}>
                     <Box component="form" onSubmit={ formikForAnswer.handleSubmit}  noValidate sx={{ mt: 1 }}>
                         <TextField

@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { getInventary, getProducts, putQuantity } from "../../../redux/actions";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
   const dispatch = useDispatch();
@@ -50,9 +51,10 @@ export const UpdateQuantity = ({ idUpdate, productToUpdate }) => {
           error={formik.touched.quantity && Boolean(formik.errors.quantity)}
           helperText={formik.touched.quantity && formik.errors.quantity}
         />
-        <h3>Stock actual: {productToUpdate?.productInventory?.quantity} </h3>
-        <h3>Stock a modificar: {formik.values.quantity} </h3>
-        <Button type="submit">Editar sotck</Button>
+        <Typography sx={{mt:1}}>Stock actual: {productToUpdate?.productInventory?.quantity} </Typography>
+        <Typography>Stock a modificar: {formik.values.quantity} </Typography>
+        <Button type="submit" variant="contained" color="darkGrey" size="small" >
+          <TypographyMenu>Editar sotck</TypographyMenu> </Button>
       </Box>
     </>
   );

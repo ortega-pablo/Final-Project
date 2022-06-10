@@ -28,15 +28,15 @@ function GetAllUsersToAdmin({user, render, setRender}) {
             <TableCell sx={{ width: "5%" }} />
 
             <TableCell>
-              <Typography variant="h5">Usuario</Typography>
+              <Typography variant="h5" color="darkGrey.main">Usuario</Typography>
             </TableCell>
 
             <TableCell>
-              <Typography variant="h5">Nombre de usuario</Typography>
+              <Typography variant="h5" color="darkGrey.main">Nombre de usuario</Typography>
             </TableCell>
 
             <TableCell>
-              <Typography variant="h5">Tipo</Typography>
+              <Typography variant="h5" color="darkGrey.main">Tipo</Typography>
             </TableCell>
 
             <TableCell sx={{ width: "10%" }}></TableCell>

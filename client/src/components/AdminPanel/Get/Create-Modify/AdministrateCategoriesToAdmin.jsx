@@ -26,6 +26,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { UpadateSubCat } from "../../../Forms/AdminCatAndSubca/UpadateSubCat";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../../personalizadTheme";
 
 const AdministrateCategoriesToAdmin = () => {
   const dispatch = useDispatch();
@@ -154,11 +155,11 @@ const AdministrateCategoriesToAdmin = () => {
             <Button
               type="submit"
               variant="contained"
-              color="ambar3"
+              color="darkGrey"
               size="small"
               sx={{ ml: 1, mr: 1 }}
             >
-              Confirmar edición
+             <TypographyMenu>Confirmar edición</TypographyMenu> 
             </Button>
 
             {updating && (
@@ -166,16 +167,16 @@ const AdministrateCategoriesToAdmin = () => {
                 type="submit"
                 onClick={(e) => setUpdating(false)}
                 variant="contained"
-                color="ambar3"
+                color="darkGrey"
                 size="small"
               >
-                Cancelar edición
+                <TypographyMenu>Cancelar edición</TypographyMenu> 
               </Button>
             )}
           </Box>
         </>
       )}
-      <Typography variant="h6" color="ambar5.main">
+      <Typography variant="h6" color="lightGrey.main">
         Categorias existentes: {allCategories.length}{" "}
       </Typography>
       <TableContainer component={Paper} align="center" sx={{ width: "100%" }}>
@@ -183,10 +184,10 @@ const AdministrateCategoriesToAdmin = () => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography>Nombre</Typography>
+                <Typography color="darkGrey.main" variant="h6">Nombre</Typography>
               </TableCell>
               <TableCell>
-                <Typography>Descripción</Typography>
+                <Typography color="darkGrey.main" variant="h6">Descripción</Typography>
               </TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -204,11 +205,11 @@ const AdministrateCategoriesToAdmin = () => {
                     name="delete"
                     startIcon={<EditIcon />}
                     variant="contained"
-                    color="ambar3"
+                    color="darkGrey"
                     size="small"
                     sx={{ mr: 1 }}
                   >
-                    Editar
+                    <TypographyMenu>Editar</TypographyMenu> 
                   </Button>
                 </TableCell>
                 <TableCell sx={{ width: "10%" }}>
@@ -218,10 +219,10 @@ const AdministrateCategoriesToAdmin = () => {
                     name="delete"
                     startIcon={<DeleteIcon />}
                     variant="contained"
-                    color="ambar3"
+                    color="darkGrey"
                     size="small"
                   >
-                    Eliminar
+                    <TypographyMenu>Eliminar</TypographyMenu> 
                   </Button>
                 </TableCell>
               </TableRow>

@@ -10,6 +10,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { TypographyMenu } from "../../personalizadTheme";
 import {
   deleteImageToBanner,
   getImageBanner,
@@ -98,13 +99,13 @@ export const Banner = () => {
               sx={{ mb: "10px" }}
               type="submit"
               variant="contained"
-              color="ambar4"
+              color="darkGrey"
               size="small"
               dissabled
             >
-              <Typography variant="h6" color="ambar5" dissabled>
+              <TypographyMenu variant="h6" >
                 Subir imagen
-              </Typography>
+              </TypographyMenu>
             </Button>
             <Typography>
               Las dimensiones de las imagenes recomendadas para el banner son

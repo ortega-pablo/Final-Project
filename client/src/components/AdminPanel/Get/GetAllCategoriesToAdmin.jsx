@@ -17,6 +17,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import { ListItemButtonMenu } from "../../../personalizadTheme";
 
 
 function Row(props) {
@@ -46,7 +47,7 @@ function Row(props) {
                   {row.subCategories?.map((sc) => (
                     <TableRow key={sc.name}>
                       <TableCell align='left' sx={{width:'5%'}}>
-                      <HorizontalRuleIcon/> 
+                      <HorizontalRuleIcon color="darkGrey" />
                       </TableCell>
                       <TableCell component="th" scope="row" sx={{mr:2}}>
                         {sc.name}
@@ -82,8 +83,8 @@ const GetAllCategoriesToAdmin = () => {
           <TableHead>
             <TableRow>
               <TableCell/>
-              <TableCell>Nombre</TableCell>
-              <TableCell align='center'>Cantidad de subcategorias</TableCell>
+              <TableCell > <Typography color="darkGrey.main" variant="h6">Nombre</Typography> </TableCell>
+              <TableCell align='center'><Typography color="darkGrey.main" variant="h6">Cantidad de subcategorias</Typography></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -54,7 +54,7 @@ function Row(props) {
             <Table>
               <TableHead>
                 <TableCell>
-                  <Typography variant="h6">
+                  <Typography variant="h6" color="darkGrey.main">
                     Productos con el descuento
                   </Typography>
                 </TableCell>
@@ -92,16 +92,16 @@ export const GetAllDiscountsToAdmin = () => {
           <TableRow>
             <TableCell />
             <TableCell>
-              <Typography variant="h5">Nombre</Typography>
+              <Typography variant="h5" color="darkGrey.main">Nombre</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">Descripcion</Typography>
+              <Typography variant="h5" color="darkGrey.main">Descripcion</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">Porcentaje</Typography>
+              <Typography variant="h5" color="darkGrey.main">Porcentaje</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h5">Activo</Typography>
+              <Typography variant="h5" color="darkGrey.main">Activo</Typography>
             </TableCell>
           </TableRow>
         </TableHead>

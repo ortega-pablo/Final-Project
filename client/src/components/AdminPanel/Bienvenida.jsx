@@ -7,7 +7,7 @@ function Bienvenida() {
   const ls = JSON.parse(localStorage.getItem('token'))
   return (
     <Container sx={{mt: 10, display:"flex", flexDirection:"column", textAlign: 'center', alignItems:"center"}}>
-      <Typography variant='h2'>¡Hola!   Bienvenido {ls.username}</Typography>
+      <Typography variant='h2' color="darkGrey.main" >¡Hola!   Bienvenido {ls.username}</Typography>
 
       <Divider variant="middle"/>
 

@@ -83,16 +83,15 @@ const CreateCategoryToAdmin = () => {
     setIdCat(e.target.value);
   }
   return (
-    <Box>
-      <Typography variant="h5" sx={{mb:5}} color='ambar5.main'>Administracion de categorias y subcategorias</Typography>
-      <Typography sx={{mb:5}} color='ambar5.main'>Categorias existentes: {allCategories.length} </Typography>
+    <Paper sx={{display:"flex", flexDirection:"column", alignItems:"center", p:2}}>
+      <Typography sx={{mt:2}} variant='h6' color='darkGrey.main'>Categorias existentes: {allCategories.length} </Typography>
       <AddCategory
         allCategories={allCategories}/>
-        <Typography variant='h6' color='ambar5.main'>Nueva subcategoria</Typography>
+        <Typography variant='h6' color='darkGrey.main'>Nueva subcategoria</Typography>
         <AddSubCategoty
           allCategories={allCategories}
         />
-    </Box>
+    </Paper>
   );
 };
 

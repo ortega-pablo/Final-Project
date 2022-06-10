@@ -16,8 +16,8 @@ const GetAllSpecificationsToAdmin = () => {
       <TableContainer component={Paper} align="center">
         <Table>
           <TableHead>
-            <TableCell>
-              Especificaciones
+            <TableCell >
+             <Typography color="darkGrey.main">Especificaciones</Typography> 
             </TableCell>
           </TableHead>
           <TableBody>

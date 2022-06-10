@@ -1,4 +1,4 @@
-import { Button, InputLabel, TextField } from "@mui/material";
+import { Button, InputLabel, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Swal from 'sweetalert2';
+import { TypographyMenu } from "../../../personalizadTheme";
 
 
 export const AddSpecification = () => {
@@ -56,7 +57,7 @@ export const AddSpecification = () => {
   return (
     <Box sx={{ display: "flex", alignItems: "center", mt:2, mb:2 }}>
       <InputLabel id="demo-simple-select-standard-label">
-        Crear nueva especicación:
+      <Typography color="darkGrey">Crear nueva especicación:</Typography> 
       </InputLabel>
 
       <Box
@@ -79,8 +80,8 @@ export const AddSpecification = () => {
           sx={{ml:3, mr:3}}
         />
 
-        <Button sx={{mt:1}}  type="submit"variant="contained" color="ambar4" >
-          Crear
+        <Button sx={{mt:1}}  type="submit" variant="contained" color="darkGrey" >
+         <TypographyMenu>Crear</TypographyMenu> 
         </Button>
       </Box>
     </Box>

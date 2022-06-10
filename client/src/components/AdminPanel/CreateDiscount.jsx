@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { CreateDiscout } from '../Forms/adminDiscounts/CreateDiscout'
@@ -10,7 +10,7 @@ function CreateDiscount() {
   const userStatus = useSelector((state) => state.userStatus);
     return (
       userStatus === "admin" || userStatus === "superAdmin" ?
-        <Box
+        <Box 
           maxWidth="vp"
           sx={{
             gap: 0,
@@ -46,8 +46,11 @@ function CreateDiscount() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h2">Acá se Crea un descuento</Typography>
+              <Typography variant="h2" color="darkGrey.main">Crear descuento</Typography>
+              <Paper>
               <CreateDiscout/>
+              </Paper>
+              
             </Container>
           </Container>
         </Box>

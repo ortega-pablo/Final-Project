@@ -10,6 +10,7 @@ import { postRegisterUser } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { TypographyMenu } from "../../personalizadTheme";
 
 
 const validationSchema = yup.object({
@@ -209,12 +210,12 @@ export const CreateAccount = () => {
           <Button
             type="submit"
             fullWidth
-            color="ambar3"
+            color="darkGrey"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             disabled={!formik.dirty}
           >
-            Crear cuenta
+            <TypographyMenu>Crear cuenta</TypographyMenu> 
           </Button>
         </form>
       </Container>

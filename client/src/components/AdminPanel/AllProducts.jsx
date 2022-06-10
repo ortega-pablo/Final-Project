@@ -45,7 +45,7 @@ function AllProducts() {
             alignItems: "center",
           }}
         >
-        <Typography variant="h2" mt={4} color='ambar5.main' >Productos</Typography>
+        <Typography variant="h2" mt={4} color='darkGrey.main' >Productos</Typography>
           <GetAllProductsToAdmin />
           
         </Container>

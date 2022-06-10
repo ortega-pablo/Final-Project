@@ -9,11 +9,19 @@ const { google } = require("googleapis");
 const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
 
+// router.get("/review", async(req, res, next)=>{
+//   const {userId, orderId, productId} = req.query
+//   try {
 
+
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 router.post("/review", async (req, res, next) => {
-  const { rating, review, orderId } = req.body;
-  const { userId, productId } = req.query;
+  const {  review } = req.body;
+  const { userId, productId,rating,orderId } = req.query;
   try {
 
     const product = await Product.findOne({
@@ -69,7 +77,7 @@ router.post('/', async (req, res, next) => {
         }
       });
 
-      console.log(findUser)
+     
 
 
 
@@ -92,7 +100,6 @@ router.post('/', async (req, res, next) => {
         }
       });
 
-      console.log(findCart)
 
 
       const newOrder = await Order.create({
@@ -1845,6 +1852,35 @@ router.put("/admin", async (req, res, next) => {
     next(error)
   }
 })
+
+
+router.put('/', async (req, res, next) => {
+
+  const {orderId} = req.query;
+
+  const {state} = req.body;
+
+  console.log(state)
+  console.log(orderId)
+
+  try {
+
+    const currentOrder = await Order.findOne({where:{id: orderId}});
+
+    if(currentOrder){
+      await currentOrder.update({
+        state,
+      })
+      return res.send(currentOrder);
+    }else{
+      return res.status(400).send("no se encontro la orden");
+    }
+  } catch (error) {
+    next(error);
+  }
+
+})
+
 
 
 module.exports = router;

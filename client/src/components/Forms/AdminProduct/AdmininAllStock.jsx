@@ -17,6 +17,7 @@ import { getInventary, getProducts, putQuantity } from "../../../redux/actions";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 export const AdmininAllStock = () => {
   const dispatch = useDispatch();
@@ -69,52 +70,8 @@ export const AdmininAllStock = () => {
   }
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <b>Nombre del producto: </b>
-              </TableCell>
-              <TableCell>
-                <b>Stock: </b>
-              </TableCell>
-              <TableCell>
-                <b>Precio por unidad: </b>
-              </TableCell>
-              <TableCell>
-                <b>Valor en stock: </b>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {allProducts.map((p) => {
-              return (
-                <TableRow>
-                  <TableCell>{p?.name}</TableCell>
-                  <TableCell>{p?.productInventory?.quantity}</TableCell>
-                  <TableCell> ${p?.price}</TableCell>
-                  <TableCell>
-                    ${p?.price * p?.productInventory?.quantity}
-                  </TableCell>
-
-                  <Button
-                    value={p.id}
-                    onClick={(e) => handleUpdateStock(e)}
-                    // name="delete"
-                    // startIcon={<EditIcon />}
-                  >
-                    Editar
-                  </Button>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {updating && (
-        <>
+    {updating && (
+        <Paper sx={{mb:3, mt:3}}>
           <Box
             component="form"
             noValidate
@@ -122,7 +79,7 @@ export const AdmininAllStock = () => {
             onSubmit={formik.handleSubmit}
             sx={{display: 'flex', alignItems:'center', m:3}}
           >
-          <Typography sx={{m:3}}>
+          <Typography >
             Estas editando a: <b>{productToUpdate.name}</b>
           </Typography>
             <TextField
@@ -139,13 +96,61 @@ export const AdmininAllStock = () => {
             <Typography sx={{m:3}}>
               Stock actual: {productToUpdate?.productInventory?.quantity}{" "}
             </Typography>
-            <Button type="submit" variant='contained' sx={{mr:1}} color="ambar3">Editar stock</Button>
-            <Button type="submit" variant='contained' color="ambar3" onClick={(e) => setUpdating(false)}>
-              Cancelar edición
+            <Button type="submit" variant='contained' sx={{mr:1}} color="darkGrey"> <TypographyMenu>Editar</TypographyMenu> </Button>
+            <Button type="submit" variant='contained' color="darkGrey" onClick={(e) => setUpdating(false)}>
+            <TypographyMenu>Cancelar</TypographyMenu> 
             </Button>
           </Box>
-        </>
+        </Paper>
       )}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography color="darkGrey.main">Nombre del producto: </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography color="darkGrey.main">Stock: </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography color="darkGrey.main">Precio por unidad: </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography color="darkGrey.main">Valor en stock: </Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {allProducts.map((p) => {
+              return (
+                <TableRow>
+                  <TableCell>{p?.name}</TableCell>
+                  <TableCell>{p?.productInventory?.quantity}</TableCell>
+                  <TableCell> ${p?.price}</TableCell>
+                  <TableCell>
+                    ${p?.price * p?.productInventory?.quantity}
+                  </TableCell>
+                  <TableCell>
+
+                  <Button
+                    value={p.id}
+                    onClick={(e) => handleUpdateStock(e)}
+                    variant="contained"
+                    color="darkGrey"
+                    size="small"
+                  >
+                   <TypographyMenu>Editar</TypographyMenu> 
+                  </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      
     </>
   );
 };

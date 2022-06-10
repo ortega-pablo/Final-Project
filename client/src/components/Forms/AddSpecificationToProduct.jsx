@@ -9,6 +9,7 @@ import {
   postAddSpecificationToProduct,
 } from "../../redux/actions";
 import {TableSpecificationNewProduct} from "./TableSpecificationNewProduct"
+import { TypographyMenu } from "../../personalizadTheme";
 
 export const AddSpecificationToProduct = ({newProdId, specifications, newProduct}) => {
   const dispatch = useDispatch();
@@ -67,14 +68,8 @@ export const AddSpecificationToProduct = ({newProdId, specifications, newProduct
           helperText={formik.touched.value && formik.errors.value}
         />
         
-        <Button type="submit" variant="contained"color="ambar4">Agregar</Button>
+        <Button type="submit" variant="contained"color="darkGrey"> <TypographyMenu>Agregar</TypographyMenu> </Button>
       </Box>
-{/* <Box>
-      <TableSpecificationNewProduct
-      newProduct={newProduct}
-      newProdId={newProdId}
-      />
-</Box> */}
     </Box>
   );
 };

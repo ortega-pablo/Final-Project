@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import { deleteSubCategory, getSubCategories } from "../../../redux/actions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 export const UpadateSubCat = ({ allSubCategories }) => {
   const dispatch = useDispatch();
@@ -41,19 +42,19 @@ export const UpadateSubCat = ({ allSubCategories }) => {
 
   return (
     <Box sx={{display:'flex', flexDirection:'column',alignItems:'center', m:3, width:"100%"}}>
-      <Typography variant="h5" sx={{m:3}}>Actualizar subcategorias</Typography>
+      <Typography variant="h5" sx={{m:3}} color="lightGrey.main">Actualizar subcategorias</Typography>
       <TableContainer component={Paper} >
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography>Nombre</Typography>
+                <Typography color="darkGrey.main" variant="h6">Nombre</Typography>
               </TableCell>
               <TableCell>
-                <Typography>Descripcion</Typography>
+                <Typography color="darkGrey.main" variant="h6">Descripcion</Typography>
               </TableCell>
               <TableCell>
-                <Typography>Categorias</Typography>
+                <Typography color="darkGrey.main" variant="h6">Categorias</Typography>
               </TableCell>
               <TableCell>
               </TableCell>
@@ -73,20 +74,12 @@ export const UpadateSubCat = ({ allSubCategories }) => {
                     name="delete"
                     startIcon={<DeleteIcon />}
                     variant="contained"
-                    color="ambar3"
+                    color="darkGrey"
                     size="small"
                   >
-                    Eliminar
+                   <TypographyMenu>Eliminar</TypographyMenu> 
                   </Button>
                 </TableCell>
-                {/* <Button
-          value={sc.id}
-        //   onClick={(e) => handleUpdateCat(e)}
-          name="delete"
-        //   startIcon={<EditIcon />}
-        >
-          Editar
-        </Button> */}
               </TableRow>
             );
           })}

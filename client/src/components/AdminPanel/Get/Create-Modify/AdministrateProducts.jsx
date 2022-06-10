@@ -16,6 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteProduct, getProducts } from "../../../../redux/actions/index";
 import { UpdateProduct } from "../../../Forms/AdminProduct/UpdateProduct";
+import { TypographyMenu } from "../../../../personalizadTheme";
 
 export const AdministrateProduct = () => {
   const dispatch = useDispatch();
@@ -71,12 +72,12 @@ export const AdministrateProduct = () => {
           <TableHead>
             <TableRow>
               <TableCell>
-              <Typography variant="h5" color="ambar5">
+              <Typography variant="h5" color="darkGrey.main">
                   SKU
                 </Typography>
               </TableCell>
               <TableCell width="90%">
-                <Typography variant="h5" color="ambar5">
+                <Typography variant="h5" color="darkGrey.main">
                   Producto
                 </Typography>
               </TableCell>
@@ -103,34 +104,31 @@ export const AdministrateProduct = () => {
                   { !updating ? 
                   (
                     <Button
-                   
-                     
+                     variant="contained"
+                     color="darkGrey"
                       size="small"
                       value={product.id}
                       onClick={(e) => handleEditProduct(e)}
                       name="edit"
                       // startIcon={<EditIcon />}
                     >
-                    
-                        Editar
+                    <TypographyMenu>Editar</TypographyMenu>
+                        
                       
                     </Button>
                   ) :
 
                   <Button
-                    
-                  // variant="contained"
-                  // color="ambar4"
+                  variant="contained"
+                  color="darkGrey"
                   disabled
                   size="small"
                   value={product.id}
                   onClick={(e) => handleEditProduct(e)}
                   name="edit"
-                  // startIcon={<EditIcon />}
+          
                 >
-                  {/* <Typography variant="h6" color="ambar5" > */}
-                    Editar
-                  {/* </Typography> */}
+                   <TypographyMenu>Editar</TypographyMenu> 
                 </Button>
 
 
@@ -144,8 +142,8 @@ export const AdministrateProduct = () => {
                         { !updating ? 
                         (
                     <Button
-                      // variant="contained"
-                      // color="ambar4"
+                    variant="contained"
+                    color="darkGrey"
                       size="small"
                       value={product.id}
                       onClick={(e) => handleDeleteProduct(e)}
@@ -153,7 +151,7 @@ export const AdministrateProduct = () => {
                       // startIcon={<DeleteIcon />}
                     >
 
-                        Eliminar
+<TypographyMenu>Eliminar</TypographyMenu> 
 
                     </Button>
                         ) :
@@ -161,17 +159,14 @@ export const AdministrateProduct = () => {
                         (
                           <Button
                           disabled
-                          // variant="contained"
-                          // color="ambar4"
+                          variant="contained"
+                     color="darkGrey"
                           size="small"
                           value={product.id}
                           onClick={(e) => handleDeleteProduct(e)}
                           name="delete"
-                          // startIcon={<DeleteIcon />}
                         >
-                          {/* <Typography variant="h6" color="ambar5"> */}
-                            Eliminar
-                          {/* </Typography> */}
+                         <TypographyMenu>Eliminar</TypographyMenu>   
                         </Button>
                         )
 

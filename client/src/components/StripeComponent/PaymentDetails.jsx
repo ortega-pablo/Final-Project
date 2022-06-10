@@ -10,6 +10,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { TypographyMenu } from '../../personalizadTheme';
 
 const CARD_ELEMENTS_OPTIONS = {
   iconStyle: "solid",
@@ -17,11 +18,11 @@ const CARD_ELEMENTS_OPTIONS = {
   maxWidth: "60%",
   style: {
     base: {
-      iconColor: "ambar3",
-      color: "#333", 
+      iconColor: "#303030",
+      color: "#fff", 
       fontSize: "18px",
       "::placeholder": {
-        color: "ambar3",
+        color: "#303030",
       },
     },
     invalid: {
@@ -117,20 +118,20 @@ export const PaymentDetails = ({backStep}) => {
           </Box>
           <Divider sx={{mt:"10px"}}></Divider>
         <Box sx={{mt:"10px", display:"flex", justifyContent:"space-between"}}>
-            <Button  variant='contained' color='ambar3' size='small' onClick={() => backStep()}>
-              Regresar
+            <Button  variant='contained' color='darkGrey' size='small' onClick={() => backStep()}>
+              <TypographyMenu>Regresar</TypographyMenu> 
             </Button>
             <LoadingButton
               type='submit'
               variant='contained' 
-              color='ambar3' 
+              color='darkGrey' 
               size='small'
               endIcon={<SendIcon />}
               loading={loading}
               loadingPosition="end"
               disabled={!stripe}
             >
-              Pagar 
+              <TypographyMenu>Pagar</TypographyMenu> 
             </LoadingButton>
         </Box>
       </Box>

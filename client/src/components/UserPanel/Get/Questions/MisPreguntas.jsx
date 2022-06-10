@@ -11,6 +11,7 @@ import {
   getUserIdByToken,
 } from "../../../../redux/actions";
 import { NuevaPregunta } from "./NuevaPregunta";
+import { DeleteAsk } from "../../../AdminPanel/DeleteAsk";
 import { TypographyMenu } from "../../../../personalizadTheme";
 
 export const MisPreguntas = () => {
@@ -81,13 +82,12 @@ export const MisPreguntas = () => {
               // let elapsed = fechaEnd.getTime() - fechaStart.getTime()
               // // console.log(elapsed)
               // console.log(Date.now())
-           
+           console.log(preg)
                 let day1 = new Date(preg.createdAt);
                 let day2 = new Date();
-                console.log(day1)
-                console.log(day2)
+              
                 let difference = day2.getTime()-day1.getTime();
-              console.log(difference)
+              
    
 
               return (
@@ -122,8 +122,8 @@ export const MisPreguntas = () => {
                       </Typography>
                     )}
                   </ListItem>
-
-               
+                  <DeleteAsk askId={preg.id}  setRender={setRender}/>
+                  <hr />
                 </Paper>
               );
             })}

@@ -11,9 +11,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { TypographyMenu } from "../../../personalizadTheme";
 import {
   getAllSpecifications,
   getCategories,
@@ -142,14 +144,15 @@ console.log(subCatInCadena)
 
   return (
     <>
-      Atencion: Si elimina su categoría, se eliminaran del producto las
-      subcategorías asociadas
-      <TableContainer component={Paper}>
+    <Typography color="warning.light">Atencion: Si elimina su categoría, se eliminaran del producto las subcategorías asociadas</Typography>
+      
+      
+      <TableContainer >
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>
-                <b>Nombre de la categoria: </b>
+                <Typography color="darkGrey.main">Nombre de la categoria: </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -164,10 +167,10 @@ console.log(subCatInCadena)
                   <Button
                     value={c.id}
                     onClick={(e) => handleDeleteCat(e)}
-                    // name="delete"
-                    // startIcon={<EditIcon />}
+                    variant="contained"
+                    color="darkGrey"
                   >
-                    Eliminar
+                    <TypographyMenu>Eliminar</TypographyMenu> 
                   </Button>
                 </TableRow>
               );
@@ -180,10 +183,10 @@ console.log(subCatInCadena)
           <TableHead>
             <TableRow>
               <TableCell>
-                <b>Nombre de la sub-categoria: </b>
+              <Typography color="darkGrey.main">Nombre de la sub-categoria: </Typography>
               </TableCell>
               <TableCell>
-                <b>Pertenece a la categoría: </b>
+              <Typography color="darkGrey.main">Pertenece a la categoría: </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -198,11 +201,11 @@ console.log(subCatInCadena)
                         <Button
                       value={sc.id}
                       onClick={(e) => handleDeleteSubc(e)}
-                      // name="delete"
-                      // startIcon={<EditIcon />}
-                      >
-                      Eliminar
-                        </Button>
+                      variant="contained"
+                    color="darkGrey"
+                  >
+                    <TypographyMenu>Eliminar</TypographyMenu> 
+                  </Button>
                           </TableRow>
                       )
           } )
@@ -214,7 +217,7 @@ console.log(subCatInCadena)
 
 
       <InputLabel id="demo-simple-select-standard-label">
-        Agregar categoria
+   
       </InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
@@ -230,10 +233,10 @@ console.log(subCatInCadena)
           return <MenuItem value={cat.id}>{cat.name}</MenuItem>;
         })}
       </Select>
-      <Button onClick={(e) => handleClickAddCat(e)}>Agregar categoria</Button>
+      <Button onClick={(e) => handleClickAddCat(e)} variant="contained" color="darkGrey" sx={{ml:2}}> <TypographyMenu>Agregar categoria</TypographyMenu> </Button>
       <hr />
       <InputLabel id="demo-simple-select-standard-label">
-        Agregar Sub categoria
+
       </InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
@@ -249,56 +252,10 @@ console.log(subCatInCadena)
           return <MenuItem value={subc.id}>{subc.name}</MenuItem>;
         })}
       </Select>
-      <Button onClick={(e) => handleClickAddSubCat(e)}>
-        Agregar Sub categoría
-      </Button>
+      <Button onClick={(e) => handleClickAddSubCat(e)} variant="contained" color="darkGrey" sx={{ml:2}}> <TypographyMenu>Agregar subcategoria</TypographyMenu> </Button>
       <hr />
       <AddCategory allCategories={allCategories} />
       <hr />
     </>
   );
 };
-
-
-
-
-
-// {productToUpdate?.categories?.map((c, i) => {
-//   return (
-//     <>
-//       <TableRow>
-//         <TableCell>
-//           <b>Categoría</b>
-//         </TableCell>
-//         <TableCell>{c.name}</TableCell>
-//         <Button
-//           value={c.id}
-//           onClick={(e) => handleDeleteCat(e)}
-//           // name="delete"
-//           // startIcon={<EditIcon />}
-//         >
-//           Eliminar
-//         </Button>
-//       </TableRow>
-
-//       {productToUpdate?.subCategories?.map((sc) => {
-//         return (
-//           <TableRow>
-//             <TableCell>
-//               <b>Sub categoría</b>
-//             </TableCell>
-//             <TableCell>{sc?.name}</TableCell>
-//             <Button
-//               value={sc.id}
-//               onClick={(e) => handleDeleteSubc(e)}
-//               // name="delete"
-//               // startIcon={<EditIcon />}
-//             >
-//               Eliminar
-//             </Button>
-//           </TableRow>
-//         );
-//       })}
-//     </>
-//   );
-// })}

@@ -47,7 +47,7 @@ function AdminProducts() {
           }}
         >
 
-          <Typography variant="h2"> Administrar Productos </Typography>
+          <Typography variant="h2" color="darkGrey.main"> Administrar Productos </Typography>
 <Box sx={{width:"100%"}}>
 
           <AdministrateProduct />

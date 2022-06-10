@@ -23,6 +23,7 @@ import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import UserEditButton from "./UserEditButton";
 import AdminEditButton from "./AdminEditButton";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 
 function RowGetUsers({ row, user, setRender , render }) {
@@ -183,8 +184,10 @@ function RowGetUsers({ row, user, setRender , render }) {
               value={row.id}
               onClick={(e) => handleDeleteUser(e)}
               name="delete"
+              variant="contained"
+              color="darkGrey"
             >
-              Eliminar
+             <TypographyMenu>Eliminar</TypographyMenu> 
             </Button>
           ) : (
             <></>
@@ -196,8 +199,10 @@ function RowGetUsers({ row, user, setRender , render }) {
                 value={row.id}
                 onClick={(e) => handleDeleteUser(e)}
                 name="delete"
+                variant="contained"
+                color="darkGrey"
               >
-                Eliminar
+               <TypographyMenu>Eliminar</TypographyMenu>
               </Button>
             ) : (
               row.role === "admin" && (
@@ -206,8 +211,10 @@ function RowGetUsers({ row, user, setRender , render }) {
                   value={row.id}
                   onClick={(e) => handleDeleteAdmin(e)}
                   name="delete"
+                  variant="contained"
+                  color="darkGrey"
                 >
-                  Eliminar
+                 <TypographyMenu>Eliminar</TypographyMenu> 
                 </Button>
               )
             )
@@ -224,8 +231,10 @@ function RowGetUsers({ row, user, setRender , render }) {
               value={row.id}
               onClick={(e)=>handleChangeAdminToUser(e)}
               name="delete"
+              variant="contained"
+              color="darkGrey"
             >
-              Cambiar rol
+             <TypographyMenu>Cambiar rol</TypographyMenu>  
             </Button>
           </TableCell>
           :
@@ -235,8 +244,10 @@ function RowGetUsers({ row, user, setRender , render }) {
               value={row.id}
               onClick={(e)=>handleChangeUserToAdmin(e)}
               name="delete"
+              variant="contained"
+              color="darkGrey"
             >
-              Cambiar rol
+             <TypographyMenu>Cambiar rol</TypographyMenu> 
             </Button>
           </TableCell>
         ) : (

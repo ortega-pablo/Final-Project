@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 // import InfoIcon from '@mui/icons-material/Info';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelect } from "@mui/base";
+import { TypographyMenu } from "../../personalizadTheme";
 
 export const AddImageToProduct = ({ newProduct, newProdId,  prueba }) => {
   const allImages = useSelector(state => state.allImages)
@@ -83,8 +84,8 @@ await dispatch(getProducts())
   }
   return (
     <Box>
-<Typography sx={{ m: "5px" }} variant="h5">
-        Selecciona las imagenes para tu producto
+<Typography sx={{ m: "5px" }} variant="h5" color="darkGrey.main">
+        Selecciona las imagenes
       </Typography>
 
 
@@ -112,7 +113,7 @@ await dispatch(getProducts())
         </div>
         <div>
               
-        <Button type="submit" variant="contained" color="ambar4" size="small" dissabled ><Typography variant="h6" color="ambar5" dissabled >Upload</Typography></Button>
+        <Button type="submit" variant="contained" color="darkGrey" size="small" dissabled ><TypographyMenu>Upload</TypographyMenu></Button>
 
         </div>
       </form>
@@ -134,50 +135,17 @@ await dispatch(getProducts())
                 <Button
                   value={i.id}
                   onClick={(e) => deleteClickImageToProduct(e)}
+                  variant="contained"
+                  color="darkGrey"
                 >
-                  Eliminar
+                  <TypographyMenu>Eliminar</TypographyMenu> 
                 </Button>
-                {/* <ImageListItemBar
-            title={i.urlFile}
-            //subtitle={i.author}
-            actionIcon={
-              <IconButton
-              value={i.id}
-              onClick={deleteClickImageToProduct}
-                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                // aria-label={`info about ${i.urlFile}`}
-              >
-                <DeleteIcon  />
-              </IconButton>
-            }
-          /> */}
+              
               </ImageListItem>
             ))}
           </ImageList>
         }
       </Box>
-
-      {/* <Stack direction="row" alignItems="center" spacing={2}>
- <label htmlFor="contained-button-file">
-        <Input
-          accept="image/*"
-         
-         
-          type="file"
-          sx={{display: "none"}}
-          onChange={(e) => handleImage(e)}
-          name="image"
-        
-          id="file"
-          //   multiple
-         
-        />
-  
-        <Button onClick={handleClickImage} variant="contained" component="span">
-          Upload
-        </Button>
-        </label>
-      </Stack>  */}
     </Box>
   );
 };

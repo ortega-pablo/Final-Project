@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { Button, InputLabel, Select, MenuItem } from "@mui/material";
+import { Button, InputLabel, Select, MenuItem, Typography } from "@mui/material";
 import { getCategories, getSubCategories, postAddSubCategory } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Swal from 'sweetalert2';
+import { TypographyMenu } from "../../personalizadTheme";
 
 export const AddSubCategoty = ({ allCategories }) => {
   const allCategory = useSelector((state) => state.categories);
@@ -96,7 +97,7 @@ export const AddSubCategoty = ({ allCategories }) => {
   }
 
   return (
-    <Box sx={{display:'flex', }}>
+    <Box sx={{display:'flex', flexDirection:"row" }}>
 
       <Box
         component="form"
@@ -105,7 +106,7 @@ export const AddSubCategoty = ({ allCategories }) => {
         onChange={handleInputNewSubCat}
         // onChange={handleInput}
         onSubmit={formik.handleSubmit}
-        sx={{display:'flex', alignItems:'center'}}
+        sx={{display:'flex', alignItems:'center', justifyContent:"stretch"}}
       >
         <TextField
           id="outlined-basic"
@@ -132,16 +133,16 @@ export const AddSubCategoty = ({ allCategories }) => {
           }
           helperText={formik.touched.description && formik.errors.description}
         />
-              <InputLabel id="demo-simple-select-standard-label" sx={{m:3}}>
-        Agregar Sub categoria a:
+         
+      <InputLabel id="demo-simple-select-standard-label" sx={{m:3}}>Agregar a:</InputLabel>
       <Select
-        labelId="demo-simple-select-standard-label"
+        labelId="simple-select-standard-label"
         id="demo-simple-select-standard"
         value={category}
         onChange={handleChangeSelect}
-        label="Age"
         type="click"
         name="select"
+        
         sx={{m:3}}
       >
         <MenuItem value="">
@@ -155,8 +156,8 @@ export const AddSubCategoty = ({ allCategories }) => {
           );
         })}
       </Select>
-      </InputLabel>
-        <Button type="submit" variant='contained' color="ambar3">Crear</Button>
+      
+        <Button type="submit" variant='contained' color="darkGrey"> <TypographyMenu>Crear</TypographyMenu></Button>
        
       </Box>
     </Box>
