@@ -319,15 +319,6 @@ export default function AdminMenuLarge() {
 
           <Divider variant="middle" />
 
-          <ListItemButtonMenu component="a" href="/orders" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <AttachMoneyIcon />
-            </ListItemIcon>
-            <ListItemText primary="Ventas" />
-          </ListItemButtonMenu>
-
-          <Divider variant="middle" />
-
           <ListItemButtonMenu component="a" href="/usersPanel" sx={{ pl: 4 }}>
             <ListItemIcon>
               <PeopleIcon />

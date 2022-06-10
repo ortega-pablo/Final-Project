@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, getCartById } from "../../../redux/actions";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../../personalizadTheme";
 
 export default function ModalToRow({
   id,
@@ -124,17 +125,18 @@ export default function ModalToRow({
                   handleSetCantidad(e);
                 }}
               ></TextField>
-              <Button type="submit" variant="contained" color="ambar3">
-                {" "}
-                Confirmar{" "}
+              <Button type="submit" variant="contained" color="darkGrey">
+                <TypographyMenu>{" "}
+                Confirmar{" "}</TypographyMenu>
+                
               </Button>
               <Button
                 onClick={() => setOpen(false)}
                 variant="contained"
-                color="ambar3"
+                color="darkGrey"
               >
-                {" "}
-                Volver{" "}
+                <TypographyMenu>{" "}
+                Volver{" "}</TypographyMenu>
               </Button>
             </Box>
           </form>
