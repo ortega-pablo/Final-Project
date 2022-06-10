@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Button, List, ListItem, ListItemText, Modal, Rating, Typography } from "@mui/material";
 import AllReviews from "./AllReviews";
+import { TypographyMenu } from "../../personalizadTheme";
 
 const style = {
     position: "absolute",
@@ -51,12 +52,12 @@ function RatingProduct({productDetail}) {
           />
           <Button
             onClick={handleOpenModal}
-            color="ambar3"
+            color="darkGrey"
             variant="contained"
             size="small"
-            sx={{ maxWidth: "28%", mt:1}}
+            sx={{ maxWidth: "32%", mt:1}}
           >
-            Ver todas las Reviews
+            <TypographyMenu>Ver todas las Reviews</TypographyMenu>
           </Button>
           <Modal
             open={openModal}

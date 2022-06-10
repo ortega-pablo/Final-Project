@@ -1,5 +1,5 @@
 import { useSelect } from "@mui/base";
-import { Box, Link, ListItem, ListItemAvatar, Typography } from "@mui/material";
+import { Box, Link, ListItem, ListItemAvatar, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,6 +11,7 @@ import {
   getUserIdByToken,
 } from "../../../../redux/actions";
 import { NuevaPregunta } from "./NuevaPregunta";
+import { TypographyMenu } from "../../../../personalizadTheme";
 
 export const MisPreguntas = () => {
   const dispatch = useDispatch();
@@ -42,20 +43,17 @@ export const MisPreguntas = () => {
 
   return (
     <>
-     <Typography sx={{mt:"15px" , mb:"15px"}} variant="h3" >Panel de preguntas</Typography>
+     <Typography sx={{mt:4 , mb:4}} variant="h3" color="darkgrey.main" >Panel de preguntas</Typography>
       {allAskForAllProducts?.map((p) => {
         const prod = allProducts.find((pr) => pr.id === p.id);
 
         return (
-          <>
-            <Box  sx={{display:"flex", justifyContent:"space-between", width:"65%"}}  >
-                <Typography sx={{maxWidth:"20%"}} variant="h5">
-              <Link underline="none" variant="subtitle2" href={"/detail/"+p?.id} >
-                  {p?.name}
+          <Paper sx={{width:"100%"}}>
+            <Box  sx={{display:"flex", justifyContent:"center", flexDirection:"column",alignItems:"center", pt:3}}  > 
+              <Link underline="none" href={"/detail/"+p?.id} >
+                  <TypographyMenu variant="h4">{p?.name}</TypographyMenu> 
               </Link>
-                </Typography>
-              <img src={prod?.images[0]?.urlFile} width="75" alt="" />
-              <img src={prod?.images[1]?.urlFile} width="75" alt="" />
+              <img src={prod?.images[0]?.urlFile} width={280} alt={p.name} />
               <h2>$ {p?.price} </h2>
               {prod?.discounts?.map((d) => {
                 return (
@@ -73,12 +71,10 @@ export const MisPreguntas = () => {
               {prod?.productInventory?.quantity === 0 ? (
                 <Typography>¡Sin stock! </Typography>
               ) : (
-                <Typography>
-                  Stock actual: {prod?.productInventory?.quantity}
+                <Typography color="darkGrey.main">
+                  Stock actual:{prod?.productInventory?.quantity}
                 </Typography>
               )}
-            </Box>
-                <Box   sx={{width:"55%"}}>
             {p?.asks?.map((preg) => {
               // var fechaStart = new Date(preg.createdAt);
               // let fechaEnd = Date.now()
@@ -95,19 +91,19 @@ export const MisPreguntas = () => {
    
 
               return (
-                <>
+                <Paper elevation={12} sx={{width:"80%", p:3, mt:2}} >
                   <Typography component="h3" variant="h5">
-                    Pregunta: {preg?.content}
+                  {preg?.content}
                   </Typography>
 
                       {difference < 3.54e+6 ?    
-                   <Typography component="h6" variant="h6">
+                   <Typography component="h6" variant="body2" color="darkGrey.main">
                     Hace {  Math.round(difference / 60000)   } minutos
                   </Typography> :   (  difference >= 3.54e+6 && difference < 8.64e+7  )   ?
-                   <Typography component="h6" variant="h6">
+                   <Typography component="h6" variant="body2" color="darkGrey.main">
                     Hace {  Math.round(difference / 3.6e+6)   } horas
                   </Typography> :  
-                   <Typography component="h6" variant="h6">
+                   <Typography component="h6" variant="body2" color="darkGrey.main">
                    Hace {  Math.round(difference / 8.64e+7)   } dias
                  </Typography>
                     }
@@ -127,13 +123,13 @@ export const MisPreguntas = () => {
                     )}
                   </ListItem>
 
-                  <hr />
-                </>
+               
+                </Paper>
               );
             })}
-              </Box>
             <NuevaPregunta idProduc={p.id} />
-          </>
+            </Box>
+          </Paper>
         );
       })}
     </>

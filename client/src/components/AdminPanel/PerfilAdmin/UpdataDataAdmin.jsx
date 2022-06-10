@@ -20,6 +20,7 @@ import {
 import { useNavigate } from "react-router-dom";
   import Swal from "sweetalert2";
   import * as yup from "yup";
+import { TypographyMenu } from "../../../personalizadTheme";
 import { editUserForUser, getDetailOneUsers, getUserIdByToken } from "../../../redux/actions";
 
   
@@ -153,7 +154,7 @@ export const UpdataDataAdmin = () => {
         <Typography
           sx={{ mt: "2%", mb: "2%", textAlign: "center" }}
           variant="h3"
-          color="ambar5.main"
+          color="darkGrey.main"
         >
           Editar tus datos
         </Typography>
@@ -242,7 +243,7 @@ export const UpdataDataAdmin = () => {
             </TableRow>
 
             <TableRow sx={{ mb: 3, mt: 3, width: "98%" }}>
-              <Button type="submit" variant="contained" color="ambar3" sx={{ width: "98%" }}>Modificar</Button>
+              <Button type="submit" variant="contained" color="darkGrey" sx={{ width: "98%" }}><TypographyMenu>Modificar</TypographyMenu></Button>
             </TableRow>
           </Table>
         </TableContainer>

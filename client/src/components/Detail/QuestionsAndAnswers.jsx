@@ -20,6 +20,7 @@ import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
 import { AnswerComponent } from "./AnswerComponent";
 import { useSelector } from "react-redux";
+import { TypographyMenu } from "../../personalizadTheme";
 
 const validationSchema = yup.object({
   content: yup
@@ -76,16 +77,16 @@ export const QuestionsAndAnswers = ({ asks, handleReRender }) => {
               value={formik.values.content}
               onChange={formik.handleChange}
               error={formik.touched.content && Boolean(formik.errors.content)}
-              helperText={formik.touched.content && formik.errors.content}
+              helperText={formik.touched.content && formik.errors.content} 
             />
             <Button
               type="submit"
               variant="contained"
-              color="ambar3"
+              color="darkGrey"
               fullWidth
               sx={{ mt: 3, mb: 2 }}
             >
-              Publicar pregunta
+              <TypographyMenu>Publicar pregunta</TypographyMenu> 
             </Button>
       </Box> : <></>
       }

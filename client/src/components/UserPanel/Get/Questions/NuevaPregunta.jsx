@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import * as yup from 'yup';
 import { getAsksForAllProductsOneUser, getUserIdByToken, postNewAsk } from '../../../../redux/actions';
+import { TypographyMenu } from '../../../../personalizadTheme';
 
 
 
@@ -79,11 +80,11 @@ export const NuevaPregunta = ({idProduc}) => {
               <Button
                 type="submit"
                 variant="contained"
-                color="ambar3"
+                color="darkGrey"
                 fullWidth
                 sx={{ mt: 3, mb: 2 }}
               >
-                Publicar nueva pregunta
+                <TypographyMenu>Publicar nueva pregunta</TypographyMenu>
               </Button>
         </Box> : <></>
         }

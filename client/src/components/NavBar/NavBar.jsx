@@ -23,13 +23,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, getCartById, verifyToken } from "../../redux/actions";
 import Swal from "sweetalert2";
+import {NavButton, ExmineIcons, TypographyMenu } from "../../personalizadTheme"
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.letters.main, 0.15),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.letters.main, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -147,17 +148,17 @@ export const NavBar = (props) => {
           <>
             <Link sx={{ textDecoration: "none" }} href="/userProfile">
               <MenuItem onClick={handleMenuProfileClose}>
-                <Typography variant="body1" color="ambar5.main">
+                <TypographyMenu variant="body1">
                   Perfil
-                </Typography>
+                </TypographyMenu>
               </MenuItem>
             </Link>
 
             <Link sx={{ textDecoration: "none" }} href="/">
               <MenuItem onClick={() => window.localStorage.removeItem("token")}>
-                <Typography variant="body1" color="ambar5.main">
+                <TypographyMenu variant="body1">
                   LogOut
-                </Typography>
+                </TypographyMenu>
               </MenuItem>
             </Link>
           </>
@@ -165,25 +166,25 @@ export const NavBar = (props) => {
           <>
             <Link sx={{ textDecoration: "none" }} href="/myDataAdm">
               <MenuItem onClick={handleMenuProfileClose}>
-                <Typography variant="body1" color="ambar5.main">
+                <TypographyMenu variant="body1">
                   Perfil
-                </Typography>
+                </TypographyMenu>
               </MenuItem>
             </Link>
 
             <Link sx={{ textDecoration: "none" }} href="/AdminPanel">
               <MenuItem onClick={handleMenuProfileClose}>
-                <Typography variant="body1" color="ambar5.main">
+                <TypographyMenu variant="body1">
                   Panel
-                </Typography>
+                </TypographyMenu>
               </MenuItem>
             </Link>
 
             <Link sx={{ textDecoration: "none" }} href="/">
               <MenuItem onClick={() => window.localStorage.removeItem("token")}>
-                <Typography variant="body1" color="ambar5.main">
+                <TypographyMenu variant="body1">
                   LogOut
-                </Typography>
+                </TypographyMenu>
               </MenuItem>
             </Link>
           </>
@@ -213,64 +214,61 @@ export const NavBar = (props) => {
     >
       <Link sx={{ textDecoration: "none" }} href="/">
         <MenuItem>
-          <IconButton size="large" color="ambar5">
+          <ExmineIcons size="large" >
             <Badge color="error">
               <HomeIcon />
             </Badge>
-          </IconButton>
-          <Typography variant="body1" color="ambar5.main">
+          </ExmineIcons>
+          <TypographyMenu variant="body1">
             Home
-          </Typography>
+          </TypographyMenu>
         </MenuItem>
       </Link>
 
       {userStatus !== null ? (
         <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton
+          <ExmineIcons
             size="large"
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
-            color="ambar5"
           >
             <AccountCircle />
-          </IconButton>
-          <Typography variant="body1" color="ambar5">
+          </ExmineIcons>
+          <TypographyMenu variant="body1">
             Perfil
-          </Typography>
+          </TypographyMenu>
         </MenuItem>
       ) : (
         <>
           <Link sx={{ textDecoration: "none" }} href="/createaccount">
             <MenuItem>
-              <IconButton
+              <ExmineIcons
                 size="large"
                 aria-label="account of current user"
                 aria-controls="primary-search-account-menu"
                 aria-haspopup="true"
-                color="ambar5"
               >
                 <AccountCircle />
-              </IconButton>
-              <Typography variant="body1" color="ambar5.main">
+              </ExmineIcons>
+              <TypographyMenu variant="body1" >
                 Crear cuenta
-              </Typography>
+              </TypographyMenu>
             </MenuItem>
           </Link>
           <Link sx={{ textDecoration: "none" }} href="login">
             <MenuItem>
-              <IconButton
+              <ExmineIcons
                 size="large"
                 aria-label="account of current user"
                 aria-controls="primary-search-account-menu"
                 aria-haspopup="true"
-                color="ambar5"
               >
                 <AccountCircle />
-              </IconButton>
-              <Typography variant="body1" color="ambar5.main">
+              </ExmineIcons>
+              <TypographyMenu variant="body1">
                 Login
-              </Typography>
+              </TypographyMenu>
             </MenuItem>
           </Link>
         </>
@@ -278,27 +276,27 @@ export const NavBar = (props) => {
 
       <Link sx={{ textDecoration: "none" }} href="/cart">
         <MenuItem>
-          <IconButton size="large" color="ambar5">
+          <ExmineIcons size="large">
             <Badge color="error">
               <ShoppingCartIcon />
             </Badge>
-          </IconButton>
-          <Typography sx={{ textDecoration: "none" }} variant="body1" color="ambar5.main">
+          </ExmineIcons>
+          <TypographyMenu sx={{ textDecoration: "none" }} variant="body1">
             Cart
-          </Typography>
+          </TypographyMenu>
         </MenuItem>
       </Link>
 
       <Link sx={{ textDecoration: "none" }} href="/about">
         <MenuItem>
-          <IconButton size="large" color="ambar5">
+          <ExmineIcons size="large">
             <Badge color="error">
               <InfoIcon />
             </Badge>
-          </IconButton>
-          <Typography variant="body1" color="ambar5.main">
-            About Us
-          </Typography>
+          </ExmineIcons>
+          <TypographyMenu variant="body1">
+            Sobre nosotros
+          </TypographyMenu>
         </MenuItem>
       </Link>
     </Menu>
@@ -308,8 +306,8 @@ export const NavBar = (props) => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         sx={{
-          backgroundColor: "ambar6.main",
-          color: "ambar1.main",
+          backgroundColor: "darkGrey.main",
+          color: "letters",
           position: "fixed",
         }}
       >
@@ -323,7 +321,7 @@ export const NavBar = (props) => {
               mr: 2,
               display: { xs: "none", sm: "block" },
               fontFamily: '"Roboto","Helvetica","Arial",sans-serif;',
-              color: "ambar1.main",
+              color: "verdeLima.main",
               textDecoration: "none",
               margin: "5px",
             }}
@@ -337,7 +335,7 @@ export const NavBar = (props) => {
           >
             <Search>
               <SearchIconWrapper>
-                <SearchIcon color="ambar1" />
+                <SearchIcon color="letters" />
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Buscar…"
@@ -348,72 +346,65 @@ export const NavBar = (props) => {
           </form>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Box sx={{ margin: "5px" }}>
-              <Button
+              <NavButton
                 variant="outlined"
                 sx={{
                   my: 2,
-                  color: "ambar1.main",
                   display: "block",
-                  borderColor: "ambar1.main",
                 }}
                 href="/#container"
               >
                 Productos
-              </Button>
+              </NavButton>
             </Box>
             <Box sx={{ margin: "5px" }}>
-              <Button
+              <NavButton
                 variant="outlined"
                 href="/about"
                 sx={{
                   my: 2,
-                  color: "ambar1.main",
                   display: "block",
-                  borderColor: "ambar1.main",
                 }}
               >
                 Sobre nosotros
-              </Button>
+              </NavButton>
             </Box>
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {userStatus !== null ? (
-              <IconButton
+              <ExmineIcons
                 size="large"
-                color="ambar1"
                 sx={{ mr: 1 }}
                 href="/cart"
               >
                 <Badge badgeContent={numerito} color="error">
                   <ShoppingCartIcon />
                 </Badge>
-              </IconButton>
+              </ExmineIcons>
             ) : (
-              <IconButton
+              <ExmineIcons
                 size="large"
-                color="ambar1"
                 sx={{ mr: 1 }}
                 onClick={handleAlertCart}
               >
                 <Badge color="error">
                   <ShoppingCartIcon />
                 </Badge>
-              </IconButton>
+              </ExmineIcons>
             )}
             {userStatus !== null ? (
-              <IconButton
+              <ExmineIcons
                 size="large"
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuProfileId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="ambar1"
               >
                 <AccountCircle />
-              </IconButton>
+              </ExmineIcons>
             ) : (
               <></>
             )}
@@ -421,32 +412,28 @@ export const NavBar = (props) => {
             {userStatus === null ? (
               <>
                 <Box sx={{ margin: "5px" }}>
-                  <Button
+                  <NavButton
                     variant="outlined"
                     href="/login"
                     sx={{
                       my: 2,
-                      color: "ambar1.main",
                       display: "block",
-                      borderColor: "ambar1.main",
                     }}
                   >
                     LogIn
-                  </Button>
+                  </NavButton>
                 </Box>
                 <Box sx={{ margin: "5px" }}>
-                  <Button
+                  <NavButton
                     variant="outlined"
                     href="/createaccount"
                     sx={{
                       my: 2,
-                      color: "ambar1.main",
                       display: "block",
-                      borderColor: "ambar1.main",
                     }}
                   >
                     Crear cuenta
-                  </Button>
+                  </NavButton>
                 </Box>
               </>
             ) : (
@@ -454,16 +441,15 @@ export const NavBar = (props) => {
             )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
+            <ExmineIcons
               size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="ambar1"
             >
               <MoreIcon />
-            </IconButton>
+            </ExmineIcons>
           </Box>
         </Toolbar>
       </AppBar>

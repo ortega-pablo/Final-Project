@@ -18,7 +18,7 @@ const MyOrders = () => {
 
   return (
       <Box sx={{ mt: 5, width: "100%" }}>
-         <Typography sx={{mt:"2%" , mb:"2%", textAlign:"center"}} variant="h3" color="ambar5.main" >Mis ordenes</Typography>
+         <Typography sx={{mt:"2%" , mb:"2%", textAlign:"center"}} variant="h3" color="darkGrey.main" >Mis ordenes</Typography>
       <TableContainer component={Paper} align="center">
         <Table aria-label="collapsible table">
             {allOrders?.map(o => (

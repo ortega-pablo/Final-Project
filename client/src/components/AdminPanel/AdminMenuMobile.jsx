@@ -120,7 +120,7 @@ function AdminMenuMobile({
             left: "50%",
             marginLeft: "-130px",
             overflowY: "scroll",
-            scrollbarColor: "ambar1",
+            scrollbarColor: "background.paper",
           }}
         >
           <List sx={{ width: 240, alignItems: "center" }}>

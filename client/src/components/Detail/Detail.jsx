@@ -6,24 +6,14 @@ import CarouselDetail from "./CarouselDetail";
 import TableDetail from "./TableDetail";
 import QuestionsAndAnswers from "./QuestionsAndAnswers";
 import {
-  Button,
   Chip,
   CircularProgress,
   Container,
   Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Modal,
   Paper,
-  Rating,
   Typography,
 } from "@mui/material";
-import { Box, maxWidth } from "@mui/system";
-import { Footer } from "../Footer/Footer";
-import { BoxGeneral } from "../../personalizadTheme";
-import AllReviews from "./AllReviews";
-import Swal from "sweetalert2";
+import { Box } from "@mui/system";
 import CartModal from "../Cart/CartModal";
 import RatingProduct from "./RatingProduct";
 
@@ -66,10 +56,10 @@ export const Detail = () => {
         justifyContent: "center",
         alignItems:"center",
         textAlign:"center",
-        backgroundColor:"ambar1.main",
+        backgroundColor:"ultraLightGrey.main",
       }}
     >
-      <Paper component="div" sx={{ maxWidth: "1100px", mt: "2%", mb: "2%" }}>
+      <Paper component="div" sx={{ mt: "2%", mb: "2%" }}>
         {productDetail.length > 0 ? (
           <Container
             maxWidth="vp"
@@ -85,7 +75,7 @@ export const Detail = () => {
               <Chip
                 label={productDetail[0].name}
                 size="string"
-                sx={{ fontSize: "24px", color: "ambar5.main" }}
+                sx={{ fontSize: "24px", color: "verdeLima.main" }}
               />
             </Divider>
 
@@ -96,7 +86,7 @@ export const Detail = () => {
                 width: "100%",
               }}
             />
-<Typography variant="h6" sx={{m:1}}>Precio: ${productDetail[0]?.price}</Typography>
+<Typography variant="h6" sx={{m:1}}>Precio: {productDetail[0]?.price}</Typography>
             <CartModal
               token={token}
               id={productDetail[0].id}
@@ -106,6 +96,7 @@ export const Detail = () => {
               name={productDetail[0].name}
               stock={productDetail[0].productInventory.quantity}
               price={productDetail[0].price}
+              image={productDetail[0].images[0].urlFile}
 
             />
 
@@ -113,7 +104,7 @@ export const Detail = () => {
               <Chip
                 label="Descripción"
                 size="string"
-                sx={{ fontSize: "18px", color: "ambar5.main" }}
+                sx={{ fontSize: "18px", color: "verdeLima.main" }}
               />
             </Divider>
             <Box
@@ -131,7 +122,7 @@ export const Detail = () => {
               <Chip
                 label="Especificaciones"
                 size="string"
-                sx={{ fontSize: "18px", color: "ambar5.main" }}
+                sx={{ fontSize: "18px", color: "verdeLima.main" }}
               />
             </Divider>
             <TableDetail productDetail={productDetail} />
@@ -140,7 +131,7 @@ export const Detail = () => {
               <Chip
                 label="Calificación del producto"
                 size="string"
-                sx={{ fontSize: "18px", color: "ambar5.main" }}
+                sx={{ fontSize: "18px", color: "verdeLima.main" }}
               />
             </Divider>
               <Box 
@@ -152,7 +143,7 @@ export const Detail = () => {
               <Chip
                 label="Consultas"
                 size="string"
-                sx={{ fontSize: "18px", color: "ambar5.main" }}
+                sx={{ fontSize: "18px", color: "verdeLima.main" }}
               />
             </Divider>
             <QuestionsAndAnswers

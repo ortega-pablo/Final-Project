@@ -16,7 +16,7 @@ export const SelectProductsPerPage = ({setProductsPerPage, productsPerPage, setC
     return (
     <Box sx={{ minWidth: 120,  }}>
         <FormControl sx={{ mt: 1, minWidth: 120 }} size="small">
-            <InputLabel id="products-per-page">Productos</InputLabel>
+            <InputLabel id="products-per-page" color="darkGrey" >Productos</InputLabel>
             <Select
                 labelId="products-per-page"
                 id="products-per-page"

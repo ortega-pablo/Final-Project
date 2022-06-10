@@ -1,5 +1,5 @@
 import {
-    Paper, Typography, List, ImageListItem, ListItem, ListItemText, Divider, Grid, Button
+    Paper, Typography, List, ImageListItem, ListItem, ListItemText, Divider,
   } from "@mui/material";
   import { Box } from "@mui/system";
   import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import {
   import { useEffect } from "react";
   import { getOrderById } from "../redux/actions";
   import {useNavigate} from "react-router-dom"
+import { ButtonMenu } from "../personalizadTheme";
   
   
   
@@ -42,6 +43,7 @@ import {
                           <ImageListItem sx={{width: "90px", heigth: "90px"}}>
                               <img 
                               src={p.productImage}
+                              alt={p}
                               />
                           </ImageListItem>
                           <ListItemText
@@ -101,14 +103,14 @@ import {
                  
                </Box>
                <Box sx={{mt:"10px", display:"flex", justifyContent:"center"}}>
-                       <Button 
+                       <ButtonMenu 
                        variant='contained' 
-                       color='ambar3' 
                        size='small'
+                       color="darkGrey"
                        onClick={
                           () => navigate("/myOrders")
                       }
-                       >Volver a mis ordenes</Button>
+                       >Volver a mis ordenes</ButtonMenu>
             
                </Box>
         </Paper>

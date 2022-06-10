@@ -14,8 +14,8 @@ export const Paginationxd = ({setCurrentPage, currentPage, productsPerPage, prod
 
   return (
     <Stack sx={{ display: 'flex', flexDirection: 'column', mt: 5, alignItems: 'center'}} spacing={2}>
-      <Typography variant="h6" color="text.primary" >Pagina: {currentPage} de {numberOfPages}</Typography>
-      <Pagination count={numberOfPages} page={currentPage} onChange={handleChangePage} siblingCount={3} color='ambar2'/>
+      <Typography variant="h6" color="lightGrey.main" >Pagina: {currentPage} de {numberOfPages}</Typography>
+      <Pagination count={numberOfPages} page={currentPage} onChange={handleChangePage} siblingCount={3} color='verdeLima' />
       <SelectPage setCurrentPage={setCurrentPage} currentPage={currentPage} productsPerPage={productsPerPage} products={products}/>
     </Stack>
   );

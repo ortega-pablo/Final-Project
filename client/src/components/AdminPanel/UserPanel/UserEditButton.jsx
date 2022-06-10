@@ -14,6 +14,7 @@ import { editUser, getAllUsers, postRegisterUser } from "../../../redux/actions"
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { NavButton } from "../../../personalizadTheme";
 
 const validationSchema = yup.object({
   userName: yup
@@ -84,7 +85,7 @@ function UserEditButton({user , token , setRender, render}) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Editar</Button>
+      <NavButton size="small" variant="outlined" onClick={handleOpen}>Editar</NavButton>
       <Modal
         open={open}
         onClose={handleClose}

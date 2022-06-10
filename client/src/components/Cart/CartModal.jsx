@@ -3,12 +3,18 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { FormControl, TextField } from "@mui/material";
+import { CardMedia, FormControl, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, clearCart, getCartById, getProducts } from "../../redux/actions";
+import {
+  addItemToCart,
+  clearCart,
+  getCartById,
+  getProducts,
+} from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { ButtonContained, TypographyMenu } from "../../personalizadTheme";
 
 export default function CartModal({
   id,
@@ -18,7 +24,8 @@ export default function CartModal({
   userStatus,
   name,
   stock,
-  price
+  price,
+  image,
 }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -37,7 +44,7 @@ export default function CartModal({
   const handleSubmitCart = async (e) => {
     e.preventDefault();
     let busqueda = cartProducts?.find((p) => p.id === id);
-    if(cantidad <= 0){
+    if (cantidad <= 0) {
       setOpen(false);
       Swal.fire({
         background: "#DFDCD3",
@@ -48,9 +55,8 @@ export default function CartModal({
       }).then(() => {
         setOpen(true);
       });
-    }
-    else if (cantidad <= stock) {
-      if (!busqueda) {        
+    } else if (cantidad <= stock) {
+      if (!busqueda) {
         await dispatch(addItemToCart(id, token, cantidad));
         dispatch(getCartById(token));
         Swal.fire({
@@ -61,7 +67,7 @@ export default function CartModal({
           timer: 1500,
         });
         setOpen(false);
-        dispatch(clearCart())
+        dispatch(clearCart());
       } else {
         Swal.fire({
           background: "#DFDCD3",
@@ -113,34 +119,33 @@ export default function CartModal({
     }).then((result) => {
       if (result.isConfirmed) {
         navigate("/login");
-        window.location.reload()
+        window.location.reload();
       }
     });
   };
 
   return (
-    <Box sx ={{textAlign:'center'}}>
-      {stock === 0 ? 
-      <>
-      <Button color="ambar3" variant="contained" size="small" disabled >
-      Agregar al Carrito
-      <ShoppingCartIcon size="small" />
-    </Button>
-    <Typography color="ambar3.main" >Producto sin stock</Typography>
-    </>:
-      stock > 0 && stock <=5 ?
-      <>
-      <Button color="ambar3" variant="contained" size="small" onClick={userStatus !== null ? handleOpen : handleAlert}>
-      Agregar al Carrito
-      <ShoppingCartIcon size="small" />
-    </Button>
-    <Typography color="ambar3.main" >Ultimas unidades!</Typography>
-    </>:
-      <Button color="ambar3" variant="contained" size="small" onClick={userStatus !== null ? handleOpen : handleAlert}>
-        Agregar al Carrito
-        <ShoppingCartIcon size="small" />
-      </Button>
-    }
+    <Box sx={{ textAlign: "center" }}>
+      {stock === 0 ? (
+        <>
+          <Button variant="contained" color="darkGrey" size="small" disabled>
+            <TypographyMenu>Producto sin stock</TypographyMenu>
+          </Button>
+        </>
+      ) : stock > 0 && stock <= 5 ? (
+        <>
+        <Button variant="contained" color="darkGrey" size="small" onClick={userStatus !== null ? handleOpen : handleAlert}>
+            <TypographyMenu>Agregar al Carrito</TypographyMenu>
+            <ShoppingCartIcon size="small" />
+          </Button>
+          <Typography color="darkGrey.main">Ultimas unidades!</Typography>
+        </>
+      ) : (
+        <Button variant="contained" color="darkGrey" size="small" onClick={userStatus !== null ? handleOpen : handleAlert}>
+            <TypographyMenu>Agregar al Carrito</TypographyMenu>
+            <ShoppingCartIcon size="small" />
+          </Button>
+      )}
       <Modal
         open={open}
         onClose={handleClose}
@@ -158,20 +163,25 @@ export default function CartModal({
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
-            textAlign: 'center',
+            textAlign: "center",
           }}
         >
-          <Typography variant="h6">{name}</Typography>
+          <Typography variant="h6" color="verdeLima.main" >{name}</Typography>
+          
+            <CardMedia component="img"
+            height="140"
+            image={image}
+            alt={name} />
 
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-           Precio: ${price}
+            Precio: {price}
           </Typography>
+          <Typography>Stock: {stock}</Typography>
           <form
             onSubmit={(e) => {
               handleSubmitCart(e);
             }}
           >
-            <Typography>Stock: {stock}</Typography>
             <Box
               sx={{
                 display: "flex",
@@ -195,18 +205,25 @@ export default function CartModal({
                 }}
               />
 
-              <Button type="submit" variant="contained" color="ambar3" size="small">
+              <Button
+                type="submit"
+                variant="contained"
+                color="darkGrey"
+                size="small"
+              >
                 {" "}
-                Agregar{" "}
+                <TypographyMenu>Agregar</TypographyMenu>
+                {" "}
               </Button>
               <Button
                 onClick={() => setOpen(false)}
                 variant="contained"
-                color="ambar3"
+                color="darkGrey"
                 size="small"
               >
                 {" "}
-                Cancelar{" "}
+                <TypographyMenu>Cancelar</TypographyMenu>
+                {" "}
               </Button>
             </Box>
           </form>

@@ -14,9 +14,10 @@ import {
   Divider,
 } from "@mui/material";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
-import { HiddenxsDown } from "../../personalizadTheme";
+import { HiddenxsDown, NavButton, TypographyMenu } from "../../personalizadTheme";
 import { clearFilters, getCategories } from "../../redux/actions";
 import Swal from "sweetalert2";
+import { ListItemButtonMenu } from "../../personalizadTheme"
 
 function validate(value) {
   let errors = {};
@@ -101,8 +102,8 @@ function Category({
       <Paper sx={{ height: "100%", display: "flex" }}>
         <List sx={{ width: 320, alignItems: "center" }}>
           <ListSubheader component="div" id="nested-list-subheader">
-            <Typography variant="h5" m={2}>
-              Categorias
+            <Typography color="verdeLima.main" variant="h5" m={2}>
+              Categorías
             </Typography>
           </ListSubheader>
           {categories.length ? (
@@ -110,19 +111,19 @@ function Category({
               return (
                 <>
                   <Divider variant="middle" />
-                  <ListItemButton
+                  <ListItemButtonMenu
                     key={category}
                     onClick={() => handleClickForCategories(category.name)}
                   >
                     <ListItemText primary={category.name} />
-                  </ListItemButton>
+                  </ListItemButtonMenu>
 
                   {category.subCategories ? (
                     category.subCategories.map((subCategory) => {
                       return (
                         <>
                           <List component="div" disablePadding>
-                            <ListItemButton
+                            <ListItemButtonMenu
                               key={subCategory}
                               sx={{ pl: 6 }}
                               onClick={() =>
@@ -131,7 +132,7 @@ function Category({
                             >
                               <HorizontalRuleIcon fontSize="small" />
                               <ListItemText primary={subCategory.name} />
-                            </ListItemButton>
+                            </ListItemButtonMenu>
                           </List>
                         </>
                       );
@@ -147,32 +148,32 @@ function Category({
           )}
           <Divider variant="middle" />
           <ListSubheader component="div" id="nested-list-subheader">
-            <Typography variant="h5" m={2}>
+            <Typography color="verdeLima.main" variant="h5" m={2}>
               Precio
             </Typography>
           </ListSubheader>
           <Divider variant="middle" />
-          <ListItemButton
+          <ListItemButtonMenu 
             onClick={() => {
               handleClickSubmitPerPrice({ Desde: 0, Hasta: 999 });
             }}
           >
-            <ListItemText primary={"Hasta $999"} />
-          </ListItemButton>
-          <ListItemButton
+            <ListItemText  primary={"Hasta $999"} />
+          </ListItemButtonMenu>
+          <ListItemButtonMenu
             onClick={() => {
               handleClickSubmitPerPrice({ Desde: 1000, Hasta: 1999 });
             }}
           >
             <ListItemText primary={"$1.000 - $1.999"} />
-          </ListItemButton>
-          <ListItemButton
+          </ListItemButtonMenu>
+          <ListItemButtonMenu
             onClick={() => {
               handleClickSubmitPerPrice({ Desde: 2000, Hasta: 1000000 });
             }}
           >
             <ListItemText primary={"Mas de $2.000"} />
-          </ListItemButton>
+          </ListItemButtonMenu>
           <ListItem>
             <Box>
               <TextField
@@ -200,7 +201,7 @@ function Category({
                 <Button
                   type="submit"
                   variant="contained"
-                  color="ambar3"
+                  color="darkGrey"
                   onClick={(e) => {
                     handleClick(e);
                     if (errors.Desde || errors.Hasta) {
@@ -217,16 +218,16 @@ function Category({
                   }}
                   sx={{ mr: 1 }}
                 >
-                  <Typography>Filtrar</Typography>
+                  <TypographyMenu>Filtrar</TypographyMenu>
                 </Button>
                 <Button
                   variant="contained"
-                  color="ambar3"
+                  color="darkGrey"
                   onClick={(e) => {
                     handleClearFilters();
                   }}
                 >
-                  <Typography>Limpiar filtros</Typography>
+                  <TypographyMenu>Limpiar filtros</TypographyMenu>
                 </Button>
               </Box>
             </Box>

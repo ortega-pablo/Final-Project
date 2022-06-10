@@ -48,7 +48,7 @@ function AllCategories() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h2" mt={4} color='ambar5.main' >Categorías</Typography>
+          <Typography variant="h2" mt={4} color='primary' >Categorías</Typography>
           <GetAllCategoriesToAdmin/>
 
         </Container>

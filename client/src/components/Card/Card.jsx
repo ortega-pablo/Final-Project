@@ -15,11 +15,12 @@ export default function MultiActionAreaCard({
   id
 }) {
   return (
-    <Card elevation={3} sx={{ alignItems:"center", width: 200, hover: "true"}}>
+    <Card elevation={24} sx={{ alignItems:"center", width: 200, hover: "true"}}>
       <CardActionArea href={"/detail/" + id} sx={[
     {maxHeight:'360px',
     minHeight:'360px',
-    backgroundColor: "#D1C6B7",
+    
+    
       },
       
     /*

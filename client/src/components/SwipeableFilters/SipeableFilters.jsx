@@ -23,6 +23,7 @@ import { HiddensmUp } from "../../personalizadTheme";
 import { clearFilters, getCategories } from "../../redux/actions";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import Swal from "sweetalert2";
+import { TypographyMenu } from "../../personalizadTheme"
 
 function validate(value) {
   let errors = {};
@@ -125,7 +126,7 @@ function SwipeableFilters({
         <Paper sx={{ height: "100%", display: "flex", maxWidth: 320 }}>
           <List sx={{ alignItems: "center" }}>
             <ListSubheader component="div" id="nested-list-subheader">
-              <Typography variant="h5" m={2}>
+              <Typography color="verdeLima.main" variant="h5" m={2}>
                 Categorias
               </Typography>
             </ListSubheader>
@@ -171,17 +172,17 @@ function SwipeableFilters({
             )}
             <Divider variant="middle" />
             <ListSubheader component="div" id="nested-list-subheader">
-              <Typography variant="h5" m={2}>
+              <Typography color="verdeLima.main" variant="h5" m={2}>
                 Precio
               </Typography>
             </ListSubheader>
             <Divider variant="middle" />
-            <ListItemButton
+            <ListItemButton color="letters"
               onClick={() => {
                 handleClickSubmitPerPrice({ Desde: 0, Hasta: 999 });
               }}
             >
-              <ListItemText primary={"Hasta $999"} />
+              <ListItemText  primary={"Hasta $999"} />
             </ListItemButton>
             <ListItemButton
               onClick={() => {
@@ -223,7 +224,7 @@ function SwipeableFilters({
                 >
                   <Button
                     variant="contained"
-                    color="ambar3"
+                    color="verdeLima"
                     onClick={(e) => {
                       handleClick(e);
                       if (errors.Desde || errors.Hasta) {
@@ -243,7 +244,7 @@ function SwipeableFilters({
                   </Button>
                   <Button
                     variant="contained"
-                    color="ambar3"
+                    color="verdeLima"
                     onClick={(e) => {
                       handleClearFilters();
                     }}

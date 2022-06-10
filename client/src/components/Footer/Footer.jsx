@@ -32,8 +32,7 @@ export const Footer = () => {
           py: 3,
           px: 2,
           m: 0,
-          backgroundColor: 'ambar6.main',
-          color: '#E8E9F2'
+          backgroundColor: 'darkGrey.main',
         }}
     >
         <Container maxWidth="sm">

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { createTheme, Paper, Container } from "@mui/material";
+import { createTheme, Paper, Container, Button, IconButton, Typography, ListItemText, ListItemButton } from "@mui/material";
 import { Box } from "@mui/system";
 
 const theme = createTheme({
@@ -11,16 +11,37 @@ const theme = createTheme({
       white: "#fff",
     },
 
+    verdeLima: {
+      main: "#BAFF39",
+    },
+
+    darkGrey:{
+      main: "#303030",
+    },
+    lightGrey:{
+      main: "#6E6E6E",
+    },
+    ultraLightGrey:{
+      main: "#D5D5D5",
+    },
+    
+    letters: {
+      main: "#fff",
+      light: "#fff",
+      dark: "#fff",
+      contrastText: "#fff",
+    },
+
     ambar1: {
-      main: "#DFDCD3",
+      main: "#BAFF39",
     },
 
     ambar2: {
-      main: "#DEA03C",
+      main: "#fff",
     },
 
     ambar3: {
-      main: "#B6893E",
+      main: "#000",
     },
 
     ambar4: {
@@ -36,10 +57,10 @@ const theme = createTheme({
     },
 
     primary: {
-      main: "#dea03c",
-      light: "#dfdcd3",
-      dark: "#b6893e",
-      contrastText: "#DEA03C",
+      main: "#fff",
+      light: "#fff",
+      dark: "#fff",
+      contrastText: "#fff",
     },
 
     secondary: {
@@ -50,7 +71,7 @@ const theme = createTheme({
     },
 
     error: {
-      main: "#d32f2f",
+      main: "#AE0000",
       light: "#ef5350",
       dark: "#c62828",
       contrastText: "#fff",
@@ -78,16 +99,16 @@ const theme = createTheme({
     },
 
     text: {
-      primary: "#685C44",
-      secondary: "#B6893E",
+      primary: "#fff",
+      secondary: "#fff",
       disabled: "#DFDCD3",
     },
 
     divider: "rgba(0, 0, 0, 0.12)",
 
     background: {
-      paper: "#D1C2B0",
-      default: "#dfdcd3",
+      paper: "#6E6E6E",
+      default: "#303030",
     },
 
     action: {
@@ -117,7 +138,7 @@ const theme = createTheme({
 });
 
 const CustomizedContainer = styled(Container)`
-  background-color: #dfdcd3;
+  background-color: #303030;
   margin-top: 10px;
   root: {
     padding: 300px;
@@ -125,7 +146,7 @@ const CustomizedContainer = styled(Container)`
 `;
 
 const BoxGeneral = styled(Box)`
-  background-color: #dfdcd3;
+  background-color: #303030;
 `;
 
 const CustomPaper = styled(Paper)`
@@ -145,6 +166,55 @@ const HiddenxsDown = styled(Box)`
   }
 `;
 
+const NavButton = styled(Button)`
+  color: #fff;
+  border-color: #fff;
+  &:hover{
+    color: #BAFF39;
+    border-color: #BAFF39;
+  }
+`;
+const TypographyMenu = styled(Typography)`
+  color: #fff;
+  border-color: #fff;
+  &:hover{
+    color: #BAFF39;
+    border-color: #BAFF39;
+  }
+`;
+const ListItemButtonMenu = styled(ListItemButton)`
+color: #fff;
+&:hover{
+  color: #BAFF39;
+}
+`;
+
+const ButtonMenu = styled(Button)`
+color: #fff;
+border-color: #BAFF39;
+&:hover{
+  color: #BAFF39;
+  border-color: #BAFF39;
+}
+`;
+const ButtonContained = styled(Button)`
+color: #303030;
+text-color: #fff;
+&:hover{
+  color: #6E6E6E;
+  border-color: #BAFF39;
+}
+`;
+
+const ExmineIcons = styled(IconButton)`
+color: #fff;
+border-color: #fff;
+&:hover{
+  color: #BAFF39;
+  border-color: #BAFF39;
+}
+`;
+
 export {
   theme,
   CustomizedContainer,
@@ -152,4 +222,10 @@ export {
   CustomPaper,
   HiddensmUp,
   HiddenxsDown,
+  NavButton,
+  ButtonMenu,
+  TypographyMenu,
+  ListItemButtonMenu,
+  ExmineIcons,
+  ButtonContained,
 };
