@@ -84,7 +84,9 @@ import {
   GET_BANNER,
   DELETE_BANNER,
   GET_ORDER_BY_ID,
-  PUT_INVENTORY_AFTER_ORDER
+  PUT_INVENTORY_AFTER_ORDER,
+  DELETE_ASK,
+  
 } from "../actions";
 
 const initialState = {
@@ -763,6 +765,11 @@ const rootReducer = (state = initialState, action) => {
     return{
       ...state,
     }
+  }
+  case DELETE_ASK: {
+    return {
+      ...state,
+    };
   }
 
     default:

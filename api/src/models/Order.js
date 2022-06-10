@@ -47,14 +47,8 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-<<<<<<< HEAD
-    // Payment_Status: {
-    //   type: DataTypes.STRING,
-    // }
-=======
     paymentState: {
       type: DataTypes.TEXT,
     }
->>>>>>> 129edc743594fa37225c4e210905aa396ea3e39a
   });
 };

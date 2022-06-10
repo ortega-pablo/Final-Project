@@ -96,6 +96,11 @@ export const POST_BANNER = "POST_BANNER";
 export const DELETE_BANNER = "DELETE_BANNER";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const PUT_INVENTORY_AFTER_ORDER = "PUT_INVENTORY_AFTER_ORDER";
+export const DELETE_ASK = "DELETE_ASK";
+
+
+
+
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -162,12 +167,12 @@ export const postNewAnswer = (payload, askId, userId) => {
   };
 };
 
-export const postNewReview = (payload, productId, userId) => {
+export const postNewReview = (payload, productId, userId, rating,orderId) => {
   return async function (dispatch) {
     try {
       console.log(payload);
       await axios.post(
-        `/orders/review?userId=${userId}&productId=${productId}`,
+        `/orders/review?userId=${userId}&productId=${productId}&rating=${rating}&orderId=${orderId}`,
         payload
       );
     } catch (error) {
@@ -1278,3 +1283,23 @@ export const postResetPassword = (payload, token) => {
     }
   };
 };
+
+
+
+export function deleteAsk(idAsk) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/asks?askId=${idAsk}`);
+
+      return dispatch({
+        type: DELETE_ASK,
+       
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
+// ?askId=2
