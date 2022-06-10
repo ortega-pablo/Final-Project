@@ -85,8 +85,9 @@ import {
   DELETE_BANNER,
   GET_ORDER_BY_ID,
   PUT_INVENTORY_AFTER_ORDER,
-  DELETE_ASK,
-  
+  DELETE_ASK,  
+  GET_ALL_ORDER,
+  PUT_STATE_ORDER
 } from "../actions";
 
 const initialState = {
@@ -116,7 +117,8 @@ const initialState = {
   allUsers: [],
   allImagesBanner: [],
   filteredUsers: [],
-  currentOrder: {}
+  currentOrder: {},
+  allOrders:[]
 };
 
 // funcion para que el carrito se guarde siempre
@@ -770,6 +772,19 @@ const rootReducer = (state = initialState, action) => {
     return {
       ...state,
     };
+  }
+
+  case GET_ALL_ORDER:{
+    return {
+      ...state,
+      allOrders: action.payload
+    }
+  }
+
+  case PUT_STATE_ORDER: {
+    return {
+      ...state
+    }
   }
 
     default:

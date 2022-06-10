@@ -148,7 +148,7 @@ export const OrderDetailForUserPanel = () => {
         <Typography variant="h6">Estado de compra:</Typography>
         <Box>
           <Typography sx={{ margin: "5px" }}>
-            Estado: {`${currentOrder?.state}.`}
+            Estado: {`${currentOrder?.state === "created" ? "creada" : ''}${currentOrder?.state === "processing" ? "en proceso" : ''}${currentOrder?.state === "shipped" ? "enviado" : ''}${currentOrder?.state === "cancelled" ? "cancelada" : ''}${currentOrder?.state === "completed" ? "completada": ''}.`} 
           </Typography>
           {currentOrder?.paymentState === "success" ? (
             <Typography sx={{ margin: "5px" }}>Pago: Exitoso.</Typography>
@@ -160,10 +160,9 @@ export const OrderDetailForUserPanel = () => {
         {/* && e?.length === 0 */}
 
         <Box sx={{ mt: "10px", display: "flex", justifyContent: "center" }}>
-          {currentOrder?.paymentState === "success" ? (
-            <Button onClick={handleOpen}>Calificar compra</Button>
-          ) : (
-            <Button>Ya calificaste la compra</Button>
+          {currentOrder?.state === "completed" && (
+            <Button onClick={handleOpen}>Calificar productos</Button>
+          
           )}
 
           <Button

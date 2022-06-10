@@ -97,10 +97,7 @@ export const DELETE_BANNER = "DELETE_BANNER";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const PUT_INVENTORY_AFTER_ORDER = "PUT_INVENTORY_AFTER_ORDER";
 export const DELETE_ASK = "DELETE_ASK";
-
-
-
-
+export const PUT_STATE_ORDER = "PUT_STATE_ORDER";
 
 export const getProducts = (name) => {
   return async (dispatch) => {
@@ -933,6 +930,19 @@ export const getAllOrders = () => {
     });
   };
 };
+
+export const modifyStateOrder = (orderId, state) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/orders?orderId=${orderId}`, {state: state});
+    } catch (error) {
+      console.log(error)
+    }
+    return dispatch({
+      type: PUT_STATE_ORDER,
+    })
+  }
+}
 
 export const getAllOrdersOneUser = (idUser) => {
   return async (dispatch) => {
