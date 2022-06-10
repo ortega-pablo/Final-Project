@@ -59,6 +59,8 @@ import { OrderDetails } from "./components/OrderDetails";
 import { OrderDetailForUserPanel } from "./components/OrderDetailForUserPanel";
 import UpdateDataAdmG from "./components/AdminPanel/PerfilAdmin/panel/UpdateDataAdmG";
 import OrdersUserPanel from "./components/UserPanel/OrdersUserPanel";
+import OrderAdminPanel from "./components/AdminPanel/OrderAdminPanel";
+import { OrderDetailForAdminPanel } from "./components/AdminPanel/OrderDetailForAdminPanel";
 
 function App() {
   return (
@@ -74,6 +76,10 @@ function App() {
         <Route
           path={`/orderForUserPanel/:id`}
           element={<OrderDetailForUserPanel></OrderDetailForUserPanel>}
+        />
+        <Route
+          path={`/orderForAdminPanel/:id`}
+          element={<OrderDetailForAdminPanel></OrderDetailForAdminPanel>}
         />
         <Route path="/about" element={<About />} />
         <Route path="/login/reset/:TokenE" element={<ResetPassword />} />
@@ -120,6 +126,8 @@ function App() {
         <Route path="/updateAdminG" element={<UpdateDataAdmG />} />
         <Route path="/updatePasswAdmin" element={<UpdatePasswAdm />} />
         <Route path="/updatePasswAdminG" element={<UpdatePasswAdmG />} />
+        <Route path="/allOrdersAdmin" element={<OrderAdminPanel />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

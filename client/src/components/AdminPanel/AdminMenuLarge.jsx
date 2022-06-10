@@ -22,6 +22,7 @@ import { HiddenxsDown } from "../../personalizadTheme";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailOneUsers, getUserIdByToken } from "../../redux/actions";
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export default function AdminMenuLarge() {
 
@@ -45,6 +46,7 @@ export default function AdminMenuLarge() {
   const [open4, setOpen4] = React.useState(false);
   const [open5, setOpen5] = React.useState(false);
   const [open6, setOpen6] = React.useState(false);
+  const [open7, setOpen7] = React.useState(false);
 
 
   const handleClick = () => {
@@ -69,6 +71,9 @@ export default function AdminMenuLarge() {
 
   const handleClick6 = () => {
     setOpen6(!open6);
+  };
+  const handleClick7 = () => {
+    setOpen7(!open7);
   };
   return (
     <HiddenxsDown sx={{ borderRadius: "10px" }}>
@@ -432,6 +437,44 @@ export default function AdminMenuLarge() {
   }
 
 
+  </List>
+</Collapse>
+<ListItemButton onClick={handleClick7}>
+  <ListItemIcon>
+    <ListAltIcon />
+  </ListItemIcon>
+  <ListItemText primary="Ordenes" />
+  {open7 ? <ExpandLess /> : <ExpandMore />}
+</ListItemButton>
+<Collapse in={open7} timeout="auto" unmountOnExit>
+  <List component="div" disablePadding>
+    <Divider variant="middle" />
+
+    {!user.loginWithGoogle ? 
+
+    <ListItemButton
+      component="a"
+      href="/updateAdmin"
+      sx={{ pl: 4 }}
+    >
+      <ListItemIcon>
+        <ModeEditIcon />
+      </ListItemIcon>
+      <ListItemText primary="Administrar" />
+    </ListItemButton>
+     :
+      <ListItemButton
+    component="a"
+    href="/updateAdminG"
+    sx={{ pl: 4 }}
+  >
+    <ListItemIcon>
+      <ModeEditIcon />
+    </ListItemIcon>
+    <ListItemText primary="Modificar datos" />
+  </ListItemButton>
+}
+    <Divider variant="middle" />
   </List>
 </Collapse>
 

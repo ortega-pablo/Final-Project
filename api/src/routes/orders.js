@@ -1847,4 +1847,33 @@ router.put("/admin", async (req, res, next) => {
 })
 
 
+router.put('/', async (req, res, next) => {
+
+  const {orderId} = req.query;
+
+  const {state} = req.body;
+
+  console.log(state)
+  console.log(orderId)
+
+  try {
+
+    const currentOrder = await Order.findOne({where:{id: orderId}});
+
+    if(currentOrder){
+      await currentOrder.update({
+        state,
+      })
+      return res.send(currentOrder);
+    }else{
+      return res.status(400).send("no se encontro la orden");
+    }
+  } catch (error) {
+    next(error);
+  }
+
+})
+
+
+
 module.exports = router;
