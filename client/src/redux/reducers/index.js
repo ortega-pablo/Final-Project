@@ -85,6 +85,7 @@ import {
   DELETE_BANNER,
   GET_ORDER_BY_ID,
   PUT_INVENTORY_AFTER_ORDER,
+  DELETE_ASK,  
   GET_ALL_ORDER,
   PUT_STATE_ORDER
 } from "../actions";
@@ -766,6 +767,11 @@ const rootReducer = (state = initialState, action) => {
     return{
       ...state,
     }
+  }
+  case DELETE_ASK: {
+    return {
+      ...state,
+    };
   }
 
   case GET_ALL_ORDER:{

@@ -45,7 +45,7 @@ export const ResponderPregunta = ({askId}) => {
       })
 
     return (
-            <Box>
+            <Box sx={{width:"25%"}}>
                 <Button onClick={() => setOpen(!open)} variant="contained" color="ambar3">Responder</Button>
                 <Collapse in={open}>
                     <Box component="form" onSubmit={ formikForAnswer.handleSubmit}  noValidate sx={{ mt: 1 }}>

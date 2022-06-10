@@ -197,8 +197,7 @@ router.get("/allUser", async (req, res, next) => {
 
 router.delete("/", async(req, res) => {
 
-  const {askId} = req.params;
-
+  const {askId} = req.query;
   try {
     if(askId){
 
@@ -207,7 +206,6 @@ router.delete("/", async(req, res) => {
           id: askId
         }
       })
-
       await Ask.destroy({
         where: {
           id:askId

@@ -77,6 +77,7 @@ export const MisPreguntas = ({ asks, userid }) => {
               // let elapsed = fechaEnd.getTime() - fechaStart.getTime()
               // // console.log(elapsed)
               // console.log(Date.now())
+              console.log(preg)
               return (
                 <>
                   <Typography component="h3" variant="h5">

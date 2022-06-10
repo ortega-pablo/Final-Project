@@ -450,11 +450,11 @@ export default function AdminMenuLarge() {
   <List component="div" disablePadding>
     <Divider variant="middle" />
 
-    {!user.loginWithGoogle ? 
+   
 
     <ListItemButton
       component="a"
-      href="/updateAdmin"
+      href="/allOrdersAdmin"
       sx={{ pl: 4 }}
     >
       <ListItemIcon>
@@ -462,18 +462,8 @@ export default function AdminMenuLarge() {
       </ListItemIcon>
       <ListItemText primary="Administrar" />
     </ListItemButton>
-     :
-      <ListItemButton
-    component="a"
-    href="/updateAdminG"
-    sx={{ pl: 4 }}
-  >
-    <ListItemIcon>
-      <ModeEditIcon />
-    </ListItemIcon>
-    <ListItemText primary="Modificar datos" />
-  </ListItemButton>
-}
+  
+
     <Divider variant="middle" />
   </List>
 </Collapse>
